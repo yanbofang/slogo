@@ -101,7 +101,9 @@ SLogo Architecture Design
 ----------------------
 1. Parsing takes place after a user types in characters and presses a button to confirm his input. This needs to occur before backend processes begin and it must start properly after pressing start. It will take place in the View class.
 2. The result will be added to a RawCode object that will be passed down to Model.
-3. Errors will be detected once Model passes the RawCode object to the ParseCode class. Here, the class will try to translate the RawCode to a Commands object, while doing so
+3. Errors will be detected once Model passes the RawCode object to the ParseCode class. Here, the class will try to translate the RawCode to a Commands object, while doing so. If an error is detected, it will send an error back to Model then to View to be displayed
+4. Commands will know what specific code is being implemented, they will know it during ParseCode, and they will spefically know from comparing strings with a resource bundle.
+5. GUI will update once Command sends Coordinates to VIEW for the turtle to update with.
 
 ![SLogo Architechture Design](images/SLogo_Design.JPG "SLogo Architechture Design")
 
@@ -179,9 +181,4 @@ External Backend: Model
 	InputView -> View -> Model -> 
 4.  The user changes the color of the environment's background.
 	InputView -> View -> Model -> Parse, readInput() -> Command, setBackground() -> Model -> View -> RunSimulation
-
-
-
-
-
 
