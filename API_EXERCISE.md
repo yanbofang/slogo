@@ -102,3 +102,86 @@ SLogo Architecture Design
 1. Parsing takes place after a user types in characters and presses a button to confirm his input. This needs to occur before backend processes begin and it must start properly after pressing start. It will take place in the View class.
 2. The result will be added to a RawCode object that will be passed down to Model.
 3. Errors will be detected once Model passes the RawCode object to the ParseCode class. Here, the class will try to translate the RawCode to a Commands object, while doing so
+
+![SLogo Architechture Design](images/SLogo_Design.JPG "SLogo Architechture Design")
+
+
+Main (extend app)
+Methods
+start(Stage)
+main(argc)
+Responsibilities
+Create stage
+RunSimulation
+Methods
+step()
+Responsibilities
+Control animation of turtle
+
+InputView
+Methods
+Responsibilities
+View
+Methods
+setUpScene()
+getLocationChange()
+updateQueue(int[])
+showError()
+Responsibilities
+Control user interface aspect of project
+Receive position changes from command and display them
+Major component of External API for frontend -- communicates with Model
+Show the error message
+Model
+Methods
+parseCommand(String) -- passes to parse
+getLocationChange(int[])
+Responsibilities
+Major component of External API for backend -- communicates with View
+Parse
+Methods
+checkValid()
+readInput
+Responsibilities 
+Reads input
+Interprets effect of imput
+Command
+Methods
+setChange()
+setBackground()
+Responsibilities
+History
+Methods
+addCommand(String)
+Responsibilities
+Keeps track of commands that have been called
+
+
+
+Create Your API’s:
+Internal Frontend: RunSimulation
+External Frontend: View
+Internal Backend: Parse, command, History
+External Backend: Model
+
+
+
+
+## Use Cases:
+1. The user types 'fd 50' in the command window, sees the turtle move in the display window leaving a trail, and has the command added to the environment's history.
+	InputView -> View -> Model -> Parse -> Command and History -> createCoordinates -> Model -> view -> RunSimulation
+
+2. The user types '50 fd' in the command window and sees an error message that the command was not formatted correctly.
+	InputView -> View -> Model -> Parse, checkValid() false ->  Model -> View showErro()
+
+3. The user types 'pu fd 50 pd fd 50' in the command window and sees the turtle move twice (once without a trail and once with a trail).
+
+	InputView -> View -> Model -> 
+4.  The user changes the color of the environment's background.
+	InputView -> View -> Model -> Parse, readInput() -> Command, setBackground() -> Model -> View -> RunSimulation
+
+
+
+
+
+
