@@ -34,7 +34,6 @@ The way we designed our internal backend was for Model to be the main class cont
 
 ![Design Picture 1](/images/designPic1.jpeg)
 
-
 ## User Interface
 
 The user interface will be organized as shown in the image below.  Within the square labeled Image Display, the user will not be able to control anything, as this part of the screen will simply show the image created by the turtle.  The variables and methods rectangles will display the variables and methods respectively that the user has already created.  The user will be able to change the variables by clicking on them and typing in a new value, but the methods will be final.  The square titled user controlled visual changes will contain buttons allowing the user to change different aspects of the appearance of the graphic, such as line color.  The console will allow the user to type in commands that will be executed once they press a button which will be located in the bottom right corner of this section.  Finally, the command history will display the most recent commands used by the user.  
