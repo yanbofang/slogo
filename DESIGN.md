@@ -43,6 +43,9 @@ If the user tries to execute a command that does not exist, or define a variable
 
 ## API Details
 
+![Design Picture 2](/images/designPic2.JPG)
+
+
 #### Frontend External
 
 **View**
@@ -107,7 +110,7 @@ The frontend internal API essentially modularize the User Interface in order to 
 In addition to the descriptions on the internal backend APIs in the design overview, the following are a list of backend internal APIs and their descriptions:
 1. Parser API:
    1. parse(String): This method returns a list of Command objects. Model calls this method to get the list command for later use. It also takes care of variables and new user defined method. Model needs to pass the String of user’s input.
-2.  Command API:
+2. Command API:
    1. getInstruction(): Returns the String value of what command it is.
    2. getValue(): Returns the String value of the value related to the command.
 3. CommandHandler API:
@@ -153,13 +156,11 @@ In addition to the descriptions on the internal backend APIs in the design overv
  * PromptView -> View: void runCommand(String input) -> Model: void handleInput(String input) -> Parser: List<Commands> parse(String input) -> Model -> CommandHandler: add(List<Commands>) -> CommandHandler: pop() (Pops off recent command) -> MovementFactory: executeCommand(Command) -> VariableFactory: makeVariable(String, String) -> Model: updateVar(String, String) -> VariableManager: add(String, String)*
  * Our flow for typing out a reassignment of a variable is the same for making a new variable -- within our VariableManager: add(String, String) method, we check for existence then update.
 
-* *The user types ‘TO ’,*
- * PromptView -> View: void runCommand(String input) -> Model: void handleInput(String input) -> Parser: List<Commands> parse(String input) -> Model -> CommandHandler: add(List<Commands>) -> CommandHandler: pop() (Pops off recent command) -> MovementFactory: executeCommand(Command) -> VariableFactory: makeVariable(String, String) -> Model: updateVar(String, String) -> VariableManager: add(String, String)
+* *The user types ‘TO MYWAY [var 50] [FD var RIGHT 90 FD var]’, which let user defines a command called MYWAY*
+ * PromptView -> View: void runCommand(String input) -> Model: void handleInput(String input) -> Parser: List<Command> parse(String input) -> UMethodManager: add(String, List<Command>) -> VariableManager: add(String, String)*
 
-
-
-
-
+* *The user then types ‘MYWAY’, calling the command he/she just created*
+ * PromptView -> View: void runCommand(String input) -> Model: void handleInput(String input) -> Parser: List<Command> parse(String input) -> UMethodManager: List<Command> getValue(String) -> Model -> CommandHandler: add(List<Commands>) -> CommandHandler: pop() (Pops off recent command) -> MovementFactory: executeCommand(Command) -> Turtle: move(int)*
 
 ## Design Considerations
 
