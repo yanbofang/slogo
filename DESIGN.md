@@ -32,7 +32,7 @@ In addition to these classes that create the flow from user input to turtle move
 
 The way we designed our internal backend was for Model to be the main class controlling the pipeline through the program. We wanted all of our classes to return to Model before Model calls another class function. This way, we simplify the API, and reduce the direct dependencies each class has on each other. For example, Model will initialize the VariableManager, UMethodManager, Parser, Turtle, and CommandHandler. Whenever it calls a method from those classes, such as Parser.parse(String input), Parser will return the necessary data (List<Commands>) that Model will then use to call CommandHandler.addCommands(List<Commands>). In addition, the internal backend will only communicate with the front end through Model (which is the external backend API).
 
-![Design Picture 1](/images/designPic1.jpeg)
+![Design Picture 1](/images/designPic1.jpg)
 
 ## User Interface
 
