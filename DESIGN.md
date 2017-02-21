@@ -37,8 +37,9 @@ The way we designed our internal backend was for Model to be the main class cont
 
 ## User Interface
 
-	The user interface will be organized as shown in the image below.  Within the square labeled Image Display, the user will not be able to control anything, as this part of the screen will simply show the image created by the turtle.  The variables and methods rectangles will display the variables and methods respectively that the user has already created.  The user will be able to change the variables by clicking on them and typing in a new value, but the methods will be final.  The square titled user controlled visual changes will contain buttons allowing the user to change different aspects of the appearance of the graphic, such as line color.  The console will allow the user to type in commands that will be executed once they press a button which will be located in the bottom right corner of this section.  Finally, the command history will display the most recent commands used by the user.  
-	If the user tries to execute a command that does not exist, or define a variable that has an error in it, then a statement declaring that there was an error will appear in the command history below the erroneous line.
+The user interface will be organized as shown in the image below.  Within the square labeled Image Display, the user will not be able to control anything, as this part of the screen will simply show the image created by the turtle.  The variables and methods rectangles will display the variables and methods respectively that the user has already created.  The user will be able to change the variables by clicking on them and typing in a new value, but the methods will be final.  The square titled user controlled visual changes will contain buttons allowing the user to change different aspects of the appearance of the graphic, such as line color.  The console will allow the user to type in commands that will be executed once they press a button which will be located in the bottom right corner of this section.  Finally, the command history will display the most recent commands used by the user.  
+
+If the user tries to execute a command that does not exist, or define a variable that has an error in it, then a statement declaring that there was an error will appear in the command history below the erroneous line.
 
 
 ## API Details
@@ -143,6 +144,9 @@ In addition to the descriptions on the internal backend APIs in the design overv
 * *The user wants to change the language to French*
  * The user clicks on the “Language” button which prompts them to select a language from a dropdown menu. OptionsView -> View: changeLanguage(String)
 
+* *The user wants a full list of commands available to them*
+ * The user clicks on the "Help" button which opens a new window with a a list of documented commands. OptionsView displayHelp()
+
 * *The user types ‘make var 50’, which creates a variable named var, which is equals to 50*
  * PromptView -> View: void runCommand(String input) -> Model: void handleInput(String input) -> Parser: List<Commands> parse(String input) -> Model -> CommandHandler: add(List<Commands>) -> CommandHandler: pop() (Pops off recent command) -> MovementFactory: executeCommand(Command) -> VariableFactory: makeVariable(String, String) -> Model: updateVar(String, String) -> VariableManager: add(String, String)
 
@@ -170,10 +174,10 @@ Throughout the project, we also made decisions to create a Command class, Coordi
 
 Since we have talked about the methods each side of the project will need access to, we have the ability to separate into two sub-teams that will be able to work relatively independently. 
 
-* *FrontEnd
+* **FrontEnd**
  * Faith: OptionsView, TurtleViewer, PromptView, CSS styling
  * Gordon: View, MethodsView, VariablesView, CSS styling
  
-* *BackEnd
- *Henry: Parser, Command, Model, VariableManager, UMethodManager, Turtle
- *Yanbo: CommandHandler, MovementFactory, Movements
+* **BackEnd**
+ * Henry: Parser, Command, Model, VariableManager, UMethodManager, Turtle
+ * Yanbo: CommandHandler, MovementFactory, Movements
