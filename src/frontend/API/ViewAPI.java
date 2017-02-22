@@ -1,5 +1,6 @@
 package frontend.API;
 
+import coordinate.Coordinate;
 import javafx.scene.image.Image;
 /**
  * API for View class
