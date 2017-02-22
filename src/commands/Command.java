@@ -1,19 +1,21 @@
 package commands;
 
+
+
 import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Command {
 	
-	private String myInstruction;
-	private ArrayList<String> myArguments;
+	protected String myInstruction;
+	protected ArrayList<Object> myArguments;
 	
 	
 	
-	public Command(String instruction, String ... args) {
-			myArguments = new ArrayList<String>();
-			myInstruction = instruction;
-			for (String each : args) {
+	public Command(String instruction, Object ... args) {
+			myArguments = new ArrayList<Object>();
+			myInstruction = instruction.toLowerCase();
+			for (Object each : args) {
 				myArguments.add(each);
 			}
 	}
@@ -23,11 +25,13 @@ public abstract class Command {
 		return myInstruction;
 	}
 	
-	public String getArguments(int k) {
+	public Object getArguments(int k) {
 		return myArguments.get(k);
 	}
 	
 	public abstract Double getValue();
+
+	public abstract void executeCommand();
 	
 
 }
