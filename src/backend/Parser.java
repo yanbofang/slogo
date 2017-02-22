@@ -12,64 +12,51 @@ public class Parser {
 	private PatternParse myPatterns;
 	private CommandFactory myFactory;
 	private List<Command> myCommands;
+	private Model myModel;
 	
-	public Parser(String[] syntax) {
+	public Parser(String[] syntax, Model m) {
+		myModel = m;
 		myPatterns = new PatternParse();
-		/*
-		for (String[] each:syntax) {
+		for (String each: syntax) {
 			myPatterns.addPattern(each);
 		}
-		*/
-		myPatterns.addPattern("resources/languages/English");
-		myPatterns.addPattern("resources/languages/Syntax");
 		myFactory = new CommandFactory("resources/languages/Commands");
 		myCommands = new ArrayList<Command>();
 	}
 	
 	public List<Command> parse(String input) {
 		myCommands.clear();
-		recurseParse(new Scanner(input));
-		System.out.println(myCommands);
+		Scanner s = new Scanner(input);
+		while (s.hasNext()) {
+			recurseParse(s);
+		}
 		return myCommands;
 	}
 	
-	private Object recurseParse(Scanner s) {
+	private Double recurseParse(Scanner s) {
+		
 		Command currentCommand;
+		
 		if (s.hasNext()) {
 			String current = s.next();
 			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current));
-
-			System.out.println(currentCommand);
 			if (currentCommand != null) {
 				myCommands.add(currentCommand);
 				for (int k = 0; k < currentCommand.getNumberExpressions(); k++) {
-					currentCommand.add(recurseParse(s));
+					Double curr = recurseParse(s);
+					currentCommand.add(curr);
 				}
-				recurseParse(s);
 				return currentCommand.getValue();
 			} else {
-				recurseParse(s);
-				return current;
+				if (myModel.getVariable(current) != null) {
+					return myModel.getVariable(current);
+				}
+				return Double.parseDouble(current);
 			}
 		} else {
-			return new Double(0);
+			throw new ParserException(String.format("NOT ENOUGH ARGUMENTS FOR COMMAND %s", 
+					myCommands.get(myCommands.size()-1).getInstruction()));
 		}
-		/*
-		List<Command> commandList = new ArrayList<Command>();
-		Command currentCommand;
-		while (s.hasNext()) {
-			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(s.next()));
-			//System.out.println(s.toString());
-			if (currentCommand == null) {
-				ArrayList<Object> arguments = new ArrayList<Object>();
-				for (int k = 0; k < currentCommand.getNumberExpressions(); k++) {
-					arguments.add()
-				}
-			} else {
-				
-			}
-		}
-		return new ArrayList<Command>();*/
 	}
 	
 	/*

@@ -1,3 +1,4 @@
+import backend.Model;
 import backend.Parser;
 
 
@@ -5,7 +6,7 @@ public class Main {
 
 	
 	public static void main(String[] argv) {
-		Parser p = new Parser(new String[]{"a;sldjfasdlfk"});
-		p.parse("fd 1");
+		Model m = new Model();
+		m.handleInput("sum sum sum 5 sum sum 1 2 4 6 7");
 	}
 }

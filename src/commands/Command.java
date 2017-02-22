@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public abstract class Command {
 
@@ -15,8 +16,8 @@ public abstract class Command {
 		finished = false;
 	}
 	
-	public void add(Object ... args) {
-		for (Object each : args) {
+	public void add(Double ... args) {
+		for (Double each : args) {
 			myArguments.add(each);
 		}
 	}
