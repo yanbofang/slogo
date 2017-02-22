@@ -1,5 +1,7 @@
 package frontend.API;
 
+import coordinate.Coordinate;
+
 /**
  * API for turtle area subcomponent
  * The graphical area that contains the turtle
