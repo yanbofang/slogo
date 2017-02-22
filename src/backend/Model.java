@@ -13,6 +13,7 @@ public class Model implements ModelInterface {
 	private MethodManager myMethods;
 	private Turtle myTurtle;
 	private Parser myParser;
+	private CommandHandler myCommandHandler;
 
 	public Model() {
 		myVariables = new VariableManager();
@@ -20,14 +21,17 @@ public class Model implements ModelInterface {
 		myTurtle = new Turtle();
 		String[] syntax = new String[]{"resources/languages/English", "resources/languages/Syntax"};
 		myParser = new Parser(syntax, this);
+		myCommandHandler = new CommandHandler();
 	}
 	
 	@Override
 	public void handleInput(String input) {
 		List<Command> commands = myParser.parse(input);
-		for (Command c: commands) {
-			System.out.println(c.getValue());
-		}
+		myCommandHandler.addCommands(commands);
+		myCommandHandler.executeCommands();
+//		for (Command c: commands) {
+//			System.out.println(c.getValue());
+//		}
 	}
 
 	@Override

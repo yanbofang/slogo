@@ -8,7 +8,7 @@ public class MathCommand extends Command {
 
 	public MathCommand(String instruction) {
 		super(instruction);
-		
+
 	}
 
 	@Override
@@ -25,30 +25,28 @@ public class MathCommand extends Command {
 
 	private Double calculateValue() {
 		Double value = 0.0;
-		/*
 		try {
 			Method method = getClass().getDeclaredMethod(myInstruction, null);
-			method.invoke(this, null);
+			value = (Double) method.invoke(this, null);
 			return value;
 		} catch (Exception e) {
-			// TODO delete print stack trace
-			e.printStackTrace();
 			return null;
-		}*/
-		if (myInstruction.equals("sum")) {
-			value = sum();
-		} else if (myInstruction == "difference") {
-			difference();
-		} else if (myInstruction == "product") {
-			product();
-		} else if (myInstruction == "quotient") {
-			quotient();
-		} else if (myInstruction == "remainder") {
-			remainder();
-		} else if (myInstruction == "minus") {
-			minus();
 		}
-		return value;
+
+		// if (myInstruction.equals("sum")) {
+		// value = sum();
+		// } else if (myInstruction == "difference") {
+		// value = difference();
+		// } else if (myInstruction == "product") {
+		// value = product();
+		// } else if (myInstruction == "quotient") {
+		// value = quotient();
+		// } else if (myInstruction == "remainder") {
+		// value = remainder();
+		// } else if (myInstruction == "minus") {
+		// value = minus();
+		// }
+		// return value;
 	}
 
 	private Double sum() {
