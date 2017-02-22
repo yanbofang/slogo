@@ -8,11 +8,12 @@ public class MathCommand extends Command {
 
 	public MathCommand(String instruction) {
 		super(instruction);
-		myValue = calculateValue();
+		
 	}
 
 	@Override
 	public Double getValue() {
+		myValue = calculateValue();
 		return this.myValue;
 	}
 
@@ -24,6 +25,7 @@ public class MathCommand extends Command {
 
 	private Double calculateValue() {
 		Double value = 0.0;
+		/*
 		try {
 			Method method = getClass().getDeclaredMethod(myInstruction, null);
 			method.invoke(this, null);
@@ -32,21 +34,21 @@ public class MathCommand extends Command {
 			// TODO delete print stack trace
 			e.printStackTrace();
 			return null;
+		}*/
+		if (myInstruction.equals("sum")) {
+			value = sum();
+		} else if (myInstruction == "difference") {
+			difference();
+		} else if (myInstruction == "product") {
+			product();
+		} else if (myInstruction == "quotient") {
+			quotient();
+		} else if (myInstruction == "remainder") {
+			remainder();
+		} else if (myInstruction == "minus") {
+			minus();
 		}
-		// if (myInstruction == "sum") {
-		// sum();
-		// } else if (myInstruction == "difference") {
-		// difference();
-		// } else if (myInstruction == "product") {
-		// product();
-		// } else if (myInstruction == "quotient") {
-		// quotient();
-		// } else if (myInstruction == "remainder") {
-		// remainder();
-		// } else if (myInstruction == "minus") {
-		// minus();
-		// }
-		// return value;
+		return value;
 	}
 
 	private Double sum() {
@@ -71,6 +73,11 @@ public class MathCommand extends Command {
 
 	private Double minus() {
 		return -1.0 * (Double) myArguments.get(0);
+	}
+
+	@Override
+	public int getNumberExpressions() {
+		return 2;
 	}
 
 }

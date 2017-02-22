@@ -1,5 +1,9 @@
 package backend;
 
+import java.util.List;
+
+import commands.Command;
+
 import javafx.scene.Node;
 import interfaces.ModelInterface;
 
@@ -14,12 +18,16 @@ public class Model implements ModelInterface {
 		myVariables = new VariableManager();
 		myMethods = new MethodManager();
 		myTurtle = new Turtle();
-		myParser = new Parser();
+		String[] syntax = new String[]{"resources/languages/English", "resources/languages/Syntax"};
+		myParser = new Parser(syntax, this);
 	}
 	
 	@Override
 	public void handleInput(String input) {
-		myParser.parse(input);
+		List<Command> commands = myParser.parse(input);
+		for (Command c: commands) {
+			System.out.println(c.getValue());
+		}
 	}
 
 	@Override
@@ -32,10 +40,21 @@ public class Model implements ModelInterface {
 	public void updateVariable(String var, String value) {
 		myVariables.add(var, value);
 	}
+	
 
 	@Override
 	public Node getTurtle() {
 		return myTurtle.getImage();
+	}
+	
+	
+	//USED FOR PARSER
+	public Double getVariable(String var) {
+		try {
+			return Double.parseDouble(myVariables.get(var));
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 }

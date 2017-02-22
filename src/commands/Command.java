@@ -1,9 +1,10 @@
 package commands;
 
 import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
 
 public abstract class Command {
+
 
 	protected String myInstruction;
 	protected ArrayList<Object> myArguments;
@@ -14,12 +15,15 @@ public abstract class Command {
 		myInstruction = instruction.toLowerCase();
 		finished = false;
 	}
-
-	public void add(Object... args) {
-		for (Object each : args) {
+	
+	public void add(Double ... args) {
+		for (Double each : args) {
 			myArguments.add(each);
 		}
 	}
+	
+	public abstract int getNumberExpressions();
+
 
 	public String getInstruction() {
 		return myInstruction;
