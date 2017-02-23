@@ -66,10 +66,13 @@ public class Parser {
 			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current, false));
 
 			if (currentCommand != null) {
-
 				for (int k = 0; k < Integer
 						.parseInt(myNumberOfExpressions.getSymbol(myPatterns.getSymbol(current, false), true)); k++) {
-					currentCommand.add(recurseParse(s, currentList));
+					Object toBeAdded = recurseParse(s, currentList);
+					if (toBeAdded == null) {
+						toBeAdded = recurseParse(s, currentList);
+					}
+					currentCommand.add(toBeAdded);
 				}
 				currentList.add(currentCommand);
 				return currentCommand.getValue();

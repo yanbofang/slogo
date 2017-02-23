@@ -4,8 +4,6 @@ import java.lang.reflect.Method;
 
 public class MathCommand extends Command {
 
-	private Double myValue;
-
 	public MathCommand(String instruction) {
 		super(instruction);
 
@@ -18,9 +16,9 @@ public class MathCommand extends Command {
 	}
 
 	@Override
-	public void executeCommand() {
+	public Double executeCommand() {
 		this.changeToFinished();
-		return;
+		return myValue;
 	}
 
 	private Double calculateValue() {

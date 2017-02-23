@@ -6,7 +6,6 @@ import backend.VariableManager;
 public class MakeCommand extends Command {
 
 	private String myVariableName;
-	private Double myValue;
 	private Variable myVariable;
 
 	public MakeCommand(String instruction) {
@@ -14,19 +13,34 @@ public class MakeCommand extends Command {
 		// TODO Auto-generated constructor stub
 	}
 
-
+	/***
+	 * NEED TO ADD THE VARIABLE THE SECOND IT IS CALLED, IN CASE THE CALL USES THE VARIABLE LATER
+	 */
 	@Override
 	public Double getValue() {
-		// TODO Auto-generated method stub
 		myValue = (Double) myArguments.get(1);
-		return myValue;
+		checkVariable();
+		return null;
+	}
+
+	private void checkVariable() {
+		String varName = (String) myArguments.get(0);
+		VariableManager varMan = VariableManager.getInstance();
+		if (varMan.get(varName) != null) {
+			if (varMan.get(varName).getValue() == myValue) {
+				return;
+			}
+		} else{
+			myVariable = new Variable(varName, myValue);
+			varMan.addVariable(myVariable);
+		}
+		
 	}
 
 	@Override
-	public void executeCommand() {
-		myVariable = new Variable((String) myArguments.get(0), (Double) myArguments.get(1));
-		VariableManager.getInstance().addVariable(myVariable);
+	public Double executeCommand() {
 		this.changeToFinished();
+		return myValue;
 	}
 
 }

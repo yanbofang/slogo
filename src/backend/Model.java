@@ -22,20 +22,24 @@ public class Model implements ModelInterface {
 		myMethods = new MethodManager();
 		myTurtle = new Turtle(50, 50);
 		myParser = new Parser(syntax, commandProperties, this);
-		myCommandHandler = new CommandHandler();
+		myCommandHandler = new CommandHandler(myTurtle);
 	}
 	
 	@Override
 	public void handleInput(String input) {
 		List<Command> commands = myParser.parse(input);
 		myCommandHandler.addCommands(commands);
-		myCommandHandler.executeCommands();
+		//myCommandHandler.executeCommands();
 	}
 
+	//The actual call from the simulation to get the next and move the turtle
 	@Override
-	public String getNextPos() {
-		// TODO Auto-generated method stub
-		return null;
+	public Double getNextPos() {
+		Double current = myCommandHandler.executeCommands();
+		while (current != null) {
+			current = myCommandHandler.executeCommands();
+		}
+		return current;
 	}
 
 	@Override

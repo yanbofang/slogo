@@ -3,13 +3,19 @@ package commands;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import backend.CommandHandler;
+import backend.Turtle;
+
 public abstract class Command {
 
 
 	protected String myInstruction;
 	protected ArrayList<Object> myArguments;
 	protected boolean finished;
-
+	protected Double myValue;
+	protected Turtle myTurtle;
+	
+	
 	public Command(String instruction) {
 		myArguments = new ArrayList<Object>();
 		myInstruction = instruction.toLowerCase();
@@ -47,9 +53,23 @@ public abstract class Command {
 		finished = true;
 	}
 
+	/**
+	 * 
+	 * @return - value that we want Parser to receive
+	 */
 	public abstract Double getValue();
 
 	// public abstract int getNumOfParameters();
-	public abstract void executeCommand();
+	public Double execute(Turtle turtle) {
+		myTurtle = turtle;
+		return executeCommand();
+	}
+	
+	/**
+	 * 
+	 * @return - value that we want to send to UI to be displaye
+	 */
+	protected abstract Double executeCommand();
+	
 
 }
