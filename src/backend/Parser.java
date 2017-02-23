@@ -30,7 +30,7 @@ public class Parser {
 		while (s.hasNext()) {
 			ArrayList<Command> current = new ArrayList<Command>();
 			recurseParse(s, current);
-			myCommands.add(current.get(0));
+			myCommands.addAll(current);
 		}
 		return myCommands;
 	}
@@ -55,10 +55,10 @@ public class Parser {
 			
 			
 			if (currentCommand != null) {
-				currentList.add(currentCommand);
 				for (int k = 0; k < currentCommand.getNumberExpressions(); k++) {
 					currentCommand.add(recurseParse(s, currentList));
 				}
+				currentList.add(currentCommand);
 				return currentCommand.getValue();
 			} else {
 				return getDataObject(current, currentList, s);

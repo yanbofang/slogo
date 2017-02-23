@@ -18,6 +18,10 @@ public class VariableManager {
 	}
 
 	public String get(String key) {
-		return myVariableMap.get(key);
+		String value = myVariableMap.get(key);
+		while (myVariableMap.containsKey(value)) {
+			value = myVariableMap.get(value);
+		}
+		return value;
 	}
 }
