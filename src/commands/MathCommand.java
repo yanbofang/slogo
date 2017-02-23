@@ -2,7 +2,7 @@ package commands;
 
 import java.lang.reflect.Method;
 
-public class MathCommand extends Command {
+public class MathCommand extends AbstractCommand {
 
 	private Double myValue;
 

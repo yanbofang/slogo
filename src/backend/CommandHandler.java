@@ -1,7 +1,9 @@
 package backend;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 import commands.Command;
@@ -10,7 +12,6 @@ public class CommandHandler {
 
 	private Queue<Command> myCommands;
 	private Command currentCommand;
-
 	public CommandHandler() {
 		// TODO Auto-generated constructor stub
 		myCommands = new LinkedList<Command>();
