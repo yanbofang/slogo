@@ -35,6 +35,13 @@ public class Parser {
 		return myCommands;
 	}
 	
+	/**
+	 * Pass in a single instruction, iterate through the scanner recursively until the command 
+	 * is completed
+	 * @param s - scanner of the input
+	 * @param currentList - list of commands to be added to 
+	 * @return - returns an object depending on the the command/value
+	 */
 	private Object recurseParse(Scanner s, List<Command> currentList) {
 		
 		Command currentCommand;
@@ -77,7 +84,11 @@ public class Parser {
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
 			return currentList;
 		}
-		return Double.parseDouble(current);
+		try {
+			return Double.parseDouble(current);
+		} catch (Exception e) {
+			throw new ParserException(String.format("NOT A VALID TYPE %s", current));
+		}
 	}
 	
 	/*
