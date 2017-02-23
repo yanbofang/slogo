@@ -61,7 +61,6 @@ public class Parser {
 
 		if (s.hasNext()) {
 			String current = s.next();
-
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
 			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current, false));

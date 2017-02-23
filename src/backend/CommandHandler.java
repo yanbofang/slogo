@@ -25,7 +25,8 @@ public class CommandHandler {
 	public void executeCommands() {
 		while (!myCommands.isEmpty()) {
 			currentCommand = myCommands.peek();
-			System.out.println(currentCommand.getValue());
+			
+			System.out.println(currentCommand.getValue() + "   *print statement in CommandHandler");
 			if (currentCommand.isFinished()) {
 				myCommands.remove();
 				continue;

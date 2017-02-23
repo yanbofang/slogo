@@ -6,7 +6,6 @@ public class Variable {
 	private Double myValue;
 	
 	public Variable(String variable, Double value) {
-		// TODO Auto-generated constructor stub
 		myName = variable;
 		myValue = value;
 	}

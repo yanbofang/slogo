@@ -1,6 +1,7 @@
 package commands;
 
 import backend.Variable;
+import backend.VariableManager;
 
 public class MakeCommand extends Command {
 
@@ -24,7 +25,8 @@ public class MakeCommand extends Command {
 	@Override
 	public void executeCommand() {
 		myVariable = new Variable((String) myArguments.get(0), (Double) myArguments.get(1));
-
+		VariableManager.getInstance().addVariable(myVariable);
+		this.changeToFinished();
 	}
 
 }

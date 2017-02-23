@@ -4,10 +4,17 @@ import java.util.HashMap;
 
 public class VariableManager {
 
+	//Singleton design pattern
+	private static VariableManager instance;
 	private HashMap<String, Variable> myVariableMap;
 
-	public VariableManager() {
+	private VariableManager() {
 		myVariableMap = new HashMap<String, Variable>();
+	}
+	
+	public static synchronized VariableManager getInstance(){
+		if(instance == null) instance = new VariableManager();
+		return instance;
 	}
 
 	public void addVariable(Variable var) {
@@ -21,6 +28,10 @@ public class VariableManager {
 
 	public Variable getVariable(String key) {
 		return myVariableMap.get(key);
+	}
+	
+	public int size(){
+		return myVariableMap.size();
 	}
 
 }
