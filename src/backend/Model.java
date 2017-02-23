@@ -14,21 +14,22 @@ public class Model implements ModelInterface {
 	private Turtle myTurtle;
 	private Parser myParser;
 	private View myView;
-
+	private CommandHandler myCommandHandler;
+	
 	public Model(String[] syntax, String commandProperties, View view) {
 		myView = view;
-		myVariables = new VariableManager();
+		myVariables = VariableManager.getInstance();
 		myMethods = new MethodManager();
 		myTurtle = new Turtle(50, 50);
 		myParser = new Parser(syntax, commandProperties, this);
+		myCommandHandler = new CommandHandler();
 	}
 	
 	@Override
 	public void handleInput(String input) {
 		List<Command> commands = myParser.parse(input);
-		for (Command c: commands) {
-			System.out.println(c.getValue());
-		}
+		myCommandHandler.addCommands(commands);
+		myCommandHandler.executeCommands();
 	}
 
 	@Override
@@ -39,7 +40,7 @@ public class Model implements ModelInterface {
 
 	@Override
 	public void updateVariable(String var, String value) {
-		myVariables.add(var, value);
+		myVariables.addVariable(new Variable(var, Double.parseDouble(value)));
 	}
 	
 
@@ -52,7 +53,7 @@ public class Model implements ModelInterface {
 	//USED FOR PARSER
 	public Double getVariable(String var) {
 		try {
-			return Double.parseDouble(myVariables.get(var));
+			return myVariables.get(var).getValue();
 		} catch (Exception e) {
 			return null;
 		}

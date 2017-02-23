@@ -23,12 +23,16 @@ public class CommandHandler {
 	}
 
 	public void executeCommands() {
-		currentCommand = myCommands.peek();
-		if (currentCommand.isFinished()) {
-			myCommands.remove();
-			return;
-		} else {
-			currentCommand.executeCommand();
+		while (!myCommands.isEmpty()) {
+			currentCommand = myCommands.peek();
+			
+			System.out.println(currentCommand.getValue() + "   *print statement in CommandHandler");
+			if (currentCommand.isFinished()) {
+				myCommands.remove();
+				continue;
+			} else {
+				currentCommand.executeCommand();
+			}
 		}
 	}
 

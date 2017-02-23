@@ -9,11 +9,11 @@ public class CommandFactory {
 	
 	public CommandFactory(String syntax) {
 		myPatterns = new PatternParse();
-		myPatterns.addPattern(syntax);
+		myPatterns.addPattern(syntax, false);
 	}
 	
 	public Command reflectCommand(String s) {
-		String className = myPatterns.getSymbol(s);
+		String className = myPatterns.getSymbol(s, false);
 		try {
 			Class<?> clazz = Class.forName( COMMAND_PACKAGE + className + "Command" );
 			return (Command) clazz.getDeclaredConstructor(java.lang.String.class).newInstance(s);
