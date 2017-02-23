@@ -19,7 +19,7 @@ public class Model implements ModelInterface {
 		myMethods = new MethodManager();
 		myTurtle = new Turtle();
 		String[] syntax = new String[]{"resources/languages/English", "resources/languages/Syntax"};
-		myParser = new Parser(syntax, this);
+		myParser = new Parser(syntax, "resources/languages/Commands", this);
 	}
 	
 	@Override
@@ -52,6 +52,14 @@ public class Model implements ModelInterface {
 	public Double getVariable(String var) {
 		try {
 			return Double.parseDouble(myVariables.get(var));
+		} catch (Exception e) {
+			return null;
+		}
+	}
+	
+	public List<Command> getMethodVariable(String var) {
+		try {
+			return myMethods.get(var);
 		} catch (Exception e) {
 			return null;
 		}
