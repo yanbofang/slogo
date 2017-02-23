@@ -42,7 +42,7 @@ public class Model implements ModelInterface {
 
 	@Override
 	public void updateVariable(String var, String value) {
-		myVariables.add(var, value);
+		myVariables.addVariable(new Variable(var, Double.parseDouble(value)));
 	}
 	
 
@@ -55,7 +55,7 @@ public class Model implements ModelInterface {
 	//USED FOR PARSER
 	public Double getVariable(String var) {
 		try {
-			return Double.parseDouble(myVariables.get(var));
+			return myVariables.getVariable(var).getValue();
 		} catch (Exception e) {
 			return null;
 		}
