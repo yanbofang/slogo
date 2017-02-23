@@ -30,8 +30,6 @@ public abstract class Command {
 		}
 	}
 	
-	public abstract int getNumberExpressions();
-
 
 	public String getInstruction() {
 		return myInstruction;

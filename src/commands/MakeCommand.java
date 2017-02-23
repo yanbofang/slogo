@@ -1,20 +1,18 @@
 package commands;
 
+import backend.Variable;
+
 public class MakeCommand extends Command {
 
-	private String myVariable;
+	private String myVariableName;
 	private Double myValue;
-	
+	private Variable myVariable;
+
 	public MakeCommand(String instruction) {
 		super(instruction);
 		// TODO Auto-generated constructor stub
 	}
 
-	@Override
-	public int getNumberExpressions() {
-		// TODO Auto-generated method stub
-		return 2;
-	}
 
 	@Override
 	public Double getValue() {
@@ -25,10 +23,8 @@ public class MakeCommand extends Command {
 
 	@Override
 	public void executeCommand() {
-		// TODO Auto-generated method stub
-		
+		myVariable = new Variable((String) myArguments.get(0), (Double) myArguments.get(1));
+
 	}
-	
-	
 
 }

@@ -73,9 +73,5 @@ public class MathCommand extends Command {
 		return -1.0 * (Double) myArguments.get(0);
 	}
 
-	@Override
-	public int getNumberExpressions() {
-		return 2;
-	}
 
 }
