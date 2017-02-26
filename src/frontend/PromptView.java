@@ -74,9 +74,14 @@ public class PromptView implements SubcomponentAPI{
 				text = userText.getText();
 				userText.setText("");
 				updateHistory(text);
+				runCommand(text);
 			}
 		});
 		
+	}
+	
+	private void runCommand(String a) {
+		view.runCommand(a);
 	}
 	
 	@Override
