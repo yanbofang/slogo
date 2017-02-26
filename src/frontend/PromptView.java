@@ -28,7 +28,7 @@ public class PromptView implements SubcomponentAPI{
 	String text;
 	
 	public PromptView(View viewIn) {
-		view = viewIn;
+		view = viewIn; 
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		promptSetup();
 		historySetup();

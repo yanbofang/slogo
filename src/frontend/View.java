@@ -40,7 +40,7 @@ public class View implements ViewAPI{
 	
 	public void runView(Model modelIn){
 		model = modelIn;
-		turtleView = new TurtleView();
+		turtleView = new TurtleView(this);
 		methodsView = new MethodsView(this);
 		optionsView = new OptionsView();
 		variablesView = new VariablesView(this);
