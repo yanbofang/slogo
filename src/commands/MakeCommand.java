@@ -3,7 +3,7 @@ package commands;
 import backend.Variable;
 import backend.VariableManager;
 
-public class MakeCommand extends Command {
+public class MakeCommand extends AbstractCommand {
 
 	private String myVariableName;
 	private Variable myVariable;

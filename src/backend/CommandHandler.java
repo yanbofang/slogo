@@ -1,7 +1,9 @@
 package backend;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Queue;
 
 import commands.Command;
@@ -14,7 +16,6 @@ public class CommandHandler {
 	private Turtle myTurtle;
 	
 	public CommandHandler(Turtle turtle) {
-		// TODO Auto-generated constructor stub
 		myTurtle = turtle;
 		myCommands = new LinkedList<Command>();
 	}

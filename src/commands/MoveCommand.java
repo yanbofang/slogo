@@ -5,7 +5,7 @@ import java.lang.reflect.Method;
 import coordinate.Coordinate;
 import javafx.scene.image.ImageView;
 
-public class MoveCommand extends Command {
+public class MoveCommand extends AbstractCommand {
 
 	private ImageView myTurtle;
 	private int myQuadrant;

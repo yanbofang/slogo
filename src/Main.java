@@ -12,5 +12,6 @@ public class Main {
 //				+ " sum sum sum 5 6 0 9");
 		m.handleInput("setxy 5 0");
 		m.getNextPos();
+
 	}
 }
