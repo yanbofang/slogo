@@ -5,7 +5,7 @@ package frontend.API;
  * @author Gordon
  *
  */
-public interface VariablesViewAPI {
+public interface VariablesViewAPI extends SubcomponentAPI{
 	/**
 	 * Adds or updates a variable to the list of variables to display
 	 * @param a
