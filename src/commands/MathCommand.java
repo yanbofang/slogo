@@ -2,12 +2,12 @@ package commands;
 
 import java.lang.reflect.Method;
 
+import backend.VariableManager;
+
 public class MathCommand extends AbstractCommand {
 
-	private Double myValue;
-
-	public MathCommand(String instruction) {
-		super(instruction);
+	public MathCommand(String instruction, VariableManager variables) {
+		super(instruction, variables);
 
 	}
 
@@ -18,9 +18,9 @@ public class MathCommand extends AbstractCommand {
 	}
 
 	@Override
-	public void executeCommand() {
+	public Double executeCommand() {
 		this.changeToFinished();
-		return;
+		return myValue;
 	}
 
 	private Double calculateValue() {

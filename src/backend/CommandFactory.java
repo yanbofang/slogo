@@ -12,11 +12,11 @@ public class CommandFactory {
 		myPatterns.addPattern(syntax, false);
 	}
 	
-	public Command reflectCommand(String s) {
+	public Command reflectCommand(String s, VariableManager variables) {
 		String className = myPatterns.getSymbol(s, false);
 		try {
 			Class<?> clazz = Class.forName( COMMAND_PACKAGE + className + "Command" );
-			return (Command) clazz.getDeclaredConstructor(java.lang.String.class).newInstance(s);
+			return (Command) clazz.getDeclaredConstructor(java.lang.String.class, backend.VariableManager.class).newInstance(s, variables);
 		} catch (Exception e) {
 			return null;
 		}

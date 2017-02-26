@@ -26,9 +26,14 @@ public class VariableManager {
 		}
 	}
 
-	public Variable getVariable(String key) {
-		return myVariableMap.get(key);
+	public Variable get(String key) {
+		Variable value = myVariableMap.get(key);
+		while (myVariableMap.containsKey(value)) {
+			value = myVariableMap.get(value);
+		}
+		return value;
 	}
+
 	
 	public int size(){
 		return myVariableMap.size();

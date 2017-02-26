@@ -13,12 +13,13 @@ public class Parser {
 	private CommandFactory myFactory;
 	private List<Command> myCommands;
 	private Model myModel;
+	private VariableManager myVariables;
 
 	// pattern parser for number of expressions
 	private PatternParse myNumberOfExpressions;
 	String[] numOfExpressionsSyntax = new String[] { "resources/languages/NumberOfExpressions" };
 
-	public Parser(String[] syntax, String commandProperty, Model m) {
+	public Parser(String[] syntax, String commandProperty, Model m, VariableManager variables) {
 		myModel = m;
 		myPatterns = new PatternParse();
 		for (String each : syntax) {
@@ -29,7 +30,7 @@ public class Parser {
 		for (String each : numOfExpressionsSyntax) {
 			myNumberOfExpressions.addPattern(each, true);
 		}
-
+		myVariables = variables;
 		myFactory = new CommandFactory(commandProperty);
 		myCommands = new ArrayList<Command>();
 	}
@@ -40,7 +41,7 @@ public class Parser {
 		while (s.hasNext()) {
 			ArrayList<Command> current = new ArrayList<Command>();
 			recurseParse(s, current);
-			myCommands.add(current.get(0));
+			myCommands.addAll(current);
 		}
 		return myCommands;
 	}
@@ -63,14 +64,18 @@ public class Parser {
 			String current = s.next();
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
-			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current, false));
+			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current, false), myVariables);
 
 			if (currentCommand != null) {
-				currentList.add(currentCommand);
 				for (int k = 0; k < Integer
 						.parseInt(myNumberOfExpressions.getSymbol(myPatterns.getSymbol(current, false), true)); k++) {
-					currentCommand.add(recurseParse(s, currentList));
+					Object toBeAdded = recurseParse(s, currentList);
+					if (toBeAdded == null) {
+						toBeAdded = recurseParse(s, currentList);
+					}
+					currentCommand.add(toBeAdded);
 				}
+				currentList.add(currentCommand);
 				return currentCommand.getValue();
 			} else {
 				return getDataObject(current, currentList, s);
@@ -101,9 +106,5 @@ public class Parser {
 			throw new ParserException(String.format("NOT A VALID TYPE %s", current));
 		}
 	}
-
-	/*
-	 * private Command generateCommand() { return new Command(); }
-	 */
 
 }
