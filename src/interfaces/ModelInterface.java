@@ -16,7 +16,7 @@ public interface ModelInterface {
 	 * Go to CommandHandler, and handle next command. 
 	 * @return
 	 */
-	public String getNextPos();
+	public Double getNextPos();
 	
 	
 	/**

@@ -3,12 +3,16 @@ package commands;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import backend.Turtle;
+
 public abstract class AbstractCommand implements Command{
 
 
 	protected String myInstruction;
 	protected ArrayList<Object> myArguments;
 	protected boolean finished;
+	protected Turtle myTurtle;
+	protected Double myValue;
 
 	public AbstractCommand(String instruction) {
 		myArguments = new ArrayList<Object>();
@@ -50,6 +54,15 @@ public abstract class AbstractCommand implements Command{
 	public abstract Double getValue();
 
 	// public abstract int getNumOfParameters();
-	public abstract void executeCommand();
+	public Double execute(Turtle turtle) {
+		myTurtle = turtle;
+		return executeCommand();
+	}
+	
+	/**
+	 * 
+	 * @return - value that we want to send to UI to be displayed
+	 */
+	protected abstract Double executeCommand();
 
 }
