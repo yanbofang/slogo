@@ -106,8 +106,4 @@ public class Parser {
 		}
 	}
 
-	/*
-	 * private Command generateCommand() { return new Command(); }
-	 */
-
 }

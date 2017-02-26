@@ -8,10 +8,9 @@ public class Main {
 	public static void main(String[] argv) {
 		String[] syntax = new String[]{"resources/languages/English", "resources/languages/Syntax"};
 		Model m = new Model(syntax, "resources/languages/Commands", null);
-		m.handleInput("sum make :f 6 :f make :a 5 :a");
 //		m.handleInput("sum sum sum 5 sum sum 1 2 4 6 7"
 //				+ " sum sum sum 5 6 0 9");
-		m.handleInput("make :abc 6");
+		m.handleInput("setxy 5 0");
 		m.getNextPos();
 	}
 }
