@@ -1,6 +1,7 @@
 package frontend.API;
 
 import javafx.scene.Node;
+import javafx.scene.Parent;
 
 /**
  * Essential Methods for every subcomponent in the user interface
@@ -13,5 +14,5 @@ public interface SubcomponentAPI {
 	 * Returns the node that represents the subcomponent
 	 * @return
 	 */
-	public Node getNode();
+	public Parent getParent();
 }
