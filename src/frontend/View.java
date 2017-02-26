@@ -44,7 +44,7 @@ public class View implements ViewAPI{
 		methodsView = new MethodsView(this);
 		optionsView = new OptionsView();
 		variablesView = new VariablesView(this);
-		promptView = new PromptView();
+		promptView = new PromptView(this);
 		resource = ResourceBundle.getBundle(RESOURCE_BUNDLE);
 		this.setView();
 	}
