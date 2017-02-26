@@ -16,7 +16,7 @@ public class Model implements ModelInterface {
 	private CommandHandler myCommandHandler;
 
 	public Model() {
-		myVariables = VariableManager.getInstance();
+		myVariables = new VariableManager();
 		myMethods = new MethodManager();
 		myTurtle = new Turtle();
 		String[] syntax = new String[]{"resources/languages/English", "resources/languages/Syntax"};
