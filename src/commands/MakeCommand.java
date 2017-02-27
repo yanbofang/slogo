@@ -15,7 +15,8 @@ public class MakeCommand extends AbstractCommand {
 	}
 
 	/***
-	 * NEED TO ADD THE VARIABLE THE SECOND IT IS CALLED, IN CASE THE CALL USES THE VARIABLE LATER
+	 * NEED TO ADD THE VARIABLE THE SECOND IT IS CALLED, IN CASE THE CALL USES
+	 * THE VARIABLE LATER
 	 */
 	@Override
 	public Double getValue() {
@@ -30,11 +31,11 @@ public class MakeCommand extends AbstractCommand {
 			if (myVariables.get(varName).getValue() == myValue) {
 				return;
 			}
-		} else{
+		} else {
 			myVariable = new Variable(varName, myValue);
 			myVariables.addVariable(myVariable);
 		}
-		
+
 	}
 
 	@Override

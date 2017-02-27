@@ -13,9 +13,8 @@ public class CommandFactory {
 	}
 	
 	public Command reflectCommand(String s, VariableManager variables) {
-		String className = myPatterns.getSymbol(s);
 		try {
-			Class<?> clazz = Class.forName( COMMAND_PACKAGE + className + "Command" );
+			Class<?> clazz = Class.forName( COMMAND_PACKAGE + s + "Command" );
 			return (Command) clazz.getDeclaredConstructor(java.lang.String.class, backend.VariableManager.class).newInstance(s, variables);
 		} catch (Exception e) {
 			return null;
