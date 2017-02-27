@@ -1,9 +1,16 @@
 import backend.Model;
-import backend.Parser;
+import frontend.View;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
 
-public class Main {
+public class Main extends Application {
 
+	public void start(Stage arg0) throws Exception {
+		Model model = new Model();
+		View view = new View(arg0);
+		view.runView(model);
+	}
 	
 	public static void main(String[] argv) {
 		String[] syntax = new String[]{"resources/languages/English", "resources/languages/Syntax"};

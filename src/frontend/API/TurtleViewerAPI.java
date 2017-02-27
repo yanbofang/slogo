@@ -15,4 +15,11 @@ public interface TurtleViewerAPI extends SubcomponentAPI{
 	 * Coordinate containing the bottom-rightmost point
 	 */
 	public Coordinate getBounds();
+	
+	/**
+	 * Change the background color of the turtle area
+	 * @param a
+	 * 6 hexidecimal string of color (ex: 3c3c3c)
+	 */
+	public void setBackgroundColor(String a);
 }
