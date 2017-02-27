@@ -17,14 +17,14 @@ public class Parser {
 
 	
 
-	public Parser(String[] syntax, String commandProperty, Model m, VariableManager variables) {
+	public Parser(String[] syntax, Model m, VariableManager variables) {
 		myModel = m;
 		myPatterns = new PatternParse();
 		for (String each : syntax) {
 			myPatterns.addPattern(each);
 		}
 		myVariables = variables;
-		myFactory = new CommandFactory(commandProperty);
+		myFactory = new CommandFactory();
 		myCommands = new ArrayList<Command>();
 	}
 

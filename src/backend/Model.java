@@ -16,12 +16,12 @@ public class Model implements ModelInterface {
 	private View myView;
 	private CommandHandler myCommandHandler;
 
-	public Model(String[] syntax, String commandProperties, View view) {
+	public Model(String[] syntax, View view) {
 		myView = view;
 		myVariables = new VariableManager();
 		myMethods = new MethodManager();
 		myTurtle = new Turtle(50, 50);
-		myParser = new Parser(syntax, commandProperties, this, myVariables);
+		myParser = new Parser(syntax, this, myVariables);
 		myCommandHandler = new CommandHandler(myTurtle);
 	}
 
