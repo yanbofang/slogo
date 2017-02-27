@@ -2,6 +2,7 @@ package commands;
 
 import java.lang.reflect.Method;
 
+import backend.VariableManager;
 import coordinate.Coordinate;
 import javafx.scene.image.ImageView;
 
@@ -9,9 +10,10 @@ public class MoveCommand extends AbstractCommand {
 
 	private ImageView myTurtle;
 	private int myQuadrant;
+	private static final Integer NUM_OF_EXPRESSIONS = 2;
 	
-	public MoveCommand(String instruction) {
-		super(instruction);
+	public MoveCommand(String instruction, VariableManager variables) {
+		super(instruction, variables, NUM_OF_EXPRESSIONS);
 		myTurtle = new ImageView();
 		myTurtle.setX(0);
 		myTurtle.setY(0);

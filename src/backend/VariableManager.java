@@ -4,18 +4,18 @@ import java.util.HashMap;
 
 public class VariableManager {
 
-	//Singleton design pattern
-	private static VariableManager instance;
+//	//Singleton design pattern
+//	private static VariableManager instance;
 	private HashMap<String, Variable> myVariableMap;
 
-	private VariableManager() {
+	public VariableManager() {
 		myVariableMap = new HashMap<String, Variable>();
 	}
 	
-	public static synchronized VariableManager getInstance(){
-		if(instance == null) instance = new VariableManager();
-		return instance;
-	}
+//	public static synchronized VariableManager getInstance(){
+//		if(instance == null) instance = new VariableManager();
+//		return instance;
+//	}
 
 	public void addVariable(Variable var) {
 		// if already existed, just update the variable

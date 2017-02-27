@@ -13,23 +13,17 @@ public class Parser {
 	private CommandFactory myFactory;
 	private List<Command> myCommands;
 	private Model myModel;
+	private VariableManager myVariables;
 
-	// pattern parser for number of expressions
-	private PatternParse myNumberOfExpressions;
-	String[] numOfExpressionsSyntax = new String[] { "resources/languages/NumberOfExpressions" };
+	
 
-	public Parser(String[] syntax, String commandProperty, Model m) {
+	public Parser(String[] syntax, String commandProperty, Model m, VariableManager variables) {
 		myModel = m;
 		myPatterns = new PatternParse();
 		for (String each : syntax) {
-			myPatterns.addPattern(each, false);
+			myPatterns.addPattern(each);
 		}
-
-		myNumberOfExpressions = new PatternParse();
-		for (String each : numOfExpressionsSyntax) {
-			myNumberOfExpressions.addPattern(each, true);
-		}
-
+		myVariables = variables;
 		myFactory = new CommandFactory(commandProperty);
 		myCommands = new ArrayList<Command>();
 	}
@@ -63,11 +57,10 @@ public class Parser {
 			String current = s.next();
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
-			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current, false));
+			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current), myVariables);
 
 			if (currentCommand != null) {
-				for (int k = 0; k < Integer
-						.parseInt(myNumberOfExpressions.getSymbol(myPatterns.getSymbol(current, false), true)); k++) {
+				for (int k = 0; k < currentCommand.getNumOfExpressions(); k++) {
 					Object toBeAdded = recurseParse(s, currentList);
 					if (toBeAdded == null) {
 						toBeAdded = recurseParse(s, currentList);
@@ -92,11 +85,11 @@ public class Parser {
 			List<Command> methodList = myModel.getMethodVariable(current);
 			currentList.addAll(methodList);
 			return methodList.get(0).getValue();
-		} else if (myPatterns.getSymbol(current, false).equals("Variable")) {
+		} else if (myPatterns.getSymbol(current).equals("Variable")) {
 			return current;
-		} else if (myPatterns.getSymbol(current, false).equals("ListStart")) {
+		} else if (myPatterns.getSymbol(current).equals("ListStart")) {
 			return recurseParse(s, new ArrayList<Command>());
-		} else if (myPatterns.getSymbol(current, false).equals("ListEnd")) {
+		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
 			return currentList;
 		}
 		try {
