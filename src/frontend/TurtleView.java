@@ -1,35 +1,50 @@
 package frontend;
 
+import java.util.ResourceBundle;
+
 import coordinate.Coordinate;
 import frontend.API.TurtleViewerAPI;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
 public class TurtleView implements TurtleViewerAPI{
 
+	View view;
+	ResourceBundle resource;
+	VBox viewer;
+	
+	
+	public TurtleView(View viewIn) {
+		view = viewIn;
+		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
+		viewer = new VBox();
+		viewer.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+	}
+	
 	@Override
 	public Parent getParent() {
-		// TODO Auto-generated method stub
-		Pane temp = new Pane();
-		temp.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
-		return temp;
+		return viewer;
 	}
 
 	@Override
 	public Coordinate getBounds() {
-		// TODO Auto-generated method stub
-		return null;
+		double XCord = viewer.getWidth();
+		double YCord = viewer.getHeight();
+		Coordinate cord = new Coordinate(XCord, YCord);
+		return cord;
 	}
 
 	@Override
 	public void setBackgroundColor(String a) {
-		// TODO Auto-generated method stub
-		
+		Color tempColor = Color.valueOf(a);
+		viewer.setBackground(new Background(new BackgroundFill(tempColor, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
 
 }

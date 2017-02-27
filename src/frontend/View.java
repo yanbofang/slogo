@@ -38,14 +38,14 @@ public class View implements ViewAPI{
 		stage = stageIn;
 	}
 	
-	public void runView(Model modelIn){
+	public void runView(Model modelIn) throws Exception{
+		resource = ResourceBundle.getBundle(RESOURCE_BUNDLE);
 		model = modelIn;
 		turtleView = new TurtleView(this);
 		methodsView = new MethodsView(this);
-		optionsView = new OptionsView();
+		optionsView = new OptionsView(this);
 		variablesView = new VariablesView(this);
-		promptView = new PromptView(this);
-		resource = ResourceBundle.getBundle(RESOURCE_BUNDLE);
+		promptView = new PromptView(this);		
 		this.setView();
 	}
 
@@ -85,30 +85,28 @@ public class View implements ViewAPI{
 
 	@Override
 	public void changeBackground(String a) {
+		optionsView.changeBackgroundColor(a);
 		turtleView.setBackgroundColor(a);
 	}
 
 	@Override
 	public void changeImage(Image a) {
-		// TODO Auto-generated method stub
-		
+		optionsView.changeImage(a);
 	}
 
 	@Override
 	public void changePenColor(String a) {
-		// TODO Auto-generated method stub
+		optionsView.changePenColor(a);
 		
 	}
 
 	@Override
 	public void changeLanguage(String a) {
-		// TODO Auto-generated method stub
-		
+		optionsView.changeLanguage(a);
 	}
 
 	@Override
 	public void runCommand(String a) {
-		// TODO Auto-generated method stub
 		model.handleInput(a);
 	}
 	
