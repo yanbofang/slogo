@@ -10,9 +10,10 @@ public class MoveCommand extends AbstractCommand {
 
 	private ImageView myTurtle;
 	private int myQuadrant;
+	private static final Integer NUM_OF_EXPRESSIONS = 1;
 	
 	public MoveCommand(String instruction, VariableManager variables) {
-		super(instruction, variables);
+		super(instruction, variables, NUM_OF_EXPRESSIONS);
 		myTurtle = new ImageView();
 		myTurtle.setX(0);
 		myTurtle.setY(0);

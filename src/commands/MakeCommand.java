@@ -7,9 +7,10 @@ public class MakeCommand extends AbstractCommand {
 
 	private String myVariableName;
 	private Variable myVariable;
+	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public MakeCommand(String instruction, VariableManager variables) {
-		super(instruction, variables);
+		super(instruction, variables, NUM_OF_EXPRESSIONS);
 		// TODO Auto-generated constructor stub
 	}
 
