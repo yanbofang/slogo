@@ -10,7 +10,7 @@ public class MoveCommand extends AbstractCommand {
 
 	private ImageView myTurtle;
 	private int myQuadrant;
-	private static final Integer NUM_OF_EXPRESSIONS = 1;
+	private static final Integer NUM_OF_EXPRESSIONS = 2;
 	
 	public MoveCommand(String instruction, VariableManager variables) {
 		super(instruction, variables, NUM_OF_EXPRESSIONS);
