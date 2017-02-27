@@ -12,8 +12,11 @@ public class CommandHandler {
 
 	private Queue<Command> myCommands;
 	private Command currentCommand;
-	public CommandHandler() {
-		// TODO Auto-generated constructor stub
+	//private Model myModel;
+	private Turtle myTurtle;
+	
+	public CommandHandler(Turtle turtle) {
+		myTurtle = turtle;
 		myCommands = new LinkedList<Command>();
 	}
 
@@ -23,18 +26,26 @@ public class CommandHandler {
 		}
 	}
 
-	public void executeCommands() {
-		while (!myCommands.isEmpty()) {
+	/**
+	 * Execute a single command -- assures we return our values for each command
+	 * @return
+	 */
+	public Double executeCommands() {
+		Double current = null;
+		if (!myCommands.isEmpty()) {
+			/*
 			currentCommand = myCommands.peek();
-			
-			System.out.println(currentCommand.getValue() + "   *print statement in CommandHandler");
 			if (currentCommand.isFinished()) {
 				myCommands.remove();
-				continue;
 			} else {
-				currentCommand.executeCommand();
-			}
+				current = currentCommand.execute(myTurtle);
+				System.out.println(current + "   *print statement in CommandHandler");
+			}*/
+			currentCommand = myCommands.poll();
+			current = currentCommand.execute(myTurtle);
+			System.out.println(current + "   *print statement in CommandHandler");
 		}
+		return current;
 	}
-
+	
 }

@@ -1,5 +1,11 @@
 package commands;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
+import backend.CommandHandler;
+import backend.Turtle;
+
 public interface Command {
 
 	void add(Object... args);
@@ -12,6 +18,6 @@ public interface Command {
 
 	Double getValue();
 
-	void executeCommand();
+	Double execute(Turtle turtle);
 
 }

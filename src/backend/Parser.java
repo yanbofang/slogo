@@ -40,7 +40,7 @@ public class Parser {
 		while (s.hasNext()) {
 			ArrayList<Command> current = new ArrayList<Command>();
 			recurseParse(s, current);
-			myCommands.add(current.get(0));
+			myCommands.addAll(current);
 		}
 		return myCommands;
 	}
@@ -66,11 +66,15 @@ public class Parser {
 			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current, false));
 
 			if (currentCommand != null) {
-				currentList.add(currentCommand);
 				for (int k = 0; k < Integer
 						.parseInt(myNumberOfExpressions.getSymbol(myPatterns.getSymbol(current, false), true)); k++) {
-					currentCommand.add(recurseParse(s, currentList));
+					Object toBeAdded = recurseParse(s, currentList);
+					if (toBeAdded == null) {
+						toBeAdded = recurseParse(s, currentList);
+					}
+					currentCommand.add(toBeAdded);
 				}
+				currentList.add(currentCommand);
 				return currentCommand.getValue();
 			} else {
 				return getDataObject(current, currentList, s);
@@ -101,9 +105,5 @@ public class Parser {
 			throw new ParserException(String.format("NOT A VALID TYPE %s", current));
 		}
 	}
-
-	/*
-	 * private Command generateCommand() { return new Command(); }
-	 */
 
 }

@@ -18,6 +18,7 @@ public class MethodManager {
 	}
 	
 	public List<Command> get(String key) {
-		return myMethodMap.get(key);
+		List<Command> value = myMethodMap.get(key);
+		return value;
 	}
 }
