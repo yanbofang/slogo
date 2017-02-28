@@ -74,7 +74,8 @@ public class OptionsView implements SubcomponentAPI{
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				backgroundColor = newValue;	
-			}		
+			}
+			
 		});
 		
 		ComboBox langBtn = createButton("Language", languages);
@@ -150,20 +151,20 @@ public class OptionsView implements SubcomponentAPI{
 		return buttonPanel;
 	}
 	
-	public void changePenColor(String a) {
+	private void changePenColor(String a) {
 		view.changePenColor(penColor);
 	}
 	
-	public void changeBackgroundColor(String a) {
-		view.changePenColor(backgroundColor);
+	private void changeBackgroundColor(String a) {
+		view.changeBackground(backgroundColor);
 		
 	}
 	
-	public void changeLanguage(String a) {
+	private void changeLanguage(String a) {
 		view.changeLanguage(lang);
 	}
 	
-	public void changeImage(Image a) {
+	private void changeImage(Image a) {
 		view.changeImage(turtle);
 	}
 

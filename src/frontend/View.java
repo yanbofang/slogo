@@ -85,24 +85,20 @@ public class View implements ViewAPI{
 
 	@Override
 	public void changeBackground(String a) {
-		optionsView.changeBackgroundColor(a);
 		turtleView.setBackgroundColor(a);
 	}
 
 	@Override
 	public void changeImage(Image a) {
-		optionsView.changeImage(a);
 	}
 
 	@Override
 	public void changePenColor(String a) {
-		optionsView.changePenColor(a);
 		
 	}
 
 	@Override
 	public void changeLanguage(String a) {
-		optionsView.changeLanguage(a);
 	}
 
 	@Override

@@ -16,9 +16,9 @@ import javafx.scene.paint.Color;
 
 public class TurtleView implements TurtleViewerAPI{
 
-	View view;
-	ResourceBundle resource;
-	VBox viewer;
+	private View view;
+	private ResourceBundle resource;
+	private VBox viewer;
 	
 	
 	public TurtleView(View viewIn) {
