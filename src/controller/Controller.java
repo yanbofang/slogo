@@ -25,8 +25,7 @@ public class Controller {
 		variables = new VariableManager();
 		turtle = new Turtle(50, 50, 100, 100);
 		model = new Model(ENGLISH_SYNTAX, null, variables, turtle);
-		view = new View(arg0);
-		view.runView(model);
+		view = new View(arg0, this);
 		view.setTurtle(turtle.getImage());
 		variablesObserver = new VariableManagerObserver(variables, view);
 		addVariableManagerObserver();
