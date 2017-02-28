@@ -42,7 +42,7 @@ public class CommandHandler {
 				System.out.println(current + "   *print statement in CommandHandler");
 			}*/
 			currentCommand = myCommands.poll();
-			current = currentCommand.execute(myTurtle);
+			current = currentCommand.executeCommand();
 			System.out.println(current + "   *print statement in CommandHandler");
 		}
 		return current;

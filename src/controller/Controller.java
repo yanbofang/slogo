@@ -21,7 +21,7 @@ public class Controller {
 
 	public Controller(Stage arg0) throws Exception {
 		variables = new VariableManager();
-		turtle = new Turtle(50, 50);
+		turtle = new Turtle(50, 50, 100, 100);
 		model = new Model(ENGLISH_SYNTAX, null, variables, turtle);
 		view = new View(arg0);
 		view.runView(model);

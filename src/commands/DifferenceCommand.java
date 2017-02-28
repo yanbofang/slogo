@@ -17,7 +17,7 @@ public class DifferenceCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected Double executeCommand() {
+	public Double executeCommand() {
 		return getValue();
 	}
 

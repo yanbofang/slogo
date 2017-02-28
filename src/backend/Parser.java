@@ -1,7 +1,6 @@
 package backend;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,10 +13,11 @@ public class Parser {
 	private List<Command> myCommands;
 	private Model myModel;
 	private VariableManager myVariables;
+	private Turtle myTurtle;
 
 	
 
-	public Parser(String[] syntax, Model m, VariableManager variables) {
+	public Parser(String[] syntax, Model m, VariableManager variables, Turtle turtle) {
 		myModel = m;
 		myPatterns = new PatternParse();
 		for (String each : syntax) {
@@ -26,6 +26,7 @@ public class Parser {
 		myVariables = variables;
 		myFactory = new CommandFactory();
 		myCommands = new ArrayList<Command>();
+		myTurtle = turtle;
 	}
 
 	public List<Command> parse(String input) {
@@ -68,7 +69,7 @@ public class Parser {
 					currentCommand.add(toBeAdded);
 				}
 				currentList.add(currentCommand);
-				return currentCommand.getValue();
+				return currentCommand.getValue(myTurtle);
 			} else {
 				return getDataObject(current, currentList, s);
 			}
@@ -84,7 +85,7 @@ public class Parser {
 		} else if (myModel.getMethodVariable(current) != null) {
 			List<Command> methodList = myModel.getMethodVariable(current);
 			currentList.addAll(methodList);
-			return methodList.get(0).getValue();
+			return methodList.get(0).getValue(myTurtle);
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
 			return current;
 		} else if (myPatterns.getSymbol(current).equals("ListStart")) {
