@@ -86,6 +86,7 @@ public class Parser {
 			return myModel.getVariable(current);
 		} else if (myModel.getMethodVariable(current) != null) {
 			List<Command> methodList = myModel.getMethodVariable(current);
+			System.out.println("here!!!!!!" + methodList);
 			currentList.addAll(methodList);
 			return methodList.get(0).getValue(myTurtle);
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
@@ -95,6 +96,7 @@ public class Parser {
 			recurseParse(s, sublist);
 			return sublist;
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
+			System.out.println("In ListEnd: " + currentList);
 			return currentList;
 		}
 		try {

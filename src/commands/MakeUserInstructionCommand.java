@@ -25,7 +25,7 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 	public Double executeCommand() {
 		// TODO Auto-generated method stub
 		String name = (String) myArguments.get(0);
-		System.out.println((List<Command>) myArguments.get(2));
+		System.out.println("executeCommand in makeuserinstruction" + (List<Command>) myArguments.get(2));
 		UserMethod method = new UserMethod(name, (List<Command>) myArguments.get(2));
 		myUserMethods.add(name, method);
 		this.changeToFinished();

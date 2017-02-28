@@ -24,6 +24,7 @@ public class RepeatCommand extends AbstractCommand{
 	
 	@Override
 	public Double getValue() {
+		System.out.println(myArguments);
 		ArrayList<Command> commandList = (ArrayList<Command>) myArguments.get(1);
 		myCommands = new LinkedList<Command>();
 		myCommands.addAll(commandList);
