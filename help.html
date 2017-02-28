@@ -1,0 +1,54 @@
+<p><strong><span style="font-size:16px;">Help:</span></strong></p>
+<ul>
+<li><strong>Turtle Commands</strong><ul>
+<li style="text-align: justify;">FORWARD&nbsp;<em>pixels</em> | FD&nbsp;<em>pixels</em> -&nbsp;moves turtle forward in its current<span style="font-size:12px;"> heading </span>by <em>pixels</em> distance ; returns the value of <em>pixels</em></li>
+<li style="text-align: justify;">BACK&nbsp;<em>pixels</em> | BK&nbsp;<em>pixels</em> - moves turtle backward in its current heading by <em>pixels</em> distance; returns the value of <em>pixels</em></li>
+<li style="text-align: justify;">LEFT&nbsp;<em>degrees</em> | LT&nbsp;<em>degrees</em> - turns turtle counterclockwise by <em>degrees</em> angle; returns the value of <em>degrees</em></li>
+<li style="text-align: justify;">RIGHT&nbsp;<em>degrees</em> | RT&nbsp;<em>degrees</em> - turns turtle clockwise by <em>degrees</em> angle; returns the value of <em>degrees</em></li>
+<li style="text-align: justify;">SETHEADING&nbsp;<em>degrees</em> | SETH&nbsp;<em>degrees</em> - turns turtle to an absolute heading; returns number of degrees moved</li>
+<li style="text-align: justify;">TOWARDS <em>x y</em> - turns turtle to face the point (<em>x</em>, <em>y</em>), where (0, 0) is the center of the screen; returns the number of degrees turtle turned</li>
+<li style="text-align: justify;">SETXY <em>x y</em> | GOTO <em>x y</em> - moves turtle to an absolute screen position, where (0, 0) is the center of the screen; returns the distance turtle moved</li>
+<li style="text-align: justify;">PENDOWN | PD - puts pen down such that when the turtle moves, it leaves a trail; returns 1</li>
+<li style="text-align: justify;">PENUP | PU - puts pen up such that when the turtle moves, it does not leave a trail; returns 0</li>
+<li style="text-align: justify;">SHOWTURTLE | ST - makes turtle visible; returns 1</li>
+<li style="text-align: justify;">HIDETURTLE | HT - makes turtle invisible; returns 0</li>
+<li style="text-align: justify;">HOME - moves turtle to the center of the screen (0, 0); returns the distance turtle moves</li>
+<li style="text-align: justify;">CLEARSCREEN | CS - erases turtle&#39;s trails and sends it to the home position; returns the distance turtle moved</li>
+</ul>
+</li>
+<li style="text-align: justify;"><strong>Turtle Queries</strong><ul>
+<li style="text-align: justify;">XCOR - returns the turtle&#39;s X coordinate from the center of the screen</li>
+<li style="text-align: justify;">YCOR - returns the turtle&#39;s Y coordinate from the center of the screen</li>
+<li style="text-align: justify;">HEADING - returns the turtle&#39;s heading in degrees</li>
+<li style="text-align: justify;">PENDOWN? | PENDOWNP - returns 1 if turtle&#39;s pen is down, 0 if it is up</li>
+<li style="text-align: justify;">SHOWING? | SHOWINGP - returns 1 if turtle is showing, 0 if it is hiding</li>
+</ul>
+</li>
+<li style="text-align: justify;"><strong>Math Operations</strong><ul>
+<li style="text-align: justify;">SUM <em>expr1 expr2</em> &nbsp;| + <em>expr1 expr2</em> &nbsp;- returns sum of the values of <em>expr1</em> and <em>expr2</em></li>
+<li style="text-align: justify;">DIFFERENCE&nbsp;<em>expr1 expr2</em>&nbsp;&nbsp;| -&nbsp;<em>expr1 expr2</em>&nbsp;&nbsp;- returns difference of the values of&nbsp;<em>expr1</em>&nbsp;and&nbsp;<em>expr2</em></li>
+<li style="text-align: justify;">PRODUCT&nbsp;<em>expr1 expr2</em>&nbsp;&nbsp;| *&nbsp;<em>expr1 expr2</em>&nbsp;&nbsp;- returns produce of the values of&nbsp;<em>expr1</em>&nbsp;and&nbsp;<em>expr2</em></li>
+<li style="text-align: justify;">QUOTIENT&nbsp;<em>expr1 expr2</em>&nbsp;&nbsp;| /&nbsp;<em>expr1 expr2</em>&nbsp;&nbsp;- returns quotient of the values of&nbsp;<em>expr1</em>&nbsp;and&nbsp;<em>expr2</em></li>
+<li style="text-align: justify;">REMAINDER&nbsp;<em>expr1 expr2</em>&nbsp;&nbsp;| %&nbsp;<em>expr1 expr2</em>&nbsp;&nbsp;- returns remainder on dividing the values of&nbsp;<em>expr1</em>&nbsp;and&nbsp;<em>expr2</em></li>
+<li style="text-align: justify;">MINUS <em>expr</em> | ~ <em>expr</em> - returns negative of the values of <em>expr</em></li>
+<li style="text-align: justify;">RANDOM <em>max</em> - returns random non-negative number strictly less than <em>max</em></li>
+<li style="text-align: justify;">SIN <em>degrees</em> - returns sine of <em>degrees</em></li>
+<li style="text-align: justify;">COS <em>degrees</em> - return cosine of <em>degrees</em></li>
+<li style="text-align: justify;">TAN&nbsp;<em>degrees</em>&nbsp;- returns tangent of&nbsp;<em>degrees</em></li>
+<li style="text-align: justify;">ATAN&nbsp;<em>degrees</em>&nbsp;- return arctangent of&nbsp;<em>degrees</em></li>
+<li style="text-align: justify;">LOG <em>expr</em> - returns natural log of <em>expr</em></li>
+<li style="text-align: justify;">POW<em> base exponent</em> - returns <em>base</em> raised to the power of the <em>exponent</em></li>
+<li style="text-align: justify;">PI - reports the number Pi</li>
+</ul>
+</li>
+<li style="text-align: justify;"><strong>Variables, Control Structures, and User-Defined Commands</strong><ul>
+<li style="text-align: justify;">MAKE <em>variable expr</em> | SET <em>variable expr</em> - assigns the value of <em>expr</em> to <em>variable</em>, creating the variable if necessary; returns <em>expr</em></li>
+<li style="text-align: justify;">REPEAT <em>expr</em> [ <em>command(s)</em> ] - runs <em>command(s</em>) given in the list the value of expr number of times; returns the value of the final command executed (or 0 if no commands are executed); note, the value of the current iteration, starting at 1, is automatically assigned to the variable :<em>repcount</em> so that it can be accessed by the <em>command(s)</em></li>
+<li style="text-align: justify;">DOTIMES [ <em>variable limit </em>] [ <em>command(s)</em> ] - runs <em>command(s)</em> for each value specified in the range, i.e., from (1 - <em>limit</em>) inclusive; returns the value of the final command executed (or 0 if no commands are executed); note, variable is assigned to each succeeding value so that it can be accessed by the <em>command(s)</em></li>
+<li style="text-align: justify;">FOR [<em> variable start end increment</em> ] [ <em>command(s)</em> ] - runs <em>command(s)</em> for each value specified in the range, i.e., from (<em>start - end</em>), going by increment; returns the value of the final command executed (or 0 if no commands are executed); note, <em>variable</em> is assigned to each succeeding value so that it can be accessed by the <em>command(s)</em></li>
+<li style="text-align: justify;">IF <em>expr</em> [ <em>command(s)</em> ] - if <em>expr</em> is not 0, runs the <em>command(s)</em> given in the list; returns the value of the final command executed (or 0 if no commands are executed)</li>
+<li style="text-align: justify;">IFELSE <em>expr</em> [ <em>trueCommand(s)</em> ] [ <em>falseCommand(s)</em> ] - if <em>expr</em> is not 0, runs the <em>trueCommand(s)</em> given in the first list, otherwise runs the <em>falseCommand(s)</em> given in the second list; returns the value of the final command executed (or 0 if no commands are executed)</li>
+<li style="text-align: justify;">TO <em>commandName</em> [ <em>variable(s)</em> ] [ <em>command(s)</em> ] - assigns <em>command(s)</em> given in the second list to <em>commandName</em> using parameters given in first list as variables; when <em>commandName</em> is used later in the program, any given values are assigned to variables that can be accessed when the command list is run and the value of the final command executed is returned (or 0 if no commands are executed); returns 1 if command is successfully defined, otherwise 0</li>
+</ul>
+</li>
+</ul>
