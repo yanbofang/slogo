@@ -61,6 +61,14 @@ public class PromptView implements SubcomponentAPI{
 	private void updateHistory(String text) {
 		Hyperlink textToAdd = new Hyperlink(text);
 		history.getChildren().add(textToAdd);
+		textToAdd.setOnAction(new EventHandler<ActionEvent>() {
+
+			@Override
+			public void handle(ActionEvent e) {
+				String tempText = textToAdd.toString();
+				runCommand(tempText);
+			}
+		});
 	}
 	
 	
@@ -88,5 +96,7 @@ public class PromptView implements SubcomponentAPI{
 	public Parent getParent() {
 		return wholeView;
 	}
+	
+
 
 }
