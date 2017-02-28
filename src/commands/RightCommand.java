@@ -1,9 +1,13 @@
 package commands;
 
-public class RightCommand extends MoveCommand {
+import backend.VariableManager;
 
-	public RightCommand(String instruction) {
-		super(instruction);
+public class RightCommand extends MoveCommand {
+	
+	private static final Integer NUM_OF_EXPRESSIONS = 1;
+
+	public RightCommand(String instruction, VariableManager manager) {
+		super(instruction, manager, NUM_OF_EXPRESSIONS);
 	}
 	
 	public Double calculateValue() {

@@ -1,11 +1,15 @@
 package commands;
 
+import backend.VariableManager;
 import coordinate.Coordinate;
 
 public class BackwardCommand extends MoveCommand {
 	
-	public BackwardCommand(String instruction) {
-		super(instruction);
+
+	protected static final Integer NUM_OF_EXPRESSIONS = 1;
+	
+	public BackwardCommand(String instruction, VariableManager manager) {
+		super(instruction, manager, NUM_OF_EXPRESSIONS);
 	}
 	
 	public Double calculateValue() {

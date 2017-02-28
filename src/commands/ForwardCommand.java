@@ -1,12 +1,15 @@
 package commands;
 
 
+import backend.VariableManager;
 import coordinate.Coordinate;
 
 public class ForwardCommand extends MoveCommand {
+	
+	private static final Integer NUM_OF_EXPRESSIONS = 1;
 
-	public ForwardCommand(String instruction) {
-		super(instruction);
+	public ForwardCommand(String instruction, VariableManager manager) {
+		super(instruction, manager, NUM_OF_EXPRESSIONS);
 	}
 	
 	public Double calculateValue() {

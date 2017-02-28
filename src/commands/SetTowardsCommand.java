@@ -1,11 +1,14 @@
 package commands;
 
+import backend.VariableManager;
 import coordinate.Coordinate;
 
 public class SetTowardsCommand extends MoveCommand {
+	
+	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
-	public SetTowardsCommand(String instruction) {
-		super(instruction);
+	public SetTowardsCommand(String instruction, VariableManager manager) {
+		super(instruction, manager, NUM_OF_EXPRESSIONS);
 	}
 	
 	public Double calculateValue() {

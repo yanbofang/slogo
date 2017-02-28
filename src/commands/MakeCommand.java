@@ -7,14 +7,16 @@ public class MakeCommand extends AbstractCommand {
 
 	private String myVariableName;
 	private Variable myVariable;
+	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
-	public MakeCommand(String instruction) {
-		super(instruction);
+	public MakeCommand(String instruction, VariableManager variables) {
+		super(instruction, variables, NUM_OF_EXPRESSIONS);
 		// TODO Auto-generated constructor stub
 	}
 
 	/***
-	 * NEED TO ADD THE VARIABLE THE SECOND IT IS CALLED, IN CASE THE CALL USES THE VARIABLE LATER
+	 * NEED TO ADD THE VARIABLE THE SECOND IT IS CALLED, IN CASE THE CALL USES
+	 * THE VARIABLE LATER
 	 */
 	@Override
 	public Double getValue() {
@@ -25,16 +27,15 @@ public class MakeCommand extends AbstractCommand {
 
 	private void checkVariable() {
 		String varName = (String) myArguments.get(0);
-		VariableManager varMan = VariableManager.getInstance();
-		if (varMan.get(varName) != null) {
-			if (varMan.get(varName).getValue() == myValue) {
+		if (myVariables.get(varName) != null) {
+			if (myVariables.get(varName).getValue() == myValue) {
 				return;
 			}
-		} else{
+		} else {
 			myVariable = new Variable(varName, myValue);
-			varMan.addVariable(myVariable);
+			myVariables.addVariable(myVariable);
 		}
-		
+
 	}
 
 	@Override

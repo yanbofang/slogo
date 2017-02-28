@@ -1,15 +1,16 @@
 package commands;
 
 
+import backend.VariableManager;
 import coordinate.Coordinate;
 
 public abstract class MoveCommand extends AbstractCommand {
 
 	protected int myQuadrant;
 	
-	public MoveCommand(String instruction) {
-		super(instruction);
-		myTurtle.setX(5);
+	public MoveCommand(String instruction, VariableManager variables, int numberOfExpressions) {
+		super(instruction, variables, numberOfExpressions);
+		myTurtle.setX(0);
 		myTurtle.setY(0);
 		myTurtle.setRotate(90);
 	}

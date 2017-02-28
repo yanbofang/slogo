@@ -20,4 +20,5 @@ public interface Command {
 
 	Double execute(Turtle turtle);
 
+	Integer getNumOfExpressions();
 }

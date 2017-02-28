@@ -1,9 +1,8 @@
 package commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import backend.Turtle;
+import backend.VariableManager;
 
 public abstract class AbstractCommand implements Command{
 
@@ -13,11 +12,19 @@ public abstract class AbstractCommand implements Command{
 	protected boolean finished;
 	protected Turtle myTurtle;
 	protected Double myValue;
+	protected VariableManager myVariables;
+	protected Integer myNumOfExpressions;
 
-	public AbstractCommand(String instruction) {
+	public AbstractCommand(String instruction, VariableManager variables) {
 		myArguments = new ArrayList<Object>();
+		myVariables = variables;
 		myInstruction = instruction.toLowerCase();
 		finished = false;
+	}
+	
+	public AbstractCommand(String instruction, VariableManager variables, int numOfExpressions){
+		this(instruction, variables);
+		myNumOfExpressions = numOfExpressions;
 	}
 	
 	public void add(Object ... args) {
@@ -34,7 +41,11 @@ public abstract class AbstractCommand implements Command{
 		}
 	}
 	
-
+	public Integer getNumOfExpressions(){
+		return myNumOfExpressions;
+	}
+	
+	
 	public String getInstruction() {
 		return myInstruction;
 	}
