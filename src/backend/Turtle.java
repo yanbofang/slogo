@@ -1,11 +1,14 @@
 package backend;
 
+import java.util.ArrayList;
+import java.util.Observable;
+
 import coordinate.Coordinate;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Turtle {
+public class Turtle extends Observable{
 	
 	private final String myTurtlePicture = "images/turtle.png";
 	
@@ -25,8 +28,8 @@ public class Turtle {
 		myImage = new ImageView(turtleView);
 		myImage.setFitWidth(width);
 		myImage.setFitHeight(height);
-		myImage.setX(myWidthBounds/2.0);
-		myImage.setY(myHeightBounds/2.0);
+		myImage.setTranslateX(myWidthBounds/2.0);
+		myImage.setTranslateY(myHeightBounds/2.0);
 		myFutureRotate = myImage.getRotate();
 		myFutureLocation = new Coordinate(myImage.getX(), myImage.getY());
 	}
@@ -41,7 +44,7 @@ public class Turtle {
 		} else if (x < 0) {
 			x += myWidthBounds;
 		}
-		myImage.setX(x);
+		myImage.setTranslateX(x);
 	}
 	
 	private void setY(double y) {
@@ -50,12 +53,17 @@ public class Turtle {
 		} else if (y < 0) {
 			y += myHeightBounds;
 		}
-		myImage.setY(y);
+		myImage.setTranslateY(y);
 	}
 	
 	public void setLocation(Coordinate coord) {
+		ArrayList<Coordinate> temp = new ArrayList<Coordinate>();
+		temp.add(getLocation());
 		setX(coord.getX());
 		setY(coord.getY());
+		temp.add(getLocation());
+		setChanged();
+		notifyObservers(temp);
 	}
 	
 	public void setFutureRotate(double rotate) {
@@ -80,7 +88,7 @@ public class Turtle {
 	}
 	
 	public Coordinate getLocation() {
-		return new Coordinate(myImage.getX(), myImage.getY());
+		return new Coordinate(myImage.getTranslateX(), myImage.getTranslateY());
 	}
 	
 	public void setRotate(double rotate) {

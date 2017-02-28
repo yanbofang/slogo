@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import coordinate.Coordinate;
 import frontend.API.TurtleViewerAPI;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
@@ -71,8 +72,8 @@ public class TurtleView implements TurtleViewerAPI{
 		viewer.setBackground(new Background(new BackgroundFill(tempColor, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
 
-	public void placeTurtle(ImageView imageView) {
-		viewer.getChildren().add(imageView);
+	public void placeTurtle(Node node) {
+		viewer.getChildren().add(node);
 	}
 
 	@Override

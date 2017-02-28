@@ -1,14 +1,17 @@
 package frontend;
 
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import backend.Model;
-import breakout.Breakout;
+import controller.Controller;
 import coordinate.Coordinate;
 import frontend.API.ViewAPI;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -53,6 +56,7 @@ public class View implements ViewAPI{
 		variablesView = new VariablesView(this);
 		promptView = new PromptView(this);		
 		this.setView();
+		timeline.play();
 	}
 
 	@Override
@@ -74,11 +78,11 @@ public class View implements ViewAPI{
 		alert.showAndWait();
 	}
 	
-	public void setTurtle(ImageView imageView){
-		turtleView.placeTurtle(imageView);
+	public void setTurtle(Node node){
+		turtleView.placeTurtle(node);
 	}
 	
-	public void update(Coordinate oldC, Coordinate newC){
+	public void updateTurtle(Coordinate oldC, Coordinate newC){
 		turtleView.changePosition(oldC, newC);
 	}
 
@@ -161,5 +165,6 @@ public class View implements ViewAPI{
 		stage.setScene(scene);
 		stage.show();
 	}
+
 
 }
