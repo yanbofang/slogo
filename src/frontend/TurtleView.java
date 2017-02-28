@@ -7,6 +7,7 @@ import frontend.API.TurtleViewerAPI;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -45,6 +46,10 @@ public class TurtleView implements TurtleViewerAPI{
 	public void setBackgroundColor(String a) {
 		Color tempColor = Color.valueOf(a);
 		viewer.setBackground(new Background(new BackgroundFill(tempColor, CornerRadii.EMPTY, Insets.EMPTY)));
+	}
+
+	public void placeTurtle(ImageView imageView) {
+		viewer.getChildren().add(imageView);
 	}
 
 }

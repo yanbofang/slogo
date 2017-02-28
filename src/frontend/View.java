@@ -3,27 +3,35 @@ package frontend;
 import java.util.ResourceBundle;
 
 import backend.Model;
+import breakout.Breakout;
 import coordinate.Coordinate;
 import frontend.API.ViewAPI;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class View implements ViewAPI{
 	private static final int HEIGHT = 600;
 	private static final int WIDTH = 1000;
+	private static final int FRAMES_PER_SECOND = 60;
+    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	public static final String RESOURCE_BUNDLE = "resources/Display";
 	
 	private Stage stage;
 	private Scene scene;
 	private GridPane root;
-	private Model model;
+	private Controller controller;
 	private Timeline timeline;
 	private ResourceBundle resource;
 	
@@ -38,9 +46,10 @@ public class View implements ViewAPI{
 		stage = stageIn;
 	}
 	
-	public void runView(Model modelIn) throws Exception{
+	public void runView(Controller controllerIn) throws Exception{
 		resource = ResourceBundle.getBundle(RESOURCE_BUNDLE);
-		model = modelIn;
+		controller = controllerIn;
+		timeline = createTimeline();
 		turtleView = new TurtleView(this);
 		methodsView = new MethodsView(this);
 		optionsView = new OptionsView(this);
@@ -67,6 +76,14 @@ public class View implements ViewAPI{
 		alert.setContentText(a);
 		alert.showAndWait();
 	}
+	
+	public void setTurtle(ImageView imageView){
+		turtleView.placeTurtle(imageView);
+	}
+	
+	public void update(Coordinate oldC, Coordinate newC){
+		turtleView.changePosition(oldC, newC);
+	}
 
 	@Override
 	public void updateUMethod(String a, String b) {
@@ -75,12 +92,12 @@ public class View implements ViewAPI{
 
 	@Override
 	public void changeVariable(String a, String b) {
-		model.updateVariable(a, b);
+		controller.updateVariable(a, b);
 	}
 
 	@Override
 	public void useUMethod(String a, String b) {
-		model.handleInput(b);
+		controller.handleInput(b);
 	}
 
 	@Override
@@ -107,7 +124,19 @@ public class View implements ViewAPI{
 
 	@Override
 	public void runCommand(String a) {
-		model.handleInput(a);
+		controller.handleInput(a);
+	}
+	
+	private void step(double dt){
+		controller.runCommand();
+	}
+	
+	private Timeline createTimeline(){
+		Timeline ret = new Timeline();
+		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
+		ret.setCycleCount(Animation.INDEFINITE);
+		ret.getKeyFrames().add(frame);
+		return ret;
 	}
 	
 	private void setView(){
