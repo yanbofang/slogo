@@ -1,8 +1,9 @@
 package backend;
 
 import java.util.HashMap;
+import java.util.Observable;
 
-public class VariableManager {
+public class VariableManager extends Observable{
 
 //	//Singleton design pattern
 //	private static VariableManager instance;
@@ -24,8 +25,13 @@ public class VariableManager {
 		} else {
 			myVariableMap.put(var.getVariableName(), var);
 		}
+		setChanged();
+		notifyObservers(var.getVariableName() + " " + var.getValue());
 	}
+	
 
+
+	
 	public Variable get(String key) {
 		Variable value = myVariableMap.get(key);
 		while (myVariableMap.containsKey(value)) {

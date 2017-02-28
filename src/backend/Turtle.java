@@ -1,11 +1,14 @@
 package backend;
 
+import java.util.ArrayList;
+import java.util.Observable;
+
 import coordinate.Coordinate;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Turtle {
+public class Turtle extends Observable{
 	
 	private final String myTurtlePicture = "images/turtle.png";
 	
@@ -61,8 +64,13 @@ public class Turtle {
 		if (!ajusted) {
 			coord = setUnadjustedLocation(coord);
 		}
+		ArrayList<Coordinate> temp = new ArrayList<Coordinate>();
+		temp.add(getLocation());
 		setX(coord.getX());
 		setY(coord.getY());
+		temp.add(getLocation());
+		setChanged();
+		notifyObservers(temp);
 	}
 	
 	public void setFutureRotate(double rotate) {

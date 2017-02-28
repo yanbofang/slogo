@@ -36,7 +36,6 @@ public class MakeVariableCommand extends AbstractCommand {
 			myVariable = new Variable(varName, myValue);
 			myVariables.addVariable(myVariable);
 		}
-
 	}
 
 	@Override
