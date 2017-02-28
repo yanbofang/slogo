@@ -85,6 +85,7 @@ public class View implements ViewAPI{
 
 	@Override
 	public void changeBackground(String a) {
+		System.out.println("test");
 		turtleView.setBackgroundColor(a);
 	}
 

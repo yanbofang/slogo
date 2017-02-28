@@ -53,7 +53,7 @@ public class PromptView implements SubcomponentAPI{
 		layout.setSpacing(20);
 		layout.setPrefHeight(425);
 		scrollPane.setContent(layout);
-		scrollPane.setFitToWidth(true);
+		//scrollPane.setFitToWidth(true);
 		history = new VBox();	
 		layout.getChildren().add(history);
 	}
