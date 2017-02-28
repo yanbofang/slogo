@@ -30,17 +30,16 @@ public class PromptView implements SubcomponentAPI{
 	public PromptView(View viewIn) {
 		view = viewIn; 
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
+		wholeView = new VBox();
 		promptSetup();
 		historySetup();
 		buttonSetup();
-		wholeView = new VBox();
 		wholeView.getChildren().addAll(scrollPane, prompt, submitBtn);
 	}
 	
 	private void promptSetup() {
 		prompt = new VBox();
 		userText = new TextArea();
-		userText.setPrefHeight(100);
 		prompt.getChildren().add(userText);
 	}
 	
@@ -53,7 +52,7 @@ public class PromptView implements SubcomponentAPI{
 		layout.setSpacing(20);
 		layout.setPrefHeight(425);
 		scrollPane.setContent(layout);
-		scrollPane.setFitToWidth(true);
+		//scrollPane.setFitToWidth(true);
 		history = new VBox();	
 		layout.getChildren().add(history);
 	}
@@ -74,7 +73,6 @@ public class PromptView implements SubcomponentAPI{
 	
 	private void buttonSetup() {
 		submitBtn = new Button(resource.getString("Submit"));
-		submitBtn.setAlignment(Pos.BOTTOM_RIGHT);
 		submitBtn.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

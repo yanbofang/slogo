@@ -53,54 +53,58 @@ public class OptionsView implements SubcomponentAPI{
 
 	public OptionsView(View viewIn) throws Exception {
 		view = viewIn;
-		resource  = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
+		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		buttonPanel = new TilePane(Orientation.HORIZONTAL);
 		changeVariables();
 	}  
 	
 	@SuppressWarnings("unchecked")
 	private void changeVariables() {
-		ComboBox<String> penBtn = createButton("Pen Color", colors);
+		ComboBox<String> penBtn = createButton(resource.getString("Pen"), colors);
 		penBtn.valueProperty().addListener(new ChangeListener<String> () {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				penColor = newValue;	
+				penColor = newValue;
+				changePenColor(penColor);
 			}
 			
 		});
 
-		ComboBox backBtn = createButton("Background Color", colors);
+		ComboBox backBtn = createButton(resource.getString("Background"), colors);
 		backBtn.valueProperty().addListener(new ChangeListener<String> () {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-				backgroundColor = newValue;	
+				backgroundColor = newValue;
+				changeBackgroundColor(backgroundColor);
 			}
 			
 		});
 		
-		ComboBox langBtn = createButton("Language", languages);
+		ComboBox langBtn = createButton(resource.getString("Language"), languages);
 		langBtn.valueProperty().addListener(new ChangeListener<String> () {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				lang = newValue;	
+				changeLanguage(lang);
 			}		
 		});
 		
-		ComboBox turtleBtn = createButton("Turtle", turtles);
+		ComboBox turtleBtn = createButton(resource.getString("Turtle"), turtles);
 		turtleBtn.valueProperty().addListener(new ChangeListener<String> () {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				turtle = new Image(getClass().getClassLoader().getResourceAsStream(newValue+".png"));;	
+				changeImage(turtle);
 			}		
 		});
 		
-		Button helpBtn = new Button("Help");
+		Button helpBtn = new Button(resource.getString("Help"));
 		buttonPanel.getChildren().add(helpBtn);
 		helpBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
 				Alert info = new Alert(AlertType.INFORMATION);
-				info.setHeaderText("Help with SLogo");
+				info.setHeaderText(resource.getString("HelpTitle"));
 				String s = "Valid commands: \n"
 						+ "Movement - forward, backward, left, right, SetHeading, SetTowards \n"
 						 + "Math - sum, difference, product, quotient, remainder, minus \n"
