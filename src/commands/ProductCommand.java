@@ -18,7 +18,7 @@ public class ProductCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected Double executeCommand() {
+	public Double executeCommand() {
 		this.changeToFinished();
 		return getValue();
 	}

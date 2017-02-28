@@ -59,7 +59,8 @@ public class OptionsView implements SubcomponentAPI{
 			"greenturtle", "blueturtle", "pinkturtle");
 
 
-	public OptionsView(View viewIn)  {
+
+	public OptionsView(View viewIn){
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		buttonPanel = new TilePane(Orientation.HORIZONTAL);
