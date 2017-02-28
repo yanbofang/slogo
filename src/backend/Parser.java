@@ -88,7 +88,9 @@ public class Parser {
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
 			return current;
 		} else if (myPatterns.getSymbol(current).equals("ListStart")) {
-			return recurseParse(s, new ArrayList<Command>());
+			ArrayList<Command> sublist = new ArrayList<Command>();
+			recurseParse(s, sublist);
+			return sublist;
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
 			return currentList;
 		}

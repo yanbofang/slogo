@@ -8,7 +8,6 @@ public class SumCommand extends AbstractCommand {
 
 	public SumCommand(String instruction, VariableManager variables) {
 		super(instruction, variables, NUM_OF_EXPRESSIONS);
-
 	}
 
 	@Override
