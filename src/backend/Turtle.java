@@ -30,10 +30,10 @@ public class Turtle extends Observable{
 		myImage = new ImageView(turtleView);
 		myImage.setFitWidth(width);
 		myImage.setFitHeight(height);
-		myImage.setTranslateX(myWidthBounds/2.0);
-		myImage.setTranslateY(myHeightBounds/2.0);
+		myImage.setTranslateX(myHeightBounds/2.0);
+		myImage.setTranslateY(myWidthBounds/2.0);
 		myFutureRotate = myImage.getRotate();
-		myFutureLocation = new Coordinate(myImage.getX(), myImage.getY());
+		myFutureLocation = new Coordinate(0.0, 0.0);
 		myPen = true;
 		showTurtle = true;
 	}
@@ -43,20 +43,24 @@ public class Turtle extends Observable{
 	}
 	
 	private void setX(double x) {
-		if (x > myWidthBounds/2) {
+		if (x > myWidthBounds) {
 			x -= myWidthBounds;
 		} else if (x < 0) {
-			x += myWidthBounds;
+			x += myHeightBounds;
 		}
+		System.out.println("NEW X VALUE");
+		System.out.println(x);
 		myImage.setTranslateX(x);
 	}
 	
 	private void setY(double y) {
-		if (y > myHeightBounds/2) {
+		if (y > myWidthBounds) {
 			y -= myWidthBounds;
 		} else if (y < 0) {
-			y += myHeightBounds;
+			y += myWidthBounds;
 		}
+		System.out.println("NEW Y VALUE");
+		System.out.println(y);
 		myImage.setTranslateY(y);
 	}
 	
@@ -88,18 +92,19 @@ public class Turtle extends Observable{
 	}
 	
 	public Coordinate getFutureLocation() {
+		System.out.println("FUTURE LOCATION");
+		System.out.println(myFutureLocation.getX());
+		System.out.println(myFutureLocation.getY());
 		return myFutureLocation;
 	}
 	
 	public void setFutureLocation(Coordinate newFuture, boolean adjusted) {
-		if (!adjusted) {
-			newFuture = setUnadjustedLocation(newFuture);
-		}
 		myFutureLocation = newFuture;
 	}
 	
 	public Coordinate getLocation() {
-		return new Coordinate(myImage.getTranslateX(), myImage.getTranslateY());
+		return new Coordinate(myImage.getTranslateX() + myHeightBounds/2.0,
+				myImage.getTranslateY() + myWidthBounds/2.0);
 	}
 	
 	public void setRotate(double rotate) {

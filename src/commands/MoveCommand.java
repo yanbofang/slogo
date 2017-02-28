@@ -44,8 +44,14 @@ public abstract class MoveCommand extends AbstractCommand {
 			rotate = 90 - rotate;
 		}
 		Coordinate currLocation = myTurtle.getFutureLocation();
+		System.out.println("MATH FOR THE LOCATION");
+		System.out.println(currLocation.getX());
+		System.out.println(currLocation.getY());
+		System.out.println(movement * Math.cos(Math.toRadians(rotate)));
+		System.out.println(movement * Math.sin(Math.toRadians(rotate)));
 		Double newX = (movement * Math.cos(Math.toRadians(rotate))) + currLocation.getX();
 		Double newY = (movement * Math.sin(Math.toRadians(rotate))) + currLocation.getY();
+		
 		Coordinate coord = new Coordinate(newX, newY);
 		return coord;
 	}

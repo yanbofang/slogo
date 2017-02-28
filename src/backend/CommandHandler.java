@@ -43,7 +43,7 @@ public class CommandHandler {
 			}*/
 			currentCommand = myCommands.poll();
 			current = currentCommand.executeCommand();
-			System.out.println(current + "   *print statement in CommandHandler");
+			//System.out.println(current + "   *print statement in CommandHandler");
 		}
 		return current;
 	}
