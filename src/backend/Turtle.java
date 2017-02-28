@@ -38,4 +38,19 @@ public class Turtle {
 		return new Coordinate(myImage.getX(), myImage.getY());
 	}
 	
+	public void setRotate(double rotate) {
+		myImage.setRotate(rotate);
+	}
+	
+	public Double getRotate() {
+		return myImage.getRotate();
+	}
+	
+	public Double getX() {
+		return myImage.getX();
+	}
+	
+	public Double getY() {
+		return myImage.getY();
+	}
 }
