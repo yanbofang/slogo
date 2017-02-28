@@ -64,7 +64,7 @@ public class PromptView implements SubcomponentAPI{
 
 			@Override
 			public void handle(ActionEvent e) {
-				String tempText = textToAdd.toString();
+				String tempText = textToAdd.getText();
 				runCommand(tempText);
 			}
 		});
