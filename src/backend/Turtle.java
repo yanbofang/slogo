@@ -1,5 +1,6 @@
 package backend;
 
+import java.util.ArrayList;
 import java.util.Observable;
 
 import coordinate.Coordinate;
@@ -56,8 +57,13 @@ public class Turtle extends Observable{
 	}
 	
 	public void setLocation(Coordinate coord) {
+		ArrayList<Coordinate> temp = new ArrayList<Coordinate>();
+		temp.add(getLocation());
 		setX(coord.getX());
 		setY(coord.getY());
+		temp.add(getLocation());
+		setChanged();
+		notifyObservers(temp);
 	}
 	
 	public void setFutureRotate(double rotate) {

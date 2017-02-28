@@ -1,9 +1,11 @@
 package frontend;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
 import backend.Turtle;
+import coordinate.Coordinate;
 
 public class TurtleObserver implements Observer {
 	private Turtle ov = null;
@@ -16,9 +18,8 @@ public class TurtleObserver implements Observer {
 
 	public void update(Observable obs, Object obj) {
 		if (obs == ov) {
-			String temp = (String) obj;
-			String[] arry = temp.split(" ");
-			myView.updateVar(arry[0], arry[1]);
+			ArrayList<Coordinate> temp = (ArrayList<Coordinate>) obj;
+			myView.updateTurtle(temp.get(0), temp.get(1));
 		}
 	}
 

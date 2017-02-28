@@ -26,19 +26,20 @@ public class RepeatCommand extends AbstractCommand{
 		ArrayList<Command> commandList = (ArrayList<Command>) myArguments.get(1);
 		myCommands = new LinkedList<Command>();
 		myCommands.addAll(commandList);
-		return (commandList.isEmpty()) ? 0.0 : commandList.get(commandList.size()-1).getValue();
+		//Haven't tested, myTurtle might be null if there is an error?
+		return (commandList.isEmpty()) ? 0.0 : commandList.get(commandList.size()-1).getValue(myTurtle);
 	}
 
 	@Override
-	protected Double executeCommand() {
+	public Double executeCommand() {
 		// TODO Auto-generated method stub
 		Double returnValue = 0.0;
 		if(!myCommands.isEmpty()){
 			Command currentCommand = myCommands.peek();
 			if(!currentCommand.isFinished()){
-				currentCommand.execute(myTurtle);
+				currentCommand.executeCommand();
 			}
-			returnValue = currentCommand.getValue();
+			returnValue = currentCommand.getValue(myTurtle);
 			myCommands.remove();
 		}
 		return returnValue;

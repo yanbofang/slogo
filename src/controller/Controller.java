@@ -5,6 +5,7 @@ import java.util.Observer;
 import backend.Model;
 import backend.Turtle;
 import backend.VariableManager;
+import frontend.TurtleObserver;
 import frontend.VariableManagerObserver;
 import frontend.View;
 import javafx.stage.Stage;
@@ -18,6 +19,7 @@ public class Controller {
 	private VariableManager variables;
 	private VariableManagerObserver variablesObserver;
 	private Turtle turtle;
+	private TurtleObserver turtleObserver;
 
 	public Controller(Stage arg0) throws Exception {
 		variables = new VariableManager();
@@ -25,15 +27,22 @@ public class Controller {
 		model = new Model(ENGLISH_SYNTAX, null, variables, turtle);
 		view = new View(arg0);
 		view.runView(model);
+		view.setTurtle(turtle.getImage());
 		variablesObserver = new VariableManagerObserver(variables, view);
 		addVariableManagerObserver();
+		turtleObserver = new TurtleObserver(turtle, view);
+		addTurtleObserver();
 	}
 
-	public void setInput(String input) {
+	public void handleInput(String input) {
 		model.handleInput(input);
 	}
 
-	public void userUpdateVariable(String var, String value) {
+	public void runCommand() {
+		model.getNextPos();
+	}
+
+	public void updateVariable(String var, String value) {
 		model.updateVariable(var, value);
 	}
 
@@ -50,9 +59,9 @@ public class Controller {
 	public void addVariableManagerObserver() {
 		variables.addObserver(variablesObserver);
 	}
-	
+
 	public void addTurtleObserver() {
-		turtle.addObserver(vmo);
+		turtle.addObserver(turtleObserver);
 	}
 
 }
