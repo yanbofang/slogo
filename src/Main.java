@@ -11,14 +11,12 @@ public class Main extends Application{
 
 	public void start(Stage arg0) throws Exception {
 		View view = new View(arg0);
+		m = new Model(SYNTAX, view);
 		view.runView(m);
 	}
 	
 	public static void main(String[] argv) {
-		m.handleInput("sum sum sum 5 sum sum 1 2 4 6 7"
-				+ " sum sum sum 5 6 0 9");
-		//m.handleInput("setxy 5 0");
-		m.getNextPos();
+		Application.launch(argv);
 
 	}
 }
