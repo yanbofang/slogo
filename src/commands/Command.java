@@ -16,9 +16,9 @@ public interface Command {
 
 	boolean isFinished();
 
-	Double getValue();
+	Double getValue(Turtle t);
 
-	Double execute(Turtle turtle);
+	Double executeCommand();
 
 	Integer getNumOfExpressions();
 }

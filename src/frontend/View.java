@@ -42,11 +42,8 @@ public class View implements ViewAPI{
 	private PromptView promptView;
 	
 	
-	public View(Stage stageIn){
+	public View(Stage stageIn, Controller controllerIn){
 		stage = stageIn;
-	}
-	
-	public void runView(Controller controllerIn) throws Exception{
 		resource = ResourceBundle.getBundle(RESOURCE_BUNDLE);
 		controller = controllerIn;
 		timeline = createTimeline();
@@ -102,24 +99,20 @@ public class View implements ViewAPI{
 
 	@Override
 	public void changeBackground(String a) {
-		optionsView.changeBackgroundColor(a);
 		turtleView.setBackgroundColor(a);
 	}
 
 	@Override
 	public void changeImage(Image a) {
-		optionsView.changeImage(a);
 	}
 
 	@Override
 	public void changePenColor(String a) {
-		optionsView.changePenColor(a);
-		
+		turtleView.setPenColor(a);
 	}
 
 	@Override
 	public void changeLanguage(String a) {
-		optionsView.changeLanguage(a);
 	}
 
 	@Override
