@@ -17,10 +17,11 @@ public class Model implements ModelInterface {
 	private Controller myController;
 	private CommandHandler myCommandHandler;
 
-	public Model(String[] syntax, Controller controller, VariableManager variables, Turtle turtle) {
+	public Model(String[] syntax, Controller controller, VariableManager variables, UserMethodManager methods,
+			Turtle turtle) {
 		myController = controller;
 		myVariables = variables;
-		myUserMethods = new UserMethodManager();
+		myUserMethods = methods;
 
 		myTurtle = turtle;
 		myParser = new Parser(syntax, this, myVariables, myUserMethods, myTurtle);
