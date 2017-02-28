@@ -1,4 +1,5 @@
 package frontend;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.ResourceBundle;
@@ -29,16 +30,23 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import javafx.stage.Stage;
 
 public class OptionsView implements SubcomponentAPI{
 	
+	private Stage s;
+	private Scene scene;
 	private ResourceBundle resource;
 	private View view;
 	private TilePane buttonPanel;
 	private String backgroundColor = "white";
 	private String penColor = "black";
 	private String lang = "English";
+	private String url = getClass().getClassLoader().getResource("help.html").toExternalForm();
 	private Image turtle = new Image(getClass().getClassLoader().getResourceAsStream("greenturtle.png"));
+	private WebEngine webEngine;
 	
 	private ObservableList<String> colors = FXCollections.observableArrayList(
 			"black", "white", "red", "green", "blue", "yellow");
@@ -51,10 +59,16 @@ public class OptionsView implements SubcomponentAPI{
 			"greenturtle", "blueturtle", "pinkturtle");
 
 
-	public OptionsView(View viewIn) throws Exception {
+	public OptionsView(View viewIn)  {
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		buttonPanel = new TilePane(Orientation.HORIZONTAL);
+		WebView browser = new WebView();
+		webEngine = browser.getEngine();
+		
+		s = new Stage(); 
+		scene = new Scene(browser);
+		//buttonPanel.getChildren().add();
 		changeVariables();
 	}  
 	
@@ -103,15 +117,9 @@ public class OptionsView implements SubcomponentAPI{
 		helpBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent event) {
-				Alert info = new Alert(AlertType.INFORMATION);
-				info.setHeaderText(resource.getString("HelpTitle"));
-				String s = "Valid commands: \n"
-						+ "Movement - forward, backward, left, right, SetHeading, SetTowards \n"
-						 + "Math - sum, difference, product, quotient, remainder, minus \n"
-						+ "Make -  MakeVariable";
-				info.setContentText(s);
-				info.show();
-				
+				webEngine.load(url);
+				s.setScene(scene);
+				s.show();
 			}	
 		});
 	}
