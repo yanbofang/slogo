@@ -46,7 +46,7 @@ public class Turtle extends Observable{
 		if (x > myWidthBounds) {
 			x -= myWidthBounds;
 		} else if (x < 0) {
-			x += myHeightBounds;
+			x += myWidthBounds;
 		}
 		System.out.println("NEW X VALUE");
 		System.out.println(x);
@@ -54,10 +54,10 @@ public class Turtle extends Observable{
 	}
 	
 	private void setY(double y) {
-		if (y > myWidthBounds) {
-			y -= myWidthBounds;
+		if (y > myHeightBounds) {
+			y -= myHeightBounds;
 		} else if (y < 0) {
-			y += myWidthBounds;
+			y += myHeightBounds;
 		}
 		System.out.println("NEW Y VALUE");
 		System.out.println(y);
@@ -92,14 +92,12 @@ public class Turtle extends Observable{
 	}
 	
 	public Coordinate getFutureLocation() {
-		System.out.println("FUTURE LOCATION");
-		System.out.println(myFutureLocation.getX());
-		System.out.println(myFutureLocation.getY());
 		return myFutureLocation;
 	}
 	
-	public void setFutureLocation(Coordinate newFuture, boolean adjusted) {
-		myFutureLocation = newFuture;
+	public void setFutureLocation(Coordinate newFuture) {
+		myFutureLocation.setX(newFuture.getX());
+		myFutureLocation.setY(newFuture.getY());
 	}
 	
 	public Coordinate getLocation() {

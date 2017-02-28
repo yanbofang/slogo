@@ -20,7 +20,7 @@ public class SetPositionCommand extends MoveCommand {
 		Double updatedY = (Double) myArguments.get(1);
 		myCoord = new Coordinate(updatedX, updatedY);
 		Double distance = calcDistance(myCoord, myTurtle.getFutureLocation());
-		myTurtle.setFutureLocation(myCoord, false);
+		myTurtle.setFutureLocation(myCoord);
 		return distance;
 	}
 	
