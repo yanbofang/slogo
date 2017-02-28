@@ -17,7 +17,7 @@ public class QuotientCommand extends AbstractCommand {
 	}
 
 	@Override
-	protected Double executeCommand() {
+	public Double executeCommand() {
 		return getValue();
 	}
 

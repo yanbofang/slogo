@@ -1,8 +1,6 @@
 package commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-
 import backend.Turtle;
 import backend.VariableManager;
 
@@ -64,18 +62,16 @@ public abstract class AbstractCommand implements Command{
 		finished = true;
 	}
 
+	public Double getValue(Turtle turtle) {
+		myTurtle = turtle;
+		return getValue();
+	}
 	public abstract Double getValue();
 
-	// public abstract int getNumOfParameters();
-	public Double execute(Turtle turtle) {
-		myTurtle = turtle;
-		return executeCommand();
-	}
-	
 	/**
 	 * 
 	 * @return - value that we want to send to UI to be displayed
 	 */
-	protected abstract Double executeCommand();
+	public abstract Double executeCommand();
 
 }
