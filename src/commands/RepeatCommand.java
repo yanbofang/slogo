@@ -6,19 +6,20 @@ import java.util.List;
 import java.util.Queue;
 
 import backend.CommandFactory;
+import backend.UserMethodManager;
 import backend.VariableManager;
 
 public class RepeatCommand extends AbstractCommand{
 
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
-	private CommandFactory myCommandFactory;
+//	private CommandFactory myCommandFactory;
 	private Queue<Command> myCommands;
 	
 
 	
-	public RepeatCommand(String instruction, VariableManager variables) {
-		super(instruction, variables, NUM_OF_EXPRESSIONS);
-		myCommandFactory = new CommandFactory();
+	public RepeatCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+//		myCommandFactory = new CommandFactory();
 	}
 	
 	@Override

@@ -11,7 +11,7 @@ import interfaces.ModelInterface;
 public class Model implements ModelInterface {
 
 	private VariableManager myVariables;
-	private UserMethodManager myMethods;
+	private UserMethodManager myUserMethods;
 	private Turtle myTurtle;
 	private Parser myParser;
 	private Controller myController;
@@ -20,10 +20,10 @@ public class Model implements ModelInterface {
 	public Model(String[] syntax, Controller controller, VariableManager variables, Turtle turtle) {
 		myController = controller;
 		myVariables = variables;
-		myMethods = new UserMethodManager();
+		myUserMethods = new UserMethodManager();
 
 		myTurtle = turtle;
-		myParser = new Parser(syntax, this, myVariables, myTurtle);
+		myParser = new Parser(syntax, this, myVariables, myUserMethods, myTurtle);
 		myCommandHandler = new CommandHandler(myTurtle);
 	}
 
@@ -65,7 +65,7 @@ public class Model implements ModelInterface {
 
 	public List<Command> getMethodVariable(String var) {
 		try {
-			return myMethods.get(var).getListOfCommands();
+			return myUserMethods.get(var).getListOfCommands();
 		} catch (Exception e) {
 			return null;
 		}
