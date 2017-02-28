@@ -12,14 +12,15 @@ public class SetHeadingCommand extends MoveCommand {
 	}
 	
 	public Double calculateValue() {
-		return setHeading();
+		Double degrees = (Double) myArguments.get(0);
+		Double difference = myTurtle.getFutureRotate() - degrees;
+		myTurtle.setFutureRotate(degrees);;
+		return difference;
 	}
 	
-	private Double setHeading() {
-		Double degrees = (Double) myArguments.get(0);
-		Double difference = myTurtle.getRotate() - degrees;
-		myTurtle.setRotate(degrees);
-		return difference;
+	public Double executeCommand() {
+		myTurtle.setRotate((Double) myArguments.get(0));
+		return myValue;
 	}
 
 }

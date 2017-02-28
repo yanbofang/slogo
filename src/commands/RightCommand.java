@@ -11,13 +11,14 @@ public class RightCommand extends MoveCommand {
 	}
 	
 	public Double calculateValue() {
-		return right();
+		Double degrees = (Double) myArguments.get(0);
+		myTurtle.setFutureRotate(myTurtle.getFutureRotate() + degrees);
+		return degrees;
 	}
 	
-	private Double right() {
-		Double degrees = (Double) myArguments.get(0);
-		myTurtle.setRotate(myTurtle.getRotate() + degrees);
-		return degrees;
+	public Double executeCommand() {
+		myTurtle.setRotate(myTurtle.getRotate() + myValue);
+		return myValue;
 	}
 	
 }

@@ -12,13 +12,14 @@ public class LeftCommand extends MoveCommand {
 	}
 	
 	public Double calculateValue() {
-		return left();
+		Double degrees = (Double) myArguments.get(0);
+		myTurtle.setFutureRotate(myTurtle.getFutureRotate() - degrees);
+		return degrees;
 	}
 	
-	private Double left() {
-		Double degrees = (Double) myArguments.get(0);
-		myTurtle.getImage().setRotate(myTurtle.getImage().getRotate() - degrees);
-		return degrees;
+	public Double executeCommand() {
+		myTurtle.setRotate(myTurtle.getRotate() - myValue);
+		return myValue;
 	}
 
 }

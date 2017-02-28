@@ -30,11 +30,7 @@ public abstract class MoveCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double executeCommand() {
-		this.changeToFinished();
-		return myValue;
-	}
-	
+	public abstract Double executeCommand();
 	public abstract Double calculateValue();
 	
 	protected Coordinate getNewCoord(Double movement) {
@@ -65,11 +61,18 @@ public abstract class MoveCommand extends AbstractCommand {
 				break;
 		}
 	}
-	
+	/**
 	protected void moveTurtle(Coordinate coord) {
+		myTurtle.changeLocation(new Coordinate(coord));
 		myTurtle.setX(coord.getX());
 		myTurtle.setY(coord.getY());
-	}
+	}**/
 	
+	protected Double calcDistance(Coordinate firstCoord, Coordinate secondCoord) {
+		Double xDiff = firstCoord.getX() - secondCoord.getX();
+		Double yDiff = firstCoord.getY() - secondCoord.getY();
+		Double distance = Math.sqrt((xDiff*xDiff) + (yDiff*yDiff));
+		return distance;
+	}
 
 }

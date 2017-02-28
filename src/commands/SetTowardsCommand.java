@@ -15,7 +15,7 @@ public class SetTowardsCommand extends MoveCommand {
 		return setTowards();
 	}
 	
-	private Double setTowards() {
+	public Double executeCommand() {
 
 		Coordinate newDirection = new Coordinate((Double) myArguments.get(0), 
 				(Double) myArguments.get(1));
@@ -40,13 +40,6 @@ public class SetTowardsCommand extends MoveCommand {
 		Double side3Square = side3*side3;
 		Double rotationAngle = Math.acos((side1Square + side2Square - side3Square) / (2*side1*side2));
 		return rotationAngle;
-	}
-	
-	private Double calcDistance(Coordinate firstCoord, Coordinate secondCoord) {
-		Double xDiff = firstCoord.getX() - secondCoord.getX();
-		Double yDiff = firstCoord.getY() - secondCoord.getY();
-		Double distance = Math.sqrt((xDiff*xDiff) + (yDiff*yDiff));
-		return distance;
 	}
 	
 }
