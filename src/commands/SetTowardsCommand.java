@@ -31,6 +31,7 @@ public class SetTowardsCommand extends MoveCommand {
 		}
 		Double difference = Math.abs(myTurtle.getRotate() - toRotate);
 		myTurtle.setRotate(toRotate);
+		this.changeToFinished();
 		return difference;
 	}
 	

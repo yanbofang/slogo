@@ -54,11 +54,11 @@ public class Controller {
 		view.updateVar(name, value);
 	}
 
-	public void addVariableManagerObserver() {
+	private void addVariableManagerObserver() {
 		variables.addObserver(variablesObserver);
 	}
 
-	public void addTurtleObserver() {
+	private void addTurtleObserver() {
 		turtle.addObserver(turtleObserver);
 	}
 

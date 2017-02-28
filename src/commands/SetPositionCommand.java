@@ -26,6 +26,7 @@ public class SetPositionCommand extends MoveCommand {
 	
 	public Double executeCommand() {
 		myTurtle.setLocation(myCoord);
+		this.changeToFinished();
 		return myDistance;
 		
 	}

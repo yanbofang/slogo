@@ -33,17 +33,17 @@ public class CommandHandler {
 	public Double executeCommands() {
 		Double current = null;
 		if (!myCommands.isEmpty()) {
-			/*
+			
 			currentCommand = myCommands.peek();
 			if (currentCommand.isFinished()) {
 				myCommands.remove();
 			} else {
-				current = currentCommand.execute(myTurtle);
+				current = currentCommand.executeCommand();
 				System.out.println(current + "   *print statement in CommandHandler");
-			}*/
-			currentCommand = myCommands.poll();
-			current = currentCommand.executeCommand();
-			System.out.println(current + "   *print statement in CommandHandler");
+			}
+//			currentCommand = myCommands.poll();
+//			current = currentCommand.executeCommand();
+//			System.out.println(current + "   *print statement in CommandHandler");
 		}
 		return current;
 	}

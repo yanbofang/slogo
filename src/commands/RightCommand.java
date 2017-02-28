@@ -18,6 +18,7 @@ public class RightCommand extends MoveCommand {
 	
 	public Double executeCommand() {
 		myTurtle.setRotate(myTurtle.getRotate() + myValue);
+		this.changeToFinished();
 		return myValue;
 	}
 	

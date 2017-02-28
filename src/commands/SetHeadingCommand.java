@@ -20,6 +20,7 @@ public class SetHeadingCommand extends MoveCommand {
 	
 	public Double executeCommand() {
 		myTurtle.setRotate((Double) myArguments.get(0));
+		this.changeToFinished();
 		return myValue;
 	}
 

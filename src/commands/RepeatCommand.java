@@ -34,7 +34,7 @@ public class RepeatCommand extends AbstractCommand{
 	public Double executeCommand() {
 		// TODO Auto-generated method stub
 		Double returnValue = 0.0;
-		if(!myCommands.isEmpty()){
+		while(!myCommands.isEmpty()){
 			Command currentCommand = myCommands.peek();
 			if(!currentCommand.isFinished()){
 				currentCommand.executeCommand();
@@ -42,6 +42,7 @@ public class RepeatCommand extends AbstractCommand{
 			returnValue = currentCommand.getValue(myTurtle);
 			myCommands.remove();
 		}
+		this.changeToFinished();
 		return returnValue;
 	}
 
