@@ -4,7 +4,7 @@ package commands;
 import backend.VariableManager;
 import coordinate.Coordinate;
 
-public class SetPositionCommand extends MoveCommand {
+public class SetPositionCommand extends AbstractCommand {
 	
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
@@ -13,9 +13,22 @@ public class SetPositionCommand extends MoveCommand {
 	}
 	
 	public Double calculateValue() {
-		return setPosition();
+		return null;//setPosition();
+	}
+
+	@Override
+	public Double getValue() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Double executeCommand() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
+	/**
 	private Double setPosition() {
 		Double updatedX = (Double) myArguments.get(0);
 		Double updatedY = (Double) myArguments.get(1);
@@ -25,5 +38,6 @@ public class SetPositionCommand extends MoveCommand {
 		return distance;
 		
 	}
+	**/
 
 }

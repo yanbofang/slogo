@@ -8,11 +8,14 @@ public abstract class MoveCommand extends AbstractCommand {
 
 	protected int myQuadrant;
 	
+	
+	public MoveCommand(String instruction, VariableManager variables) {
+		super(instruction, variables, 0);
+	}
+	
+	
 	public MoveCommand(String instruction, VariableManager variables, int numberOfExpressions) {
 		super(instruction, variables, numberOfExpressions);
-		myTurtle.setX(0);
-		myTurtle.setY(0);
-		myTurtle.setRotate(90);
 	}
 
 	@Override
@@ -34,7 +37,6 @@ public abstract class MoveCommand extends AbstractCommand {
 	
 	public abstract Double calculateValue();
 	
-
 	protected Coordinate getNewCoord(Double movement) {
 		double rotate = myTurtle.getRotate();
 		myQuadrant = 1;
@@ -69,19 +71,5 @@ public abstract class MoveCommand extends AbstractCommand {
 		myTurtle.setY(coord.getY());
 	}
 	
-	protected Double calcDistance(Coordinate firstCoord, Coordinate secondCoord) {
-		Double xDiff = firstCoord.getX() - secondCoord.getX();
-		Double yDiff = firstCoord.getY() - secondCoord.getY();
-		Double distance = Math.sqrt((xDiff*xDiff) + (yDiff*yDiff));
-		return distance;
-	}
-	
-	protected Double calcRotation(Double side1, Double side2, Double side3) {
-		Double side1Square = side1*side1;
-		Double side2Square = side2*side2;
-		Double side3Square = side3*side3;
-		Double rotationAngle = Math.acos((side1Square + side2Square - side3Square) / (2*side1*side2));
-		return rotationAngle;
-	}
 
 }

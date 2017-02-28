@@ -43,6 +43,7 @@ public class Turtle {
 	}
 	
 	public Double getRotate() {
+
 		return myImage.getRotate();
 	}
 	
