@@ -1,5 +1,7 @@
 package frontend;
 
+import java.util.Observable;
+import java.util.Observer;
 import java.util.ResourceBundle;
 
 import backend.Model;
@@ -135,5 +137,6 @@ public class View implements ViewAPI{
 		stage.setScene(scene);
 		stage.show();
 	}
+
 
 }
