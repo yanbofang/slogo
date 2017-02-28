@@ -1,6 +1,7 @@
 package commands;
 
 
+import backend.UserMethodManager;
 import backend.VariableManager;
 import coordinate.Coordinate;
 
@@ -8,14 +9,14 @@ public abstract class MoveCommand extends AbstractCommand {
 
 	protected int myQuadrant;
 	
+//	
+//	public MoveCommand(String instruction, VariableManager variables) {
+//		super(instruction, variables, 0);
+//	}
 	
-	public MoveCommand(String instruction, VariableManager variables) {
-		super(instruction, variables, 0);
-	}
 	
-	
-	public MoveCommand(String instruction, VariableManager variables, int numberOfExpressions) {
-		super(instruction, variables, numberOfExpressions);
+	public MoveCommand(String instruction, VariableManager variables, UserMethodManager methods, int numberOfExpressions) {
+		super(instruction, variables, methods, numberOfExpressions);
 	}
 
 	@Override

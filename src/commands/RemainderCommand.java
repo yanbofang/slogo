@@ -1,14 +1,14 @@
 package commands;
 
+import backend.UserMethodManager;
 import backend.VariableManager;
 
 public class RemainderCommand extends AbstractCommand {
 
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
-	public RemainderCommand(String instruction, VariableManager variables) {
-		super(instruction, variables, NUM_OF_EXPRESSIONS);
-
+	public RemainderCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 
 	@Override

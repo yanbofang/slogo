@@ -13,17 +13,19 @@ public class Parser {
 	private List<Command> myCommands;
 	private Model myModel;
 	private VariableManager myVariables;
+	private UserMethodManager myUserMethods;
 	private Turtle myTurtle;
 
 	
 
-	public Parser(String[] syntax, Model m, VariableManager variables, Turtle turtle) {
+	public Parser(String[] syntax, Model m, VariableManager variables, UserMethodManager methods, Turtle turtle) {
 		myModel = m;
 		myPatterns = new PatternParse();
 		for (String each : syntax) {
 			myPatterns.addPattern(each);
 		}
 		myVariables = variables;
+		myUserMethods = methods;
 		myFactory = new CommandFactory();
 		myCommands = new ArrayList<Command>();
 		myTurtle = turtle;
@@ -58,7 +60,7 @@ public class Parser {
 			String current = s.next();
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
-			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current), myVariables);
+			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current), myVariables, myUserMethods);
 
 			if (currentCommand != null) {
 				for (int k = 0; k < currentCommand.getNumOfExpressions(); k++) {
@@ -84,6 +86,7 @@ public class Parser {
 			return myModel.getVariable(current);
 		} else if (myModel.getMethodVariable(current) != null) {
 			List<Command> methodList = myModel.getMethodVariable(current);
+			System.out.println("here!!!!!!" + methodList);
 			currentList.addAll(methodList);
 			return methodList.get(0).getValue(myTurtle);
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
@@ -93,6 +96,7 @@ public class Parser {
 			recurseParse(s, sublist);
 			return sublist;
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
+			System.out.println("In ListEnd: " + currentList);
 			return currentList;
 		}
 		try {
