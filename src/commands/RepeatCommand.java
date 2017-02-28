@@ -6,23 +6,25 @@ import java.util.List;
 import java.util.Queue;
 
 import backend.CommandFactory;
+import backend.UserMethodManager;
 import backend.VariableManager;
 
 public class RepeatCommand extends AbstractCommand{
 
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
-	private CommandFactory myCommandFactory;
+//	private CommandFactory myCommandFactory;
 	private Queue<Command> myCommands;
 	
 
 	
-	public RepeatCommand(String instruction, VariableManager variables) {
-		super(instruction, variables, NUM_OF_EXPRESSIONS);
-		myCommandFactory = new CommandFactory();
+	public RepeatCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+//		myCommandFactory = new CommandFactory();
 	}
 	
 	@Override
 	public Double getValue() {
+		System.out.println(myArguments);
 		ArrayList<Command> commandList = (ArrayList<Command>) myArguments.get(1);
 		myCommands = new LinkedList<Command>();
 		myCommands.addAll(commandList);
@@ -34,7 +36,7 @@ public class RepeatCommand extends AbstractCommand{
 	public Double executeCommand() {
 		// TODO Auto-generated method stub
 		Double returnValue = 0.0;
-		if(!myCommands.isEmpty()){
+		while(!myCommands.isEmpty()){
 			Command currentCommand = myCommands.peek();
 			if(!currentCommand.isFinished()){
 				currentCommand.executeCommand();
@@ -42,6 +44,7 @@ public class RepeatCommand extends AbstractCommand{
 			returnValue = currentCommand.getValue(myTurtle);
 			myCommands.remove();
 		}
+		this.changeToFinished();
 		return returnValue;
 	}
 

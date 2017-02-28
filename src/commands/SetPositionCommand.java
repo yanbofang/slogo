@@ -1,6 +1,7 @@
 package commands;
 
 
+import backend.UserMethodManager;
 import backend.VariableManager;
 import coordinate.Coordinate;
 
@@ -9,8 +10,8 @@ public class SetPositionCommand extends MoveCommand {
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 	private Coordinate myCoord;
 
-	public SetPositionCommand(String instruction, VariableManager manager) {
-		super(instruction, manager, NUM_OF_EXPRESSIONS);
+	public SetPositionCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 	
 	@Override
@@ -25,6 +26,7 @@ public class SetPositionCommand extends MoveCommand {
 	
 	public Double executeCommand() {
 		myTurtle.setLocation(myCoord, false);
+		this.changeToFinished();
 		return myValue;
 		
 	}

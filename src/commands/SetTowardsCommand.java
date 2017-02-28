@@ -1,5 +1,6 @@
 package commands;
 
+import backend.UserMethodManager;
 import backend.VariableManager;
 import coordinate.Coordinate;
 
@@ -8,8 +9,8 @@ public class SetTowardsCommand extends MoveCommand {
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 	private Double myRotate;
 
-	public SetTowardsCommand(String instruction, VariableManager manager) {
-		super(instruction, manager, NUM_OF_EXPRESSIONS);
+	public SetTowardsCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 	
 	public Double calculateValue() {
@@ -27,11 +28,11 @@ public class SetTowardsCommand extends MoveCommand {
 
 		Double difference = Math.abs(myTurtle.getFutureRotate() - myRotate);
 		myTurtle.setFutureRotate(myRotate);
-		
 		return difference;
 	}
 	
 	public Double executeCommand() {
+		this.changeToFinished();
 		myTurtle.setRotate(myRotate);
 		return myValue;
 	}
