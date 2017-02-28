@@ -22,4 +22,11 @@ public interface TurtleViewerAPI extends SubcomponentAPI{
 	 * 6 hexidecimal string of color (ex: 3c3c3c)
 	 */
 	public void setBackgroundColor(String a);
+	
+	/**
+	 * Change the pen color of the turtle area
+	 * @param a
+	 * 6 hexidecimal string of color (ex: 3c3c3c)
+	 */
+	public void setPenColor(String a);
 }
