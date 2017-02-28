@@ -28,8 +28,8 @@ public class Turtle extends Observable{
 		myImage = new ImageView(turtleView);
 		myImage.setFitWidth(width);
 		myImage.setFitHeight(height);
-		myImage.setX(myWidthBounds/2.0);
-		myImage.setY(myHeightBounds/2.0);
+		myImage.setTranslateX(myWidthBounds/2.0);
+		myImage.setTranslateY(myHeightBounds/2.0);
 		myFutureRotate = myImage.getRotate();
 		myFutureLocation = new Coordinate(myImage.getX(), myImage.getY());
 	}
@@ -44,7 +44,7 @@ public class Turtle extends Observable{
 		} else if (x < 0) {
 			x += myWidthBounds;
 		}
-		myImage.setX(x);
+		myImage.setTranslateX(x);
 	}
 	
 	private void setY(double y) {
@@ -53,7 +53,7 @@ public class Turtle extends Observable{
 		} else if (y < 0) {
 			y += myHeightBounds;
 		}
-		myImage.setY(y);
+		myImage.setTranslateY(y);
 	}
 	
 	public void setLocation(Coordinate coord) {
@@ -88,7 +88,7 @@ public class Turtle extends Observable{
 	}
 	
 	public Coordinate getLocation() {
-		return new Coordinate(myImage.getX(), myImage.getY());
+		return new Coordinate(myImage.getTranslateX(), myImage.getTranslateY());
 	}
 	
 	public void setRotate(double rotate) {

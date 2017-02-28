@@ -48,7 +48,6 @@ public class Controller {
 	public void changeLanguage(String newLanguage) throws Exception {
 		String[] newSyntax = new String[] { "resources/languages/" + newLanguage, "resources/languages/Syntax" };
 		model = new Model(newSyntax, null, variables, turtle);
-		view.runView(model);
 	}
 
 	public void updateVar(String name, String value) {

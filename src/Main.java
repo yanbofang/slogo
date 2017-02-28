@@ -12,10 +12,10 @@ public class Main extends Application{
 //		controller.start();
 	}
 
-
 	public static void main(String[] args) {
 		launch(args);
 	}
+
 
 //	public static void main(String[] argv) {
 //		m.handleInput("sum sum sum 5 sum sum 1 2 4 6 7"

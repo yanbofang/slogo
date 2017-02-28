@@ -23,7 +23,7 @@ public class MakeVariableCommand extends AbstractCommand {
 	public Double getValue() {
 		myValue = (Double) myArguments.get(1);
 		checkVariable();
-		return null;
+		return myValue;
 	}
 
 	private void checkVariable() {
