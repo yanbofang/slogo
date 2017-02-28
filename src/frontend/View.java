@@ -94,7 +94,7 @@ public class View implements ViewAPI{
 
 	@Override
 	public void changePenColor(String a) {
-		
+		turtleView.setPenColor(a);
 	}
 
 	@Override
