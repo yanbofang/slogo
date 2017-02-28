@@ -18,7 +18,7 @@ public class Main extends Application{
 	public static void main(String[] argv) {
 		
 		Model m = new Model(SYNTAX, null);
-		//m.handleInput("make :f 5");
+		m.handleInput("make :f 5");
 		//m.handleInput("sum sum sum 5 sum sum 1 2 4 6 7"
 		//		+ " sum sum sum 5 6 0 9");
 		//m.handleInput("product 50 4");

@@ -14,6 +14,8 @@ public class Turtle {
 	private double myWidthBounds;
 	private double myFutureRotate;
 	private Coordinate myFutureLocation;
+	private boolean myPen;
+	private boolean showTurtle;
 	
 
 	
@@ -25,10 +27,12 @@ public class Turtle {
 		myImage = new ImageView(turtleView);
 		myImage.setFitWidth(width);
 		myImage.setFitHeight(height);
-		myImage.setX(myWidthBounds/2.0);
-		myImage.setY(myHeightBounds/2.0);
+		myImage.setTranslateX(myWidthBounds/2.0);
+		myImage.setTranslateY(myHeightBounds/2.0);
 		myFutureRotate = myImage.getRotate();
 		myFutureLocation = new Coordinate(myImage.getX(), myImage.getY());
+		myPen = true;
+		showTurtle = true;
 	}
 	
 	public Node getImage() {
@@ -41,7 +45,7 @@ public class Turtle {
 		} else if (x < 0) {
 			x += myWidthBounds;
 		}
-		myImage.setX(x);
+		myImage.setTranslateX(x);
 	}
 	
 	private void setY(double y) {
@@ -50,10 +54,13 @@ public class Turtle {
 		} else if (y < 0) {
 			y += myHeightBounds;
 		}
-		myImage.setY(y);
+		myImage.setTranslateY(y);
 	}
 	
-	public void setLocation(Coordinate coord) {
+	public void setLocation(Coordinate coord, boolean ajusted) {
+		if (!ajusted) {
+			coord = setUnadjustedLocation(coord);
+		}
 		setX(coord.getX());
 		setY(coord.getY());
 	}
@@ -66,21 +73,25 @@ public class Turtle {
 		return myFutureRotate;
 	}
 	
-	public void setUnadjustedLocation(Coordinate coord) {
-		setX(coord.getX()+myWidthBounds/2.0);
-		setY(coord.getY()+myHeightBounds/2.0);
+	private Coordinate setUnadjustedLocation(Coordinate coord) {
+		coord.setX(coord.getX()+myWidthBounds/2.0);
+		coord.setY(coord.getY()+myHeightBounds/2.0);
+		return coord;
 	}
 	
 	public Coordinate getFutureLocation() {
 		return myFutureLocation;
 	}
 	
-	public void setFutureLocation(Coordinate newFuture) {
+	public void setFutureLocation(Coordinate newFuture, boolean adjusted) {
+		if (!adjusted) {
+			newFuture = setUnadjustedLocation(newFuture);
+		}
 		myFutureLocation = newFuture;
 	}
 	
 	public Coordinate getLocation() {
-		return new Coordinate(myImage.getX(), myImage.getY());
+		return new Coordinate(myImage.getTranslateX(), myImage.getTranslateY());
 	}
 	
 	public void setRotate(double rotate) {
@@ -88,15 +99,19 @@ public class Turtle {
 	}
 	
 	public Double getRotate() {
-
 		return myImage.getRotate();
 	}
 	
-	public Double getX() {
-		return myImage.getX();
+	public boolean showTurtle() {
+		return showTurtle;
 	}
 	
-	public Double getY() {
-		return myImage.getY();
+	public boolean showPen() {
+		return myPen;
 	}
+	
+	public Coordinate getHome() {
+		return new Coordinate(myWidthBounds/2.0, myHeightBounds/2.0);
+	}
+	
 }

@@ -4,13 +4,13 @@ import backend.Turtle;
 import backend.Variable;
 import backend.VariableManager;
 
-public class MakeCommand extends AbstractCommand {
+public class MakeVariableCommand extends AbstractCommand {
 
 	private String myVariableName;
 	private Variable myVariable;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
-	public MakeCommand(String instruction, VariableManager variables) {
+	public MakeVariableCommand(String instruction, VariableManager variables) {
 		super(instruction, variables, NUM_OF_EXPRESSIONS);
 		// TODO Auto-generated constructor stub
 	}
@@ -23,7 +23,7 @@ public class MakeCommand extends AbstractCommand {
 	public Double getValue() {
 		myValue = (Double) myArguments.get(1);
 		checkVariable();
-		return null;
+		return myValue;
 	}
 
 	private void checkVariable() {

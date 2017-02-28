@@ -6,32 +6,34 @@ import coordinate.Coordinate;
 public class SetTowardsCommand extends MoveCommand {
 	
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
+	private Double myRotate;
 
 	public SetTowardsCommand(String instruction, VariableManager manager) {
 		super(instruction, manager, NUM_OF_EXPRESSIONS);
 	}
 	
 	public Double calculateValue() {
-		return setTowards();
-	}
-	
-	public Double executeCommand() {
-
 		Coordinate newDirection = new Coordinate((Double) myArguments.get(0), 
 				(Double) myArguments.get(1));
-
-		Coordinate neutralDirection = new Coordinate(myTurtle.getX(), myTurtle.getY()+10);
-		Coordinate currentPosition = new Coordinate(myTurtle.getX(), myTurtle.getY());
+		Coordinate currentPosition = myTurtle.getFutureLocation();
+		Coordinate neutralDirection = new Coordinate(currentPosition.getX(), currentPosition.getY()+10);
 		Double turtleToNew = calcDistance(newDirection, currentPosition);
 		Double turtleToNeutral = calcDistance(neutralDirection, currentPosition);
 		Double newToNeutral = calcDistance(newDirection, neutralDirection);
-		Double toRotate = Math.toDegrees(calcRotation(turtleToNew, turtleToNeutral, newToNeutral));
-		if (newDirection.getX() < myTurtle.getX()) {
-			toRotate += 180;
+		myRotate = Math.toDegrees(calcRotation(turtleToNew, turtleToNeutral, newToNeutral));
+		if (newDirection.getX() < currentPosition.getX()) {
+			myRotate += 180;
 		}
-		Double difference = Math.abs(myTurtle.getRotate() - toRotate);
-		myTurtle.setRotate(toRotate);
+
+		Double difference = Math.abs(myTurtle.getFutureRotate() - myRotate);
+		myTurtle.setFutureRotate(myRotate);
+		
 		return difference;
+	}
+	
+	public Double executeCommand() {
+		myTurtle.setRotate(myRotate);
+		return myValue;
 	}
 	
 	private Double calcRotation(Double side1, Double side2, Double side3) {

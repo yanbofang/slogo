@@ -19,13 +19,13 @@ public class BackwardCommand extends MoveCommand {
 		myCoord.setX(myCoord.getX()*-1);
 		myCoord.setY(myCoord.getY()*-1);
 		updateCoords(myCoord, myQuadrant);
-		myTurtle.setFutureLocation(myCoord);
+		myTurtle.setFutureLocation(myCoord, true);
 		return movement;
 	}
 	
 	public Double executeCommand() {
 		this.changeToFinished();
-		myTurtle.setLocation(myCoord);
+		myTurtle.setLocation(myCoord, true);
 		return myValue;
 	}
 
