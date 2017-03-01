@@ -40,6 +40,7 @@ public class Parser {
 			System.out.println(current);
 			myCommands.addAll(current);
 		}
+		System.out.println("In Parser: " + myCommands);
 		return myCommands;
 	}
 
@@ -87,7 +88,6 @@ public class Parser {
 		System.out.println(current);
 		if (myModel.getMethodVariable(current) != null) {
 			List<Command> methodList = myModel.getMethodVariable(current);
-			//System.out.println("here!!!!!!" + methodList);
 			currentList.addAll(methodList);
 			return methodList;
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
