@@ -1,6 +1,8 @@
 package commands;
 
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 import coordinate.Coordinate;
@@ -15,20 +17,13 @@ public class SetPositionCommand extends MoveCommand {
 	}
 	
 	@Override
-	public Double calculateValue() {
-		Double updatedX = (Double) myArguments.get(0);
-		Double updatedY = (Double) myArguments.get(1);
+	public Double calculateValue(List<Object> args) {
+		Double updatedX = (Double) args.get(0);
+		Double updatedY = (Double) args.get(1);
 		myCoord = new Coordinate(updatedX, updatedY);
-		Double distance = calcDistance(myCoord, myTurtle.getFutureLocation());
-		myTurtle.setFutureLocation(myCoord);
-		return distance;
-	}
-	
-	public Double executeCommand() {
+		Double distance = calcDistance(myCoord, myTurtle.getLocation(true));
 		myTurtle.setLocation(myCoord, false);
-		this.changeToFinished();
-		return myValue;
-		
+		return distance;
 	}
 
 

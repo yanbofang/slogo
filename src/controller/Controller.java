@@ -29,7 +29,6 @@ public class Controller {
 	public Controller(Stage arg0) throws Exception {
 		variables = new VariableManager();
 		view = new View(arg0, this);
-		System.out.println(view.getBounds());
 		turtle = new Turtle(25, 25, view.getBounds().getX(), view.getBounds().getY());
 		view.setTurtle(turtle.getImage());
 		userMethods = new UserMethodManager();
@@ -43,7 +42,7 @@ public class Controller {
 	}
 
 	public void handleInput(String input) {
-		System.out.println(input);
+		System.out.println(input + "THIS IS IN THE CONTROLLER");
 		model.handleInput(input);
 	}
 

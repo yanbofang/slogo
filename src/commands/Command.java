@@ -18,7 +18,7 @@ public interface Command {
 
 	Double getValue(Turtle t);
 
-	Double executeCommand();
+	Double executeCommand(Turtle turtle);
 	
 	void resetCommand();
 

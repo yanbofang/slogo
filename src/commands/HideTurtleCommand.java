@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -13,15 +15,8 @@ public class HideTurtleCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue() {
+	public Double getValue(List<Object> args) {
 		myValue = 0.0;
-		myTurtle.setFutureShow(false);
-		return myValue;
-	}
-
-	@Override
-	public Double executeCommand() {
-		this.changeToFinished();
 		myTurtle.setShow(false);
 		return myValue;
 	}

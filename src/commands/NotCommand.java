@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -13,8 +15,8 @@ public class NotCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue() {
-		Double exp1 = (Double) myArguments.get(0);
+	public Double getValue(List<Object> args) {
+		Double exp1 = (Double) args.get(0);
 		if (exp1 == 0.0) {
 			myValue = 1.0;
 		} else {
@@ -23,9 +25,4 @@ public class NotCommand extends AbstractCommand {
 		return myValue;
 	}
 
-	@Override
-	public Double executeCommand() {
-		this.changeToFinished();
-		return myValue;
-	}
 }
