@@ -17,7 +17,7 @@ public class SumCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args) {
-		return (Double) args.get(0) + (Double) myArguments.get(1);
+		return (Double) args.get(0) + (Double) args.get(1);
 	}
 
 

@@ -18,8 +18,8 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 	
 
 	@Override
-	public Double getValue() {
-		if (myUserMethods.contains((String) myArguments.get(0))){
+	public Double getValue(List<Object> args) {
+		if (myUserMethods.contains((String) args.get(0))){
 			throw new ParserException("User method already created!");
 		}
 		return 1.0;
