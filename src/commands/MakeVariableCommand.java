@@ -28,6 +28,8 @@ public class MakeVariableCommand extends AbstractCommand {
 	}
 
 	private void checkVariable() {
+
+		System.out.println(myArguments.get(0));
 		String varName = (String) myArguments.get(0);
 		if (myVariables.get(varName) != null) {
 			if (myVariables.get(varName).getValue() == myValue) {

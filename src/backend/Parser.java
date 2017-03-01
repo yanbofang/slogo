@@ -32,6 +32,7 @@ public class Parser {
 	}
 
 	public List<Command> parse(String input) {
+		System.out.println(input);
 		myCommands.clear();
 		Scanner s = new Scanner(input);
 		while (s.hasNext()) {
@@ -61,7 +62,7 @@ public class Parser {
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
 			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current), myVariables, myUserMethods);
-
+			//System.out.println(current);
 			if (currentCommand != null) {
 				for (int k = 0; k < currentCommand.getNumOfExpressions(); k++) {
 					Object toBeAdded = recurseParse(s, currentList);
@@ -86,9 +87,9 @@ public class Parser {
 			return myModel.getVariable(current);
 		} else if (myModel.getMethodVariable(current) != null) {
 			List<Command> methodList = myModel.getMethodVariable(current);
-			System.out.println("here!!!!!!" + methodList);
-			currentList.addAll(methodList);
-			return methodList.get(0).getValue(myTurtle);
+			//System.out.println("here!!!!!!" + methodList);
+			//currentList.addAll(methodList);
+			return methodList;
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
 			return current;
 		} else if (myPatterns.getSymbol(current).equals("ListStart")) {
