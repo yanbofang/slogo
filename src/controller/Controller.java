@@ -41,6 +41,7 @@ public class Controller {
 	}
 
 	public void handleInput(String input) {
+		System.out.println(input);
 		model.handleInput(input);
 	}
 

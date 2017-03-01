@@ -96,8 +96,7 @@ public class Parser {
 			recurseParse(s, sublist);
 			return sublist;
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
-			System.out.println("In ListEnd: " + currentList);
-			return currentList;
+			return null;
 		}
 		try {
 			return Double.parseDouble(current);
