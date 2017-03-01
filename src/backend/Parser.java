@@ -69,8 +69,6 @@ public class Parser {
 					if (toBeAdded == null) {
 						toBeAdded = recurseParse(s, currentList);
 					}
-					System.out.println("TO BE ADDED");
-					System.out.println(toBeAdded);
 					currentCommand.add(toBeAdded);
 				}
 				currentList.add(currentCommand);
@@ -89,7 +87,6 @@ public class Parser {
 			return myModel.getVariable(current);
 		} else if (myModel.getMethodVariable(current) != null) {
 			List<Command> methodList = myModel.getMethodVariable(current);
-			//System.out.println("here!!!!!!" + methodList);
 			currentList.addAll(methodList);
 			return methodList;
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
