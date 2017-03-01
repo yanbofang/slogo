@@ -1,0 +1,55 @@
+VBox {
+	-fx-background-color: #4a4f4e;
+}
+
+.root {
+	-fx-background-color: #4a4f4e;
+}
+
+.scroll-pane {
+	-fx-background: #4a4f4e;
+	-fx-border-color: #343837;
+}
+
+.scroll-bar {
+	-fx-background-color: #4a4f4e;
+}
+
+TilePane {
+	-fx-background-color: #4a4f4e;
+	-fx-border-color: #343837;
+}
+
+.btn {
+	-fx-text-fill: #000000;
+}
+
+.combo-box {
+	-fx-background-color: #333333;
+	-fx-text-fill: #5edbbc;
+}
+
+.combo-box-popup {
+	-fx-background-color: #333333;
+	-fx-text-fill: #5edbbc;
+}
+
+.combo-box .list-cell {
+	-fx-background-color: #333333;
+	-fx-text-fill: #5edbbc;
+}
+
+
+.label {
+	-fx-text-fill: #333333;
+}
+
+#submit {
+	-fx-text-fill: #ffffff;
+	-fx-background-color: #45e03a;
+	-fx-background-radius: 45;
+}
+
+#submit:hover {
+	-fx-background-color: #3bbf31;
+}

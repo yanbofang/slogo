@@ -22,7 +22,7 @@ public class TurtleView implements TurtleViewerAPI{
 
 	private View view;
 	private ResourceBundle resource;
-	private VBox viewer;
+	private Pane viewer;
 	private ArrayList<Line> lines;
 	private Color penColor;
 	
@@ -30,21 +30,19 @@ public class TurtleView implements TurtleViewerAPI{
 	public TurtleView(View viewIn) {
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
-		viewer = new VBox();
+		viewer = new Pane();
 		viewer.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		lines = new ArrayList<Line>();
+		penColor = Color.BLACK;
 	}
 	
 	
 	public void changePosition(Coordinate oldC, Coordinate newC) {
-		Line newLine = new Line();
-		newLine.setStartX(oldC.getX());
-		newLine.setStartY(oldC.getY());
-		newLine.setEndX(oldC.getX());
-		newLine.setEndY(oldC.getY());
+		Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
 		newLine.setStroke(penColor);
 		lines.add(newLine);
 		viewer.getChildren().add(newLine);
+		System.out.println("test");
 	}
 	
 	public void clear() {

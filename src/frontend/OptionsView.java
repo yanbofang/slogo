@@ -35,7 +35,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class OptionsView implements SubcomponentAPI{
-	
+
 	private Stage s;
 	private Scene scene;
 	private ResourceBundle resource;
