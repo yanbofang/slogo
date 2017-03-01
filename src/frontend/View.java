@@ -113,6 +113,7 @@ public class View implements ViewAPI {
 
 	@Override
 	public void changeImage(Image a) {
+		controller.changeImage(a);
 	}
 
 	@Override
@@ -122,11 +123,36 @@ public class View implements ViewAPI {
 
 	@Override
 	public void changeLanguage(String a) {
+		try {
+			controller.changeLanguage(a);
+		} catch (Exception e) {
+			this.showError(resource.getString("WrongLanguage"));
+		}
+		this.clearLines();
+		this.clearVariables();
+		this.clearMethods();
+		this.clearHistory();
 	}
 
 	@Override
 	public void runCommand(String a) {
 		controller.handleInput(a);
+	}
+	
+	public void clearVariables(){
+		variablesView.clearVars();
+	}
+	
+	public void clearMethods(){
+		methodsView.clearMethods();
+	}
+	
+	public void clearHistory(){
+		promptView.clearHistory();
+	}
+	
+	public void clearLines(){
+		turtleView.clear();
 	}
 
 	public void setPen(Boolean penIn) {

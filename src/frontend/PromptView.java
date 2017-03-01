@@ -10,6 +10,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.control.TextArea;
@@ -31,10 +32,15 @@ public class PromptView implements SubcomponentAPI{
 		view = viewIn; 
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		wholeView = new VBox();
+		wholeView.setAlignment(Pos.TOP_CENTER);
 		promptSetup();
 		historySetup();
 		buttonSetup();
 		wholeView.getChildren().addAll(scrollPane, prompt, submitBtn);
+	}
+	
+	public void clearHistory(){
+		history.getChildren().clear();
 	}
 	
 	private void promptSetup() {
@@ -52,9 +58,10 @@ public class PromptView implements SubcomponentAPI{
 		layout.setSpacing(20);
 		layout.setPrefHeight(425);
 		scrollPane.setContent(layout);
-		//scrollPane.setFitToWidth(true);
+		scrollPane.setFitToWidth(true);
 		history = new VBox();	
-		layout.getChildren().add(history);
+		Label title = new Label("Command History\n(click to execute)");
+		layout.getChildren().addAll(title,history);
 	}
 	
 	private void updateHistory(String text) {

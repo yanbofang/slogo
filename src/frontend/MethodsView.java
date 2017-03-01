@@ -58,6 +58,11 @@ public class MethodsView implements MethodsViewAPI{
 		}
 	}
 	
+	public void clearMethods(){
+		hyperlinks.clear();
+		vBox.getChildren().clear();
+	}
+	
 	private void clickedMethod(Hyperlink source){
 		String method = source.getText();
 		view.useUMethod(method);

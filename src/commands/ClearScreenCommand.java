@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import coordinate.Coordinate;
 import backend.UserMethodManager;
 import backend.VariableManager;
@@ -16,14 +18,8 @@ public class ClearScreenCommand extends MoveCommand {
 	}
 
 	@Override
-	public Double calculateValue() {
+	public Double calculateValue(List<Object> args) {
 		myCoord = toHome();
-		return myValue;
-	}
-
-	@Override
-	public Double executeCommand() {
-		this.changeToFinished();
 		myTurtle.setLocation(myCoord, false);
 		myTurtle.setClear(true);
 		return myValue;

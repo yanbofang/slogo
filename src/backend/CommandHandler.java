@@ -38,7 +38,7 @@ public class CommandHandler {
 			if (currentCommand.isFinished()) {
 				myCommands.remove();
 			} else {
-				current = currentCommand.executeCommand();
+				current = currentCommand.executeCommand(myTurtle);
 				System.out.println(current + "   *print statement in CommandHandler");
 			}
 		}

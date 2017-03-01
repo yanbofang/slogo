@@ -1,6 +1,10 @@
 package commands;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+
+import backend.ParserException;
 import backend.Turtle;
 import backend.UserMethodManager;
 import backend.VariableManager;
@@ -32,15 +36,7 @@ public abstract class AbstractCommand implements Command{
 	
 	public void add(Object ... args) {
 		for (Object each : args) {
-			try {
-				myArguments.add((Double) each);
-			}  catch (Exception e) {
-				 try {
-					 myArguments.add(Double.parseDouble((String) each));
-				 } catch (Exception f) {
-					 myArguments.add(each);
-				 }
-			}
+			myArguments.add(each);
 		}
 	}
 	
@@ -71,14 +67,40 @@ public abstract class AbstractCommand implements Command{
 
 	public Double getValue(Turtle turtle) {
 		myTurtle = turtle;
-		return getValue();
+		return getValue(myArguments);
 	}
-	public abstract Double getValue();
+	public abstract Double getValue(List<Object> args);
 
 	/**
 	 * 
 	 * @return - value that we want to send to UI to be displayed
 	 */
-	public abstract Double executeCommand();
+	public Double executeCommand(Turtle turtle) {
+		myTurtle = turtle;
+		ArrayList<Object> newArgs = new ArrayList<Object>();
+		for (Object o: myArguments) {
+			if (o instanceof AbstractCommand) {
+				Command c = (Command) o;
+				newArgs.add(c.executeCommand(turtle));
+			} else {
+				try {
+					newArgs.add((Double) o);
+				}  catch (Exception e) {
+					 try {
+						 newArgs.add(Double.parseDouble((String) o));
+					 } catch (Exception f) {
+						 try {
+							 newArgs.add(myVariables.get((String) o).getValue());
+						 } catch (Exception g) {
+							 newArgs.add(o);
+						 }
+					}
+				}
+			}
+		}
+		System.out.println(newArgs);
+		this.changeToFinished();
+		return getValue(newArgs);
+	}
 
 }

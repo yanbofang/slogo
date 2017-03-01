@@ -26,6 +26,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.TilePane;
 import javafx.scene.layout.VBox;
@@ -40,7 +41,7 @@ public class OptionsView implements SubcomponentAPI{
 	private Scene scene;
 	private ResourceBundle resource;
 	private View view;
-	private TilePane buttonPanel;
+	private HBox buttonPanel;
 	private String backgroundColor = "white";
 	private String penColor = "black";
 	private String lang = "English";
@@ -63,7 +64,7 @@ public class OptionsView implements SubcomponentAPI{
 	public OptionsView(View viewIn){
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
-		buttonPanel = new TilePane(Orientation.HORIZONTAL);
+		buttonPanel = new HBox();
 		WebView browser = new WebView();
 		webEngine = browser.getEngine();
 		
@@ -114,6 +115,7 @@ public class OptionsView implements SubcomponentAPI{
 		});
 		
 		Button helpBtn = new Button(resource.getString("Help"));
+		helpBtn.setId("help");
 		buttonPanel.getChildren().add(helpBtn);
 		helpBtn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override

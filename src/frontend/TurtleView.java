@@ -42,7 +42,6 @@ public class TurtleView implements TurtleViewerAPI{
 		newLine.setStroke(penColor);
 		lines.add(newLine);
 		viewer.getChildren().add(newLine);
-		System.out.println("test");
 	}
 	
 	public void clear() {

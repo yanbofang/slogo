@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -12,14 +14,8 @@ public class ShowTurtleCommand extends AbstractCommand {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 	@Override
-	public Double getValue() {
+	public Double getValue(List<Object> args) {
 		myValue = 1.0;
-		myTurtle.setFutureShow(true);
-		return myValue;
-	}
-	@Override
-	public Double executeCommand() {
-		this.changeToFinished();
 		myTurtle.setShow(true);
 		return myValue;
 	}

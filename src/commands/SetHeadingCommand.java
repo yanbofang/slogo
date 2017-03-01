@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -12,17 +14,12 @@ public class SetHeadingCommand extends MoveCommand {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 	
-	public Double calculateValue() {
-		Double degrees = (Double) myArguments.get(0);
-		Double difference = myTurtle.getFutureRotate() - degrees;
-		myTurtle.setFutureRotate(degrees);;
+	public Double calculateValue(List<Object> args) {
+		Double degrees = (Double) args.get(0);
+		Double difference = myTurtle.getRotate() - degrees;
+		myTurtle.setRotate(degrees);;
 		return difference;
 	}
-	
-	public Double executeCommand() {
-		myTurtle.setRotate((Double) myArguments.get(0));
-		this.changeToFinished();
-		return myValue;
-	}
+
 
 }

@@ -10,6 +10,7 @@ import frontend.TurtleObserver;
 import frontend.UserMethodObserver;
 import frontend.VariableManagerObserver;
 import frontend.View;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Controller {
@@ -28,7 +29,6 @@ public class Controller {
 	public Controller(Stage arg0) throws Exception {
 		variables = new VariableManager();
 		view = new View(arg0, this);
-		System.out.println(view.getBounds());
 		turtle = new Turtle(25, 25, view.getBounds().getX(), view.getBounds().getY());
 		view.setTurtle(turtle.getImage());
 		userMethods = new UserMethodManager();
@@ -42,7 +42,7 @@ public class Controller {
 	}
 
 	public void handleInput(String input) {
-		System.out.println(input);
+		System.out.println(input + "THIS IS IN THE CONTROLLER");
 		model.handleInput(input);
 	}
 
@@ -61,6 +61,10 @@ public class Controller {
 
 	public void updateVar(String name, String value) {
 		view.updateVar(name, value);
+	}
+	
+	public void changeImage(Image a){
+		turtle.setImage(a);
 	}
 
 	private void addVariableManagerObserver() {
