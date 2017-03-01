@@ -24,16 +24,16 @@ public class Turtle extends Observable{
 	
 
 	
-	public Turtle(double width, double height, double heightBounds, double widthBounds) {
+	public Turtle(double width, double height, double widthBounds, double heightBounds) {
 		//myImage = new ImageView();
 		Image turtleView = new Image(getClass().getClassLoader().getResourceAsStream(myTurtlePicture));
-		myHeightBounds = heightBounds;
-		myWidthBounds = widthBounds;
+		myHeightBounds = heightBounds - height;
+		myWidthBounds = widthBounds - width;
 		myImage = new ImageView(turtleView);
 		myImage.setFitWidth(width);
 		myImage.setFitHeight(height);
-		myImage.setTranslateX(myHeightBounds/2.0);
-		myImage.setTranslateY(myWidthBounds/2.0);
+		myImage.setTranslateX(myWidthBounds/2.0);
+		myImage.setTranslateY(myHeightBounds/2.0);
 		myFutureRotate = myImage.getRotate();
 		myFutureLocation = new Coordinate(0.0, 0.0);
 		myPen = true;

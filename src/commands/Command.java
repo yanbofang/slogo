@@ -19,6 +19,8 @@ public interface Command {
 	Double getValue(Turtle t);
 
 	Double executeCommand();
+	
+	void resetCommand();
 
 	Integer getNumOfExpressions();
 }
