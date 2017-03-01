@@ -77,7 +77,7 @@ public abstract class MoveCommand extends AbstractCommand {
 	protected Coordinate toHome() {
 		Coordinate coord = new Coordinate(0.0,0.0);
 		myValue = calcDistance(coord, myTurtle.getLocation(true));
-		myTurtle.setLocation(coord, true);
+		myTurtle.setLocation(coord,false);
 		return coord;
 	}
 
