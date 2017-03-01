@@ -19,7 +19,7 @@ public class UserMethodObserver implements Observer {
 	public void update(Observable obs, Object obj) {
 		if (obs == ov) {
 			ArrayList<String> lst = (ArrayList<String>) obj;
-			myView.updateUMethod(lst.get(0), lst.get(1));
+			myView.updateUMethod(lst.get(0));
 		}
 	}
 

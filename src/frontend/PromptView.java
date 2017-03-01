@@ -31,6 +31,7 @@ public class PromptView implements SubcomponentAPI{
 		view = viewIn; 
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		wholeView = new VBox();
+		wholeView.setAlignment(Pos.TOP_RIGHT);
 		promptSetup();
 		historySetup();
 		buttonSetup();
