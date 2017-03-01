@@ -133,9 +133,7 @@ public class Turtle extends Observable{
 	
 	public void setPen(boolean b) {
 		myPen = b;
-//		boolean temp = 
-//		setChanged();
-//		notifyObservers(temp);
+		this.penChange();
 	}
 	
 	public void setFuturePen(boolean b) {
@@ -164,5 +162,14 @@ public class Turtle extends Observable{
 	
 	public void setClear(boolean b) {
 		myClear = b;
+		if(b){
+			penChange();
+		}
+	}
+	
+	private void penChange(){
+		this.setChanged();
+		boolean temp[] = {myClear, myPen};
+		notifyObservers(temp);
 	}
 }

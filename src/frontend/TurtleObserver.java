@@ -23,7 +23,12 @@ public class TurtleObserver implements Observer {
 				myView.updateTurtle(temp.get(0), temp.get(1));
 			}
 			else if(obj instanceof boolean[]){
-				
+				boolean[] temp = (boolean[]) obj;
+				if(temp[0]){
+					myView.clearLines();
+					ov.setClear(false);
+				}
+				myView.setPen(temp[1]);
 			}
 		}
 	}
