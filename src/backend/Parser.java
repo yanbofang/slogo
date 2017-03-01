@@ -84,13 +84,12 @@ public class Parser {
 
 	private Object getDataObject(String current, List<Command> currentList, Scanner s) {
 		if (myModel.getVariable(current) != null) {
-			System.out.println(current);
 			return myModel.getVariable(current);
 		} else if (myModel.getMethodVariable(current) != null) {
 			List<Command> methodList = myModel.getMethodVariable(current);
-			System.out.println("here!!!!!!" + methodList);
-			currentList.addAll(methodList);
-			return methodList.get(0).getValue(myTurtle);
+			//System.out.println("here!!!!!!" + methodList);
+			//currentList.addAll(methodList);
+			return methodList;
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
 			return current;
 		} else if (myPatterns.getSymbol(current).equals("ListStart")) {

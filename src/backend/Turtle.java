@@ -19,6 +19,8 @@ public class Turtle extends Observable{
 	private Coordinate myFutureLocation;
 	private boolean myPen;
 	private boolean showTurtle;
+	private boolean myFuturePen;
+	private boolean myFutureShow;
 	
 
 	
@@ -35,7 +37,9 @@ public class Turtle extends Observable{
 		myFutureRotate = myImage.getRotate();
 		myFutureLocation = new Coordinate(0.0, 0.0);
 		myPen = true;
+		myFuturePen = true;
 		showTurtle = true;
+		myFutureShow = showTurtle;
 	}
 	
 	public Node getImage() {
@@ -121,8 +125,19 @@ public class Turtle extends Observable{
 		return myPen;
 	}
 	
-	public Coordinate getHome() {
-		return new Coordinate(myWidthBounds/2.0, myHeightBounds/2.0);
+	public void setPen(boolean b) {
+		myPen = b;
 	}
 	
+	public void setFuturePen(boolean b) {
+		myFuturePen = b;
+	}
+	
+	public void setShow(boolean b) {
+		showTurtle = b;
+	}
+	
+	public void setFutureShow(boolean b) {
+		myFutureShow = b;
+	}
 }
