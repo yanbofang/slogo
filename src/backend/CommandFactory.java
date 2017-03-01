@@ -8,7 +8,6 @@ public class CommandFactory {
 	
 	public Command reflectCommand(String s, VariableManager variables, UserMethodManager methods) {
 		try {
-			System.out.println(s);
 			Class<?> clazz = Class.forName( COMMAND_PACKAGE + s + "Command" );
 			return (Command) clazz.getDeclaredConstructor(java.lang.String.class, backend.VariableManager.class, backend.UserMethodManager.class).newInstance(s, variables, methods);
 		} catch (Exception e) {

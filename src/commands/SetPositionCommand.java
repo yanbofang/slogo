@@ -9,7 +9,6 @@ public class SetPositionCommand extends MoveCommand {
 	
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 	private Coordinate myCoord;
-	private Double myDistance;
 
 	public SetPositionCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
@@ -20,15 +19,15 @@ public class SetPositionCommand extends MoveCommand {
 		Double updatedX = (Double) myArguments.get(0);
 		Double updatedY = (Double) myArguments.get(1);
 		myCoord = new Coordinate(updatedX, updatedY);
-		myDistance = calcDistance(myCoord, myTurtle.getFutureLocation());
+		Double distance = calcDistance(myCoord, myTurtle.getFutureLocation());
 		myTurtle.setFutureLocation(myCoord);
-		return myDistance;
+		return distance;
 	}
 	
 	public Double executeCommand() {
-		myTurtle.setLocation(myCoord);
+		myTurtle.setLocation(myCoord, false);
 		this.changeToFinished();
-		return myDistance;
+		return myValue;
 		
 	}
 

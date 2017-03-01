@@ -17,7 +17,6 @@ public class ForwardCommand extends MoveCommand {
 	public Double calculateValue() {
 		Double movement = (Double) myArguments.get(0);
 		myCoord = getNewCoord(movement);
-		updateCoords(myCoord, myQuadrant);
 		myTurtle.setFutureLocation(myCoord);
 		return movement;
 	}
@@ -25,11 +24,7 @@ public class ForwardCommand extends MoveCommand {
 	@Override
 	public Double executeCommand() {
 		this.changeToFinished();
-		System.out.println(myTurtle.getLocation().getX());
-
-		System.out.println(myTurtle.getLocation().getY());
-		System.out.println(myCoord.getY());
-		myTurtle.setLocation(myCoord);
+		myTurtle.setLocation(myCoord, false);
 		return myValue;
 	}
 
