@@ -75,21 +75,21 @@ Pane {
 }
 
 .label {
-	-fx-text-fill: #5edbbc;
+	-fx-text-fill: #45e03a;
 }
 
 #help {
 	-fx-background-color: #333333;
 	-fx-text-fill: #5edbbc;
-	-fx-background-radius: 45;
+	//-fx-background-radius: 45;
 }
 
 #submit {
 	-fx-text-fill: #4a4f4e;
-	-fx-background-color: #45e03a;
+	-fx-background-color: #efe115;//#45e03a;
 	-fx-background-radius: 45;
 }
 
 #submit:hover {
-	-fx-background-color: #3bbf31;
+	-fx-background-color: #bfb411;
 }

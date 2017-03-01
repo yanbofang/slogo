@@ -22,6 +22,9 @@ public class TurtleObserver implements Observer {
 				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) obj;
 				myView.updateTurtle(temp.get(0), temp.get(1));
 			}
+			else if(obj instanceof boolean[]){
+				
+			}
 		}
 	}
 

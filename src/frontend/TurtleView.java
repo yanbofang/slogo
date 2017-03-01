@@ -33,12 +33,13 @@ public class TurtleView implements TurtleViewerAPI{
 		viewer = new Pane();
 		viewer.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		lines = new ArrayList<Line>();
-		penColor = Color.BLACK;
+		penColor = Color.RED;
 	}
 	
 	
 	public void changePosition(Coordinate oldC, Coordinate newC) {
 		Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
+		System.out.println(penColor.toString());
 		newLine.setStroke(penColor);
 		lines.add(newLine);
 		viewer.getChildren().add(newLine);

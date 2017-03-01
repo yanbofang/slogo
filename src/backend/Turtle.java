@@ -48,6 +48,10 @@ public class Turtle extends Observable{
 		return myImage;
 	}
 	
+	public void setImage(Image a) {
+		myImage.setImage(a);
+	}
+	
 	private void setX(double x) {
 		if (x > myWidthBounds) {
 			x -= myWidthBounds;
