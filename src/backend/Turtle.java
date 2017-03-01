@@ -107,8 +107,8 @@ public class Turtle extends Observable{
 	}
 	
 	public Coordinate getLocation() {
-		return new Coordinate(myImage.getTranslateX() + myHeightBounds/2.0,
-				myImage.getTranslateY() + myWidthBounds/2.0);
+		return new Coordinate(myImage.getTranslateX() + myImage.getFitWidth()/2,
+				myImage.getTranslateY() + myImage.getFitHeight()/2);
 	}
 	
 	public void setRotate(double rotate) {
