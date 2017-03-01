@@ -19,6 +19,7 @@ public class LeftCommand extends MoveCommand {
 	}
 	
 	public Double executeCommand() {
+		this.changeToFinished();
 		myTurtle.setRotate(myTurtle.getRotate() - myValue);
 		return myValue;
 	}

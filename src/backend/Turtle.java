@@ -21,6 +21,7 @@ public class Turtle extends Observable{
 	private boolean showTurtle;
 	private boolean myFuturePen;
 	private boolean myFutureShow;
+	private boolean myClear;
 	
 
 	
@@ -40,6 +41,7 @@ public class Turtle extends Observable{
 		myFuturePen = true;
 		showTurtle = true;
 		myFutureShow = showTurtle;
+		myClear = false;
 	}
 	
 	public Node getImage() {
@@ -133,11 +135,27 @@ public class Turtle extends Observable{
 		myFuturePen = b;
 	}
 	
+	public boolean getFuturePen() {
+		return myFuturePen;
+	}
+	
 	public void setShow(boolean b) {
 		showTurtle = b;
 	}
 	
 	public void setFutureShow(boolean b) {
 		myFutureShow = b;
+	}
+	
+	public boolean getFutureShow() {
+		return myFutureShow;
+	}
+	
+	public boolean getClear() {
+		return myClear;
+	}
+	
+	public void setClear(boolean b) {
+		myClear = b;
 	}
 }

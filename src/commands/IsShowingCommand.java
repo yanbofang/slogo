@@ -1,31 +1,30 @@
 package commands;
 
-import coordinate.Coordinate;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
-public class HomeCommand extends MoveCommand {
-	
+public class IsShowingCommand extends AbstractCommand {
+
 	private static final Integer NUM_OF_EXPRESSIONS = 0;
-	private Coordinate myCoord;
-	
-	public HomeCommand(String instruction, VariableManager variables,
+	public IsShowingCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-	}
-
-	@Override
-	public Double calculateValue() {
-		myCoord = toHome();
-		return myValue;
+		
 	}
 	
+	@Override
+	public Double getValue() {
+		if (myTurtle.getFutureShow()) {
+			myValue = 1.0;
+		} else {
+			myValue = 0.0;
+		}
+		return myValue;
+	}
 	@Override
 	public Double executeCommand() {
 		this.changeToFinished();
-		myTurtle.setLocation(myCoord, false);
 		return myValue;
 	}
 
-	
 }
