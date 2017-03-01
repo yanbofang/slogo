@@ -1,13 +1,14 @@
 package commands;
 
+import backend.UserMethodManager;
 import backend.VariableManager;
 
 public class RightCommand extends MoveCommand {
 	
 	private static final Integer NUM_OF_EXPRESSIONS = 1;
 
-	public RightCommand(String instruction, VariableManager manager) {
-		super(instruction, manager, NUM_OF_EXPRESSIONS);
+	public RightCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 	
 	public Double calculateValue() {
@@ -18,6 +19,7 @@ public class RightCommand extends MoveCommand {
 	
 	public Double executeCommand() {
 		myTurtle.setRotate(myTurtle.getRotate() + myValue);
+		this.changeToFinished();
 		return myValue;
 	}
 	

@@ -44,7 +44,6 @@ public class VariablesView implements VariablesViewAPI{
 		Label title = new Label(resource.getString("VariableTitle"));
 		title.setTextAlignment(TextAlignment.CENTER);
 		layout.getChildren().addAll(title,vBox);
-
 	}
 
 	@Override

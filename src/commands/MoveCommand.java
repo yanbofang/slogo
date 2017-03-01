@@ -1,6 +1,7 @@
 package commands;
 
 
+import backend.UserMethodManager;
 import backend.VariableManager;
 import coordinate.Coordinate;
 
@@ -8,14 +9,14 @@ public abstract class MoveCommand extends AbstractCommand {
 
 	protected int myQuadrant;
 	
+//	
+//	public MoveCommand(String instruction, VariableManager variables) {
+//		super(instruction, variables, 0);
+//	}
 	
-	public MoveCommand(String instruction, VariableManager variables) {
-		super(instruction, variables, 0);
-	}
 	
-	
-	public MoveCommand(String instruction, VariableManager variables, int numberOfExpressions) {
-		super(instruction, variables, numberOfExpressions);
+	public MoveCommand(String instruction, VariableManager variables, UserMethodManager methods, int numberOfExpressions) {
+		super(instruction, variables, methods, numberOfExpressions);
 	}
 
 	@Override
@@ -34,7 +35,7 @@ public abstract class MoveCommand extends AbstractCommand {
 	public abstract Double calculateValue();
 	
 	protected Coordinate getNewCoord(Double movement) {
-		double rotate = myTurtle.getRotate();
+		double rotate = myTurtle.getFutureRotate();
 		myQuadrant = 1;
 		while (rotate - 90 >= 0) {
 			rotate -= 90;
@@ -43,21 +44,26 @@ public abstract class MoveCommand extends AbstractCommand {
 		if (myQuadrant == 1 || myQuadrant == 3) {
 			rotate = 90 - rotate;
 		}
-		Double newY = (movement * Math.sin(Math.toRadians(rotate))) + myTurtle.getY();
-		Double newX = (movement * Math.cos(Math.toRadians(rotate))) + myTurtle.getX();
+		Coordinate currLocation = myTurtle.getFutureLocation();
+		Coordinate movementCoord = new Coordinate(movement * Math.cos(Math.toRadians(rotate)),
+				movement * Math.sin(Math.toRadians(rotate)));
+		updateCoords(movementCoord, myQuadrant);
+		Double newX = movementCoord.getX() + currLocation.getX();
+		Double newY = movementCoord.getY() + currLocation.getY();
+		
 		Coordinate coord = new Coordinate(newX, newY);
 		return coord;
 	}
 	
 	protected void updateCoords(Coordinate coord, int quadrant) {
 		switch (quadrant) {
-		case 1: break;
-		case 2: coord.setY(coord.getY()*-1);
+		case 1: coord.setY(coord.getY()*-1);
 				break;
+		case 2: break;
 		case 3: coord.setX(coord.getX()*-1); 
-				coord.setY(coord.getY()*-1);
 				break;
-		case 4: coord.setX(coord.getX()*-1); 
+		case 4: coord.setX(coord.getX()*-1);
+				coord.setY(coord.getY()*-1);
 				break;
 		}
 	}

@@ -2,6 +2,7 @@ package commands;
 
 import java.util.ArrayList;
 import backend.Turtle;
+import backend.UserMethodManager;
 import backend.VariableManager;
 
 public abstract class AbstractCommand implements Command{
@@ -14,16 +15,18 @@ public abstract class AbstractCommand implements Command{
 	protected Double myValue;
 	protected VariableManager myVariables;
 	protected Integer myNumOfExpressions;
+	protected UserMethodManager myUserMethods;
 
-	public AbstractCommand(String instruction, VariableManager variables) {
+	public AbstractCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		myArguments = new ArrayList<Object>();
 		myVariables = variables;
 		myInstruction = instruction.toLowerCase();
+		myUserMethods = methods;
 		finished = false;
 	}
 	
-	public AbstractCommand(String instruction, VariableManager variables, int numOfExpressions){
-		this(instruction, variables);
+	public AbstractCommand(String instruction, VariableManager variables, UserMethodManager methods, int numOfExpressions){
+		this(instruction, variables, methods);
 		myNumOfExpressions = numOfExpressions;
 	}
 	

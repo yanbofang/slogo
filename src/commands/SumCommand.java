@@ -1,13 +1,14 @@
 package commands;
 
+import backend.UserMethodManager;
 import backend.VariableManager;
 
 public class SumCommand extends AbstractCommand {
 
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
-	public SumCommand(String instruction, VariableManager variables) {
-		super(instruction, variables, NUM_OF_EXPRESSIONS);
+	public SumCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 
 	@Override
