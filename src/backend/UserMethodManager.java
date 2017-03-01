@@ -19,9 +19,7 @@ public class UserMethodManager extends Observable {
 	public void add(String key, UserMethod method) {
 		myMethodMap.put(key, method);
 		setChanged();
-		String commands = String.join(" ", method.getListOfCommands().toString());
-		System.out.println("!!!!!!!!!!" +commands);
-		notifyObservers(new ArrayList<String> (Arrays.asList(key, commands)));
+		notifyObservers(key);
 	}
 
 	public UserMethod get(String key) {
