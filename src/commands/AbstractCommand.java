@@ -75,12 +75,13 @@ public abstract class AbstractCommand implements Command{
 	 * 
 	 * @return - value that we want to send to UI to be displayed
 	 */
-	public Double executeCommand() {
+	public Double executeCommand(Turtle turtle) {
+		myTurtle = turtle;
 		ArrayList<Object> newArgs = new ArrayList<Object>();
 		for (Object o: myArguments) {
 			if (o instanceof AbstractCommand) {
 				Command c = (Command) o;
-				newArgs.add(c.executeCommand());
+				newArgs.add(c.executeCommand(turtle));
 			} else {
 				try {
 					newArgs.add((Double) o);
@@ -91,12 +92,13 @@ public abstract class AbstractCommand implements Command{
 						 try {
 							 newArgs.add(myVariables.get((String) o).getValue());
 						 } catch (Exception g) {
-							 throw new ParserException("WRONG TYPE");
+							 newArgs.add(o);
 						 }
 					}
 				}
 			}
 		}
+		System.out.println(newArgs);
 		this.changeToFinished();
 		return getValue(newArgs);
 	}

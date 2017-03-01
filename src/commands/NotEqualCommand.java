@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -13,9 +15,9 @@ public class NotEqualCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue() {
-		Double exp1 = (Double) myArguments.get(0);
-		Double exp2 = (Double) myArguments.get(1);
+	public Double getValue(List<Object> args) {
+		Double exp1 = (Double) args.get(0);
+		Double exp2 = (Double) args.get(1);
 		if (exp1 != exp2) {
 			myValue = 1.0;
 		} else {
@@ -24,9 +26,4 @@ public class NotEqualCommand extends AbstractCommand {
 		return myValue;
 	}
 
-	@Override
-	public Double executeCommand() {
-		this.changeToFinished();
-		return myValue;
-	}
 }

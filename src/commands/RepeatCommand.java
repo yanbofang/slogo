@@ -21,21 +21,21 @@ public class RepeatCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue() {
-		ArrayList<Command> commandList = (ArrayList<Command>) myArguments.get(1);
+	public Double getValue(List<Object> args) {
+		ArrayList<Command> commandList = (ArrayList<Command>) args.get(1);
 		myCommands = new LinkedList<Command>();
 		myCommands.addAll(commandList);
+		
 		// Haven't tested, myTurtle might be null if there is an error?
-		return (commandList.isEmpty()) ? 0.0 : commandList.get(commandList.size() - 1).getValue(myTurtle);
+		return runCommands((Double) args.get(0));
 	}
 
-	@Override
-	public Double executeCommand() {
-		// TODO Auto-generated method stub
+	
+	private Double runCommands(Double repeatTimes) {
 		Double returnValue = 0.0;
 		Queue<Command> tempCommands = new LinkedList<Command>();
 		tempCommands.addAll(myCommands);
-		for (int i = 0; i < (Double) myArguments.get(0); i++) {
+		for (int i = 0; i < repeatTimes; i++) {
 			myCommands.addAll(tempCommands);
 			for (Command c : myCommands) {
 				c.resetCommand();
@@ -43,16 +43,14 @@ public class RepeatCommand extends AbstractCommand {
 			while (!myCommands.isEmpty()) {
 				Command currentCommand = myCommands.peek();
 				if (!currentCommand.isFinished()) {
-					currentCommand.executeCommand();
-					System.out.println(currentCommand + "THIS IS IN REPEAT COMMAND" + 
-							currentCommand.getArguments(0));
+					currentCommand.executeCommand(myTurtle);
+					System.out.println(currentCommand + "THIS IS IN REPEAT COMMAND");
 					
 				}
 				returnValue = currentCommand.getValue(myTurtle);
 				myCommands.remove();
 			}
 		}
-		this.changeToFinished();
 		return returnValue;
 	}
 

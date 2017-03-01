@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 import coordinate.Coordinate;
@@ -13,10 +15,10 @@ public class SetTowardsCommand extends MoveCommand {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 	
-	public Double calculateValue() {
-		Coordinate newDirection = new Coordinate((Double) myArguments.get(0), 
-				(Double) myArguments.get(1));
-		Coordinate currentPosition = myTurtle.getFutureLocation(true);
+	public Double calculateValue(List<Object> args) {
+		Coordinate newDirection = new Coordinate((Double) args.get(0), 
+				(Double) args.get(1));
+		Coordinate currentPosition = myTurtle.getLocation(true);
 		Coordinate neutralDirection = new Coordinate(currentPosition.getX(), currentPosition.getY()-10);
 		Double turtleToNew = calcDistance(newDirection, currentPosition);
 		Double turtleToNeutral = calcDistance(neutralDirection, currentPosition);
@@ -25,15 +27,9 @@ public class SetTowardsCommand extends MoveCommand {
 		if (newDirection.getX() < currentPosition.getX()) {
 			myRotate = 360 - myRotate;
 		}
-		Double difference = Math.abs(myTurtle.getFutureRotate() - myRotate);
-		myTurtle.setFutureRotate(myRotate);
-		return difference;
-	}
-	
-	public Double executeCommand() {
-		this.changeToFinished();
+		Double difference = Math.abs(myTurtle.getRotate() - myRotate);
 		myTurtle.setRotate(myRotate);
-		return myValue;
+		return difference;
 	}
 	
 	private Double calcRotation(Double side1, Double side2, Double side3) {

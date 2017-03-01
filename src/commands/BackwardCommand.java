@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 import coordinate.Coordinate;
@@ -14,17 +16,11 @@ public class BackwardCommand extends MoveCommand {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 	
-	public Double calculateValue() {
-		Double movement = (Double) myArguments.get(0);
+	public Double calculateValue(List<Object> args) {
+		Double movement = (Double) args.get(0);
 		myCoord = getNewCoord(movement*-1);
-		myTurtle.setFutureLocation(myCoord);
-		return movement;
-	}
-	
-	public Double executeCommand() {
-		this.changeToFinished();
 		myTurtle.setLocation(myCoord, false);
-		return myValue;
+		return movement;
 	}
 
 }

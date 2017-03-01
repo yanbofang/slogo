@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -13,17 +15,9 @@ public class PenDownCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue() {
+	public Double getValue(List<Object> args) {
 		myValue = 1.0;
-		myTurtle.setFuturePen(true);
-		return myValue;
-	}
-
-	@Override
-	public Double executeCommand() {
-		this.changeToFinished();
 		myTurtle.setPen(true);
 		return myValue;
 	}
-
 }

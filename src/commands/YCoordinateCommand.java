@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -13,15 +15,10 @@ public class YCoordinateCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue() {
-		myValue = myTurtle.getFutureLocation(false).getY();
+	public Double getValue(List<Object> args) {
+		myValue = myTurtle.getLocation(false).getY();
 		return myValue;
 	}
 
-	@Override
-	public Double executeCommand() {
-		this.changeToFinished();
-		return myValue;
-	}
 
 }

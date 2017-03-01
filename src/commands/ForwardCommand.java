@@ -1,6 +1,8 @@
 package commands;
 
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 import coordinate.Coordinate;
@@ -14,19 +16,11 @@ public class ForwardCommand extends MoveCommand {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 	
-	public Double calculateValue() {
-		Double movement = (Double) myArguments.get(0);
+	public Double calculateValue(List<Object> args) {
+		Double movement = (Double) args.get(0);
 		myCoord = getNewCoord(movement);
-		myTurtle.setFutureLocation(myCoord);
-		return movement;
-	}
-
-	@Override
-	public Double executeCommand() {
-		System.out.println(myArguments.get(0));
-		this.changeToFinished();
 		myTurtle.setLocation(myCoord, false);
-		return myValue;
+		return movement;
 	}
 
 }
