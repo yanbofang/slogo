@@ -15,12 +15,8 @@ public class Turtle extends Observable{
 	private ImageView myImage;
 	private double myHeightBounds;
 	private double myWidthBounds;
-	//private double myFutureRotate;
-	//private Coordinate myFutureLocation;
 	private boolean myPen;
 	private boolean showTurtle;
-	//private boolean myFuturePen;
-	//private boolean myFutureShow;
 	private boolean myClear;
 	
 
@@ -37,12 +33,8 @@ public class Turtle extends Observable{
 		myImage.setTranslateX(myWidthBounds/2.0);
 		myImage.setTranslateY(myHeightBounds/2.0);
 		myImage.setRotate(0);
-		//myFutureRotate = 0.0;
-		//myFutureLocation = new Coordinate(0.0, 0.0);
 		myPen = true;
-		//myFuturePen = true;
 		showTurtle = true;
-		//myFutureShow = showTurtle;
 		myClear = false;
 	}
 	
@@ -87,50 +79,13 @@ public class Turtle extends Observable{
 		setChanged();
 		notifyObservers(temp);
 	}
-	/*
-	
-	public void setFutureRotate(double rotate) {
-		while (rotate >= 360) {
-			rotate -= 360;
-		}
-		myFutureRotate = rotate;
-	}
-	
-	public Double getFutureRotate() {
-		return myFutureRotate;
-	}*/
 	
 	private Coordinate setUnadjustedLocation(Coordinate coord) {
 		coord.setX(coord.getX()+myWidthBounds/2.0);
 		coord.setY(coord.getY()+myHeightBounds/2.0);
 		return coord;
 	}
-	/*
-	public Coordinate getFutureLocation(boolean adjust) {
-		if (adjust) {
-			return setUnadjustedLocation(new Coordinate(new Double(myFutureLocation.getX())
-			, new Double(myFutureLocation.getY())));
-		}
-		return myFutureLocation;
-	}
 	
-	public void setFutureLocation(Coordinate newFuture) {
-		Double newX = newFuture.getX();
-		Double newY = newFuture.getY(); 
-		
-		if (newX > myWidthBounds/2.0 - myImage.getFitWidth()) {
-			newX -= myWidthBounds;
-		} else if (newX < -myWidthBounds/2.0 + myImage.getFitWidth()) {
-			newX += myWidthBounds;
-		}
-		if (newY > myHeightBounds/2.0 - myImage.getFitHeight()) {
-			newY -= myHeightBounds;
-		} else if (newY < -myHeightBounds/2.0 + myImage.getFitHeight()) {
-			newY += myHeightBounds;
-		}
-		myFutureLocation.setX(newX);
-		myFutureLocation.setY(newY);
-	}*/
 	
 	public Coordinate getLocation(boolean unadjust) {
 		Coordinate current = new Coordinate(myImage.getTranslateX(),
@@ -170,27 +125,11 @@ public class Turtle extends Observable{
 		myPen = b;
 		this.penChange();
 	}
-	/*
-	public void setFuturePen(boolean b) {
-		myFuturePen = b;
-	}
 	
-	public boolean getFuturePen() {
-		return myFuturePen;
-	}
-	*/
 	public void setShow(boolean b) {
 		showTurtle = b;
 	}
-	/*
-	public void setFutureShow(boolean b) {
-		myFutureShow = b;
-	}
 	
-	public boolean getFutureShow() {
-		return myFutureShow;
-	}
-	*/
 	public boolean getClear() {
 		return myClear;
 	}
