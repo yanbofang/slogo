@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 import commands.Command;
 
-
 public class Parser {
 
 	private PatternParse myPatterns;
@@ -15,7 +14,6 @@ public class Parser {
 	private Model myModel;
 	private VariableManager myVariables;
 	private UserMethodManager myUserMethods;
-
 	
 
 	public Parser(String[] syntax, Model m, VariableManager variables, UserMethodManager methods) {
@@ -45,7 +43,6 @@ public class Parser {
 					throw new ParserException(String.format("NOT VALID INPUT: %s", input));
 				}
 			} 
-			System.out.println(current);
 			myCommands.addAll(current);
 		}
 		return myCommands;
@@ -70,7 +67,7 @@ public class Parser {
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
 			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current), myVariables, myUserMethods);
-			//System.out.println(current);
+			// System.out.println(current);
 			if (currentCommand != null) {
 				for (int k = 0; k < currentCommand.getNumOfExpressions(); k++) {
 					Object toBeAdded = recurseParse(s);
@@ -104,13 +101,13 @@ public class Parser {
 			throw new ParserException(String.format("NOT A VALID TYPE %s", current));
 		}
 	}
-	
+
 	private ArrayList<Command> getSubList(Scanner s) {
 		ArrayList<Command> subList = new ArrayList<Command>();
 		Object current;
 		while (s.hasNext()) {
 			current = recurseParse(s);
-			
+
 			try {
 				String check = (String) current;
 				if (myPatterns.getSymbol(check).equals("ListEnd")) {

@@ -48,7 +48,7 @@ public class MakeVariableCommand extends AbstractCommand {
 
 		//System.out.println(myArguments.get(0));
 
-		System.out.println(myArguments);
+		System.out.println(myValue);
 		String varName = (String) myArguments.get(0);
 		if (myVariables.get(varName) != null) {
 			if (myVariables.get(varName).getValue() != myValue) {

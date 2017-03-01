@@ -1,5 +1,6 @@
 package commands;
 
+import java.util.Collection;
 import java.util.List;
 
 import backend.ParserException;
@@ -13,26 +14,17 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 
 	public MakeUserInstructionCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		// TODO Auto-generated constructor stub
 	}
-	
 
 	@Override
 	public Double getValue(List<Object> args) {
-		if (myUserMethods.contains((String) args.get(0))){
+		if (args.get(0) instanceof Collection) {
 			throw new ParserException("User method already created!");
 		}
-		return 1.0;
-	}
-
-	@Override
-	public Double executeCommand() {
-		// TODO Auto-generated method stub
-		String name = (String) myArguments.get(0);
-		System.out.println("executeCommand in makeuserinstruction" + (List<Command>) myArguments.get(2));
-		UserMethod method = new UserMethod(name, (List<Command>) myArguments.get(2));
+		String name = (String) args.get(0);
+		System.out.println("executeCommand in makeuserinstruction" + (List<Command>) args.get(2));
+		UserMethod method = new UserMethod(name, (List<Command>) args.get(2));
 		myUserMethods.add(name, method);
-		this.changeToFinished();
 		return method.getMethodName().isEmpty() ? 0.0 : 1.0;
 	}
 

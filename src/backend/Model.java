@@ -31,6 +31,10 @@ public class Model implements ModelInterface {
 	@Override
 	public void handleInput(String input) {
 		List<Command> commands = myParser.parse(input);
+		System.out.println("!!" + commands);
+		for(Command c: commands){
+			c.resetCommand();
+		}
 		myCommandHandler.addCommands(commands);
 		// myCommandHandler.executeCommands();
 	}
