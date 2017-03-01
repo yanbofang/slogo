@@ -67,18 +67,18 @@ public abstract class MoveCommand extends AbstractCommand {
 				break;
 		}
 	}
-	/**
-	protected void moveTurtle(Coordinate coord) {
-		myTurtle.changeLocation(new Coordinate(coord));
-		myTurtle.setX(coord.getX());
-		myTurtle.setY(coord.getY());
-	}**/
 	
 	protected Double calcDistance(Coordinate firstCoord, Coordinate secondCoord) {
 		Double xDiff = firstCoord.getX() - secondCoord.getX();
 		Double yDiff = firstCoord.getY() - secondCoord.getY();
 		Double distance = Math.sqrt((xDiff*xDiff) + (yDiff*yDiff));
 		return distance;
+	}
+	protected Coordinate toHome() {
+		Coordinate coord = new Coordinate(0.0,0.0);
+		myValue = calcDistance(coord, myTurtle.getFutureLocation());
+		myTurtle.setFutureLocation(coord);
+		return coord;
 	}
 
 }
