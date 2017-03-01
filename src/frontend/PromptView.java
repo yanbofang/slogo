@@ -73,6 +73,7 @@ public class PromptView implements SubcomponentAPI{
 	
 	private void buttonSetup() {
 		submitBtn = new Button(resource.getString("Submit"));
+		submitBtn.setId("submit");
 		submitBtn.setOnAction(new EventHandler<ActionEvent>() {
 
 			@Override

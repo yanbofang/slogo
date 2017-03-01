@@ -15,7 +15,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
 public class MethodsView implements MethodsViewAPI{
-	private HashMap<String, String> methods;
 	private HashMap<String, Hyperlink> hyperlinks;
 	
 	private View view;
@@ -26,7 +25,6 @@ public class MethodsView implements MethodsViewAPI{
 	public MethodsView(View viewIn){
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
-		methods = new HashMap<String, String>();
 		hyperlinks = new HashMap<String, Hyperlink>();
 		
 		scrollPane = new ScrollPane();
@@ -50,8 +48,7 @@ public class MethodsView implements MethodsViewAPI{
 	}
 
 	@Override
-	public void updateUMethods(String a, String b) {
-		methods.put(a, b);
+	public void updateUMethods(String a) {
 		if(!hyperlinks.containsKey(a)){
 			Hyperlink temp = new Hyperlink(a);
 			temp.setId("uMethod");
@@ -63,6 +60,6 @@ public class MethodsView implements MethodsViewAPI{
 	
 	private void clickedMethod(Hyperlink source){
 		String method = source.getText();
-		view.useUMethod(method, methods.get(method));
+		view.useUMethod(method);
 	}
 }

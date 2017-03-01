@@ -23,29 +23,31 @@ import javafx.scene.layout.RowConstraints;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class View implements ViewAPI{
+public class View implements ViewAPI {
 	private static final int HEIGHT = 600;
 	private static final int WIDTH = 1000;
 	private static final int FRAMES_PER_SECOND = 60;
-    private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
-    private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+	private static final int MILLISECOND_DELAY = 1000 / FRAMES_PER_SECOND;
+	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	public static final String RESOURCE_BUNDLE = "resources/Display";
-	
+	public static final String CSS_STYLESHEET = "resources/UI.css";
+
 	private Stage stage;
 	private Scene scene;
 	private GridPane root;
 	private Controller controller;
 	private Timeline timeline;
 	private ResourceBundle resource;
-	
+
 	private TurtleView turtleView;
 	private MethodsView methodsView;
 	private OptionsView optionsView;
 	private VariablesView variablesView;
 	private PromptView promptView;
-	
-	
-	public View(Stage stageIn, Controller controllerIn){
+
+	private boolean penDown;
+
+	public View(Stage stageIn, Controller controllerIn) {
 		stage = stageIn;
 		resource = ResourceBundle.getBundle(RESOURCE_BUNDLE);
 		controller = controllerIn;
@@ -54,8 +56,9 @@ public class View implements ViewAPI{
 		methodsView = new MethodsView(this);
 		optionsView = new OptionsView(this);
 		variablesView = new VariablesView(this);
-		promptView = new PromptView(this);		
+		promptView = new PromptView(this);
 		this.setView();
+		penDown = true;
 		timeline.play();
 	}
 
@@ -66,7 +69,7 @@ public class View implements ViewAPI{
 
 	@Override
 	public void updateVar(String a, String b) {
-		variablesView.updateVar(a, b);		
+		variablesView.updateVar(a, b);
 	}
 
 	@Override
@@ -77,18 +80,20 @@ public class View implements ViewAPI{
 		alert.setContentText(a);
 		alert.showAndWait();
 	}
-	
-	public void setTurtle(Node node){
+
+	public void setTurtle(Node node) {
 		turtleView.placeTurtle(node);
 	}
-	
-	public void updateTurtle(Coordinate oldC, Coordinate newC){
-		turtleView.changePosition(oldC, newC);
+
+	public void updateTurtle(Coordinate oldC, Coordinate newC) {
+		if (penDown) {
+			turtleView.changePosition(oldC, newC);
+		}
 	}
 
 	@Override
-	public void updateUMethod(String a, String b) {
-		methodsView.updateUMethods(a, b);
+	public void updateUMethod(String a) {
+		methodsView.updateUMethods(a);
 	}
 
 	@Override
@@ -97,8 +102,8 @@ public class View implements ViewAPI{
 	}
 
 	@Override
-	public void useUMethod(String a, String b) {
-		controller.handleInput(b);
+	public void useUMethod(String a) {
+		controller.handleInput(a);
 	}
 
 	@Override
@@ -123,20 +128,24 @@ public class View implements ViewAPI{
 	public void runCommand(String a) {
 		controller.handleInput(a);
 	}
-	
-	private void step(double dt){
+
+	public void setPen(Boolean penIn) {
+		penDown = penIn;
+	}
+
+	private void step(double dt) {
 		controller.runCommand();
 	}
-	
-	private Timeline createTimeline(){
+
+	private Timeline createTimeline() {
 		Timeline ret = new Timeline();
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
 		ret.setCycleCount(Animation.INDEFINITE);
 		ret.getKeyFrames().add(frame);
 		return ret;
 	}
-	
-	private void setView(){
+
+	private void setView() {
 		root = new GridPane();
 		scene = new Scene(root, WIDTH, HEIGHT);
 		ColumnConstraints column1 = new ColumnConstraints();
@@ -155,16 +164,16 @@ public class View implements ViewAPI{
 		RowConstraints row4 = new RowConstraints();
 		row4.setPercentHeight(30);
 		root.getRowConstraints().addAll(row1, row2, row3, row4);
-		
+
 		root.add(optionsView.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 0, 1, 2, 2);
 		root.add(variablesView.getParent(), 0, 3, 1, 1);
 		root.add(methodsView.getParent(), 1, 3, 1, 1);
 		root.add(promptView.getParent(), 2, 1, 1, 3);
-		
+
+		scene.getStylesheets().add(CSS_STYLESHEET);
 		stage.setScene(scene);
 		stage.show();
 	}
-
 
 }

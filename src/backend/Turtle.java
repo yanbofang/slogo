@@ -127,6 +127,9 @@ public class Turtle extends Observable{
 	
 	public void setPen(boolean b) {
 		myPen = b;
+//		boolean temp = 
+//		setChanged();
+//		notifyObservers(temp);
 	}
 	
 	public void setFuturePen(boolean b) {
