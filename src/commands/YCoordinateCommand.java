@@ -14,7 +14,7 @@ public class YCoordinateCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue() {
-		myValue = myTurtle.getFutureLocation().getY();
+		myValue = myTurtle.getFutureLocation(false).getY();
 		return myValue;
 	}
 

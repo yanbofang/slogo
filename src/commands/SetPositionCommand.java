@@ -19,14 +19,14 @@ public class SetPositionCommand extends MoveCommand {
 		Double updatedX = (Double) myArguments.get(0);
 		Double updatedY = (Double) myArguments.get(1);
 		myCoord = new Coordinate(updatedX, updatedY);
-		Double distance = calcDistance(myCoord, myTurtle.getFutureLocation());
+		Double distance = calcDistance(myCoord, myTurtle.getFutureLocation(false));
 		myTurtle.setFutureLocation(myCoord);
 		return distance;
 	}
 	
 	public Double executeCommand() {
-		myTurtle.setLocation(myCoord, false);
 		this.changeToFinished();
+		myTurtle.setLocation(myCoord, true);
 		return myValue;
 		
 	}

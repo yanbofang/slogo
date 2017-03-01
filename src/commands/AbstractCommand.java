@@ -38,7 +38,12 @@ public abstract class AbstractCommand implements Command{
 				 try {
 					 myArguments.add(Double.parseDouble((String) each));
 				 } catch (Exception f) {
-					 myArguments.add(each);
+					 try {
+						 myArguments.add(myVariables.get((String) each).getValue());
+					 } catch (Exception g) {
+						  myArguments.add(each);
+					 }
+					
 				 }
 			}
 		}

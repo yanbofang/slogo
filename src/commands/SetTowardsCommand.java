@@ -16,16 +16,15 @@ public class SetTowardsCommand extends MoveCommand {
 	public Double calculateValue() {
 		Coordinate newDirection = new Coordinate((Double) myArguments.get(0), 
 				(Double) myArguments.get(1));
-		Coordinate currentPosition = myTurtle.getFutureLocation();
-		Coordinate neutralDirection = new Coordinate(currentPosition.getX(), currentPosition.getY()+10);
+		Coordinate currentPosition = myTurtle.getFutureLocation(true);
+		Coordinate neutralDirection = new Coordinate(currentPosition.getX(), currentPosition.getY()-10);
 		Double turtleToNew = calcDistance(newDirection, currentPosition);
 		Double turtleToNeutral = calcDistance(neutralDirection, currentPosition);
 		Double newToNeutral = calcDistance(newDirection, neutralDirection);
 		myRotate = Math.toDegrees(calcRotation(turtleToNew, turtleToNeutral, newToNeutral));
 		if (newDirection.getX() < currentPosition.getX()) {
-			myRotate += 180;
+			myRotate = 360 - myRotate;
 		}
-
 		Double difference = Math.abs(myTurtle.getFutureRotate() - myRotate);
 		myTurtle.setFutureRotate(myRotate);
 		return difference;

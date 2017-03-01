@@ -26,13 +26,32 @@ public class MakeVariableCommand extends AbstractCommand {
 		checkVariable();
 		return myValue;
 	}
+	
+	@Override
+	public void add(Object ... args) {
+		for (Object each : args) {
+			try {
+				myArguments.add((Double) each);
+			}  catch (Exception e) {
+				 try {
+					 myArguments.add(Double.parseDouble((String) each));
+				 } catch (Exception f) { 
+					  myArguments.add(each);
+				 }
+			}
+		}
+	}
+	
 
 	private void checkVariable() {
 
-		System.out.println(myArguments.get(0));
+		//System.out.println(myArguments.get(0));
+
+		System.out.println(myArguments);
 		String varName = (String) myArguments.get(0);
 		if (myVariables.get(varName) != null) {
-			if (myVariables.get(varName).getValue() == myValue) {
+			if (myVariables.get(varName).getValue() != myValue) {
+				myVariables.addVariable(new Variable(varName, myValue));
 				return;
 			}
 		} else {

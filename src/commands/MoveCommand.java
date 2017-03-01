@@ -44,7 +44,7 @@ public abstract class MoveCommand extends AbstractCommand {
 		if (myQuadrant == 1 || myQuadrant == 3) {
 			rotate = 90 - rotate;
 		}
-		Coordinate currLocation = myTurtle.getFutureLocation();
+		Coordinate currLocation = myTurtle.getFutureLocation(false);
 		Coordinate movementCoord = new Coordinate(movement * Math.cos(Math.toRadians(rotate)),
 				movement * Math.sin(Math.toRadians(rotate)));
 		updateCoords(movementCoord, myQuadrant);
@@ -76,7 +76,7 @@ public abstract class MoveCommand extends AbstractCommand {
 	}
 	protected Coordinate toHome() {
 		Coordinate coord = new Coordinate(0.0,0.0);
-		myValue = calcDistance(coord, myTurtle.getFutureLocation());
+		myValue = calcDistance(coord, myTurtle.getFutureLocation(false));
 		myTurtle.setFutureLocation(coord);
 		return coord;
 	}

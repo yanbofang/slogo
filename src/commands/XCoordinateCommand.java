@@ -14,7 +14,7 @@ public class XCoordinateCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue() {
-		myValue = myTurtle.getFutureLocation().getX();
+		myValue = myTurtle.getFutureLocation(false).getX();
 		System.out.println(myValue);
 		return myValue;
 	}

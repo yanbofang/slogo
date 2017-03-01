@@ -25,16 +25,16 @@ public class Turtle extends Observable{
 	
 
 	
-	public Turtle(double width, double height, double heightBounds, double widthBounds) {
+	public Turtle(double width, double height, double widthBounds, double heightBounds) {
 		//myImage = new ImageView();
 		Image turtleView = new Image(getClass().getClassLoader().getResourceAsStream(myTurtlePicture));
-		myHeightBounds = heightBounds;
-		myWidthBounds = widthBounds;
+		myHeightBounds = heightBounds - height/2;
+		myWidthBounds = widthBounds - width/2;
 		myImage = new ImageView(turtleView);
 		myImage.setFitWidth(width);
 		myImage.setFitHeight(height);
-		myImage.setTranslateX(myHeightBounds/2.0);
-		myImage.setTranslateY(myWidthBounds/2.0);
+		myImage.setTranslateX(myWidthBounds/2.0);
+		myImage.setTranslateY(myHeightBounds/2.0);
 		myFutureRotate = myImage.getRotate();
 		myFutureLocation = new Coordinate(0.0, 0.0);
 		myPen = true;
@@ -49,24 +49,22 @@ public class Turtle extends Observable{
 	}
 	
 	private void setX(double x) {
+		/* KEEP IN CASE BUT DON'T THINK WE NEED
 		if (x > myWidthBounds) {
 			x -= myWidthBounds;
 		} else if (x < 0) {
 			x += myWidthBounds;
-		}
-		System.out.println("NEW X VALUE");
-		System.out.println(x);
+		}*/
 		myImage.setTranslateX(x);
 	}
 	
 	private void setY(double y) {
+		/* KEEP IN CASE BUT DON'T THINK WE NEED
 		if (y > myHeightBounds) {
 			y -= myHeightBounds;
 		} else if (y < 0) {
 			y += myHeightBounds;
-		}
-		System.out.println("NEW Y VALUE");
-		System.out.println(y);
+		}*/
 		myImage.setTranslateY(y);
 	}
 	
@@ -97,18 +95,33 @@ public class Turtle extends Observable{
 		return coord;
 	}
 	
-	public Coordinate getFutureLocation() {
+	public Coordinate getFutureLocation(boolean adjust) {
+		if (adjust) {
+			return setUnadjustedLocation(new Coordinate(myFutureLocation.getX(), myFutureLocation.getY()));
+		}
 		return myFutureLocation;
 	}
 	
 	public void setFutureLocation(Coordinate newFuture) {
-		myFutureLocation.setX(newFuture.getX());
-		myFutureLocation.setY(newFuture.getY());
+		Double newX = newFuture.getX();
+		Double newY = newFuture.getY(); 
+		if (newX > myWidthBounds) {
+			newX -= myWidthBounds;
+		} else if (newX < 0) {
+			newX += myWidthBounds;
+		}
+		if (newY > myHeightBounds) {
+			newY -= myHeightBounds;
+		} else if (newY < 0) {
+			newY += myHeightBounds;
+		}
+		myFutureLocation.setX(newX);
+		myFutureLocation.setY(newY);
 	}
 	
 	public Coordinate getLocation() {
-		return new Coordinate(myImage.getTranslateX() + myHeightBounds/2.0,
-				myImage.getTranslateY() + myWidthBounds/2.0);
+		return new Coordinate(myImage.getTranslateX(),
+				myImage.getTranslateY());
 	}
 	
 	public void setRotate(double rotate) {
