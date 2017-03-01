@@ -25,8 +25,8 @@ public class Turtle extends Observable{
 		//myImage = new ImageView();
 		Image turtleView = new Image(getClass().getClassLoader().getResourceAsStream(myTurtlePicture));
 
-		myHeightBounds = heightBounds + height;
-		myWidthBounds = widthBounds + width;
+		myHeightBounds = heightBounds - height;
+		myWidthBounds = widthBounds - width;
 		myImage = new ImageView(turtleView);
 		myImage.setFitWidth(width);
 		myImage.setFitHeight(height);
@@ -72,9 +72,11 @@ public class Turtle extends Observable{
 			coord = setUnadjustedLocation(coord);
 		}
 		ArrayList<Coordinate> temp = new ArrayList<Coordinate>();
-		temp.add(new Coordinate(myImage.getTranslateX(), myImage.getTranslateY()));
+		temp.add(new Coordinate(myImage.getTranslateX()+ myImage.getFitWidth()/2, myImage.getTranslateY()+ myImage.getFitHeight()/2));
 		setX(coord.getX());
 		setY(coord.getY());
+		coord.setX(coord.getX() + myImage.getFitWidth()/2);
+		coord.setY(coord.getY() + myImage.getFitHeight()/2);
 		temp.add(coord);
 		setChanged();
 		notifyObservers(temp);

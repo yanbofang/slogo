@@ -9,50 +9,17 @@ import backend.CommandFactory;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
-public class RepeatCommand extends AbstractCommand {
+public class RepeatCommand extends LoopCommand {
 
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
-	// private CommandFactory myCommandFactory;
-	private Queue<Command> myCommands;
 
 	public RepeatCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		// myCommandFactory = new CommandFactory();
 	}
 
-	@Override
 	public Double getValue(List<Object> args) {
-		ArrayList<Command> commandList = (ArrayList<Command>) args.get(1);
-		myCommands = new LinkedList<Command>();
-		myCommands.addAll(commandList);
-		
-		// Haven't tested, myTurtle might be null if there is an error?
-		return runCommands((Double) args.get(0));
-	}
-
-	
-	private Double runCommands(Double repeatTimes) {
-		Double returnValue = 0.0;
-		Queue<Command> tempCommands = new LinkedList<Command>();
-		tempCommands.addAll(myCommands);
-		for (int i = 0; i < repeatTimes; i++) {
-			//myCommands.addAll(tempCommands);
-			for (Command c : myCommands) {
-				returnValue = c.executeCommand(myTurtle);
-			}
-			/*
-			while (!myCommands.isEmpty()) {
-				Command currentCommand = myCommands.peek();
-				if (!currentCommand.isFinished()) {
-					currentCommand.executeCommand(myTurtle);
-					System.out.println(currentCommand + "THIS IS IN REPEAT COMMAND");
-					
-				}
-				returnValue = currentCommand.getValue(myTurtle);
-				myCommands.remove();
-			}*/
-		}
-		return returnValue;
+		myCommands = (ArrayList<Command>) args.get(1);
+		return runCommands(1.0, (Double) args.get(0), 1.0);
 	}
 
 }
