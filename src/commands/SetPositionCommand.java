@@ -26,5 +26,4 @@ public class SetPositionCommand extends MoveCommand {
 		return distance;
 	}
 
-
 }

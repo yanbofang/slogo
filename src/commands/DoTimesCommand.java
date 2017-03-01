@@ -21,6 +21,4 @@ public class DoTimesCommand extends LoopCommand{
 		return runCommands(1.0, (Double) args.get(1), 1.0);
 	}
 
-
-
 }
