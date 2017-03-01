@@ -29,8 +29,8 @@ public class Turtle extends Observable{
 		//myImage = new ImageView();
 		Image turtleView = new Image(getClass().getClassLoader().getResourceAsStream(myTurtlePicture));
 
-		myHeightBounds = heightBounds - height;
-		myWidthBounds = widthBounds - width;
+		myHeightBounds = heightBounds + height;
+		myWidthBounds = widthBounds + width;
 		myImage = new ImageView(turtleView);
 		myImage.setFitWidth(width);
 		myImage.setFitHeight(height);
@@ -50,26 +50,28 @@ public class Turtle extends Observable{
 		return myImage;
 	}
 	
+
+	public void setImage(Image a) {
+		myImage.setImage(a);
+	}
+	
 	private Double setX(double x) {
-		/*
 		if (x > myWidthBounds) {
 			x -= myWidthBounds;
 		} else if (x < 0) {
 			x += myWidthBounds;
-		}*/
+		}
 		myImage.setTranslateX(x);
 		return x;
 	}
 	
 	private Double setY(double y) {
-		myImage.setTranslateY(y);
-		/*
 		if (y > myHeightBounds) {
 			y -= myHeightBounds;
 		} else if (y < 0) {
 			y += myHeightBounds;
-		}*/
-		
+		}
+		myImage.setTranslateY(y);
 		return y;
 	}
 	
@@ -114,17 +116,17 @@ public class Turtle extends Observable{
 	public void setFutureLocation(Coordinate newFuture) {
 		Double newX = newFuture.getX();
 		Double newY = newFuture.getY(); 
-		
-		if (newX > myWidthBounds/2.0 + myImage.getFitWidth()) {
+		/*
+		if (newX > myWidthBounds/2.0 - myImage.getFitWidth()) {
 			newX -= myWidthBounds;
 		} else if (newX < -myWidthBounds/2.0 + myImage.getFitWidth()) {
 			newX += myWidthBounds;
 		}
-		if (newY > myHeightBounds/2.0 + myImage.getFitHeight()) {
+		if (newY > myHeightBounds/2.0 - myImage.getFitHeight()) {
 			newY -= myHeightBounds;
 		} else if (newY < -myHeightBounds/2.0 + myImage.getFitHeight()) {
 			newY += myHeightBounds;
-		}
+		}*/
 		myFutureLocation.setX(newX);
 		myFutureLocation.setY(newY);
 	}
@@ -155,9 +157,7 @@ public class Turtle extends Observable{
 	
 	public void setPen(boolean b) {
 		myPen = b;
-//		boolean temp = 
-//		setChanged();
-//		notifyObservers(temp);
+		this.penChange();
 	}
 	
 	public void setFuturePen(boolean b) {
@@ -186,5 +186,14 @@ public class Turtle extends Observable{
 	
 	public void setClear(boolean b) {
 		myClear = b;
+		if(b){
+			penChange();
+		}
+	}
+	
+	private void penChange(){
+		this.setChanged();
+		boolean temp[] = {myClear, myPen};
+		notifyObservers(temp);
 	}
 }

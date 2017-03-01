@@ -1,5 +1,9 @@
 package commands;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import backend.ParserException;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -12,13 +16,9 @@ public class SumCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue() {
-		return (Double) myArguments.get(0) + (Double) myArguments.get(1);
+	public Double getValue(List<Object> args) {
+		return (Double) args.get(0) + (Double) myArguments.get(1);
 	}
 
-	@Override
-	public Double executeCommand() {
-		this.changeToFinished();
-		return getValue();
-	}
+
 }

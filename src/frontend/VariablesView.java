@@ -65,6 +65,12 @@ public class VariablesView implements VariablesViewAPI{
 		hyperlinks.put(a, temp);
 	}
 	
+	public void clearVars(){
+		values.clear();
+		hyperlinks.clear();
+		vBox.getChildren().clear();
+	}
+	
 	private Hyperlink makeHyperlink(){
 		Hyperlink ret = new Hyperlink();
 		ret.setId("variable");

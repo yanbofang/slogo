@@ -10,6 +10,7 @@ import frontend.TurtleObserver;
 import frontend.UserMethodObserver;
 import frontend.VariableManagerObserver;
 import frontend.View;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Controller {
@@ -60,6 +61,10 @@ public class Controller {
 
 	public void updateVar(String name, String value) {
 		view.updateVar(name, value);
+	}
+	
+	public void changeImage(Image a){
+		turtle.setImage(a);
 	}
 
 	private void addVariableManagerObserver() {

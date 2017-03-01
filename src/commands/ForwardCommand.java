@@ -23,6 +23,7 @@ public class ForwardCommand extends MoveCommand {
 
 	@Override
 	public Double executeCommand() {
+		System.out.println(myArguments.get(0));
 		this.changeToFinished();
 		myTurtle.setLocation(myCoord, false);
 		return myValue;
