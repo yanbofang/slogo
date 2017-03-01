@@ -32,12 +32,12 @@ public class Parser {
 	}
 
 	public List<Command> parse(String input) {
-		System.out.println(input);
 		myCommands.clear();
 		Scanner s = new Scanner(input);
 		while (s.hasNext()) {
 			ArrayList<Command> current = new ArrayList<Command>();
 			recurseParse(s, current);
+			System.out.println(current);
 			myCommands.addAll(current);
 		}
 		return myCommands;
@@ -69,8 +69,6 @@ public class Parser {
 					if (toBeAdded == null) {
 						toBeAdded = recurseParse(s, currentList);
 					}
-					System.out.println("TO BE ADDED");
-					System.out.println(toBeAdded);
 					currentCommand.add(toBeAdded);
 				}
 				currentList.add(currentCommand);
@@ -85,6 +83,8 @@ public class Parser {
 	}
 
 	private Object getDataObject(String current, List<Command> currentList, Scanner s) {
+		System.out.println("HEllo");
+		System.out.println(current);
 		if (myModel.getMethodVariable(current) != null) {
 			List<Command> methodList = myModel.getMethodVariable(current);
 			//System.out.println("here!!!!!!" + methodList);
@@ -93,17 +93,36 @@ public class Parser {
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
 			return current;
 		} else if (myPatterns.getSymbol(current).equals("ListStart")) {
-			ArrayList<Command> sublist = new ArrayList<Command>();
-			recurseParse(s, sublist);
+			ArrayList<Command> sublist = getSubList(s);
+			System.out.println("HERE");
+			System.out.println(sublist);
 			return sublist;
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
-			return null;
+			System.out.println("GOTHERE");
+			return current;
 		}
 		try {
 			return Double.parseDouble(current);
 		} catch (Exception e) {
 			throw new ParserException(String.format("NOT A VALID TYPE %s", current));
 		}
+	}
+	
+	private ArrayList<Command> getSubList(Scanner s) {
+		ArrayList<Command> subList = new ArrayList<Command>();
+		Object current;
+		while (s.hasNext()) {
+			current = recurseParse(s, subList);
+			try {
+				String check = (String) current;
+				if (myPatterns.getSymbol(check).equals("ListEnd")) {
+					return subList;
+				}
+			} catch (Exception e) {
+				continue;
+			}
+		}
+		throw new ParserException(String.format("NO LIST END CHARACTER"));
 	}
 
 }

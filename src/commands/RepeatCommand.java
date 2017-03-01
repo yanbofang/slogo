@@ -44,6 +44,9 @@ public class RepeatCommand extends AbstractCommand {
 				Command currentCommand = myCommands.peek();
 				if (!currentCommand.isFinished()) {
 					currentCommand.executeCommand();
+					System.out.println(currentCommand + "THIS IS IN REPEAT COMMAND" + 
+							currentCommand.getArguments(0));
+					
 				}
 				returnValue = currentCommand.getValue(myTurtle);
 				myCommands.remove();
