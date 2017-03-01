@@ -40,6 +40,7 @@ public class Parser {
 			recurseParse(s, current);
 			myCommands.addAll(current);
 		}
+		System.out.println("In Parser: " + myCommands);
 		return myCommands;
 	}
 
