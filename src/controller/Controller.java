@@ -27,11 +27,12 @@ public class Controller {
 
 	public Controller(Stage arg0) throws Exception {
 		variables = new VariableManager();
-		turtle = new Turtle(50, 50, 100, 100);
+		view = new View(arg0, this);
+		System.out.println(view.getBounds());
+		turtle = new Turtle(25, 25, view.getBounds().getX(), view.getBounds().getY());
+		view.setTurtle(turtle.getImage());
 		userMethods = new UserMethodManager();
 		model = new Model(ENGLISH_SYNTAX, null, variables, userMethods, turtle);
-		view = new View(arg0, this);
-		view.setTurtle(turtle.getImage());
 		variablesObserver = new VariableManagerObserver(variables, view);
 		addVariableManagerObserver();
 		turtleObserver = new TurtleObserver(turtle, view);
@@ -41,6 +42,7 @@ public class Controller {
 	}
 
 	public void handleInput(String input) {
+		System.out.println(input);
 		model.handleInput(input);
 	}
 
