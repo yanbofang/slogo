@@ -5,8 +5,8 @@ import java.util.List;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
-public class IfElseCommand extends ConditionalCommand{
-	
+public class IfElseCommand extends ConditionalCommand {
+
 	private static final Integer NUM_OF_EXPRESSIONS = 3;
 
 	public IfElseCommand(String instruction, VariableManager variables, UserMethodManager methods) {
@@ -16,13 +16,8 @@ public class IfElseCommand extends ConditionalCommand{
 
 	@Override
 	public Double getValue(List<Object> args) {
-		Double returnValue = 0.0;
-		if((Double) args.get(0)== 0.0){
-			returnValue = execute(returnValue, (Double) args.get(0), (List<Command>) args.get(2), true);
-		}else{
-			returnValue = execute(returnValue, (Double) args.get(0), (List<Command>) args.get(1), true);
-		}
-		return returnValue;
+		return (Double) args.get(0) == 0.0 ? execute((Double) args.get(0), (List<Command>) args.get(2), true)
+				: execute((Double) args.get(0), (List<Command>) args.get(1), true);
 	}
 
 }

@@ -18,7 +18,7 @@ public class IfCommand extends ConditionalCommand {
 	public Double getValue(List<Object> args) {
 		// TODO Auto-generated method stub
 		Double returnValue = 0.0;
-		returnValue = execute(returnValue, (Double) args.get(0), (List<Command>) args.get(1), false);
+		returnValue = execute((Double) args.get(0), (List<Command>) args.get(1), false);
 		return returnValue;
 	}
 

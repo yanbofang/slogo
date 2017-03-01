@@ -17,8 +17,8 @@ public abstract class ConditionalCommand extends AbstractCommand {
 	public abstract Double getValue(List<Object> args);
 
 
-	protected Double execute(Double val, Double expr, List<Command> commandList, boolean ifElse) {
-		Double returnValue = val;
+	protected Double execute(Double expr, List<Command> commandList, boolean ifElse) {
+		Double returnValue = 0.0;
 		if (ifElse == false && expr == 0.0) {
 			return 0.0;
 		}
