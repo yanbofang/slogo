@@ -2,6 +2,7 @@ package commands;
 
 import java.util.List;
 
+import backend.ParserException;
 import backend.UserMethod;
 import backend.UserMethodManager;
 import backend.VariableManager;
@@ -14,11 +15,14 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 		// TODO Auto-generated constructor stub
 	}
+	
 
 	@Override
 	public Double getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		if (myUserMethods.contains((String) myArguments.get(0))){
+			throw new ParserException("User method already created!");
+		}
+		return 1.0;
 	}
 
 	@Override

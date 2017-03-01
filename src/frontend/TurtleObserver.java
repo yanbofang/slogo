@@ -18,8 +18,10 @@ public class TurtleObserver implements Observer {
 
 	public void update(Observable obs, Object obj) {
 		if (obs == ov) {
-			ArrayList<Coordinate> temp = (ArrayList<Coordinate>) obj;
-			myView.updateTurtle(temp.get(0), temp.get(1));
+			if (obj instanceof ArrayList<?>) {
+				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) obj;
+				myView.updateTurtle(temp.get(0), temp.get(1));
+			}
 		}
 	}
 

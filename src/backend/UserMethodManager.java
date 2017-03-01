@@ -19,12 +19,21 @@ public class UserMethodManager extends Observable {
 	public void add(String key, UserMethod method) {
 		myMethodMap.put(key, method);
 		setChanged();
-		String commands = String.join(",", method.getListOfCommands().toString());
-		notifyObservers(new ArrayList<String> (Arrays.asList(key, commands)));
+		notifyObservers(key);
 	}
 
 	public UserMethod get(String key) {
 		UserMethod method = myMethodMap.get(key);
 		return method;
+	}
+	
+	
+	/**
+	 * Check if the method manager contains already contains the method
+	 * @param key
+	 * @return
+	 */
+	public boolean contains(String key){
+		return myMethodMap.containsKey(key);
 	}
 }

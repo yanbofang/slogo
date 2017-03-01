@@ -37,10 +37,8 @@ public interface ViewAPI {
 	 * Update the frontend display of user defined methods
 	 * @param a
 	 * The method selected
-	 * @param b
-	 * The code associated with the method
 	 */
-	public void updateUMethod(String a, String b);
+	public void updateUMethod(String a);
 	
 	// Internal API
 	/**
@@ -56,10 +54,8 @@ public interface ViewAPI {
 	 * Have the backend run a user method selected in the UI
 	 * @param a
 	 * The name of the method
-	 * @param b
-	 * The associated code with the method
 	 */
-	public void useUMethod(String a, String b);
+	public void useUMethod(String a);
 	
 	/**
 	 * Change the background color of the turtle's area

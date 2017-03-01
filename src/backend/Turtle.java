@@ -28,8 +28,9 @@ public class Turtle extends Observable{
 	public Turtle(double width, double height, double widthBounds, double heightBounds) {
 		//myImage = new ImageView();
 		Image turtleView = new Image(getClass().getClassLoader().getResourceAsStream(myTurtlePicture));
-		myHeightBounds = heightBounds - height/2;
-		myWidthBounds = widthBounds - width/2;
+
+		myHeightBounds = heightBounds - height;
+		myWidthBounds = widthBounds - width;
 		myImage = new ImageView(turtleView);
 		myImage.setFitWidth(width);
 		myImage.setFitHeight(height);
@@ -120,8 +121,8 @@ public class Turtle extends Observable{
 	}
 	
 	public Coordinate getLocation() {
-		return new Coordinate(myImage.getTranslateX(),
-				myImage.getTranslateY());
+		return new Coordinate(myImage.getTranslateX() + myImage.getFitWidth()/2,
+				myImage.getTranslateY() + myImage.getFitHeight()/2);
 	}
 	
 	public void setRotate(double rotate) {
@@ -142,6 +143,9 @@ public class Turtle extends Observable{
 	
 	public void setPen(boolean b) {
 		myPen = b;
+//		boolean temp = 
+//		setChanged();
+//		notifyObservers(temp);
 	}
 	
 	public void setFuturePen(boolean b) {

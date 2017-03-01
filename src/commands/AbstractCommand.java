@@ -69,6 +69,10 @@ public abstract class AbstractCommand implements Command{
 	protected void changeToFinished() {
 		finished = true;
 	}
+	
+	public void resetCommand() {
+		finished = false;
+	}
 
 	public Double getValue(Turtle turtle) {
 		myTurtle = turtle;
