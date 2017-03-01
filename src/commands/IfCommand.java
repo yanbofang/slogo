@@ -15,17 +15,10 @@ public class IfCommand extends ConditionalCommand {
 	}
 
 	@Override
-	public Double getValue() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Double executeCommand() {
+	public Double getValue(List<Object> args) {
 		// TODO Auto-generated method stub
 		Double returnValue = 0.0;
-		returnValue = execute(returnValue, (List<Command>) myArguments.get(1), false);
-		this.changeToFinished();
+		returnValue = execute(returnValue, (Double) args.get(0), (List<Command>) args.get(1), false);
 		return returnValue;
 	}
 

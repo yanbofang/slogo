@@ -14,20 +14,18 @@ public abstract class ConditionalCommand extends AbstractCommand {
 	}
 
 	@Override
-	public abstract Double getValue();
+	public abstract Double getValue(List<Object> args);
 
-	@Override
-	public abstract Double executeCommand();
 
-	protected Double execute(Double val, List<Command> commandList, boolean ifElse) {
+	protected Double execute(Double val, Double expr, List<Command> commandList, boolean ifElse) {
 		Double returnValue = val;
-		if (ifElse == false && (Double) myArguments.get(0) == 0.0) {
+		if (ifElse == false && expr == 0.0) {
 			return 0.0;
 		}
 		for (Command c : commandList) {
 			System.out.println("execute in conditional " + c.getInstruction() + "finished ?   " + c.isFinished() + "Value ");
 			while (!c.isFinished()) {
-				returnValue = c.executeCommand();
+				returnValue = c.executeCommand(myTurtle);
 			}
 		}
 		return returnValue;

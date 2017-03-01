@@ -15,22 +15,14 @@ public class IfElseCommand extends ConditionalCommand{
 	}
 
 	@Override
-	public Double getValue() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Double executeCommand() {
+	public Double getValue(List<Object> args) {
 		Double returnValue = 0.0;
-		if((Double) myArguments.get(0) == 0.0){
-			returnValue = execute(returnValue, (List<Command>) myArguments.get(2), true);
+		if((Double) args.get(0)== 0.0){
+			returnValue = execute(returnValue, (Double) args.get(0), (List<Command>) args.get(2), true);
 		}else{
-			returnValue = execute(returnValue, (List<Command>) myArguments.get(1), true);
+			returnValue = execute(returnValue, (Double) args.get(0), (List<Command>) args.get(1), true);
 		}
-		this.changeToFinished();
 		return returnValue;
 	}
-
 
 }
