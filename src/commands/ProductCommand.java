@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -12,15 +14,10 @@ public class ProductCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue() {
-		myValue = (Double) myArguments.get(0) * (Double) myArguments.get(1);
+	public Double getValue(List<Object> args) {
+		myValue = (Double) args.get(0) * (Double) args.get(1);
 		return myValue;
 	}
 
-	@Override
-	public Double executeCommand() {
-		this.changeToFinished();
-		return getValue();
-	}
 
 }

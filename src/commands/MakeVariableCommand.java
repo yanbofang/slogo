@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.Turtle;
 import backend.UserMethodManager;
 import backend.Variable;
@@ -21,8 +23,8 @@ public class MakeVariableCommand extends AbstractCommand {
 	 * THE VARIABLE LATER
 	 */
 	@Override
-	public Double getValue() {
-		myValue = (Double) myArguments.get(1);
+	public Double getValue(List<Object> args) {
+		myValue = (Double) args.get(1);
 		checkVariable();
 		return myValue;
 	}
@@ -41,7 +43,7 @@ public class MakeVariableCommand extends AbstractCommand {
 			}
 		}
 	}
-	
+	WRONG
 
 	private void checkVariable() {
 
@@ -58,12 +60,6 @@ public class MakeVariableCommand extends AbstractCommand {
 			myVariable = new Variable(varName, myValue);
 			myVariables.addVariable(myVariable);
 		}
-	}
-
-	@Override
-	public Double executeCommand() {
-		this.changeToFinished();
-		return myValue;
 	}
 
 }

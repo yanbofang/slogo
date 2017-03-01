@@ -1,5 +1,7 @@
 package commands;
 
+import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -12,13 +14,9 @@ public class QuotientCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue() {
-		return (Double) myArguments.get(0) / (Double) myArguments.get(1);
+	public Double getValue(List<Object> args) {
+		return (Double) args.get(0) / (Double) args.get(1);
 	}
 
-	@Override
-	public Double executeCommand() {
-		return getValue();
-	}
 
 }

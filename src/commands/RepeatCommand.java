@@ -36,10 +36,11 @@ public class RepeatCommand extends AbstractCommand {
 		Queue<Command> tempCommands = new LinkedList<Command>();
 		tempCommands.addAll(myCommands);
 		for (int i = 0; i < repeatTimes; i++) {
-			myCommands.addAll(tempCommands);
+			//myCommands.addAll(tempCommands);
 			for (Command c : myCommands) {
-				c.resetCommand();
+				returnValue = c.executeCommand(myTurtle);
 			}
+			/*
 			while (!myCommands.isEmpty()) {
 				Command currentCommand = myCommands.peek();
 				if (!currentCommand.isFinished()) {
@@ -49,7 +50,7 @@ public class RepeatCommand extends AbstractCommand {
 				}
 				returnValue = currentCommand.getValue(myTurtle);
 				myCommands.remove();
-			}
+			}*/
 		}
 		return returnValue;
 	}
