@@ -69,15 +69,15 @@ public abstract class MoveCommand extends AbstractCommand {
 	}
 	
 	protected Double calcDistance(Coordinate firstCoord, Coordinate secondCoord) {
-		Double xDiff = firstCoord.getX() - secondCoord.getX();
-		Double yDiff = firstCoord.getY() - secondCoord.getY();
+		Double xDiff = new Double(firstCoord.getX() - secondCoord.getX());
+		Double yDiff = new Double(firstCoord.getY() - secondCoord.getY());
 		Double distance = Math.sqrt((xDiff*xDiff) + (yDiff*yDiff));
 		return distance;
 	}
 	protected Coordinate toHome() {
 		Coordinate coord = new Coordinate(0.0,0.0);
 		myValue = calcDistance(coord, myTurtle.getLocation(true));
-		myTurtle.setLocation(coord, true);
+		myTurtle.setLocation(coord, false);
 		return coord;
 	}
 

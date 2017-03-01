@@ -19,7 +19,6 @@ public class HomeCommand extends MoveCommand {
 	@Override
 	public Double calculateValue(List<Object> args) {
 		myCoord = toHome();
-		myTurtle.setLocation(myCoord, false);
 		return myValue;
 	}
 

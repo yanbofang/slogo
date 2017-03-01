@@ -43,7 +43,6 @@ public class MakeVariableCommand extends AbstractCommand {
 			}
 		}
 	}
-	WRONG
 
 	private void checkVariable() {
 
