@@ -169,7 +169,7 @@ public class Parser {
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
 			return current;
 		} else if (myPatterns.getSymbol(current).equals("ListStart")) {
-			ArrayList<Command> sublist = new ArrayList<Command>();
+			ArrayList<Object> sublist = new ArrayList<Object>();
 			sublist = getSubList(s);
 			return sublist;
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
@@ -182,19 +182,20 @@ public class Parser {
 		}
 	}
 
-	private ArrayList<Command> getSubList(Scanner s) {
-		ArrayList<Command> subList = new ArrayList<Command>();
+	private ArrayList<Object> getSubList(Scanner s) {
+		ArrayList<Object> subList = new ArrayList<Object>();
 		Object current;
 		while (s.hasNext()) {
 			current = recurseParse(s);
-
 			try {
 				String check = (String) current;
 				if (myPatterns.getSymbol(check).equals("ListEnd")) {
 					return subList;
+				}else if (myPatterns.getSymbol(check).equals("Variable")){
+					subList.add(current);
 				}
 			} catch (Exception e) {
-				subList.add((Command) current);
+				subList.add(current);
 			}
 		}
 		throw new ParserException(String.format("NO LIST END CHARACTER"));

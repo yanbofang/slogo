@@ -21,8 +21,13 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 		if (args.get(0) instanceof Collection) {
 			throw new ParserException("User method already created!");
 		}
+		// make variables if haven't been made
+		for (Object o : (List) args.get(1)) {
+			if (o instanceof Command) {
+				((Command) o).executeCommand(myTurtle);
+			}
+		}
 		String name = (String) args.get(0);
-		System.out.println("executeCommand in makeuserinstruction" + (List<Command>) args.get(2));
 		UserMethod method = new UserMethod(name, (List<Command>) args.get(2));
 		myUserMethods.add(name, method);
 		return method.getMethodName().isEmpty() ? 0.0 : 1.0;
