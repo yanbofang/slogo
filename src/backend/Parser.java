@@ -14,7 +14,7 @@ public class Parser {
 	private Model myModel;
 	private VariableManager myVariables;
 	private UserMethodManager myUserMethods;
-	
+	private boolean inCommandCall;
 
 	public Parser(String[] syntax, Model m, VariableManager variables, UserMethodManager methods) {
 		myModel = m;
@@ -85,6 +85,7 @@ public class Parser {
 	private Object getDataObject(String current, Scanner s) {
 		if (myModel.getMethodVariable(current) != null) {
 			List<Command> methodList = myModel.getMethodVariable(current);
+			//RETURN NEW METHOD COMMAND
 			return methodList;
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
 			return current;
@@ -94,6 +95,9 @@ public class Parser {
 			return sublist;
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
 			return current;
+		} else if (current.equals("#")) {
+			s.nextLine();
+			return recurseParse(s);
 		}
 		try {
 			return Double.parseDouble(current);

@@ -23,7 +23,7 @@ public abstract class ConditionalCommand extends AbstractCommand {
 			return 0.0;
 		}
 		for (Command c : commandList) {
-			System.out.println("execute in conditional " + c.getInstruction() + "finished ?   " + c.isFinished() + "Value ");
+			c.resetCommand();
 			while (!c.isFinished()) {
 				returnValue = c.executeCommand(myTurtle);
 			}
