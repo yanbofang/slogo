@@ -24,14 +24,13 @@ public class Turtle extends Observable{
 	public Turtle(double width, double height, double widthBounds, double heightBounds) {
 		//myImage = new ImageView();
 		Image turtleView = new Image(getClass().getClassLoader().getResourceAsStream(myTurtlePicture));
-
 		myHeightBounds = heightBounds - height;
 		myWidthBounds = widthBounds - width;
 		myImage = new ImageView(turtleView);
 		myImage.setFitWidth(width);
 		myImage.setFitHeight(height);
-		myImage.setTranslateX(myWidthBounds/2.0);
-		myImage.setTranslateY(myHeightBounds/2.0);
+		myImage.setTranslateX(myWidthBounds/2.0 );
+		myImage.setTranslateY(myHeightBounds/2.0 );
 		myImage.setRotate(0);
 		myPen = true;
 		showTurtle = true;
@@ -72,7 +71,7 @@ public class Turtle extends Observable{
 			coord = setUnadjustedLocation(coord);
 		}
 		ArrayList<Coordinate> temp = new ArrayList<Coordinate>();
-		temp.add(new Coordinate(myImage.getTranslateX()+ myImage.getFitWidth()/2, myImage.getTranslateY()+ myImage.getFitHeight()/2));
+		temp.add(new Coordinate(myImage.getTranslateX() + myImage.getFitWidth()/2, myImage.getTranslateY() + myImage.getFitHeight()/2));
 		setX(coord.getX());
 		setY(coord.getY());
 		coord.setX(coord.getX() + myImage.getFitWidth()/2);
@@ -80,11 +79,11 @@ public class Turtle extends Observable{
 		temp.add(coord);
 		setChanged();
 		notifyObservers(temp);
-	}
+		}
 	
 	private Coordinate setUnadjustedLocation(Coordinate coord) {
-		coord.setX(coord.getX()+myWidthBounds/2.0);
-		coord.setY(coord.getY()+myHeightBounds/2.0);
+		coord.setX(coord.getX() + myWidthBounds/2.0);
+		coord.setY(coord.getY() + myHeightBounds/2.0);
 		return coord;
 	}
 	

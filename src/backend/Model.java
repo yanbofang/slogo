@@ -24,7 +24,7 @@ public class Model implements ModelInterface {
 		myUserMethods = methods;
 
 		myTurtle = turtle;
-		myParser = new Parser(syntax, this, myVariables, myUserMethods, myTurtle);
+		myParser = new Parser(syntax, this, myVariables, myUserMethods);
 		myCommandHandler = new CommandHandler(myTurtle);
 	}
 
