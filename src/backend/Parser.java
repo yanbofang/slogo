@@ -40,6 +40,7 @@ public class Parser {
 				try {
 					current.addAll((List<Command>) currentCommand);
 				} catch (Exception f) {
+					System.out.println(currentCommand);
 					throw new ParserException(String.format("NOT VALID INPUT: %s", input));
 				}
 			} 
