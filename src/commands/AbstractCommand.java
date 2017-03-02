@@ -40,6 +40,11 @@ public abstract class AbstractCommand implements Command {
 		}
 	}
 
+	public void clearArguments(){
+		myArguments.clear();
+	}
+	
+	
 	public Integer getNumOfExpressions() {
 		return myNumOfExpressions;
 	}
@@ -78,6 +83,7 @@ public abstract class AbstractCommand implements Command {
 	public Double executeCommand(Turtle turtle) {
 		myTurtle = turtle;
 		ArrayList<Object> newArgs = new ArrayList<Object>();
+		System.out.println("myARGUMENTS IN ABSTRACT " + myArguments);
 		for (Object o : myArguments) {
 			if (o instanceof AbstractCommand) {
 				Command c = (Command) o;

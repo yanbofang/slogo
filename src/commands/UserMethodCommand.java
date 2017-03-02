@@ -17,7 +17,8 @@ public class UserMethodCommand extends AbstractCommand {
 	public Double getValue(List<Object> args) {
 		Double returnValue = 0.0;
 		// Create the variables
-		for (int i = 0; i < args.size(); i++) {
+		System.out.println("!     " + myInstruction + " NUM "+ this.getNumOfExpressions());
+		for (int i = 0; i < this.getNumOfExpressions(); i++) {
 			myVariables.addVariable(
 					new Variable(myUserMethods.getUserMethod(myInstruction).getListOfVariables().get(i), (Double) args.get(i)));
 		}

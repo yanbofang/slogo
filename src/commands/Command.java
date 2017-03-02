@@ -9,6 +9,8 @@ import backend.Turtle;
 public interface Command {
 
 	void add(Object... args);
+	
+	void clearArguments();
 
 	String getInstruction();
 
