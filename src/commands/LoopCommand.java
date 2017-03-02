@@ -23,18 +23,16 @@ public abstract class LoopCommand extends AbstractCommand {
 	protected Double runCommands(Double start, Double end, Double increment, Variable var) {
 		Double returnValue = 0.0;
 		for (int i = start.intValue(); i < end.intValue() + 1; i += increment.intValue()) {
-			if(var != null){
+			if (var != null) {
 				myVariables.addVariable(new Variable(var.getVariableName(), (double) i));
 			}
 			for (Command c : myCommands) {
 				c.resetCommand();
-			}
-			for (Command c : myCommands) {
-				if (!c.isFinished()) {
+				while (!c.isFinished()) {
 					returnValue = c.executeCommand(myTurtle);
 				}
 			}
-	
+
 		}
 		return returnValue;
 	}
