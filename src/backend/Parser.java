@@ -107,7 +107,6 @@ public class Parser {
 		Object current;
 		while (s.hasNext()) {
 			current = recurseParse(s);
-
 			try {
 				String check = (String) current;
 				if (myPatterns.getSymbol(check).equals("ListEnd")) {
