@@ -9,8 +9,7 @@ import backend.Turtle;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
-public abstract class AbstractCommand implements Command{
-
+public abstract class AbstractCommand implements Command {
 
 	protected String myInstruction;
 	protected ArrayList<Object> myArguments;
@@ -28,23 +27,23 @@ public abstract class AbstractCommand implements Command{
 		myUserMethods = methods;
 		finished = false;
 	}
-	
-	public AbstractCommand(String instruction, VariableManager variables, UserMethodManager methods, int numOfExpressions){
+
+	public AbstractCommand(String instruction, VariableManager variables, UserMethodManager methods,
+			int numOfExpressions) {
 		this(instruction, variables, methods);
 		myNumOfExpressions = numOfExpressions;
 	}
-	
-	public void add(Object ... args) {
+
+	public void add(Object... args) {
 		for (Object each : args) {
 			myArguments.add(each);
 		}
 	}
-	
-	public Integer getNumOfExpressions(){
+
+	public Integer getNumOfExpressions() {
 		return myNumOfExpressions;
 	}
-	
-	
+
 	public String getInstruction() {
 		return myInstruction;
 	}
@@ -60,7 +59,7 @@ public abstract class AbstractCommand implements Command{
 	protected void changeToFinished() {
 		finished = true;
 	}
-	
+
 	public void resetCommand() {
 		finished = false;
 	}
@@ -69,6 +68,7 @@ public abstract class AbstractCommand implements Command{
 		myTurtle = turtle;
 		return getValue(myArguments);
 	}
+
 	public abstract Double getValue(List<Object> args);
 
 	/**
@@ -78,22 +78,24 @@ public abstract class AbstractCommand implements Command{
 	public Double executeCommand(Turtle turtle) {
 		myTurtle = turtle;
 		ArrayList<Object> newArgs = new ArrayList<Object>();
-		for (Object o: myArguments) {
+		for (Object o : myArguments) {
 			if (o instanceof AbstractCommand) {
 				Command c = (Command) o;
 				newArgs.add(c.executeCommand(turtle));
 			} else {
 				try {
 					newArgs.add((Double) o);
-				}  catch (Exception e) {
-					 try {
-						 newArgs.add(Double.parseDouble((String) o));
-					 } catch (Exception f) {
-						 try {
-							 newArgs.add(myVariables.get((String) o).getValue());
-						 } catch (Exception g) {
-							 newArgs.add(o);
-						 }
+				} catch (Exception e) {
+					try {
+						newArgs.add(Double.parseDouble((String) o));
+					} catch (Exception f) {
+						try {
+							if (myVariables.get((String) o) != null) {
+								newArgs.add(myVariables.get((String) o).getValue());
+							}
+						} catch (Exception g) {
+							newArgs.add(o);
+						}
 					}
 				}
 			}
