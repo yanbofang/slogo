@@ -1,5 +1,6 @@
 package commands;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -18,18 +19,21 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args) {
-		if (args.get(0) instanceof Collection) {
+		if (args.get(0) instanceof MakeUserInstructionCommand) {
 			throw new ParserException("User method already created!");
 		}
 		// make variables if haven't been made
-		for (Object o : (List) args.get(1)) {
-			if (o instanceof Command) {
-				((Command) o).executeCommand(myTurtle);
-			}
+		int numOfVariables = 0;
+		List<String> variablesNameList = new ArrayList<String>();
+		for (String variableName: (List<String>) args.get(1)) {
+			numOfVariables++;
+			variablesNameList.add(variableName);
 		}
 		String name = (String) args.get(0);
-		UserMethod method = new UserMethod(name, (List<Command>) args.get(2));
-		myUserMethods.add(name, method);
+		//Create the UserMethod as a command, instruction is the name of the method
+		UserMethodCommand userCommand = new UserMethodCommand(name, myVariables, myUserMethods, numOfVariables);
+		UserMethod method = new UserMethod(name, (List<Command>) args.get(2), variablesNameList);
+		myUserMethods.add(name, method, userCommand);
 		return method.getMethodName().isEmpty() ? 0.0 : 1.0;
 	}
 

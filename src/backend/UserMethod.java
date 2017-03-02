@@ -7,11 +7,13 @@ public class UserMethod {
 
 	private String myMethodName;
 	private List<Command> myListOfCommands;
+	private List<String> myListOfVariableNames;
 
-	public UserMethod(String name, List<Command> lst) {
+	public UserMethod(String name, List<Command> commandsList, List<String> variableNameList) {
 		// TODO Auto-generated constructor stub
 		myMethodName = name;
-		myListOfCommands = lst;
+		myListOfCommands = commandsList;
+		myListOfVariableNames = variableNameList;
 	}
 
 	public String getMethodName() {
@@ -22,4 +24,7 @@ public class UserMethod {
 		return myListOfCommands;
 	}
 
+	public List<String> getListOfVariables() {
+		return myListOfVariableNames;
+	}
 }

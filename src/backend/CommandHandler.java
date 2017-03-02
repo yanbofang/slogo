@@ -33,7 +33,6 @@ public class CommandHandler {
 	public Double executeCommands() {
 		Double current = null;
 		if (!myCommands.isEmpty()) {
-			
 			currentCommand = myCommands.peek();
 			if (currentCommand.isFinished()) {
 				myCommands.remove();

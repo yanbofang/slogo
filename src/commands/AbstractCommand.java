@@ -92,8 +92,8 @@ public abstract class AbstractCommand implements Command {
 						 try {
 							 if (myVariables.get((String) o) != null) {
 								 newArgs.add(myVariables.get((String) o).getValue());
-							 } else if (myUserMethods.get((String) o) != null) {
-								 newArgs.add(myUserMethods.get((String) o).getListOfCommands());
+							 } else if (myUserMethods.getUserMethodCommand((String) o) != null) {
+								 newArgs.add(myUserMethods.getUserMethodCommand((String) o));
 							 } else {
 								 newArgs.add(o);
 							 }
