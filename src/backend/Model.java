@@ -77,5 +77,9 @@ public class Model implements ModelInterface {
 			return null;
 		}
 	}
+	
+	public void executeCommand(Command c) {
+		c.executeCommand(myTurtle);
+	}
 
 }

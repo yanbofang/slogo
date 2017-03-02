@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -89,6 +90,7 @@ public abstract class AbstractCommand implements Command {
 				Command c = (Command) o;
 				newArgs.add(c.executeCommand(turtle));
 			} else {
+			
 				try {
 					newArgs.add((Double) o);
 				}  catch (Exception e) {
@@ -110,9 +112,32 @@ public abstract class AbstractCommand implements Command {
 				}
 			}
 		}
-		System.out.println(newArgs);
 		this.changeToFinished();
 		return getValue(newArgs);
+	}
+	
+	protected List<Object> checkList(Object o) {
+		List<Object> returnList = new ArrayList<Object>();
+		List<Object> newList = (List<Object>) o;
+		for (Object each : newList) {
+			if (each instanceof Command) {
+				Command c = (Command) each;
+				returnList.add(c.executeCommand(myTurtle));
+			} else {
+				try {
+					if (myVariables.get((String) o) != null) {
+						 returnList.add(myVariables.get((String) o).getValue());
+					 } else if (myUserMethods.getUserMethodCommand((String) o) != null) {
+						 returnList.add(myUserMethods.getUserMethodCommand((String) o).executeCommand(myTurtle));
+					 } else { 
+						 returnList.add(each);
+					 }
+				} catch (Exception e) {
+					returnList.add(each);
+				}
+			}
+		}
+		return returnList;
 	}
 
 }
