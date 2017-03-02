@@ -42,7 +42,6 @@ public class Controller {
 	}
 
 	public void handleInput(String input) {
-		System.out.println(input + "THIS IS IN THE CONTROLLER");
 		model.handleInput(input);
 	}
 

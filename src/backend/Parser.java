@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Scanner;
 
 import commands.Command;
+import commands.MakeUserInstructionCommand;
+import commands.MakeVariableCommand;
 
 public class Parser {
 
@@ -34,11 +36,13 @@ public class Parser {
 			ArrayList<Command> current = new ArrayList<Command>();
 			Object currentCommand = recurseParse(s);
 			try {
+				Command c =  (Command) currentCommand;
 				current.add((Command) currentCommand);
 			} catch (Exception e) {
 				try {
 					current.addAll((List<Command>) currentCommand);
 				} catch (Exception f) {
+					System.out.println(currentCommand);
 					throw new ParserException(String.format("NOT VALID INPUT: %s", input));
 				}
 			}
@@ -46,6 +50,7 @@ public class Parser {
 		}
 		return myCommands;
 	}
+
 
 	/**
 	 * Pass in a single instruction, iterate through the scanner recursively
@@ -84,6 +89,7 @@ public class Parser {
 	private Object getDataObject(String current, Scanner s) {
 		if (myModel.getMethodVariable(current) != null) {
 			Command methodCommand = myModel.getMethodVariable(current);
+			System.out.println(current);
 			for (int k = 0; k < methodCommand.getNumOfExpressions(); k++) {
 				Object toBeAdded = recurseParse(s);
 				methodCommand.add(toBeAdded);
@@ -97,6 +103,9 @@ public class Parser {
 			return sublist;
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
 			return current;
+		} else if (current.equals("#")) {
+			s.nextLine();
+			return recurseParse(s);
 		}
 		try {
 			return Double.parseDouble(current);
