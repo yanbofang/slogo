@@ -90,7 +90,13 @@ public abstract class AbstractCommand implements Command{
 						 newArgs.add(Double.parseDouble((String) o));
 					 } catch (Exception f) {
 						 try {
-							 newArgs.add(myVariables.get((String) o).getValue());
+							 if (myVariables.get((String) o) != null) {
+								 newArgs.add(myVariables.get((String) o).getValue());
+							 } else if (myUserMethods.get((String) o) != null) {
+								 newArgs.add(myUserMethods.get((String) o).getListOfCommands());
+							 } else {
+								 newArgs.add(o);
+							 }
 						 } catch (Exception g) {
 							 newArgs.add(o);
 						 }
