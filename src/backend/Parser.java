@@ -14,7 +14,6 @@ public class Parser {
 	private Model myModel;
 	private VariableManager myVariables;
 	private UserMethodManager myUserMethods;
-	private boolean inCommandCall;
 
 	public Parser(String[] syntax, Model m, VariableManager variables, UserMethodManager methods) {
 		myModel = m;
@@ -43,7 +42,7 @@ public class Parser {
 					System.out.println(currentCommand);
 					throw new ParserException(String.format("NOT VALID INPUT: %s", input));
 				}
-			} 
+			}
 			myCommands.addAll(current);
 		}
 		return myCommands;
@@ -85,9 +84,12 @@ public class Parser {
 
 	private Object getDataObject(String current, Scanner s) {
 		if (myModel.getMethodVariable(current) != null) {
-			List<Command> methodList = myModel.getMethodVariable(current);
-			//RETURN NEW METHOD COMMAND
-			return methodList;
+			Command methodCommand = myModel.getMethodVariable(current);
+			for (int k = 0; k < methodCommand.getNumOfExpressions(); k++) {
+				Object toBeAdded = recurseParse(s);
+				methodCommand.add(toBeAdded);
+			}
+			return methodCommand;
 		} else if (myPatterns.getSymbol(current).equals("Variable")) {
 			return current;
 		} else if (myPatterns.getSymbol(current).equals("ListStart")) {

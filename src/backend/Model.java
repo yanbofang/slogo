@@ -31,9 +31,11 @@ public class Model implements ModelInterface {
 	@Override
 	public void handleInput(String input) {
 		List<Command> commands = myParser.parse(input);
-		System.out.println("!!" + commands);
-		for(Command c: commands){
-			c.resetCommand();
+		for (Command c : commands) {
+			if (c instanceof Command) {
+				c.resetCommand();
+
+			}
 		}
 		myCommandHandler.addCommands(commands);
 		// myCommandHandler.executeCommands();
@@ -68,9 +70,9 @@ public class Model implements ModelInterface {
 		}
 	}
 
-	public List<Command> getMethodVariable(String var) {
+	public Command getMethodVariable(String var) {
 		try {
-			return myUserMethods.get(var).getListOfCommands();
+			return myUserMethods.getUserMethodCommand(var);
 		} catch (Exception e) {
 			return null;
 		}
