@@ -85,17 +85,21 @@ public abstract class AbstractCommand implements Command {
 			} else {
 				try {
 					newArgs.add((Double) o);
-				} catch (Exception e) {
-					try {
-						newArgs.add(Double.parseDouble((String) o));
-					} catch (Exception f) {
-						try {
-							if (myVariables.get((String) o) != null) {
-								newArgs.add(myVariables.get((String) o).getValue());
-							}
-						} catch (Exception g) {
-							newArgs.add(o);
-						}
+				}  catch (Exception e) {
+					 try {
+						 newArgs.add(Double.parseDouble((String) o));
+					 } catch (Exception f) {
+						 try {
+							 if (myVariables.get((String) o) != null) {
+								 newArgs.add(myVariables.get((String) o).getValue());
+							 } else if (myUserMethods.get((String) o) != null) {
+								 newArgs.add(myUserMethods.get((String) o).getListOfCommands());
+							 } else {
+								 newArgs.add(o);
+							 }
+						 } catch (Exception g) {
+							 newArgs.add(o);
+						 }
 					}
 				}
 			}

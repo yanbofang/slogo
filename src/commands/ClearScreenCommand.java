@@ -20,7 +20,6 @@ public class ClearScreenCommand extends MoveCommand {
 	@Override
 	public Double calculateValue(List<Object> args) {
 		myCoord = toHome();
-		myTurtle.setLocation(myCoord, false);
 		myTurtle.setClear(true);
 		return myValue;
 	}

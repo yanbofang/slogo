@@ -5,20 +5,21 @@ import java.util.List;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
-public class YCoordinateCommand extends AbstractCommand {
+public class RandomCommand extends AbstractCommand {
 
-	private static final Integer NUM_OF_EXPRESSIONS = 0;
+	private static final Integer NUM_OF_EXPRESSIONS = 1;
 	
-	public YCoordinateCommand(String instruction, VariableManager variables,
+	public RandomCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 
 	@Override
 	public Double getValue(List<Object> args) {
-		myValue = myTurtle.getLocation(true).getY();
-		return myValue;
+		Double max = (Double) args.get(0);
+		return Math.random() * (max - 0) + 0;
 	}
-
+	
+	
 
 }

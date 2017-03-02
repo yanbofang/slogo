@@ -34,9 +34,8 @@ public abstract class LoopCommand extends AbstractCommand {
 					returnValue = c.executeCommand(myTurtle);
 				}
 			}
-
+	
 		}
 		return returnValue;
 	}
-
 }

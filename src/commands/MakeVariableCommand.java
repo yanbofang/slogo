@@ -29,21 +29,6 @@ public class MakeVariableCommand extends AbstractCommand {
 		checkVariable();
 		return myValue;
 	}
-	
-	@Override
-	public void add(Object ... args) {
-		for (Object each : args) {
-			try {
-				myArguments.add((Double) each);
-			}  catch (Exception e) {
-				 try {
-					 myArguments.add(Double.parseDouble((String) each));
-				 } catch (Exception f) { 
-					  myArguments.add(each);
-				 }
-			}
-		}
-	}
 
 	private void checkVariable() {
 
