@@ -89,7 +89,7 @@ public class Parser {
 	private Object getDataObject(String current, Scanner s) {
 		if (myModel.getMethodVariable(current) != null) {
 			Command methodCommand = myModel.getMethodVariable(current);
-			System.out.println(current);
+			methodCommand.clearArguments();
 			for (int k = 0; k < methodCommand.getNumOfExpressions(); k++) {
 				Object toBeAdded = recurseParse(s);
 				methodCommand.add(toBeAdded);
