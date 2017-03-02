@@ -7,6 +7,7 @@ import java.util.Scanner;
 import commands.Command;
 import commands.MakeUserInstructionCommand;
 import commands.MakeVariableCommand;
+import commands.UserMethodCommand;
 
 public class Parser {
 
@@ -88,8 +89,9 @@ public class Parser {
 
 	private Object getDataObject(String current, Scanner s) {
 		if (myModel.getMethodVariable(current) != null) {
-			Command methodCommand = myModel.getMethodVariable(current);
-			methodCommand.clearArguments();
+			UserMethod method = (UserMethod) myUserMethods.getUserMethod(current);
+			UserMethodCommand methodCommand = new UserMethodCommand(current, myVariables, myUserMethods, 
+					method);
 			for (int k = 0; k < methodCommand.getNumOfExpressions(); k++) {
 				Object toBeAdded = recurseParse(s);
 				methodCommand.add(toBeAdded);

@@ -83,6 +83,7 @@ public abstract class AbstractCommand implements Command {
 	 */
 	public Double executeCommand(Turtle turtle) {
 		myTurtle = turtle;
+		System.out.println(myArguments);
 		ArrayList<Object> newArgs = new ArrayList<Object>();
 		System.out.println("myARGUMENTS IN ABSTRACT " + myArguments);
 		for (Object o : myArguments) {
