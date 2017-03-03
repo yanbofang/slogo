@@ -79,8 +79,7 @@ public class OptionsView implements SubcomponentAPI{
 						updateVariables();
 					}
 				}
-			}
-			
+			}			
 		});
 	}
 	

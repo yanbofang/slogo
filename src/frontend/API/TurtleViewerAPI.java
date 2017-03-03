@@ -1,11 +1,12 @@
 package frontend.API;
 
 import coordinate.Coordinate;
+import javafx.scene.Node;
 
 /**
  * API for turtle area subcomponent
  * The graphical area that contains the turtle
- * @author Gordon
+ * @author Gordon and Faith
  *
  */
 public interface TurtleViewerAPI extends SubcomponentAPI{
@@ -29,4 +30,26 @@ public interface TurtleViewerAPI extends SubcomponentAPI{
 	 * 6 hexidecimal string of color (ex: 3c3c3c)
 	 */
 	public void setPenColor(String a);
+	
+	/**
+	 * Places turtle on the screen
+	 * @param a
+	 * Node containing the turtle
+	 */
+	public void placeTurtle(Node a);
+	
+	/**
+	 * Adds a line to the screen that indicates the change in position for the turtle
+	 * @param oldC
+	 * Coordinate indicating the previous position of the turtle
+	 * @param newC
+	 * Coordinate indicating the new position of the turtle
+	 * Node containing the turtle
+	 */
+	public void changePosition(Coordinate oldC, Coordinate newC);
+	
+	/**
+	 * Removes all previously created lines from the screen
+	 */
+	public void clear();
 }
