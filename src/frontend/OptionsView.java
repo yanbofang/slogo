@@ -27,15 +27,15 @@ public class OptionsView implements SubcomponentAPI{
 	private String defaultBackgroundColor = "white";
 	private String defaultPenColor = "black";
 	private String defaultLang = "English";
+	private String helpTitle = "help";
 	private String url = getClass().getClassLoader().getResource("help.html").toExternalForm();
 	private WebEngine webEngine;
 	private String[][] viewOptions = {{"backgroundColor", defaultBackgroundColor},{"penColor", defaultPenColor}, 
 										{"lang", defaultLang}, {"turtle", null}};
 	
-	
 	private ObservableList<String> colors = FXCollections.observableArrayList(
 			"black", "white", "red", "green", "blue", "yellow");
-
+	
 	private ObservableList<String> languages = FXCollections.observableArrayList(
 			"Chinese", "English", "French", "German", "Italian", 
 			"Portugese", "Russsian", "Spanish");
@@ -56,8 +56,16 @@ public class OptionsView implements SubcomponentAPI{
 		setVariables();
 	}  
 	
+	private void setVariables() {
+		createFeatureButton("penColor", colors);
+		createFeatureButton("backgroundColor", colors);
+		createFeatureButton("lang", languages);
+		createFeatureButton("turtle", turtles);	
+		createHelpButton();
+	}
+	
 	@SuppressWarnings("unchecked")
-	private ComboBox<String> createButton(String feature,@SuppressWarnings("rawtypes") ObservableList options) {
+	private void createFeatureButton(String feature,@SuppressWarnings("rawtypes") ObservableList options) {
 		@SuppressWarnings({ "rawtypes" })
 		ComboBox btn = new ComboBox(options);
 		btn.setPromptText(resource.getString(feature));
@@ -74,7 +82,6 @@ public class OptionsView implements SubcomponentAPI{
 			}
 			
 		});
-		return btn;
 	}
 	
 	private void updateVariables() {
@@ -82,15 +89,10 @@ public class OptionsView implements SubcomponentAPI{
 		changeBackgroundColor();
 		changeImage();
 		changeLanguage();
-		
 	}
-	private void setVariables() {
-		createButton("penColor", colors);
-		createButton("backgroundColor", colors);
-		createButton("lang", languages);
-		createButton("turtle", turtles);
-		
-		Button helpBtn = new Button(resource.getString("Help"));
+	
+	private void createHelpButton(){
+		Button helpBtn = new Button(resource.getString(helpTitle));
 		helpBtn.setId("help");
 		buttonPanel.getChildren().add(helpBtn);
 		helpBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -113,8 +115,7 @@ public class OptionsView implements SubcomponentAPI{
 	}
 	
 	private void changeBackgroundColor() {
-		view.changeBackground(viewOptions[0][1]);
-		
+		view.changeBackground(viewOptions[0][1]);	
 	}
 	
 	private void changeLanguage() {
@@ -128,5 +129,4 @@ public class OptionsView implements SubcomponentAPI{
 			view.changeImage(turtleImage);
 		}
 	}
-
 }
