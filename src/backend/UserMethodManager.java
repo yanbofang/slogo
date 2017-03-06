@@ -25,6 +25,11 @@ public class UserMethodManager extends Observable {
 		setChanged();
 		notifyObservers(key);
 	}
+	
+	//for testing
+	public HashMap<String, UserMethodCommand> getCommandMap(){
+		return myMethodCommandMap;
+	}
 
 	public UserMethod getUserMethod(String key) {
 		UserMethod method = myMethodMap.get(key);
@@ -38,6 +43,7 @@ public class UserMethodManager extends Observable {
 	 */
 	public UserMethodCommand getUserMethodCommand(String key) {
 		UserMethodCommand methodCommand = myMethodCommandMap.get(key);
+		System.out.println("In UserMethodManager: " +  myMethodCommandMap.toString());
 		return methodCommand;
 	}
 

@@ -82,7 +82,6 @@ public abstract class AbstractCommand implements Command {
 	 */
 	public Double executeCommand(Turtle turtle) {
 		myTurtle = turtle;
-		System.out.println("This is myArguments: " + myArguments);
 		ArrayList<Object> newArgs = new ArrayList<Object>();
 		for (Object o : myArguments) {
 			if (o instanceof AbstractCommand) {
@@ -96,10 +95,17 @@ public abstract class AbstractCommand implements Command {
 				// newArgs.add(Double.parseDouble((String) o));
 				// } catch (Exception f) {
 				try {
+					System.out.println("This is o: " + (String) o);
+					// System.out.println("USERMETHODCOMMAND: " +
+					// myUserMethods.getUserMethodCommand((String) o));
 					if (myVariables.get((String) o) != null) {
+						System.out.println(myVariables.get((String) o));
 						newArgs.add(myVariables.get((String) o).getValue());
-					} else if (myUserMethods.getUserMethodCommand((String) o) != null) {
-						newArgs.add(myUserMethods.getUserMethodCommand((String) o));
+						// } else if
+						// (myUserMethods.getUserMethodCommand((String) o) !=
+						// null) {
+						// newArgs.add(myUserMethods.getUserMethodCommand((String)
+						// o));
 					} else {
 						newArgs.add(o);
 					}
@@ -111,7 +117,8 @@ public abstract class AbstractCommand implements Command {
 		// }
 		// }
 		this.changeToFinished();
-		return getValue(newArgs);
+		System.out.println("This is args: " + newArgs);
+		return this.getValue(newArgs);
 	}
 
 	protected List<Object> checkList(Object o) {
