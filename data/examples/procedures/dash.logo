@@ -1,6 +1,6 @@
 set :count 12
 
-to dash [ ]
+to :dash [ ]
 [
   repeat :count 
   [
@@ -9,4 +9,4 @@ to dash [ ]
 ]
 
 
-dash
+:dash

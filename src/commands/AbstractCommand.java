@@ -43,11 +43,10 @@ public abstract class AbstractCommand implements Command {
 		}
 	}
 
-	public void clearArguments(){
+	public void clearArguments() {
 		myArguments.clear();
 	}
-	
-	
+
 	public Integer getNumOfExpressions() {
 		return myNumOfExpressions;
 	}
@@ -88,38 +87,44 @@ public abstract class AbstractCommand implements Command {
 		myTurtle = turtles.getTurtle(k);
 		System.out.println(myArguments);
 		ArrayList<Object> newArgs = new ArrayList<Object>();
-		System.out.println("myARGUMENTS IN ABSTRACT " + myArguments);
 		for (Object o : myArguments) {
 			if (o instanceof AbstractCommand) {
 				Command c = (Command) o;
 				newArgs.add(c.executeCommand(turtles, k));
 			} else {
-			
+				// try {
+				// newArgs.add((Double) o);
+				// } catch (Exception e) {
+				// try {
+				// newArgs.add(Double.parseDouble((String) o));
+				// } catch (Exception f) {
 				try {
-					newArgs.add((Double) o);
-				}  catch (Exception e) {
-					 try {
-						 newArgs.add(Double.parseDouble((String) o));
-					 } catch (Exception f) {
-						 try {
-							 if (myVariables.get((String) o) != null) {
-								 newArgs.add(myVariables.get((String) o).getValue());
-							 } else if (myUserMethods.getUserMethodCommand((String) o) != null) {
-								 newArgs.add(myUserMethods.getUserMethodCommand((String) o));
-							 } else {
-								 newArgs.add(o);
-							 }
-						 } catch (Exception g) {
-							 newArgs.add(o);
-						 }
+					System.out.println("This is o: " + (String) o);
+					// System.out.println("USERMETHODCOMMAND: " +
+					// myUserMethods.getUserMethodCommand((String) o));
+					if (myVariables.get((String) o) != null) {
+						System.out.println(myVariables.get((String) o));
+						newArgs.add(myVariables.get((String) o).getValue());
+						// } else if
+						// (myUserMethods.getUserMethodCommand((String) o) !=
+						// null) {
+						// newArgs.add(myUserMethods.getUserMethodCommand((String)
+						// o));
+					} else {
+						newArgs.add(o);
 					}
+				} catch (Exception g) {
+					newArgs.add(o);
 				}
 			}
 		}
+		// }
+		// }
 		this.changeToFinished();
-		return getValue(newArgs);
+		System.out.println("This is args: " + newArgs);
+		return this.getValue(newArgs);
 	}
-	
+
 	protected List<Object> checkList(Object o) {
 		List<Object> returnList = new ArrayList<Object>();
 		List<Object> newList = (List<Object>) o;
@@ -130,12 +135,12 @@ public abstract class AbstractCommand implements Command {
 			} else {
 				try {
 					if (myVariables.get((String) o) != null) {
-						 returnList.add(myVariables.get((String) o).getValue());
-					 } else if (myUserMethods.getUserMethodCommand((String) o) != null) {
-						 returnList.add(myUserMethods.getUserMethodCommand((String) o).executeCommand(myTurtleManager, myTurtle.getID()));
-					 } else { 
-						 returnList.add(each);
-					 }
+						returnList.add(myVariables.get((String) o).getValue());
+					} else if (myUserMethods.getUserMethodCommand((String) o) != null) {
+						returnList.add(myUserMethods.getUserMethodCommand((String) o).executeCommand(myTurtleManager, myTurtle.getID()));
+					} else {
+						returnList.add(each);
+					}
 				} catch (Exception e) {
 					returnList.add(each);
 				}

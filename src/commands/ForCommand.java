@@ -15,6 +15,7 @@ public class ForCommand extends LoopCommand {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 
+	@Override
 	public Double getValue(List<Object> args) {
 		myCommands = (ArrayList<Command>) args.get(1);
 		List<Object> lst = (List<Object>) args.get(0);

@@ -1,6 +1,7 @@
 package frontend.API;
 
 import coordinate.Coordinate;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 /**
  * API for View class
@@ -92,4 +93,16 @@ public interface ViewAPI {
 	 */
 	public void runCommand(String a);
 	
+	
+	/**
+	 * Set Turtle
+	 * @param n
+	 */
+	public void setTurtle(Node n);	
+	
+	public void updateTurtle(Coordinate x, Coordinate y);
+
+	public void clearLines();
+
+	public void setPen(Boolean b);
 }
