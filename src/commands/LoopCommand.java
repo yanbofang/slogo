@@ -30,7 +30,7 @@ public abstract class LoopCommand extends AbstractCommand {
 			for (Command c : myCommands) {
 				c.resetCommand();
 				while (!c.isFinished()) {
-					returnValue = c.executeCommand(myTurtle);
+					returnValue = c.executeCommand(myTurtleManager, myTurtle.getID());
 				}
 			}
 
