@@ -152,10 +152,12 @@ public class View implements ViewAPI {
 		promptView.clearHistory();
 	}
 	
+	@Override
 	public void clearLines(){
 		turtleView.clear();
 	}
 
+	@Override
 	public void setPen(Boolean penIn) {
 		penDown = penIn;
 	}
@@ -203,6 +205,7 @@ public class View implements ViewAPI {
 		stage.setScene(scene);
 		stage.show();
 	}
+
 	
 	private Object handleKeyInput(KeyCode code) {
 		double x = 50;

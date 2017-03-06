@@ -3,8 +3,6 @@ package backend;
 import java.util.List;
 
 import commands.Command;
-import controller.Controller;
-import frontend.View;
 import javafx.scene.Node;
 import interfaces.ModelInterface;
 
@@ -14,12 +12,10 @@ public class Model implements ModelInterface {
 	private UserMethodManager myUserMethods;
 	private Turtle myTurtle;
 	private Parser myParser;
-	private Controller myController;
 	private CommandHandler myCommandHandler;
 
-	public Model(String[] syntax, Controller controller, VariableManager variables, UserMethodManager methods,
+	public Model(String[] syntax, VariableManager variables, UserMethodManager methods,
 			Turtle turtle) {
-		myController = controller;
 		myVariables = variables;
 		myUserMethods = methods;
 
