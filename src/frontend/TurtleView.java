@@ -36,7 +36,6 @@ public class TurtleView implements TurtleViewerAPI{
 		penColor = Color.BLACK;
 	}
 	
-	
 	public void changePosition(Coordinate oldC, Coordinate newC) {
 		Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
 		newLine.setStroke(penColor);
@@ -69,13 +68,14 @@ public class TurtleView implements TurtleViewerAPI{
 		viewer.setBackground(new Background(new BackgroundFill(tempColor, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
 
-	public void placeTurtle(Node node) {
-		viewer.getChildren().add(node);
-	}
-
 	@Override
 	public void setPenColor(String a) {
 		penColor = Color.valueOf(a);
+	}
+
+	@Override
+	public void placeTurtle(Node a) {
+		viewer.getChildren().add(a);
 	}
 
 }

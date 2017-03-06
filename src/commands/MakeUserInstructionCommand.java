@@ -31,8 +31,9 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 		}
 		String name = (String) args.get(0);
 		//Create the UserMethod as a command, instruction is the name of the method
-		UserMethodCommand userCommand = new UserMethodCommand(name, myVariables, myUserMethods, numOfVariables);
+
 		UserMethod method = new UserMethod(name, (List<Command>) args.get(2), variablesNameList);
+		UserMethodCommand userCommand = new UserMethodCommand(name, myVariables, myUserMethods, method);
 		myUserMethods.add(name, method, userCommand);
 		return method.getMethodName().isEmpty() ? 0.0 : 1.0;
 	}

@@ -56,9 +56,9 @@ public class PromptView implements SubcomponentAPI{
 		layout.setAlignment(Pos.TOP_CENTER);
 		layout.setPadding(new Insets(10, 10, 0, 20));
 		layout.setSpacing(20);
-		layout.setPrefHeight(425);
 		scrollPane.setContent(layout);
 		scrollPane.setFitToWidth(true);
+		scrollPane.setPrefHeight(425);
 		history = new VBox();	
 		Label title = new Label("Command History\n(click to execute)");
 		layout.getChildren().addAll(title,history);
