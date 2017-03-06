@@ -17,7 +17,7 @@ public class DoubleCommand extends AbstractCommand{
 	@Override
 	public Double getValue(List<Object> args) {
 		// TODO Auto-generated method stub
-		System.out.println(myInstruction);
+		System.out.println("MYINSTRUCTION: "+myInstruction);
 		return Double.parseDouble(myInstruction);
 	}
 	

@@ -41,11 +41,10 @@ public abstract class AbstractCommand implements Command {
 		}
 	}
 
-	public void clearArguments(){
+	public void clearArguments() {
 		myArguments.clear();
 	}
-	
-	
+
 	public Integer getNumOfExpressions() {
 		return myNumOfExpressions;
 	}
@@ -90,32 +89,31 @@ public abstract class AbstractCommand implements Command {
 				Command c = (Command) o;
 				newArgs.add(c.executeCommand(turtle));
 			} else {
-			
+				// try {
+				// newArgs.add((Double) o);
+				// } catch (Exception e) {
+				// try {
+				// newArgs.add(Double.parseDouble((String) o));
+				// } catch (Exception f) {
 				try {
-					newArgs.add((Double) o);
-				}  catch (Exception e) {
-					 try {
-						 newArgs.add(Double.parseDouble((String) o));
-					 } catch (Exception f) {
-						 try {
-							 if (myVariables.get((String) o) != null) {
-								 newArgs.add(myVariables.get((String) o).getValue());
-							 } else if (myUserMethods.getUserMethodCommand((String) o) != null) {
-								 newArgs.add(myUserMethods.getUserMethodCommand((String) o));
-							 } else {
-								 newArgs.add(o);
-							 }
-						 } catch (Exception g) {
-							 newArgs.add(o);
-						 }
+					if (myVariables.get((String) o) != null) {
+						newArgs.add(myVariables.get((String) o).getValue());
+					} else if (myUserMethods.getUserMethodCommand((String) o) != null) {
+						newArgs.add(myUserMethods.getUserMethodCommand((String) o));
+					} else {
+						newArgs.add(o);
 					}
+				} catch (Exception g) {
+					newArgs.add(o);
 				}
 			}
 		}
+		// }
+		// }
 		this.changeToFinished();
 		return getValue(newArgs);
 	}
-	
+
 	protected List<Object> checkList(Object o) {
 		List<Object> returnList = new ArrayList<Object>();
 		List<Object> newList = (List<Object>) o;
@@ -126,12 +124,12 @@ public abstract class AbstractCommand implements Command {
 			} else {
 				try {
 					if (myVariables.get((String) o) != null) {
-						 returnList.add(myVariables.get((String) o).getValue());
-					 } else if (myUserMethods.getUserMethodCommand((String) o) != null) {
-						 returnList.add(myUserMethods.getUserMethodCommand((String) o).executeCommand(myTurtle));
-					 } else { 
-						 returnList.add(each);
-					 }
+						returnList.add(myVariables.get((String) o).getValue());
+					} else if (myUserMethods.getUserMethodCommand((String) o) != null) {
+						returnList.add(myUserMethods.getUserMethodCommand((String) o).executeCommand(myTurtle));
+					} else {
+						returnList.add(each);
+					}
 				} catch (Exception e) {
 					returnList.add(each);
 				}
