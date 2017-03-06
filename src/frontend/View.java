@@ -17,6 +17,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -196,10 +197,29 @@ public class View implements ViewAPI {
 		root.add(variablesView.getParent(), 0, 3, 1, 1);
 		root.add(methodsView.getParent(), 1, 3, 1, 1);
 		root.add(promptView.getParent(), 2, 1, 1, 3);
+		root.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
 
 		scene.getStylesheets().add(CSS_STYLESHEET);
 		stage.setScene(scene);
 		stage.show();
 	}
-
+	
+	private Object handleKeyInput(KeyCode code) {
+		double x = 50;
+		double y = 60;
+		Coordinate current = new Coordinate(x, y);	
+		if (code == KeyCode.L) {
+			controller.handleInput("left 5");	
+		}
+		if (code == KeyCode.R) {
+			controller.handleInput("right 5");		
+		}
+		if (code == KeyCode.F) {
+			controller.handleInput("fd 5");		
+		}
+		if (code == KeyCode.B) {
+			controller.handleInput("back 5");		
+		}
+		return null;
+	}
 }
