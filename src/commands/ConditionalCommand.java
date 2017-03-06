@@ -10,7 +10,6 @@ public abstract class ConditionalCommand extends AbstractCommand {
 	public ConditionalCommand(String instruction, VariableManager variables, UserMethodManager methods,
 			int numOfExpressions) {
 		super(instruction, variables, methods, numOfExpressions);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -24,7 +23,7 @@ public abstract class ConditionalCommand extends AbstractCommand {
 		for (Command c : commandList) {
 			c.resetCommand();
 			while (!c.isFinished()) {
-				returnValue = c.executeCommand(myTurtle);
+				returnValue = c.executeCommand(myTurtleManager, myTurtle.getID());
 			}
 		}
 		return returnValue;

@@ -26,8 +26,4 @@ public interface ModelInterface {
 	 */
 	public void updateVariable(String var, String value);
 	
-	/**
-	 * Return turtle image for UI Scene
-	 */
-	public Node getTurtle();
 }

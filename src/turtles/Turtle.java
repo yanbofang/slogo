@@ -1,4 +1,4 @@
-package backend;
+package turtles;
 
 import java.util.ArrayList;
 import java.util.Observable;
@@ -8,21 +8,21 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
-public class Turtle extends Observable{
+public class Turtle extends Observable implements TurtleAPI{
 	
 	private final String myTurtlePicture = "images/turtle.png";
 	
 	private ImageView myImage;
 	private double myHeightBounds;
 	private double myWidthBounds;
-	private boolean myPen;
+	private Pen myPen;
 	private boolean showTurtle;
 	private boolean myClear;
+	private Double myID;
 	
 
 	
-	public Turtle(double width, double height, double widthBounds, double heightBounds) {
-		//myImage = new ImageView();
+	public Turtle(double width, double height, double widthBounds, double heightBounds, Double id) {
 		Image turtleView = new Image(getClass().getClassLoader().getResourceAsStream(myTurtlePicture));
 		myHeightBounds = heightBounds - height;
 		myWidthBounds = widthBounds - width;
@@ -32,9 +32,10 @@ public class Turtle extends Observable{
 		myImage.setTranslateX(myWidthBounds/2.0 );
 		myImage.setTranslateY(myHeightBounds/2.0 );
 		myImage.setRotate(0);
-		myPen = true;
+		myPen = new Pen();
 		showTurtle = true;
 		myClear = false;
+		myID = id;
 	}
 	
 	public Node getImage() {
@@ -97,6 +98,11 @@ public class Turtle extends Observable{
 		return current;
 	}
 	
+	@Override
+	public Coordinate getLocation() {
+		return getLocation(false);
+	}
+	
 	private Coordinate unadjust(Coordinate coord) {
 		coord.setX(coord.getX() - myWidthBounds/2.0);
 		coord.setY(coord.getY() - myHeightBounds/2.0);
@@ -118,22 +124,10 @@ public class Turtle extends Observable{
 		return showTurtle;
 	}
 	
-	public boolean showPen() {
-		return myPen;
-	}
-	
-	public void setPen(boolean b) {
-		myPen = b;
-		this.penChange();
-	}
-	
 	public void setShow(boolean b) {
 		showTurtle = b;
 	}
-	
-	public boolean getClear() {
-		return myClear;
-	}
+
 	
 	public void setClear(boolean b) {
 		myClear = b;
@@ -144,7 +138,16 @@ public class Turtle extends Observable{
 	
 	private void penChange(){
 		this.setChanged();
-		boolean temp[] = {myClear, myPen};
+		boolean temp[] = {myClear, myPen.showPen()};
 		notifyObservers(temp);
+	}
+
+	@Override
+	public Pen getPen() {
+		return myPen;
+	}
+	
+	public Double getID() {
+		return myID;
 	}
 }
