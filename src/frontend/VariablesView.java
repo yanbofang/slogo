@@ -33,6 +33,7 @@ public class VariablesView implements VariablesViewAPI{
 		
 		scrollPane = new ScrollPane();
 		scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		scrollPane.setPrefHeight(200);
 		VBox layout = new VBox();
 		layout.setAlignment(Pos.TOP_CENTER);
 		layout.setPadding(new Insets(10, 10, 0, 20));
