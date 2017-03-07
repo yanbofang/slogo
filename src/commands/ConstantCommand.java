@@ -5,11 +5,11 @@ import java.util.List;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
-public class DoubleCommand extends AbstractCommand {
+public class ConstantCommand extends AbstractCommand {
 
 	private static final Integer NUM_OF_EXPRESSIONS = 0;
 
-	public DoubleCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+	public ConstantCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 
