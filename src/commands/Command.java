@@ -3,15 +3,17 @@ package commands;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import turtles.Turtle;
+import turtles.TurtleManagerCommandAPI;
 import backend.CommandHandler;
-import backend.Turtle;
+
 import backend.VariableManager;
 
 public interface Command {
 
 	void add(Object... args);
-	
-	void clearArguments();
+
+	// void clearArguments();
 
 	String getInstruction();
 
@@ -19,11 +21,13 @@ public interface Command {
 
 	boolean isFinished();
 
-//	Double getValue(Turtle t);
+	Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k);
 
-	Double executeCommand(Turtle turtle, VariableManager vars);
-	
 	void resetCommand();
 
 	Integer getNumOfExpressions();
+
+	void performBeforeExecution();
+
+	boolean getRunTurtles();
 }

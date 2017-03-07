@@ -1,4 +1,4 @@
-to square [ :distance ]
+to :square [ :distance ]
 [
   repeat 4 [
     fd :distance
@@ -8,7 +8,7 @@ to square [ :distance ]
 
 make :distance 200
 repeat 10 [
-  square :distance
+  :square :distance
   make :distance - :distance 10
   rt 36
 ]

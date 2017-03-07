@@ -18,6 +18,7 @@ public abstract class MoveCommand extends AbstractCommand {
 	public MoveCommand(String instruction, VariableManager variables, UserMethodManager methods,
 			int numberOfExpressions) {
 		super(instruction, variables, methods, numberOfExpressions);
+		runAllTurtles = true;
 	}
 
 	@Override

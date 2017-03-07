@@ -1,22 +1,22 @@
 package frontend;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import animation.MoveAnimation;
 import coordinate.Coordinate;
 import frontend.API.TurtleViewerAPI;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import turtles.Pen;
 
 public class TurtleView implements TurtleViewerAPI{
 
@@ -25,24 +25,30 @@ public class TurtleView implements TurtleViewerAPI{
 	private Pane viewer;
 	private ArrayList<Line> lines;
 	private Color penColor;
+	private Map<Double,String> colorMap;
+	private MoveAnimation animation;
 	
-	
-	public TurtleView(View viewIn) {
+	public TurtleView(View viewIn, Map mapIn, double gbIndex) {
 		view = viewIn;
+		colorMap = mapIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		viewer = new Pane();
 		viewer.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		lines = new ArrayList<Line>();
-		penColor = Color.BLACK;
 	}
 	
-	public void changePosition(Coordinate oldC, Coordinate newC) {
-		Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
-		newLine.setStroke(penColor);
-		lines.add(newLine);
-		viewer.getChildren().add(newLine);
+	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen) {
+		if (pen.showPen()) {
+			// need turtle
+//			animation = new MoveAnimation(view, pen, oldC, newC);
+			Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
+			newLine.setStroke(Color.valueOf(colorMap.get(pen.getColor())));
+			newLine.setStrokeWidth(pen.getSize());
+			lines.add(newLine);
+			viewer.getChildren().add(newLine);
+		}	
 	}
-	
+
 	public void clear() {
 		for (Line line: lines) {
 			viewer.getChildren().remove(line);
@@ -75,7 +81,12 @@ public class TurtleView implements TurtleViewerAPI{
 
 	@Override
 	public void placeTurtle(Node a) {
-		viewer.getChildren().add(a);
+		viewer.getChildren().add(a);	
 	}
+	
+	public void removeTurtle(Node a) {
+		viewer.getChildren().remove(a);
+	}
+
 
 }

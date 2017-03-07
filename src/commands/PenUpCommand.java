@@ -12,6 +12,7 @@ public class PenUpCommand extends AbstractCommand {
 	public PenUpCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+		runAllTurtles = true;
 	}
 
 	@Override

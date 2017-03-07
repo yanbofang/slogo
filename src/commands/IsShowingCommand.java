@@ -11,6 +11,7 @@ public class IsShowingCommand extends AbstractCommand {
 	public IsShowingCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+		runAllTurtles = true;
 		
 	}
 	

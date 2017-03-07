@@ -22,7 +22,6 @@ public class Parser {
 		myModel = m;
 		myPatterns = new PatternParse();
 		for (String each : syntax) {
-			System.out.println("myPatterns" + each);
 			myPatterns.addPattern(each);
 		}
 		myVariables = variables;
@@ -70,6 +69,7 @@ public class Parser {
 
 		if (s.hasNext()) {
 			String current = s.next();
+			
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
 			currentCommand = myFactory.reflectCommand(current, myPatterns.getSymbol(current), myVariables, myUserMethods);
@@ -79,6 +79,7 @@ public class Parser {
 					Object toBeAdded = recurseParse(s);
 					currentCommand.add(toBeAdded);
 				}
+				currentCommand.performBeforeExecution();
 				return currentCommand;
 			} else {
 				return getDataObject(current, s);
@@ -89,7 +90,7 @@ public class Parser {
 	}
 
 	private Object getDataObject(String current, Scanner s) {
-		if (myModel.getMethodVariable(current) != null) {
+		if (myUserMethods.getUserMethod(current) != null) {
 			UserMethod method = (UserMethod) myUserMethods.getUserMethod(current);
 			UserMethodCommand methodCommand = new UserMethodCommand(current, myVariables, myUserMethods, 
 					method);
@@ -106,13 +107,10 @@ public class Parser {
 			return sublist;
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
 			return current;
-		} else if (current.equals("#")) {
+		} else if (myPatterns.getSymbol(current).equals("Comment")){
 			s.nextLine();
 			return recurseParse(s);
-		}
-		try {
-			return Double.parseDouble(current);
-		} catch (Exception e) {
+		} else {
 			throw new ParserException(String.format("NOT A VALID TYPE %s", current));
 		}
 	}

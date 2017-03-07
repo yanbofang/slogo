@@ -15,11 +15,12 @@ public class RepeatCommand extends LoopCommand {
 
 	public RepeatCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+		runAllTurtles = true;
 	}
 
 	public Double getValue(List<Object> args, VariableManager vars) {
 		myCommands = (ArrayList<Command>) args.get(1);
 		System.out.println("myCommands in RepeatCommand: " + myCommands.toString());
-		return runCommands(1.0, (Double) args.get(0), 1.0, null, vars);
+		return runCommands(1.0, (Double) args.get(0), 1.0, null, vars, myTurtle.getID());
 	}
 }

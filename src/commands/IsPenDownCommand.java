@@ -12,6 +12,7 @@ public class IsPenDownCommand extends AbstractCommand {
 	public IsPenDownCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSION);
+		runAllTurtles = true;
 	}
 
 	@Override

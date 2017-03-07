@@ -18,4 +18,9 @@ public class ConstantCommand extends AbstractCommand {
 		return Double.parseDouble(myInstruction);
 	}
 
+	@Override
+	public void performBeforeExecution() {
+		return;		
+	}
+
 }

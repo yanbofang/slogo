@@ -2,7 +2,7 @@ package commands;
 
 import java.util.List;
 
-import backend.Turtle;
+import turtles.Turtle;
 import backend.UserMethodManager;
 import backend.Variable;
 import backend.VariableManager;
@@ -15,7 +15,6 @@ public class MakeVariableCommand extends AbstractCommand {
 
 	public MakeVariableCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		// TODO Auto-generated constructor stub
 	}
 
 	/***
@@ -23,8 +22,12 @@ public class MakeVariableCommand extends AbstractCommand {
 	 * THE VARIABLE LATER
 	 */
 	@Override
+<<<<<<< HEAD
 	public Double getValue(List<Object> args, VariableManager vars) {
 		System.out.println("makevar!!!!!!! " + args);
+=======
+	public Double getValue(List<Object> args) {
+>>>>>>> ae34916c40d34c41e75bf348766f340649d34ff2
 		myValue = (Double) args.get(1);
 		checkVariable(vars);
 		return myValue;

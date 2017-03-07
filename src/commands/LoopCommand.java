@@ -15,22 +15,24 @@ public abstract class LoopCommand extends AbstractCommand {
 
 	public LoopCommand(String instruction, VariableManager variables, UserMethodManager methods, int numOfExpressions) {
 		super(instruction, variables, methods, numOfExpressions);
+		runNested = false;
+		runAllTurtles = true;
 	}
 
 	@Override
 	public abstract Double getValue(List<Object> args, VariableManager vars);
 
-	protected Double runCommands(Double start, Double end, Double increment, Variable var, VariableManager vars) {
+	protected Double runCommands(Double start, Double end, Double increment, Variable var, VariableManager vars,
+			Double k) {
 		Double returnValue = 0.0;
 		for (int i = start.intValue(); i < end.intValue() + 1; i += increment.intValue()) {
 			if (var != null) {
 				vars.addVariable(new Variable(var.getVariableName(), (double) i));
 			}
-			System.out.println("!!!!My Commands In LoopCommand: " + myCommands);
 			for (Command c : myCommands) {
 				c.resetCommand();
 				while (!c.isFinished()) {
-					returnValue = c.executeCommand(myTurtle, vars);
+					returnValue = c.executeCommand(myTurtleManager, vars, k);
 				}
 			}
 

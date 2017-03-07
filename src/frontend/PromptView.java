@@ -2,6 +2,7 @@ package frontend;
 
 import java.util.ResourceBundle;
 
+import coordinate.Coordinate;
 import frontend.API.SubcomponentAPI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -13,6 +14,7 @@ import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.ScrollPane.ScrollBarPolicy;
+import javafx.scene.input.KeyCode;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
@@ -76,7 +78,6 @@ public class PromptView implements SubcomponentAPI{
 			}
 		});
 	}
-	
 	
 	private void buttonSetup() {
 		submitBtn = new Button(resource.getString("Submit"));

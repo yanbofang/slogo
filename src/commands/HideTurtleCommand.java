@@ -12,6 +12,7 @@ public class HideTurtleCommand extends AbstractCommand {
 	public HideTurtleCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSION);
+		runAllTurtles = true;
 	}
 
 	@Override

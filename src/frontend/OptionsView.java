@@ -28,20 +28,21 @@ public class OptionsView implements SubcomponentAPI{
 	private String defaultPenColor = "black";
 	private String defaultLang = "English";
 	private String helpTitle = "help";
+	private String defaultTurtle = "turtle";
 	private String url = getClass().getClassLoader().getResource("help.html").toExternalForm();
 	private WebEngine webEngine;
 	private String[][] viewOptions = {{"backgroundColor", defaultBackgroundColor},{"penColor", defaultPenColor}, 
-										{"lang", defaultLang}, {"turtle", null}};
+										{"lang", defaultLang}, {"turtle", defaultTurtle}};
 	
 	private ObservableList<String> colors = FXCollections.observableArrayList(
 			"black", "white", "red", "green", "blue", "yellow");
 	
 	private ObservableList<String> languages = FXCollections.observableArrayList(
 			"Chinese", "English", "French", "German", "Italian", 
-			"Portugese", "Russsian", "Spanish");
+			"Portuguese", "Russian", "Spanish");
 
 	private ObservableList<String> turtles = FXCollections.observableArrayList(
-			"greenturtle", "blueturtle", "pinkturtle");
+			"greenturtle", "blueturtle", "pinkturtle", "turtle");
 
 
 
@@ -54,7 +55,7 @@ public class OptionsView implements SubcomponentAPI{
 		s = new Stage(); 
 		scene = new Scene(browser);
 		setVariables();
-	}  
+	} 
 	
 	private void setVariables() {
 		createFeatureButton("penColor", colors);
@@ -122,10 +123,9 @@ public class OptionsView implements SubcomponentAPI{
 	}
 	
 	private void changeImage() {
-		if(viewOptions[3][1] != null) {
-			String imageName = resource.getString(viewOptions[3][1]);
-			Image turtleImage = new Image(getClass().getClassLoader().getResourceAsStream(imageName));
-			view.changeImage(turtleImage);
-		}
+		String imageName = resource.getString(viewOptions[3][1]);
+		Image turtleImage = new Image(getClass().getClassLoader().getResourceAsStream(imageName));
+		view.changeImage(turtleImage);
+
 	}
 }

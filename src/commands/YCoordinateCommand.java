@@ -12,6 +12,7 @@ public class YCoordinateCommand extends AbstractCommand {
 	public YCoordinateCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+		runAllTurtles = true;
 	}
 
 	@Override
