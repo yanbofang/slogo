@@ -1,6 +1,7 @@
 package frontend;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -87,7 +88,8 @@ public class PaletteView implements SubcomponentAPI {
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
 				for (String[] option: viewOptions) {
 					if (feature.equals(option[0])) {
-						option[1] = newValue;
+						String[] choice = (String[]) (Arrays.asList(newValue.split(": "))).toArray();
+						option[1] = choice[1];
 						updateVariables();
 					}
 				}
@@ -121,7 +123,7 @@ public class PaletteView implements SubcomponentAPI {
 	
 	private void changeImage() {
 		if (viewOptions[2][1] != null) {
-			String imageName = resource.getString(viewOptions[3][1]);
+			String imageName = resource.getString(viewOptions[2][1]);
 			Image turtleImage = new Image(getClass().getClassLoader().getResourceAsStream(imageName));
 			view.changeImage(turtleImage);
 			viewOptions[2][1] = null;
