@@ -40,6 +40,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import turtles.Pen;
 import turtles.Turtle;
 import turtles.TurtleAPI;
 import turtles.TurtleManager;
@@ -79,7 +80,6 @@ public class View implements ViewAPI, Observer {
 	private ViewObservable<String> activeViews;
 	private Map<String, String> filePath;
 	private ObservableList<String> fileName;
-	private boolean penDown;
 
 	public View(Stage stageIn, Controller controllerIn) {
 		stage = stageIn;
@@ -91,7 +91,6 @@ public class View implements ViewAPI, Observer {
 		this.getFilePaths();
 		this.parseWorkspace(DEFAULT_SER);
 
-		penDown = true;
 		timeline.play();
 	}
 
@@ -117,16 +116,14 @@ public class View implements ViewAPI, Observer {
 	public void setTurtle(TurtleManager tmIn) {
 		turtleManager = tmIn;
 		tmIn.addObserver(this);
-		for(Turtle t : turtleManager.allTurtles()){
+		for (Turtle t : turtleManager.allTurtles()) {
 			turtleView.placeTurtle(t.getImage());
 			t.addObserver(this);
 		}
 	}
 
-	public void updateTurtle(Coordinate oldC, Coordinate newC) {
-		if (penDown) {
-			turtleView.changePosition(oldC, newC);
-		}
+	public void updateTurtle(Coordinate oldC, Coordinate newC, Pen p) {
+		turtleView.changePosition(oldC, newC, p);
 	}
 
 	@Override
@@ -193,13 +190,8 @@ public class View implements ViewAPI, Observer {
 	public void clearLines() {
 		turtleView.clear();
 	}
-
-	@Override
-	public void setPen(Boolean penIn) {
-		penDown = penIn;
-	}
 	
-	public void deleteWorkspace(String s){
+	public void deleteWorkspace(String s) {
 		String fp = filePath.get(s);
 		fileName.remove(s);
 		File file = new File(fp);
@@ -289,12 +281,12 @@ public class View implements ViewAPI, Observer {
 		}
 	}
 	
-	private Map<String, Double> createMap(String keysAndValues) {
-		Map<String, Double> map = new HashMap<String,Double>();
+	private Map<Double, String> createMap(String keysAndValues) {
+		Map<Double, String> map = new HashMap<Double,String>();
 		String[] defaults = (String[]) (Arrays.asList(keysAndValues.split(";"))).toArray();
 		for(String defaultChoice: defaults) {
 			String[] tempChoice = (String[]) (Arrays.asList(defaultChoice.split(";"))).toArray();
-			map.put(tempChoice[0], Double.parseDouble(tempChoice[1]));
+			map.put(Double.parseDouble(tempChoice[1]), tempChoice[0]);
 		}
 		return map;
 	}
@@ -406,8 +398,8 @@ public class View implements ViewAPI, Observer {
 		fileName = FXCollections.observableArrayList();
 		filePath = new HashMap<String, String>();
 		File dir = new File(SER_FILEPATH);
-		for(File file : dir.listFiles()) {
-			if(file.getName().endsWith(".ser")){
+		for (File file : dir.listFiles()) {
+			if (file.getName().endsWith(".ser")) {
 				String tempName = file.getName().replaceAll(".ser", "");
 				fileName.add(tempName);
 				filePath.put(tempName, file.getPath());
@@ -420,12 +412,16 @@ public class View implements ViewAPI, Observer {
 			updateView((String) arg1);
 			workSpace.views = activeViews.getList();
 		}
-		if (arg0 instanceof TurtleManager){
+		if (arg0 instanceof TurtleManager) {
 			Turtle t = (Turtle) arg1;
 			turtleView.placeTurtle(t.getImage());
 			t.addObserver(this);
-
-			System.out.println(turtleManager.allTurtles().size());
+		}
+		if (arg0 instanceof Turtle) {
+			if(arg1 instanceof ArrayList<?>){
+				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
+				
+			}
 		}
 	}
 
