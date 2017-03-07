@@ -12,10 +12,17 @@ import javafx.collections.FXCollections;
 import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import turtles.TurtleManager;
 
 public class VisualOptionsView implements SubcomponentAPI {
 
@@ -23,26 +30,39 @@ public class VisualOptionsView implements SubcomponentAPI {
 	private View view;
 	private VariablesView vView;
 	private MethodsView mView;
-	private PalleteView pView;
+	private PaletteView pView;
 	private TurtleVisualView tView;
-	private HBox visualViews;
+	private VBox visualViews;
+	private VBox layout;
+	private ScrollPane scrollPane;
 
 	public VisualOptionsView(View viewIn){
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
-		visualViews = new HBox();
-		setVariables();
+		visualViews = new VBox();
+		setUpScrollPane();
+		setIndividualViews();
 	}  
 
-	private void setVariables() {
+	private void setUpScrollPane() {
+		scrollPane = new ScrollPane();
+		scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		layout = new VBox();
+		scrollPane.setContent(layout);
+		scrollPane.setFitToWidth(true);
+		scrollPane.setPrefHeight(600);
+		visualViews.getChildren().add(scrollPane);
+	}
+	
+	private void setIndividualViews() {
 		mView = new MethodsView(view);
-		visualViews.getChildren().add(mView.getParent());
+		layout.getChildren().add(mView.getParent());
 		vView = new VariablesView(view);
-		visualViews.getChildren().add(vView.getParent());
-		pView = new PalleteView(view);
-		visualViews.getChildren().add(pView.getParent());
+		layout.getChildren().add(vView.getParent());
+		pView = new PaletteView(view);
+		layout.getChildren().add(pView.getParent());
 		tView = new TurtleVisualView(view);
-		visualViews.getChildren().add(tView.getParent());
+		layout.getChildren().add(tView.getParent());
 	}
 
 
