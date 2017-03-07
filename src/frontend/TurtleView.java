@@ -42,6 +42,10 @@ public class TurtleView implements TurtleViewerAPI{
 		penColor = Color.BLACK;
 	}
 	
+	public TurtleView(View viewIn, int bgIndex){
+		this(viewIn);
+	}
+	
 	public void changePosition(Coordinate oldC, Coordinate newC) {
 		Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
 		newLine.setStroke(penColor);

@@ -39,6 +39,7 @@ public class Controller {
 		//THIS WILL NOW HAPPEN IN BACKEND
 		//turtle = new Turtle(25, 25, view.getBounds().getX(), view.getBounds().getY(), 1.0);
 		turtle = new TurtleManager(new Coordinate(view.getBounds().getX(), view.getBounds().getY()));
+		view.setTurtle(turtle);
 		userMethods = new UserMethodManager();
 		model = new Model(ENGLISH_SYNTAX, variables, userMethods, turtle);
 		variablesObserver = new VariableManagerObserver(variables, view);
@@ -67,7 +68,8 @@ public class Controller {
 	}
 
 	public void changeImage(Image a) {
-		turtle.setImage(a);
+		// TODO: update image
+//		turtle.setImage(a);
 	}
 
 	private void addVariableManagerObserver() {
@@ -75,7 +77,8 @@ public class Controller {
 	}
 
 	private void addTurtleObserver() {
-		turtle.addObserver(turtleObserver);
+		// TODO: update turtle observer
+//		turtle.addObserver(turtleObserver);
 	}
 
 	private void addUserMethodsObserver() {

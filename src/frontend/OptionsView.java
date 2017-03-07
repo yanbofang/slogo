@@ -39,7 +39,7 @@ public class OptionsView implements SubcomponentAPI{
 	
 	private ObservableList<String> languages = FXCollections.observableArrayList(
 			"Chinese", "English", "French", "German", "Italian", 
-			"Portugese", "Russsian", "Spanish");
+			"Portuguese", "Russian", "Spanish");
 
 	private ObservableList<String> turtles = FXCollections.observableArrayList(
 			"greenturtle", "blueturtle", "pinkturtle", "turtle");
@@ -55,7 +55,7 @@ public class OptionsView implements SubcomponentAPI{
 		s = new Stage(); 
 		scene = new Scene(browser);
 		setVariables();
-	}  
+	} 
 	
 	private void setVariables() {
 		createFeatureButton("penColor", colors);
