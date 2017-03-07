@@ -73,6 +73,7 @@ public class View implements ViewAPI, Observer {
 	private VariablesView variablesView;
 	private PromptView promptView;
 	private StateView stateView;
+	private PalleteView palleteView;
 
 	private VBox views;
 	private ViewObservable<String> activeViews;
@@ -373,6 +374,7 @@ public class View implements ViewAPI, Observer {
 		optionsView = new OptionsView(this);
 		variablesView = new VariablesView(this);
 		stateView = new StateView(this);
+		palleteView = new PalleteView(this);
 
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
