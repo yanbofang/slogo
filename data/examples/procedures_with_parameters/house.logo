@@ -3,27 +3,27 @@ to :poly [ :numsides :length ]
   repeat :numsides
   [
     fd :length 
-    rt quotient 360 :numsides
+    rt quotient 360.0 :numsides
   ]
 ]
 
 to :square [ :side ]
 [
-  :poly 4 :side
+  :poly 4.0 :side
 ]
 
 to :triangle [ :side ]
 [
-  :poly 3 :side
+  :poly 3.0 :side
 ]
 
 
 to :house [ :size ]
 [
   :square :size
-  fd :size rt 30
+  fd :size rt 30.0
   :triangle :size
 ]
 
 
-:house 100
+:house 100.0
