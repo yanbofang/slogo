@@ -19,20 +19,12 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 	}
 
 	@Override
-<<<<<<< HEAD
 	public Double getValue(List<Object> args, VariableManager vars) {
-		if (args.get(0) instanceof MakeUserInstructionCommand) {
-			throw new ParserException("User method already created!");
-		}
-		// make variables if haven't been made
-=======
-	public Double getValue(List<Object> args) {
 		return myValue;
 	}
 
 	@Override
 	public void performBeforeExecution() {
->>>>>>> ae34916c40d34c41e75bf348766f340649d34ff2
 		int numOfVariables = 0;
 		List<String> variablesNameList = new ArrayList<String>();
 		for (String variableName: (List<String>) myArguments.get(1)) {
@@ -48,9 +40,9 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 		this.changeToFinished();
 		return;
 	}
-	
-	@Override 
-	public Double executeCommand(TurtleManagerCommandAPI turtles, Double k) {
+
+	@Override
+	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
 		this.changeToFinished();
 		return myValue;
 	}

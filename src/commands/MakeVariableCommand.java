@@ -22,12 +22,7 @@ public class MakeVariableCommand extends AbstractCommand {
 	 * THE VARIABLE LATER
 	 */
 	@Override
-<<<<<<< HEAD
 	public Double getValue(List<Object> args, VariableManager vars) {
-		System.out.println("makevar!!!!!!! " + args);
-=======
-	public Double getValue(List<Object> args) {
->>>>>>> ae34916c40d34c41e75bf348766f340649d34ff2
 		myValue = (Double) args.get(1);
 		checkVariable(vars);
 		return myValue;
