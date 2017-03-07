@@ -31,4 +31,8 @@ public class ViewObservable<T> extends Observable{
 		return views.contains(t);
 	}
 	
+	public List<T> getList(){
+		return views;
+	}
+	
 }

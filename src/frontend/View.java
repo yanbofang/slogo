@@ -22,6 +22,9 @@ import frontend.API.ViewAPI;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.ObservableMap;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -43,6 +46,7 @@ public class View implements ViewAPI, Observer {
 	private static final int FRAMES_PER_SECOND = 60;
 	private static final int MILLISECOND_DELAY = 10000 / FRAMES_PER_SECOND;
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
+	private static final String SER_FILEPATH = "src/resources/";
 	private static final String DEFAULT_SER = "src/resources/default.ser";
 	public static final String RESOURCE_BUNDLE = "resources/Display";
 	public static final String CSS_STYLESHEET = "resources/UI.css";
@@ -64,19 +68,20 @@ public class View implements ViewAPI, Observer {
 	private StateView stateView;
 
 	private VBox views;
-
+	private ViewObservable<String> activeViews;
+	private ObservableMap<String, String> fileToPath;
+	private ObservableList<String> fileNames;
 	private boolean penDown;
 
 	public View(Stage stageIn, Controller controllerIn) {
 		stage = stageIn;
-		resource = ResourceBundle.getBundle(RESOURCE_BUNDLE);
-		this.parseWorkspace(DEFAULT_SER);
 		controller = controllerIn;
 		timeline = createTimeline();
-
-		this.initializeViews();
+		resource = ResourceBundle.getBundle(RESOURCE_BUNDLE);
+		
 		this.initializeCore();
-		this.showInitialViews(workSpace.views);
+		this.parseWorkspace(DEFAULT_SER);
+
 		penDown = true;
 		timeline.play();
 	}
@@ -151,6 +156,7 @@ public class View implements ViewAPI, Observer {
 		this.clearVariables();
 		this.clearMethods();
 		this.clearHistory();
+		workSpace.language = a;
 	}
 
 	@Override
@@ -179,7 +185,32 @@ public class View implements ViewAPI, Observer {
 		penDown = penIn;
 	}
 	
-	public void newWorkSpace() throws Exception{
+	public void saveWorkspace(String s){
+		// TODO: background, files
+		String fp = SER_FILEPATH + s + ".ser";
+		fileToPath.put(s, fp);
+		fileNames.add(s);
+		workSpace.files = fileToPath;
+		try {
+			File file = new File(fp);
+			file.getParentFile().mkdirs();
+			file.createNewFile();
+			FileOutputStream fileOut = new FileOutputStream(file);
+			ObjectOutputStream out = new ObjectOutputStream(fileOut);
+			out.writeObject(workSpace);
+			out.close();
+			fileOut.close();
+		} catch (IOException i) {
+			showError(resource.getString("SavingError"));
+		}
+	}
+	
+	public void loadWorkspace(String s){
+		views.getChildren().clear();
+		parseWorkspace(fileToPath.get(s));
+	}
+	
+	public void newWorkspace() throws Exception{
 		new Controller(new Stage());
 	}
 
@@ -202,6 +233,7 @@ public class View implements ViewAPI, Observer {
 			workSpace = (WorkSpace) in.readObject();
 			in.close();
 			fileIn.close();
+			updateWorkspace();
 		} catch (IOException i) {
 			showError(resource.getString("FileNotFound"));
 			if (fp.equals(DEFAULT_SER)) {
@@ -235,8 +267,7 @@ public class View implements ViewAPI, Observer {
 			out.close();
 			fileOut.close();
 		} catch (IOException i) {
-			showError(resource.getString("help"));
-			i.printStackTrace();
+			showError(resource.getString("SavingError"));
 		}
 	}
 
@@ -261,9 +292,6 @@ public class View implements ViewAPI, Observer {
 		scrollPane.setContent(views);
 		scrollPane.setFitToWidth(true);
 
-		root.add(optionsTab.getParent(), 0, 0, 3, 1);
-		root.add(turtleView.getParent(), 1, 1, 1, 1);
-		root.add(promptView.getParent(), 2, 1, 1, 1);
 		root.add(scrollPane, 0, 1, 1, 1);
 
 		scene.getStylesheets().add(CSS_STYLESHEET);
@@ -323,21 +351,36 @@ public class View implements ViewAPI, Observer {
 	}
 
 	private void initializeViews() {
-		ViewObservable<String> temp = new ViewObservable<String>(workSpace.views);
-		temp.addObserver(this);
+		optionsTab = new OptionsTab(this, fileNames, activeViews);
+		promptView = new PromptView(this);		
 		turtleView = new TurtleView(this, workSpace.background);
 		methodsView = new MethodsView(this);
 		optionsView = new OptionsView(this);
 		variablesView = new VariablesView(this);
-		promptView = new PromptView(this);
 		stateView = new StateView(this);
-		optionsTab = new OptionsTab(this, workSpace.files, temp);
+		
+		root.add(optionsTab.getParent(), 0, 0, 3, 1);
+		root.add(turtleView.getParent(), 1, 1, 1, 1);
+		root.add(promptView.getParent(), 2, 1, 1, 1);
+	}
+	
+	private void updateWorkspace(){
+		// TODO finish updates i.e. background
+		activeViews = new ViewObservable<String>(workSpace.views);
+		activeViews.addObserver(this);
+		fileToPath = FXCollections.observableMap(workSpace.files);
+		List<String> temp = new ArrayList<String>(fileToPath.keySet());
+		fileNames = FXCollections.observableList(temp);
+		this.initializeViews();
+		this.showInitialViews(workSpace.views);
+		changeLanguage(workSpace.language);
 	}
 
 	public void update(Observable arg0, Object arg1) {
 		if (arg0 instanceof ViewObservable) {
 			updateView((String) arg1);
 		}
+		workSpace.views = activeViews.getList();
 	}
 	
 }

@@ -85,8 +85,8 @@ public class VariablesView implements VariablesViewAPI{
 		String[] variableArr = source.getText().split(" = ");
 		
 		TextInputDialog dialog = new TextInputDialog(variableArr[1]);
-		dialog.setTitle("Edit Variable");
-		dialog.setContentText("Please enter a new value: ");
+		dialog.setTitle(resource.getString("VariableDialogTitle"));
+		dialog.setContentText(resource.getString("VariableDialogContent"));
 		String newValue = getResult(dialog, variableArr[1]);
 		updateVar(variableArr[0], newValue);
 		view.changeVariable(variableArr[0], newValue);
