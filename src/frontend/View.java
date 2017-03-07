@@ -113,8 +113,9 @@ public class View implements ViewAPI, Observer {
 		alert.showAndWait();
 	}
 
-	public void setTurtle(TurtleManagerAPI tmIn) {
+	public void setTurtle(TurtleManager tmIn) {
 		turtleManager = tmIn;
+		tmIn.addObserver(this);
 		for(Turtle t : turtleManager.allTurtles()){
 			turtleView.placeTurtle(t.getImage());
 			t.addObserver(this);
