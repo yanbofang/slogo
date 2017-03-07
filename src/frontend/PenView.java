@@ -18,14 +18,14 @@ public class PenView implements SubcomponentAPI {
 	
 	private View view;
 	private ResourceBundle resource;
-	private HBox box;
+	private VBox box;
 	private Pen p;
 	
 	
 	public PenView(View viewIn) {
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
-		box = new HBox();
+		box = new VBox();
 		p = new Pen();
 		createBox();
 	}
@@ -38,7 +38,7 @@ public class PenView implements SubcomponentAPI {
 	}
 	
 	private void setPenPosition() {
-		HBox positionOptions = new HBox();
+		VBox positionOptions = new VBox();
 		Label positionTitle = new Label("Choose the state of the pen: \n"
 				+ "if pen is up, the turtle will not draw a line \n"
 				+ "if the pen is down, the turtle will draw a line");
@@ -48,7 +48,7 @@ public class PenView implements SubcomponentAPI {
 		box.getChildren().add(positionOptions);
 	}
 	
-	private void createPenUpBtn(HBox group) {
+	private void createPenUpBtn(VBox group) {
 		Button btn = new Button(resource.getString("penUp"));
 		group.getChildren().add(btn);
 		btn.setOnAction(new EventHandler<ActionEvent>() {
@@ -60,7 +60,7 @@ public class PenView implements SubcomponentAPI {
 		});
 	}
 	
-	private void createPenDownBtn(HBox group) {
+	private void createPenDownBtn(VBox group) {
 		Button btn = new Button(resource.getString("penDown"));
 		group.getChildren().add(btn);
 		btn.setOnAction(new EventHandler<ActionEvent>() {
