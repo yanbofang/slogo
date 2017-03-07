@@ -122,10 +122,8 @@ public abstract class AbstractCommand implements Command {
 					newArgs.add((String) o);
 				}
 			} else {
-				System.out.println("hereerererer" + o);
-				newArgs.add(convertArguments((List<Object>) o,  runNested));//methodVarCheck((List<Object>) o));
+				newArgs.add(convertArguments((List<Object>) o,  runNested));
 			}
-			//determineObject(newArgs, list.get(k));
 		}
 		System.out.println("This is args: " + newArgs);
 		return newArgs;
