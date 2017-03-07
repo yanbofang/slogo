@@ -20,6 +20,8 @@ public class TurtleManager implements TurtleManagerAPI, TurtleManagerCommandAPI{
 		myTurtleMap = new HashMap<Double, Turtle>();
 		XBOUND = bounds.getX();
 		YBOUND = bounds.getY();
+		getTurtle(1.0);
+		myActiveTurtles = new ArrayList<Double>();
 	}
 
 	@Override

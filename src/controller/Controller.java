@@ -43,7 +43,7 @@ public class Controller {
 		model = new Model(ENGLISH_SYNTAX, variables, userMethods, turtle);
 		variablesObserver = new VariableManagerObserver(variables, view);
 		addVariableManagerObserver();
-		turtleObserver = new TurtleObserver(turtle, view);
+		//turtleObserver = new TurtleObserver(turtle, view);
 		addTurtleObserver();
 		userMethodsObserver = new UserMethodObserver(userMethods, view);
 		addUserMethodsObserver();
@@ -67,7 +67,7 @@ public class Controller {
 	}
 
 	public void changeImage(Image a) {
-		turtle.setImage(a);
+		//turtle.setImage(a);
 	}
 
 	private void addVariableManagerObserver() {
@@ -75,7 +75,7 @@ public class Controller {
 	}
 
 	private void addTurtleObserver() {
-		turtle.addObserver(turtleObserver);
+		//turtle.addObserver(turtleObserver);
 	}
 
 	private void addUserMethodsObserver() {
