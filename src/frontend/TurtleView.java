@@ -17,6 +17,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import turtles.Pen;
+import turtles.Turtle;
 
 public class TurtleView implements TurtleViewerAPI{
 
@@ -37,10 +38,10 @@ public class TurtleView implements TurtleViewerAPI{
 		lines = new ArrayList<Line>();
 	}
 	
-	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen) {
+	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen, Turtle turtle) {
 		if (pen.showPen()) {
-			// need turtle
-//			animation = new MoveAnimation(view, pen, oldC, newC);
+			
+			animation = new MoveAnimation(view, turtle.getImage(), oldC, newC);
 			Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
 			newLine.setStroke(Color.valueOf(colorMap.get(pen.getColor())));
 			newLine.setStrokeWidth(pen.getSize());
@@ -62,8 +63,9 @@ public class TurtleView implements TurtleViewerAPI{
 
 	@Override
 	public Coordinate getBounds() {
-		double XCord = viewer.getWidth();
-		double YCord = viewer.getHeight();
+		double XCord = viewer.getPrefWidth();
+		System.out.println(XCord);
+		double YCord = viewer.getPrefHeight();
 		Coordinate cord = new Coordinate(XCord, YCord);
 		return cord;
 	}

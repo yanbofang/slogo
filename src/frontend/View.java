@@ -121,8 +121,8 @@ public class View implements ViewAPI, Observer {
 		}
 	}
 
-	public void updateTurtle(Coordinate oldC, Coordinate newC, Pen p) {
-		turtleView.changePosition(oldC, newC, p);
+	public void updateTurtle(Coordinate oldC, Coordinate newC, Pen p, Turtle t) {
+		turtleView.changePosition(oldC, newC, p, t);
 	}
 
 	@Override
@@ -422,7 +422,7 @@ public class View implements ViewAPI, Observer {
 			if(arg1 instanceof ArrayList<?>){
 				Turtle t = (Turtle) arg1;
 				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
-				updateTurtle(temp.get(0),temp.get(1),t.getPen());
+				updateTurtle(temp.get(0),temp.get(1),t.getPen(), t);
 			}
 		}
 	}
