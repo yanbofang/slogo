@@ -42,7 +42,7 @@ public class TurtleView implements TurtleViewerAPI{
 		colorMap = mapIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		viewer = new Pane();
-		viewer.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		viewer.setBackground(new Background(new BackgroundFill(Color.RED, CornerRadii.EMPTY, Insets.EMPTY)));
 		lines = new ArrayList<Line>();
 	}
 	

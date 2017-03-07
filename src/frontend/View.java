@@ -51,7 +51,6 @@ public class View implements ViewAPI, Observer {
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	private static final String SER_FILEPATH = "src/resources/";
 	private static final String DEFAULT_SER = "src/resources/default.ser";
-	private static final String FILEPATHS = "src/resources/paths.ser";
 	public static final String RESOURCE_BUNDLE = "resources/Display";
 	public static final String CSS_STYLESHEET = "resources/UI.css";
 
@@ -67,7 +66,6 @@ public class View implements ViewAPI, Observer {
 	private OptionsTab optionsTab;
 	private TurtleView turtleView;
 	private MethodsView methodsView;
-	private OptionsView optionsView;
 	private VariablesView variablesView;
 	private PromptView promptView;
 	private StateView stateView;
@@ -87,6 +85,8 @@ public class View implements ViewAPI, Observer {
 		this.initializeCore();
 		this.getFilePaths();
 		this.parseWorkspace(DEFAULT_SER);
+		
+		stage.sizeToScene();
 
 		timeline.play();
 	}
@@ -372,7 +372,6 @@ public class View implements ViewAPI, Observer {
 		promptView = new PromptView(this);
 		turtleView = new TurtleView(this, workSpace.colorPalette, workSpace.background);
 		methodsView = new MethodsView(this);
-		optionsView = new OptionsView(this);
 		variablesView = new VariablesView(this);
 		stateView = new StateView(this);
 		paletteView = new PaletteView(this, workSpace.colorPalette, workSpace.imagePalette);
