@@ -11,19 +11,22 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import turtles.Pen;
 
 public class PenView implements SubcomponentAPI {
 
 	
-	View view;
-	ResourceBundle resource;
-	HBox box;
+	private View view;
+	private ResourceBundle resource;
+	private HBox box;
+	private Pen p;
 	
 	
 	public PenView(View viewIn) {
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		box = new HBox();
+		p = new Pen();
 		createBox();
 	}
 	
@@ -51,7 +54,8 @@ public class PenView implements SubcomponentAPI {
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				view.setPen(true);
+				p.setPen(true);
+				setPenState();
 			}
 		});
 	}
@@ -62,7 +66,8 @@ public class PenView implements SubcomponentAPI {
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				view.setPen(false);
+				p.setPen(false);
+				setPenState();
 			}
 		});
 	}
@@ -70,15 +75,23 @@ public class PenView implements SubcomponentAPI {
 	private void setPenWidth() {
 		Slider sizeSlide = new Slider(1, 100, 10);
 		sizeSlide.valueProperty().addListener(e -> {
-			view.setPenSize(sizeSlide.getValue());
+			p.setSize(sizeSlide.getValue());
+			setPenSize();
 		});
 		box.getChildren().add(sizeSlide);
 	}
 	
+	private void setPenSize() {
+		view.setPenSize(p.getSize());
+	}
+	
+	private void setPenState() {
+		view.setPenState(p.showPen());
+	}
+	
 	@Override
 	public Parent getParent() {
-		// TODO Auto-generated method stub
-		return null;
+		return box;
 	}
 	
 }
