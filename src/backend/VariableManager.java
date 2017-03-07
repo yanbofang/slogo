@@ -1,16 +1,16 @@
 package backend;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Observable;
 
-public class VariableManager extends Observable{
-	
+public class VariableManager extends Observable {
+
 	private HashMap<String, Variable> myVariableMap;
 
 	public VariableManager() {
 		myVariableMap = new HashMap<String, Variable>();
 	}
-	
 
 	public void addVariable(Variable var) {
 		// if already existed, just update the variable
@@ -22,10 +22,18 @@ public class VariableManager extends Observable{
 		setChanged();
 		notifyObservers(var.getVariableName() + " " + var.getValue());
 	}
-	
 
+	public Map<String, Variable> getVariableMap() {
+		return myVariableMap;
+	}
 
-	
+	public void addAll(Map<String, Variable> variableMap) {
+		for (String key : variableMap.keySet()) {
+			Variable newVar = new Variable(key, variableMap.get(key).getValue());
+			myVariableMap.put(key, newVar);
+		}
+	}
+
 	public Variable get(String key) {
 		Variable value = myVariableMap.get(key);
 		while (myVariableMap.containsKey(value)) {
@@ -34,8 +42,7 @@ public class VariableManager extends Observable{
 		return value;
 	}
 
-	
-	public int size(){
+	public int size() {
 		return myVariableMap.size();
 	}
 

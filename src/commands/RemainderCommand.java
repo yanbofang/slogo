@@ -14,7 +14,7 @@ public class RemainderCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		return (Double) args.get(0) % (Double) args.get(1);
 	}
 

@@ -1,6 +1,5 @@
 package commands;
 
-
 import java.util.List;
 
 import backend.UserMethodManager;
@@ -10,20 +9,20 @@ import coordinate.Coordinate;
 public abstract class MoveCommand extends AbstractCommand {
 
 	protected int myQuadrant;
-	
-//	
-//	public MoveCommand(String instruction, VariableManager variables) {
-//		super(instruction, variables, 0);
-//	}
-	
-	
-	public MoveCommand(String instruction, VariableManager variables, UserMethodManager methods, int numberOfExpressions) {
+
+	//
+	// public MoveCommand(String instruction, VariableManager variables) {
+	// super(instruction, variables, 0);
+	// }
+
+	public MoveCommand(String instruction, VariableManager variables, UserMethodManager methods,
+			int numberOfExpressions) {
 		super(instruction, variables, methods, numberOfExpressions);
 		runAllTurtles = true;
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		myValue = 0.0;
 		try {
 			myValue = calculateValue(args);
@@ -34,7 +33,7 @@ public abstract class MoveCommand extends AbstractCommand {
 	}
 
 	public abstract Double calculateValue(List<Object> args);
-	
+
 	protected Coordinate getNewCoord(Double movement) {
 		double rotate = myTurtle.getRotate();
 		myQuadrant = 1;
@@ -51,32 +50,37 @@ public abstract class MoveCommand extends AbstractCommand {
 		updateCoords(movementCoord, myQuadrant);
 		Double newX = movementCoord.getX() + currLocation.getX();
 		Double newY = movementCoord.getY() + currLocation.getY();
-		
+
 		Coordinate coord = new Coordinate(newX, newY);
 		return coord;
 	}
-	
+
 	protected void updateCoords(Coordinate coord, int quadrant) {
 		switch (quadrant) {
-		case 1: coord.setY(coord.getY()*-1);
-				break;
-		case 2: break;
-		case 3: coord.setX(coord.getX()*-1); 
-				break;
-		case 4: coord.setX(coord.getX()*-1);
-				coord.setY(coord.getY()*-1);
-				break;
+		case 1:
+			coord.setY(coord.getY() * -1);
+			break;
+		case 2:
+			break;
+		case 3:
+			coord.setX(coord.getX() * -1);
+			break;
+		case 4:
+			coord.setX(coord.getX() * -1);
+			coord.setY(coord.getY() * -1);
+			break;
 		}
 	}
-	
+
 	protected Double calcDistance(Coordinate firstCoord, Coordinate secondCoord) {
 		Double xDiff = new Double(firstCoord.getX() - secondCoord.getX());
 		Double yDiff = new Double(firstCoord.getY() - secondCoord.getY());
-		Double distance = Math.sqrt((xDiff*xDiff) + (yDiff*yDiff));
+		Double distance = Math.sqrt((xDiff * xDiff) + (yDiff * yDiff));
 		return distance;
 	}
+
 	protected Coordinate toHome() {
-		Coordinate coord = new Coordinate(0.0,0.0);
+		Coordinate coord = new Coordinate(0.0, 0.0);
 		myValue = calcDistance(coord, myTurtle.getLocation(true));
 		myTurtle.setLocation(coord, false);
 		return coord;

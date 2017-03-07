@@ -18,24 +18,24 @@ public class ForCommand extends LoopCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		myCommands = (ArrayList<Command>) args.get(1);
 		List<Object> lst = (List<Object>) args.get(0);
-		//lst = checkList(lst);
+		// lst = checkList(lst);
 		Variable var = new Variable((String) lst.get(0), (Double) lst.get(1));
 		myVariables.addVariable(var);
-		return runCommands((Double) lst.get(1), (Double) lst.get(2), (Double) lst.get(3), var, myTurtle.getID());
+		return runCommands((Double) lst.get(1), (Double) lst.get(2), (Double) lst.get(3), var, vars, myTurtle.getID());
 	}
-	
+
 	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, Double k) {
+	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
 		myTurtleManager = turtles;
 		myTurtle = turtles.getTurtle(k);
 		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(convertArguments((List<Object>)myArguments.get(0), true));
-		myConvertedArguments.add(convertArguments((List<Object>)myArguments.get(1), false));
+		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(0), vars, true));
+		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(1), vars, false));
 		this.changeToFinished();
-		return this.getValue(myConvertedArguments);
+		return this.getValue(myConvertedArguments, vars);
 	}
 
 }

@@ -16,7 +16,7 @@ public class HideTurtleCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		myValue = 0.0;
 		myTurtle.setShow(false);
 		return myValue;

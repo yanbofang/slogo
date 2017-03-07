@@ -7,11 +7,13 @@ import turtles.Turtle;
 import turtles.TurtleManagerCommandAPI;
 import backend.CommandHandler;
 
+import backend.VariableManager;
+
 public interface Command {
 
 	void add(Object... args);
-	
-	//void clearArguments();
+
+	// void clearArguments();
 
 	String getInstruction();
 
@@ -19,15 +21,13 @@ public interface Command {
 
 	boolean isFinished();
 
-	//Double getValue(Turtle t);
+	Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k);
 
-	Double executeCommand(TurtleManagerCommandAPI turtles, Double k);
-	
 	void resetCommand();
 
 	Integer getNumOfExpressions();
-	
+
 	void performBeforeExecution();
-	
+
 	boolean getRunTurtles();
 }
