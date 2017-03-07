@@ -9,5 +9,4 @@ public class WorkSpace implements java.io.Serializable{
 	public List<String> views;
 	public Map<String, Double> colorPalette;
 	public Map<String, Double> imagePalette;
-	
 }
