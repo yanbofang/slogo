@@ -3,6 +3,7 @@ package frontend.API;
 import coordinate.Coordinate;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
+import turtles.TurtleManagerAPI;
 /**
  * API for View class
  * Serves as communicator between frontend and backend
@@ -98,7 +99,7 @@ public interface ViewAPI {
 	 * Set Turtle
 	 * @param n
 	 */
-	public void setTurtle(Node n);	
+	public void setTurtle(TurtleManagerAPI tm);	
 	
 	public void updateTurtle(Coordinate x, Coordinate y);
 

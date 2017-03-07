@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
@@ -39,6 +40,10 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import turtles.Turtle;
+import turtles.TurtleAPI;
+import turtles.TurtleManager;
+import turtles.TurtleManagerAPI;
 
 public class View implements ViewAPI, Observer {
 	private static final int HEIGHT = 600;
@@ -48,6 +53,7 @@ public class View implements ViewAPI, Observer {
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	private static final String SER_FILEPATH = "src/resources/";
 	private static final String DEFAULT_SER = "src/resources/default.ser";
+	private static final String FILEPATHS = "src/resources/paths.ser";
 	public static final String RESOURCE_BUNDLE = "resources/Display";
 	public static final String CSS_STYLESHEET = "resources/UI.css";
 
@@ -58,6 +64,7 @@ public class View implements ViewAPI, Observer {
 	private Timeline timeline;
 	private ResourceBundle resource;
 	private WorkSpace workSpace;
+	private TurtleManagerAPI turtleManager;
 
 	private OptionsTab optionsTab;
 	private TurtleView turtleView;
@@ -69,8 +76,8 @@ public class View implements ViewAPI, Observer {
 
 	private VBox views;
 	private ViewObservable<String> activeViews;
-	private ObservableMap<String, String> fileToPath;
-	private ObservableList<String> fileNames;
+	private Map<String, String> filePath;
+	private ObservableList<String> fileName;
 	private boolean penDown;
 
 	public View(Stage stageIn, Controller controllerIn) {
@@ -78,8 +85,9 @@ public class View implements ViewAPI, Observer {
 		controller = controllerIn;
 		timeline = createTimeline();
 		resource = ResourceBundle.getBundle(RESOURCE_BUNDLE);
-		
+
 		this.initializeCore();
+		this.getFilePaths();
 		this.parseWorkspace(DEFAULT_SER);
 
 		penDown = true;
@@ -105,8 +113,12 @@ public class View implements ViewAPI, Observer {
 		alert.showAndWait();
 	}
 
-	public void setTurtle(Node node) {
-		turtleView.placeTurtle(node);
+	public void setTurtle(TurtleManagerAPI tmIn) {
+		turtleManager = tmIn;
+		for(Turtle t : turtleManager.allTurtles()){
+			turtleView.placeTurtle(t.getImage());
+			t.addObserver(this);
+		}
 	}
 
 	public void updateTurtle(Coordinate oldC, Coordinate newC) {
@@ -185,12 +197,18 @@ public class View implements ViewAPI, Observer {
 		penDown = penIn;
 	}
 	
-	public void saveWorkspace(String s){
+	public void deleteWorkspace(String s){
+		String fp = filePath.get(s);
+		fileName.remove(s);
+		File file = new File(fp);
+		file.delete();
+	}
+
+	public void saveWorkspace(String s) {
 		// TODO: background, files
 		String fp = SER_FILEPATH + s + ".ser";
-		fileToPath.put(s, fp);
-		fileNames.add(s);
-		workSpace.files = fileToPath;
+		filePath.put(s, fp);
+		fileName.add(s);
 		try {
 			File file = new File(fp);
 			file.getParentFile().mkdirs();
@@ -204,13 +222,13 @@ public class View implements ViewAPI, Observer {
 			showError(resource.getString("SavingError"));
 		}
 	}
-	
-	public void loadWorkspace(String s){
+
+	public void loadWorkspace(String s) {
 		views.getChildren().clear();
-		parseWorkspace(fileToPath.get(s));
+		parseWorkspace(filePath.get(s));
 	}
-	
-	public void newWorkspace() throws Exception{
+
+	public void newWorkspace() throws Exception {
 		new Controller(new Stage());
 	}
 
@@ -252,11 +270,6 @@ public class View implements ViewAPI, Observer {
 		workSpace.language = resource.getString("DefaultLanguage");
 		workSpace.background = Integer.parseInt(resource.getString("DefaultBackground"));
 		workSpace.views = new ArrayList<String>(Arrays.asList(resource.getString("DefaultViews").split(",")));
-		workSpace.files = new HashMap<String, String>();
-		String[] temp = resource.getString("DefaultFiles").split(",");
-		for (int i = 0; i < temp.length; i = i + 2) {
-			workSpace.files.put(temp[i], temp[i + 1]);
-		}
 		try {
 			File file = new File(DEFAULT_SER);
 			file.getParentFile().mkdirs();
@@ -266,6 +279,7 @@ public class View implements ViewAPI, Observer {
 			out.writeObject(workSpace);
 			out.close();
 			fileOut.close();
+			updateWorkspace();
 		} catch (IOException i) {
 			showError(resource.getString("SavingError"));
 		}
@@ -298,22 +312,22 @@ public class View implements ViewAPI, Observer {
 		stage.setScene(scene);
 		stage.show();
 	}
-	
+
 	private Object handleKeyInput(KeyCode code) {
 		double x = 50;
 		double y = 60;
-		Coordinate current = new Coordinate(x, y);	
+		Coordinate current = new Coordinate(x, y);
 		if (code == KeyCode.L) {
-			controller.handleInput("left 5");	
+			controller.handleInput("left 5");
 		}
 		if (code == KeyCode.R) {
-			controller.handleInput("right 5");		
+			controller.handleInput("right 5");
 		}
 		if (code == KeyCode.F) {
-			controller.handleInput("fd 5");		
+			controller.handleInput("fd 5");
 		}
 		if (code == KeyCode.B) {
-			controller.handleInput("back 5");		
+			controller.handleInput("back 5");
 		}
 		return null;
 	}
@@ -351,36 +365,53 @@ public class View implements ViewAPI, Observer {
 	}
 
 	private void initializeViews() {
-		optionsTab = new OptionsTab(this, fileNames, activeViews);
-		promptView = new PromptView(this);		
+		optionsTab = new OptionsTab(this, fileName, activeViews);
+		promptView = new PromptView(this);
 		turtleView = new TurtleView(this, workSpace.background);
 		methodsView = new MethodsView(this);
 		optionsView = new OptionsView(this);
 		variablesView = new VariablesView(this);
 		stateView = new StateView(this);
-		
+
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
 		root.add(promptView.getParent(), 2, 1, 1, 1);
 	}
-	
-	private void updateWorkspace(){
+
+	private void updateWorkspace() {
 		// TODO finish updates i.e. background
 		activeViews = new ViewObservable<String>(workSpace.views);
 		activeViews.addObserver(this);
-		fileToPath = FXCollections.observableMap(workSpace.files);
-		List<String> temp = new ArrayList<String>(fileToPath.keySet());
-		fileNames = FXCollections.observableList(temp);
 		this.initializeViews();
 		this.showInitialViews(workSpace.views);
 		changeLanguage(workSpace.language);
 	}
 
+	private void getFilePaths() {
+		fileName = FXCollections.observableArrayList();
+		filePath = new HashMap<String, String>();
+		File dir = new File(SER_FILEPATH);
+		for(File file : dir.listFiles()) {
+			if(file.getName().endsWith(".ser")){
+				String tempName = file.getName().replaceAll(".ser", "");
+				fileName.add(tempName);
+				filePath.put(tempName, file.getPath());
+			}
+		}
+	}
+
 	public void update(Observable arg0, Object arg1) {
 		if (arg0 instanceof ViewObservable) {
 			updateView((String) arg1);
+			workSpace.views = activeViews.getList();
 		}
-		workSpace.views = activeViews.getList();
+		if (arg0 instanceof TurtleManager){
+			Turtle t = (Turtle) arg1;
+			turtleView.placeTurtle(t.getImage());
+			t.addObserver(this);
+
+			System.out.println(turtleManager.allTurtles().size());
+		}
 	}
-	
+
 }

@@ -4,10 +4,10 @@ import java.util.List;
 
 public interface TurtleManagerAPI {
 
-	List<TurtleAPI> getActiveTurtles();
+	List<Turtle> getActiveTurtles();
 	
-	List<TurtleAPI> allTurtles();
+	List<Turtle> allTurtles();
 	
-	TurtleAPI getAPI(Double id);
+	Turtle getAPI(Double id);
 
 }
