@@ -81,10 +81,11 @@ public class TurtleView implements TurtleViewerAPI{
 
 	@Override
 	public void placeTurtle(Node a) {
-		viewer.getChildren().add(a);
-//		a.setOnMouseClicked((e) -> {
-//			
-//		});		
+		viewer.getChildren().add(a);	
+	}
+	
+	public void removeTurtle(Node turtle) {
+		viewer.getChildren().remove(turtle);
 	}
 
 }

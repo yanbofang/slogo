@@ -24,6 +24,7 @@ public class VisualOptionsView implements SubcomponentAPI {
 	private VariablesView vView;
 	private MethodsView mView;
 	private PalleteView pView;
+	private TurtleVisualView tView;
 	private HBox visualViews;
 
 	public VisualOptionsView(View viewIn){
@@ -40,6 +41,8 @@ public class VisualOptionsView implements SubcomponentAPI {
 		visualViews.getChildren().add(vView.getParent());
 		pView = new PalleteView(view);
 		visualViews.getChildren().add(pView.getParent());
+		tView = new TurtleVisualView(view);
+		visualViews.getChildren().add(tView.getParent());
 	}
 
 
