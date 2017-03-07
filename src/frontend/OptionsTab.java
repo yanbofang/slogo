@@ -74,7 +74,6 @@ public class OptionsTab implements SubcomponentAPI {
 	}
 
 	private void deleteWorkspace(ComboBox cb, String s) {
-		System.out.println(s);
 		if (s!=null&&!s.equals("   ")) {
 			if (s.equals("default")) {
 				Alert alert = new Alert(AlertType.WARNING);

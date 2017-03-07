@@ -64,7 +64,7 @@ public class View implements ViewAPI, Observer {
 	private Timeline timeline;
 	private ResourceBundle resource;
 	private WorkSpace workSpace;
-	private TurtleManagerAPI turtleManager;
+	private TurtleManager turtleManager;
 
 	private OptionsTab optionsTab;
 	private TurtleView turtleView;
@@ -192,6 +192,10 @@ public class View implements ViewAPI, Observer {
 
 	public void clearLines() {
 		turtleView.clear();
+	}
+	
+	public TurtleManager getTurtleManager(){
+		return turtleManager;
 	}
 
 	@Override
