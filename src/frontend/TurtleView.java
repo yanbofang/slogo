@@ -38,13 +38,15 @@ public class TurtleView implements TurtleViewerAPI{
 	}
 	
 	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen) {
-		// need turtle
-//		animation = new MoveAnimation(view, pen, oldC, newC);
-		Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
-		newLine.setStroke(Color.valueOf(colorMap.get(pen.getColor())));
-		newLine.setStrokeWidth(pen.getSize());
-		lines.add(newLine);
-		viewer.getChildren().add(newLine);
+		if (pen.showPen()) {
+			// need turtle
+//			animation = new MoveAnimation(view, pen, oldC, newC);
+			Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
+			newLine.setStroke(Color.valueOf(colorMap.get(pen.getColor())));
+			newLine.setStrokeWidth(pen.getSize());
+			lines.add(newLine);
+			viewer.getChildren().add(newLine);
+		}	
 	}
 
 	public void clear() {
