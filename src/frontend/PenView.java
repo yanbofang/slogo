@@ -78,8 +78,12 @@ public class PenView implements SubcomponentAPI {
 		box.getChildren().add(sizeSlide);
 	}
 	
-	public Pen setPenStates() {
-		return p;
+	private void setPenSize() {
+		view.setPenSize(p.getSize());
+	}
+	
+	private void setPenState() {
+		view.setPenState(p.showPen());
 	}
 	
 	@Override
