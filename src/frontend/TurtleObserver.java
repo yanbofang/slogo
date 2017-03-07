@@ -4,14 +4,15 @@ import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
-import backend.Turtle;
+import turtles.Turtle;
 import coordinate.Coordinate;
+import frontend.API.ViewAPI;
 
 public class TurtleObserver implements Observer {
 	private Turtle ov = null;
-	private View myView;
+	private ViewAPI myView;
 
-	public TurtleObserver(Turtle vm, View view) {
+	public TurtleObserver(Turtle vm, ViewAPI view) {
 		this.ov = vm;
 		myView = view;
 	}

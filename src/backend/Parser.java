@@ -22,6 +22,7 @@ public class Parser {
 		myModel = m;
 		myPatterns = new PatternParse();
 		for (String each : syntax) {
+			System.out.println("myPatterns" + each);
 			myPatterns.addPattern(each);
 		}
 		myVariables = variables;
@@ -69,9 +70,10 @@ public class Parser {
 
 		if (s.hasNext()) {
 			String current = s.next();
+			
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
-			currentCommand = myFactory.reflectCommand(myPatterns.getSymbol(current), myVariables, myUserMethods);
+			currentCommand = myFactory.reflectCommand(current, myPatterns.getSymbol(current), myVariables, myUserMethods);
 			// System.out.println(current);
 			if (currentCommand != null) {
 				for (int k = 0; k < currentCommand.getNumOfExpressions(); k++) {
@@ -105,7 +107,7 @@ public class Parser {
 			return sublist;
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
 			return current;
-		} else if (current.equals("#")) {
+		} else if (myPatterns.getSymbol(current).equals("Comment")){
 			s.nextLine();
 			return recurseParse(s);
 		}

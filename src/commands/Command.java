@@ -3,8 +3,9 @@ package commands;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import turtles.Turtle;
+import turtles.TurtleManagerCommandAPI;
 import backend.CommandHandler;
-import backend.Turtle;
 
 public interface Command {
 
@@ -20,7 +21,7 @@ public interface Command {
 
 	Double getValue(Turtle t);
 
-	Double executeCommand(Turtle turtle);
+	Double executeCommand(TurtleManagerCommandAPI turtles, Double k);
 	
 	void resetCommand();
 

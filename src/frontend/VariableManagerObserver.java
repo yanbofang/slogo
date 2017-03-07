@@ -3,14 +3,15 @@ package frontend;
 import java.util.Observer;
 
 import backend.VariableManager;
+import frontend.API.ViewAPI;
 
 import java.util.Observable;
 
 public class VariableManagerObserver implements Observer {
 	private VariableManager ov = null;
-	private View myView;
+	private ViewAPI myView;
 
-	public VariableManagerObserver(VariableManager vm, View view) {
+	public VariableManagerObserver(VariableManager vm, ViewAPI view) {
 		this.ov = vm;
 		myView = view;
 	}

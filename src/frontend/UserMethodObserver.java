@@ -5,13 +5,14 @@ import java.util.Observable;
 import java.util.Observer;
 
 import backend.UserMethodManager;
+import frontend.API.ViewAPI;
 
 public class UserMethodObserver implements Observer {
 
 	private UserMethodManager ov = null;
-	private View myView;
+	private ViewAPI myView;
 
-	public UserMethodObserver(UserMethodManager um, View view) {
+	public UserMethodObserver(UserMethodManager um, ViewAPI view) {
 		this.ov = um;
 		myView = view;
 	}

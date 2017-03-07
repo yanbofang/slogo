@@ -26,10 +26,11 @@ public abstract class LoopCommand extends AbstractCommand {
 			if (var != null) {
 				myVariables.addVariable(new Variable(var.getVariableName(), (double) i));
 			}
+			System.out.println("!!!!My Commands In LoopCommand: " + myCommands);
 			for (Command c : myCommands) {
 				c.resetCommand();
 				while (!c.isFinished()) {
-					returnValue = c.executeCommand(myTurtle);
+					returnValue = c.executeCommand(myTurtleManager, myTurtle.getID());
 				}
 			}
 

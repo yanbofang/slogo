@@ -1,10 +1,11 @@
 package backend;
 
+import java.util.Arrays;
 import java.util.List;
 
+import turtles.Turtle;
+import turtles.TurtleManager;
 import commands.Command;
-import controller.Controller;
-import frontend.View;
 import javafx.scene.Node;
 import interfaces.ModelInterface;
 
@@ -12,20 +13,17 @@ public class Model implements ModelInterface {
 
 	private VariableManager myVariables;
 	private UserMethodManager myUserMethods;
-	private Turtle myTurtle;
+	private TurtleManager myTurtles;
 	private Parser myParser;
-	private Controller myController;
 	private CommandHandler myCommandHandler;
 
-	public Model(String[] syntax, Controller controller, VariableManager variables, UserMethodManager methods,
-			Turtle turtle) {
-		myController = controller;
+	public Model(String[] syntax, VariableManager variables, UserMethodManager methods,
+			TurtleManager turtles) {
 		myVariables = variables;
 		myUserMethods = methods;
-
-		myTurtle = turtle;
+		myTurtles = turtles;
 		myParser = new Parser(syntax, this, myVariables, myUserMethods);
-		myCommandHandler = new CommandHandler(myTurtle);
+		myCommandHandler = new CommandHandler(myTurtles);
 	}
 
 	@Override
@@ -56,11 +54,6 @@ public class Model implements ModelInterface {
 		myVariables.addVariable(new Variable(var, Double.parseDouble(value)));
 	}
 
-	@Override
-	public Node getTurtle() {
-		return myTurtle.getImage();
-	}
-
 	// USED FOR PARSER
 	public Double getVariable(String var) {
 		try {
@@ -76,10 +69,6 @@ public class Model implements ModelInterface {
 		} catch (Exception e) {
 			return null;
 		}
-	}
-	
-	public void executeCommand(Command c) {
-		c.executeCommand(myTurtle);
 	}
 
 }
