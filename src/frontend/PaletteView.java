@@ -14,14 +14,14 @@ import javafx.scene.Parent;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
-import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 public class PalleteView implements SubcomponentAPI {
 
 
 	private ResourceBundle resource;
 	private View view;
-	private HBox visualViews;
+	private VBox visualViews;
 	private String defaultBackgroundColor = "white";
 	private String defaultPenColor = "black";
 	private String defaultLang = "English";
@@ -43,14 +43,14 @@ public class PalleteView implements SubcomponentAPI {
 	public PalleteView(View viewIn){
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
-		visualViews = new HBox();
+		visualViews = new VBox();
 		visualViews.getChildren().add(createColorView());
 		visualViews.getChildren().add(createImageView());
 		setVariables();
 	}  
 	
-	private HBox createColorView() {
-		HBox colorView = new HBox();
+	private VBox createColorView() {
+		VBox colorView = new VBox();
 		colorMap = createMap(colors);
 		String text = "Color Pallete \n";
 		Label colorPallete = new Label(text);
@@ -62,8 +62,8 @@ public class PalleteView implements SubcomponentAPI {
 		return colorView;
 		}
 	
-	private HBox createImageView() {
-		HBox imageView = new HBox();
+	private VBox createImageView() {
+		VBox imageView = new VBox();
 		turtleMap = createMap(turtles);
 		Label imagePallete = new Label("Image Pallete \n");
 		imageView.getChildren().add(imagePallete);

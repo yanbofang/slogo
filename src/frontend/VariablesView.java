@@ -33,6 +33,7 @@ public class VariablesView implements VariablesViewAPI{
 		
 		scrollPane = new ScrollPane();
 		scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
+		scrollPane.setPrefHeight(200);
 		VBox layout = new VBox();
 		layout.setAlignment(Pos.TOP_CENTER);
 		layout.setPadding(new Insets(10, 10, 0, 20));
@@ -84,8 +85,8 @@ public class VariablesView implements VariablesViewAPI{
 		String[] variableArr = source.getText().split(" = ");
 		
 		TextInputDialog dialog = new TextInputDialog(variableArr[1]);
-		dialog.setTitle("Edit Variable");
-		dialog.setContentText("Please enter a new value: ");
+		dialog.setTitle(resource.getString("VariableDialogTitle"));
+		dialog.setContentText(resource.getString("VariableDialogContent"));
 		String newValue = getResult(dialog, variableArr[1]);
 		updateVar(variableArr[0], newValue);
 		view.changeVariable(variableArr[0], newValue);
