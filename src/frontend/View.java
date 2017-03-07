@@ -62,7 +62,7 @@ public class View implements ViewAPI, Observer {
 	private Timeline timeline;
 	private ResourceBundle resource;
 	private WorkSpace workSpace;
-	private TurtleManagerAPI turtleManager;
+	private TurtleManager turtleManager;
 
 	private OptionsTab optionsTab;
 	private TurtleView turtleView;
@@ -72,6 +72,8 @@ public class View implements ViewAPI, Observer {
 	private PromptView promptView;
 	private StateView stateView;
 	private PaletteView paletteView;
+	private PenView penView;
+	private TurtleVisualView turtleVisualView;
 
 	private VBox views;
 	private ViewObservable<String> activeViews;
@@ -376,7 +378,9 @@ public class View implements ViewAPI, Observer {
 		variablesView = new VariablesView(this);
 		stateView = new StateView(this);
 		paletteView = new PaletteView(this, workSpace.colorPalette, workSpace.imagePalette);
-
+		penView = new PenView(this);
+		turtleVisualView = new TurtleVisualView(this, workSpace.colorPalette, workSpace.background, turtleManager);
+		
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
 		root.add(promptView.getParent(), 2, 1, 1, 1);
