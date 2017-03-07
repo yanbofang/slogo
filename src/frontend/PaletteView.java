@@ -38,7 +38,9 @@ public class PaletteView implements SubcomponentAPI {
 	private ObservableList<String> turtleButtonLabels = FXCollections.observableArrayList();
 	
 	
+
 	public PaletteView(View viewIn, Map<Double,String> colorIn, Map<Double,String> turtleIn){
+
 		view = viewIn;
 		colorMap = colorIn;
 		turtleMap = turtleIn;
