@@ -192,10 +192,10 @@ public class View implements ViewAPI, Observer {
 		return turtleManager;
 	}
 
-	@Override
-	public void setPen(Boolean penIn) {
-		penDown = penIn;
-	}
+//	@Override
+//	public void setPen(Boolean penIn) {
+//		penDown = penIn;
+//	}
 	
 	public void deleteWorkspace(String s) {
 		String fp = filePath.get(s);
