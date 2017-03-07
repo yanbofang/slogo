@@ -1,8 +1,10 @@
 package frontend;
 
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.ResourceBundle;
 
+import animation.MoveAnimation;
 import coordinate.Coordinate;
 import frontend.API.TurtleViewerAPI;
 import javafx.beans.value.ChangeListener;
@@ -23,6 +25,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
+import turtles.Pen;
 
 public class TurtleView implements TurtleViewerAPI{
 
@@ -31,24 +34,24 @@ public class TurtleView implements TurtleViewerAPI{
 	private Pane viewer;
 	private ArrayList<Line> lines;
 	private Color penColor;
+	private Map<Double,String> colorMap;
+	private MoveAnimation animation;
 	
-	
-	public TurtleView(View viewIn) {
+	public TurtleView(View viewIn, Map mapIn, double gbIndex) {
 		view = viewIn;
+		colorMap = mapIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		viewer = new Pane();
 		viewer.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		lines = new ArrayList<Line>();
-		penColor = Color.BLACK;
 	}
 	
-	public TurtleView(View viewIn, int bgIndex){
-		this(viewIn);
-	}
-	
-	public void changePosition(Coordinate oldC, Coordinate newC) {
+	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen) {
+		// need turtle
+//		animation = new MoveAnimation(view, pen, oldC, newC);
 		Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
-		newLine.setStroke(penColor);
+		newLine.setStroke(Color.valueOf(colorMap.get(pen.getColor())));
+		newLine.setStrokeWidth(pen.getSize());
 		lines.add(newLine);
 		viewer.getChildren().add(newLine);
 	}
@@ -88,8 +91,9 @@ public class TurtleView implements TurtleViewerAPI{
 		viewer.getChildren().add(a);	
 	}
 	
-	public void removeTurtle(Node turtle) {
-		viewer.getChildren().remove(turtle);
+	public void removeTurtle(Node a) {
+		viewer.getChildren().remove(a);
 	}
+
 
 }
