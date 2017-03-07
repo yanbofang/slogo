@@ -1,68 +1,70 @@
 package frontend;
+
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.TreeMap;
+
 import frontend.API.SubcomponentAPI;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.MapChangeListener;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
+import javafx.collections.ObservableMap;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
-import javafx.stage.Stage;
 
-public class OptionsView implements SubcomponentAPI{
+public class VisualOptionsView implements SubcomponentAPI {
 
-	private Stage s;
-	private Scene scene;
 	private ResourceBundle resource;
 	private View view;
-	private HBox buttonPanel;
+	private VariablesView vView;
+	private MethodsView mView;
+	private PalleteView pView;
+	private HBox visualViews;
 	private String defaultBackgroundColor = "white";
 	private String defaultPenColor = "black";
 	private String defaultLang = "English";
-	private String helpTitle = "help";
 	private String defaultTurtle = "turtle";
-	private String url = getClass().getClassLoader().getResource("help.html").toExternalForm();
-	private WebEngine webEngine;
-	private String[][] viewOptions = {{"backgroundColor", defaultBackgroundColor},{"penColor", defaultPenColor}, 
-										{"lang", defaultLang}, {"turtle", defaultTurtle}};
 	
+	private String[][] viewOptions = {{"backgroundColor", defaultBackgroundColor},{"penColor", defaultPenColor}, 
+			{"lang", defaultLang}, {"turtle", defaultTurtle}};
+
+	Map<String,Integer> colorMap = new TreeMap<String,Integer>();
+	Map<String,Integer> turtleMap = new TreeMap<String,Integer>();
+
 	private ObservableList<String> colors = FXCollections.observableArrayList(
 			"black", "white", "red", "green", "blue", "yellow");
-	
-	private ObservableList<String> languages = FXCollections.observableArrayList(
-			"Chinese", "English", "French", "German", "Italian", 
-			"Portugese", "Russsian", "Spanish");
 
 	private ObservableList<String> turtles = FXCollections.observableArrayList(
 			"greenturtle", "blueturtle", "pinkturtle", "turtle");
+	
 
-
-
-	public OptionsView(View viewIn){
+	public VisualOptionsView(View viewIn){
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
-		buttonPanel = new HBox();
-		WebView browser = new WebView();
-		webEngine = browser.getEngine();
-		s = new Stage(); 
-		scene = new Scene(browser);
+		visualViews = new HBox();
 		setVariables();
 	}  
 	
+	private Map<String,Integer> createMap(List<String> keys) {
+		Map<String,Integer> map = new TreeMap<String,Integer>();
+		for(Integer i = 0; i<keys.size(); i++) {
+			map.put(keys.get(i), i);
+		}
+		return map;
+	}
+
 	private void setVariables() {
-		createFeatureButton("penColor", colors);
-		createFeatureButton("backgroundColor", colors);
-		createFeatureButton("lang", languages);
-		createFeatureButton("turtle", turtles);	
-		createHelpButton();
+		mView = new MethodsView(view);
+		visualViews.getChildren().add(mView.getParent());
+		vView = new VariablesView(view);
+		visualViews.getChildren().add(vView.getParent());
+		pView = new PalleteView(view);
+		visualViews.getChildren().add(pView.getParent());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -70,7 +72,7 @@ public class OptionsView implements SubcomponentAPI{
 		@SuppressWarnings({ "rawtypes" })
 		ComboBox btn = new ComboBox(options);
 		btn.setPromptText(resource.getString(feature));
-		buttonPanel.getChildren().add(btn);
+		visualViews.getChildren().add(btn);
 		btn.valueProperty().addListener(new ChangeListener<String> () {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
@@ -88,26 +90,11 @@ public class OptionsView implements SubcomponentAPI{
 		changePenColor();
 		changeBackgroundColor();
 		changeImage();
-		changeLanguage();
-	}
-	
-	private void createHelpButton(){
-		Button helpBtn = new Button(resource.getString(helpTitle));
-		helpBtn.setId("help");
-		buttonPanel.getChildren().add(helpBtn);
-		helpBtn.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				webEngine.load(url);
-				s.setScene(scene);
-				s.show();
-			}	
-		});
 	}
 
 	@Override
 	public Parent getParent() {
-		return buttonPanel;
+		return visualViews;
 	}
 	
 	private void changePenColor() {
@@ -118,9 +105,6 @@ public class OptionsView implements SubcomponentAPI{
 		view.changeBackground(viewOptions[0][1]);	
 	}
 	
-	private void changeLanguage() {
-		view.changeLanguage(viewOptions[2][1]);
-	}
 	
 	private void changeImage() {
 		String imageName = resource.getString(viewOptions[3][1]);
@@ -129,3 +113,4 @@ public class OptionsView implements SubcomponentAPI{
 
 	}
 }
+

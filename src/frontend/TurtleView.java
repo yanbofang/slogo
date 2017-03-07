@@ -5,11 +5,17 @@ import java.util.ResourceBundle;
 
 import coordinate.Coordinate;
 import frontend.API.TurtleViewerAPI;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.InputEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
@@ -42,7 +48,7 @@ public class TurtleView implements TurtleViewerAPI{
 		lines.add(newLine);
 		viewer.getChildren().add(newLine);
 	}
-	
+
 	public void clear() {
 		for (Line line: lines) {
 			viewer.getChildren().remove(line);
@@ -76,6 +82,9 @@ public class TurtleView implements TurtleViewerAPI{
 	@Override
 	public void placeTurtle(Node a) {
 		viewer.getChildren().add(a);
+//		a.setOnMouseClicked((e) -> {
+//			
+//		});		
 	}
 
 }
