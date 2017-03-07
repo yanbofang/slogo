@@ -286,7 +286,7 @@ public class View implements ViewAPI, Observer {
 		String[] defaults = (String[]) (Arrays.asList(keysAndValues.split(";"))).toArray();
 		for(String defaultChoice: defaults) {
 			String[] tempChoice = (String[]) (Arrays.asList(defaultChoice.split(","))).toArray();
-			map.put(tempChoice[0], Double.parseDouble(tempChoice[1]));
+			map.put(Double.parseDouble(tempChoice[1]), tempChoice[0]);
 		}
 		return map;
 	}

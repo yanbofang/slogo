@@ -106,5 +106,5 @@ public interface ViewAPI {
 
 	public void clearLines();
 
-	public void setPen(Boolean b);
+//	public void setPen(Boolean b);
 }
