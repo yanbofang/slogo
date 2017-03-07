@@ -28,4 +28,6 @@ public interface Command {
 	Integer getNumOfExpressions();
 	
 	void performBeforeExecution();
+	
+	boolean getRunTurtles();
 }

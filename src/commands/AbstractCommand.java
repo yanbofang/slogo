@@ -25,6 +25,7 @@ public abstract class AbstractCommand implements Command {
 	protected UserMethodManager myUserMethods;
 	protected TurtleManagerCommandAPI myTurtleManager;
 	protected boolean runNested;
+	protected boolean runAllTurtles;
 
 	public AbstractCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		myArguments = new ArrayList<Object>();
@@ -33,6 +34,7 @@ public abstract class AbstractCommand implements Command {
 		myUserMethods = methods;
 		finished = false;
 		runNested = true;
+		runAllTurtles = false;
 	}
 
 	public AbstractCommand(String instruction, VariableManager variables, UserMethodManager methods,
@@ -100,7 +102,7 @@ public abstract class AbstractCommand implements Command {
 	}
 	
 
-	private ArrayList<Object> convertArguments(List<Object> list, boolean nest) {
+	protected ArrayList<Object> convertArguments(List<Object> list, boolean nest) {
 		ArrayList<Object> newArgs = new ArrayList<Object>();
 		for (int k = 0; k < list.size(); k++) {
 			Object o = list.get(k);
@@ -203,6 +205,10 @@ public abstract class AbstractCommand implements Command {
 			}
 		}
 		return returnList;
+	}
+	
+	public boolean getRunTurtles() {
+		return runAllTurtles;
 	}
 
 }
