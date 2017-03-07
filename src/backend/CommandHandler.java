@@ -12,12 +12,13 @@ public class CommandHandler {
 
 	private Queue<Command> myCommands;
 	private Command currentCommand;
-	//private Model myModel;
+	private VariableManager myVariables;
 	private Turtle myTurtle;
-	
-	public CommandHandler(Turtle turtle) {
+
+	public CommandHandler(Turtle turtle, VariableManager vars) {
 		myTurtle = turtle;
 		myCommands = new LinkedList<Command>();
+		myVariables = vars;
 	}
 
 	public void addCommands(List<Command> lst) {
@@ -28,6 +29,7 @@ public class CommandHandler {
 
 	/**
 	 * Execute a single command -- assures we return our values for each command
+	 * 
 	 * @return
 	 */
 	public Double executeCommands() {
@@ -37,11 +39,11 @@ public class CommandHandler {
 			if (currentCommand.isFinished()) {
 				myCommands.remove();
 			} else {
-				current = currentCommand.executeCommand(myTurtle);
-				System.out.println(current + "   *print statement in CommandHandler");
+				current = currentCommand.executeCommand(myTurtle, myVariables);
+				System.out.println(current + "   *print statement in CommandHandler, currentCommand is: " + currentCommand);
 			}
 		}
 		return current;
 	}
-	
+
 }

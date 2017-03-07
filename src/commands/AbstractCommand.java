@@ -69,24 +69,25 @@ public abstract class AbstractCommand implements Command {
 		finished = false;
 	}
 
-	public Double getValue(Turtle turtle) {
-		myTurtle = turtle;
-		return getValue(myArguments);
-	}
+//	public Double getValue(Turtle turtle) {
+//		myTurtle = turtle;
+//		return getValue(myArguments, myVariables);
+//	}
 
-	public abstract Double getValue(List<Object> args);
+	public abstract Double getValue(List<Object> args, VariableManager localVariables);
 
 	/**
 	 * 
 	 * @return - value that we want to send to UI to be displayed
 	 */
-	public Double executeCommand(Turtle turtle) {
+	public Double executeCommand(Turtle turtle, VariableManager vars) {
 		myTurtle = turtle;
+		VariableManager localVariables = vars;
 		ArrayList<Object> newArgs = new ArrayList<Object>();
 		for (Object o : myArguments) {
 			if (o instanceof AbstractCommand) {
 				Command c = (Command) o;
-				newArgs.add(c.executeCommand(turtle));
+				newArgs.add(c.executeCommand(turtle, localVariables));
 			} else {
 				// try {
 				// newArgs.add((Double) o);
@@ -98,9 +99,9 @@ public abstract class AbstractCommand implements Command {
 					System.out.println("This is o: " + (String) o);
 					// System.out.println("USERMETHODCOMMAND: " +
 					// myUserMethods.getUserMethodCommand((String) o));
-					if (myVariables.get((String) o) != null) {
-						System.out.println(myVariables.get((String) o));
-						newArgs.add(myVariables.get((String) o).getValue());
+					if (localVariables.get((String) o) != null) {
+						System.out.println(localVariables.get((String) o));
+						newArgs.add(localVariables.get((String) o).getValue());
 						// } else if
 						// (myUserMethods.getUserMethodCommand((String) o) !=
 						// null) {
@@ -118,22 +119,22 @@ public abstract class AbstractCommand implements Command {
 		// }
 		this.changeToFinished();
 		System.out.println("This is args: " + newArgs);
-		return this.getValue(newArgs);
+		return this.getValue(newArgs, localVariables);
 	}
 
-	protected List<Object> checkList(Object o) {
+	protected List<Object> checkList(Object o, VariableManager vars) {
 		List<Object> returnList = new ArrayList<Object>();
 		List<Object> newList = (List<Object>) o;
 		for (Object each : newList) {
 			if (each instanceof Command) {
 				Command c = (Command) each;
-				returnList.add(c.executeCommand(myTurtle));
+				returnList.add(c.executeCommand(myTurtle, vars));
 			} else {
 				try {
-					if (myVariables.get((String) o) != null) {
-						returnList.add(myVariables.get((String) o).getValue());
+					if (vars.get((String) o) != null) {
+						returnList.add(vars.get((String) o).getValue());
 					} else if (myUserMethods.getUserMethodCommand((String) o) != null) {
-						returnList.add(myUserMethods.getUserMethodCommand((String) o).executeCommand(myTurtle));
+						returnList.add(myUserMethods.getUserMethodCommand((String) o).executeCommand(myTurtle, vars));
 					} else {
 						returnList.add(each);
 					}

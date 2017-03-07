@@ -21,7 +21,7 @@ public class Model implements ModelInterface {
 
 		myTurtle = turtle;
 		myParser = new Parser(syntax, this, myVariables, myUserMethods);
-		myCommandHandler = new CommandHandler(myTurtle);
+		myCommandHandler = new CommandHandler(myTurtle, myVariables);
 	}
 
 	@Override
@@ -74,8 +74,8 @@ public class Model implements ModelInterface {
 		}
 	}
 	
-	public void executeCommand(Command c) {
-		c.executeCommand(myTurtle);
-	}
+//	public void executeCommand(Command c) {
+//		c.executeCommand(myTurtle, myVariables);
+//	}
 
 }

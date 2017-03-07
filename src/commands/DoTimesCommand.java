@@ -15,13 +15,13 @@ public class DoTimesCommand extends LoopCommand {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		myCommands = (ArrayList<Command>) args.get(1);
 		List<Object> lst = (List<Object>) args.get(0);
-		lst = checkList(lst);
+		lst = checkList(lst, vars);
 		Variable var = new Variable((String) lst.get(0), 1.0);
-		myVariables.addVariable(var);
-		return runCommands(1.0, (Double) lst.get(1), 1.0, var);
+		vars.addVariable(var);
+		return runCommands(1.0, (Double) lst.get(1), 1.0, var, vars);
 	}
 
 }

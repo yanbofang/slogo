@@ -18,9 +18,9 @@ public abstract class LoopCommand extends AbstractCommand {
 	}
 
 	@Override
-	public abstract Double getValue(List<Object> args);
+	public abstract Double getValue(List<Object> args, VariableManager vars);
 
-	protected Double runCommands(Double start, Double end, Double increment, Variable var) {
+	protected Double runCommands(Double start, Double end, Double increment, Variable var, VariableManager vars) {
 		Double returnValue = 0.0;
 		for (int i = start.intValue(); i < end.intValue() + 1; i += increment.intValue()) {
 			if (var != null) {
@@ -30,7 +30,7 @@ public abstract class LoopCommand extends AbstractCommand {
 			for (Command c : myCommands) {
 				c.resetCommand();
 				while (!c.isFinished()) {
-					returnValue = c.executeCommand(myTurtle);
+					returnValue = c.executeCommand(myTurtle, vars);
 				}
 			}
 

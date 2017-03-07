@@ -14,7 +14,7 @@ public class ConstantCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		return Double.parseDouble(myInstruction);
 	}
 

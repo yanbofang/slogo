@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import backend.CommandHandler;
 import backend.Turtle;
+import backend.VariableManager;
 
 public interface Command {
 
@@ -18,9 +19,9 @@ public interface Command {
 
 	boolean isFinished();
 
-	Double getValue(Turtle t);
+//	Double getValue(Turtle t);
 
-	Double executeCommand(Turtle turtle);
+	Double executeCommand(Turtle turtle, VariableManager vars);
 	
 	void resetCommand();
 

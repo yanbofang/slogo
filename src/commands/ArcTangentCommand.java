@@ -7,14 +7,13 @@ import backend.VariableManager;
 
 public class ArcTangentCommand extends AbstractCommand {
 	private static final Integer NUM_OF_EXPRESSIONS = 1;
-	
-	public ArcTangentCommand(String instruction, VariableManager variables,
-			UserMethodManager methods) {
+
+	public ArcTangentCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager localVariables) {
 		return Math.atan(Math.toRadians((Double) args.get(0)));
 	}
 }

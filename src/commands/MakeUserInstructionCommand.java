@@ -18,7 +18,7 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		if (args.get(0) instanceof MakeUserInstructionCommand) {
 			throw new ParserException("User method already created!");
 		}

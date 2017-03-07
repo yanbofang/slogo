@@ -15,7 +15,7 @@ public class PenDownCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		myValue = 1.0;
 		myTurtle.setPen(true);
 		return myValue;

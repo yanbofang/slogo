@@ -15,7 +15,7 @@ public class OrCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		Double exp1 = (Double) args.get(0);
 		Double exp2 = (Double) args.get(1);
 		if (exp1 != 0.0 || exp2 != 0.0) {

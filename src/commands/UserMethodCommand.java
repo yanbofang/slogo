@@ -1,6 +1,8 @@
 package commands;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import backend.UserMethod;
 import backend.UserMethodManager;
@@ -18,11 +20,18 @@ public class UserMethodCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		Double returnValue = 0.0;
+		
+		Map<String, Variable> globalVariables = vars.getVariableMap();
+		
+		VariableManager localVariables = new VariableManager();
+		
+		localVariables.addAll(globalVariables);
+		
 		// Create the variables
 		for (int i = 0; i < this.getNumOfExpressions(); i++) {
-			myVariables.addVariable(
+			localVariables.addVariable(
 					new Variable(myMethod.getListOfVariables().get(i), (Double) args.get(i)));
 		}
 
@@ -31,7 +40,7 @@ public class UserMethodCommand extends AbstractCommand {
 		for (Command c : commands) {
 			c.resetCommand();
 			while (!c.isFinished()) {
-				returnValue = c.executeCommand(myTurtle);
+				returnValue = c.executeCommand(myTurtle, localVariables);
 			}
 		}
 		return returnValue;
