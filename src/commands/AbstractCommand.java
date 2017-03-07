@@ -49,11 +49,6 @@ public abstract class AbstractCommand implements Command {
 		}
 	}
 
-	/*
-	public void clearArguments() {
-		myArguments.clear();
-	}*/
-
 	public Integer getNumOfExpressions() {
 		return myNumOfExpressions;
 	}
@@ -77,11 +72,6 @@ public abstract class AbstractCommand implements Command {
 	public void resetCommand() {
 		finished = false;
 	}
-
-	/*public Double getValue(Turtle turtle) {
-		myTurtle = turtle;
-		return getValue(myArguments);
-	}*/
 
 	public abstract Double getValue(List<Object> args);
 
@@ -140,7 +130,13 @@ public abstract class AbstractCommand implements Command {
 		System.out.println("This is args: " + newArgs);
 		return newArgs;
 	}
-
+	
+	public boolean getRunTurtles() {
+		return runAllTurtles;
+	}
+	
+	
+/*
 	private List<Object> methodVarCheck(List<Object> o) {
 		List<Object> check = new ArrayList<Object>();
 		for (Object each: o) {
@@ -206,9 +202,6 @@ public abstract class AbstractCommand implements Command {
 		}
 		return returnList;
 	}
-	
-	public boolean getRunTurtles() {
-		return runAllTurtles;
-	}
+	*/
 
 }

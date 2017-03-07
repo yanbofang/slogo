@@ -21,6 +21,6 @@ public class RepeatCommand extends LoopCommand {
 	public Double getValue(List<Object> args) {
 		myCommands = (ArrayList<Command>) args.get(1);
 		System.out.println("myCommands in RepeatCommand: " + myCommands.toString());
-		return runCommands(1.0, (Double) args.get(0), 1.0, null);
+		return runCommands(1.0, (Double) args.get(0), 1.0, null, myTurtle.getID());
 	}
 }
