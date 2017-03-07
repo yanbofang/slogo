@@ -16,7 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.layout.VBox;
 
-public class PalleteView implements SubcomponentAPI {
+public class PaletteView implements SubcomponentAPI {
 
 
 	private ResourceBundle resource;
@@ -40,7 +40,7 @@ public class PalleteView implements SubcomponentAPI {
 			"greenturtle", "blueturtle", "pinkturtle", "turtle");
 	
 	
-	public PalleteView(View viewIn){
+	public PaletteView(View viewIn){
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		visualViews = new VBox();
