@@ -55,6 +55,7 @@ public class PenView implements SubcomponentAPI {
 			@Override
 			public void handle(ActionEvent e) {
 				p.setPen(true);
+				setPenState();
 			}
 		});
 	}
@@ -66,6 +67,7 @@ public class PenView implements SubcomponentAPI {
 			@Override
 			public void handle(ActionEvent e) {
 				p.setPen(false);
+				setPenState();
 			}
 		});
 	}
@@ -74,6 +76,7 @@ public class PenView implements SubcomponentAPI {
 		Slider sizeSlide = new Slider(1, 100, 10);
 		sizeSlide.valueProperty().addListener(e -> {
 			p.setSize(sizeSlide.getValue());
+			setPenSize();
 		});
 		box.getChildren().add(sizeSlide);
 	}
