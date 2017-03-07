@@ -25,8 +25,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -42,7 +40,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import turtles.Pen;
 import turtles.Turtle;
-import turtles.TurtleAPI;
 import turtles.TurtleManager;
 import turtles.TurtleManagerAPI;
 
@@ -74,7 +71,7 @@ public class View implements ViewAPI, Observer {
 	private VariablesView variablesView;
 	private PromptView promptView;
 	private StateView stateView;
-	private PalleteView palleteView;
+	private PaletteView paletteView;
 
 	private VBox views;
 	private ViewObservable<String> activeViews;
@@ -190,7 +187,7 @@ public class View implements ViewAPI, Observer {
 	public void clearLines() {
 		turtleView.clear();
 	}
-
+	
 	public void deleteWorkspace(String s) {
 		String fp = filePath.get(s);
 		fileName.remove(s);
@@ -264,6 +261,8 @@ public class View implements ViewAPI, Observer {
 		workSpace.language = resource.getString("DefaultLanguage");
 		workSpace.background = Integer.parseInt(resource.getString("DefaultBackground"));
 		workSpace.views = new ArrayList<String>(Arrays.asList(resource.getString("DefaultViews").split(",")));
+		workSpace.colorPalette = createMap("defaultColors");
+		workSpace.imagePalette = createMap("defaultImages");
 		try {
 			File file = new File(DEFAULT_SER);
 			file.getParentFile().mkdirs();
@@ -277,6 +276,16 @@ public class View implements ViewAPI, Observer {
 		} catch (IOException i) {
 			showError(resource.getString("SavingError"));
 		}
+	}
+	
+	private Map<Double, String> createMap(String keysAndValues) {
+		Map<Double, String> map = new HashMap<Double,String>();
+		String[] defaults = (String[]) (Arrays.asList(resource.getString(keysAndValues).split(";"))).toArray();
+		for(String defaultChoice: defaults) {
+			String[] tempChoice = (String[]) (Arrays.asList(defaultChoice.split(","))).toArray();
+			map.put(Double.parseDouble(tempChoice[1]), tempChoice[0]);
+		}
+		return map;
 	}
 
 	private void initializeCore() {
@@ -366,7 +375,7 @@ public class View implements ViewAPI, Observer {
 		optionsView = new OptionsView(this);
 		variablesView = new VariablesView(this);
 		stateView = new StateView(this);
-		palleteView = new PalleteView(this);
+		//paletteView = new PaletteView(this);
 
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
