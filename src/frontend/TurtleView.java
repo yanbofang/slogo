@@ -37,7 +37,7 @@ public class TurtleView implements TurtleViewerAPI{
 	private Map<Double,String> colorMap;
 	private MoveAnimation animation;
 	
-	public TurtleView(View viewIn, Map mapIn) {
+	public TurtleView(View viewIn, Map mapIn, double gbIndex) {
 		view = viewIn;
 		colorMap = mapIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
@@ -46,13 +46,9 @@ public class TurtleView implements TurtleViewerAPI{
 		lines = new ArrayList<Line>();
 	}
 	
-	public TurtleView(View viewIn, int bgIndex){
-		this(viewIn);
-	}
-	
 	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen) {
 		// need turtle
-		animation = new MoveAnimation(view, pen, oldC, newC);
+//		animation = new MoveAnimation(view, pen, oldC, newC);
 		Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
 		newLine.setStroke(Color.valueOf(colorMap.get(pen.getColor())));
 		newLine.setStrokeWidth(pen.getSize());

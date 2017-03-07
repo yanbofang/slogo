@@ -25,8 +25,6 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableMap;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -42,7 +40,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import turtles.Pen;
 import turtles.Turtle;
-import turtles.TurtleAPI;
 import turtles.TurtleManager;
 import turtles.TurtleManagerAPI;
 
@@ -373,12 +370,12 @@ public class View implements ViewAPI, Observer {
 	private void initializeViews() {
 		optionsTab = new OptionsTab(this, fileName, activeViews);
 		promptView = new PromptView(this);
-		turtleView = new TurtleView(this, workSpace.background);
+		turtleView = new TurtleView(this, workSpace.colorPalette, workSpace.background);
 		methodsView = new MethodsView(this);
 		optionsView = new OptionsView(this);
 		variablesView = new VariablesView(this);
 		stateView = new StateView(this);
-		//paletteView = new PaletteView(this);
+		paletteView = new PaletteView(this, workSpace.colorPalette, workSpace.imagePalette);
 
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
@@ -419,8 +416,9 @@ public class View implements ViewAPI, Observer {
 		}
 		if (arg0 instanceof Turtle) {
 			if(arg1 instanceof ArrayList<?>){
+				Turtle t = (Turtle) arg1;
 				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
-				
+				updateTurtle(temp.get(0),temp.get(1),t.getPen());
 			}
 		}
 	}

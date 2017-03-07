@@ -2,6 +2,8 @@ package controller;
 
 import java.util.HashMap;
 
+import turtles.Pen;
+
 public class TurtleInfo {
 	private HashMap<String, Double> stats;
 	private Pen pen;
@@ -28,14 +30,14 @@ public class TurtleInfo {
 	}
 
 	public boolean getPenDown() {
-		return pen.getDown();
+		return pen.showPen();
 	}
 
 	public double getPenSize() {
 		return pen.getSize();
 	}
 
-	public int getPenColor() {
+	public double getPenColor() {
 		return pen.getColor();
 	}
 
