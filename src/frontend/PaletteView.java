@@ -1,8 +1,11 @@
 package frontend;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.Set;
 import java.util.TreeMap;
 
 import frontend.API.SubcomponentAPI;
@@ -22,75 +25,61 @@ public class PaletteView implements SubcomponentAPI {
 	private ResourceBundle resource;
 	private View view;
 	private VBox visualViews;
-	private String defaultBackgroundColor = "white";
-	private String defaultPenColor = "black";
-	private String defaultLang = "English";
-	private String defaultTurtle = "turtle";
-	
-	Map<String,Integer> colorMap = new TreeMap<String,Integer>();
-	Map<String,Integer> turtleMap = new TreeMap<String,Integer>();
+	Map<Double,String> colorMap;
+	Map<Double,String> turtleMap;
 
-	private String[][] viewOptions = {{"backgroundColor", defaultBackgroundColor},{"penColor", defaultPenColor}, 
-			{"lang", defaultLang}, {"turtle", defaultTurtle}};
+	private String[][] viewOptions = {{"backgroundColor", null},{"penColor", null}, 
+			{"turtle", null}};
 	
-	private ObservableList<String> colors = FXCollections.observableArrayList(
-			"black", "white", "red", "green", "blue", "yellow");
+	private List<Double> colors;
+	
+	private ObservableList<String> colorButtonLabels = FXCollections.observableArrayList();
 
-	private ObservableList<String> turtles = FXCollections.observableArrayList(
-			"greenturtle", "blueturtle", "pinkturtle", "turtle");
+	private ObservableList<String> turtleButtonLabels = FXCollections.observableArrayList();
 	
 	
-	public PaletteView(View viewIn){
+
+	public PaletteView(View viewIn, Map<Double,String> colorIn, Map<Double,String> turtleIn){
+
 		view = viewIn;
+		colorMap = colorIn;
+		turtleMap = turtleIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		visualViews = new VBox();
 		visualViews.getChildren().add(createColorView());
 		visualViews.getChildren().add(createImageView());
-		setVariables();
 	}  
 	
 	private VBox createColorView() {
 		VBox colorView = new VBox();
-		colorMap = createMap(colors);
 		String text = "Color Pallete \n";
-		Label colorPallete = new Label(text);
-		colorView.getChildren().add(colorPallete);
-		ComboBox<String> backgroundBtn = createFeatureButton("backgroundColor", colors);
-		colorView.getChildren().add(backgroundBtn);
-		ComboBox<String> penBtn = createFeatureButton("penColor", colors);
-		colorView.getChildren().add(penBtn);
+		Label colorPalette = new Label(text);
+		colorView.getChildren().add(colorPalette);
+		colorButtonLabels = createFeatureButton("backgroundColor", colorMap, colorView);
+		createFeatureButton("penColor", colorMap, colorView);
 		return colorView;
 		}
 	
 	private VBox createImageView() {
 		VBox imageView = new VBox();
-		turtleMap = createMap(turtles);
 		Label imagePallete = new Label("Image Pallete \n");
 		imageView.getChildren().add(imagePallete);
-		ComboBox<String> turtleBtn = createFeatureButton("turtle", turtles);
-		imageView.getChildren().add(turtleBtn);
+		turtleButtonLabels = createFeatureButton("turtle", turtleMap, imageView);
 		return imageView;
 	}
 	
-	private Map<String,Integer> createMap(List<String> keys) {
-		Map<String,Integer> map = new TreeMap<String,Integer>();
-		for(Integer i = 0; i<keys.size(); i++) {
-			map.put(keys.get(i), i);
+	private ObservableList<String> updateLists(Map map) {
+		List<Double> values = new ArrayList<Double>(map.keySet());	
+		ObservableList<String> buttonLabels = FXCollections.observableArrayList();
+		for (Double value: values) {
+			buttonLabels.add(value.toString() + ": " + map.get(value));
 		}
-		return map;
-	}
-	
-	private void setVariables() {
-		createFeatureButton("penColor", colors);
-		createFeatureButton("backgroundColor", colors);
-		createFeatureButton("turtle", turtles);
+		return buttonLabels;
 	}
 	
 	@SuppressWarnings("unchecked")
-	private ComboBox<String> createFeatureButton(String feature,@SuppressWarnings("rawtypes") ObservableList options) {
-		for (int i=0; i<options.size(); i++) {
-			options.set(i, options.get(i) + ": " + colorMap.get(options.get(i)));
-		}
+	private ObservableList<String> createFeatureButton(String feature, Map map, VBox group) {
+		ObservableList<String> options = FXCollections.observableArrayList(updateLists(map));
 		ComboBox btn = new ComboBox(options);
 		btn.setPromptText(resource.getString(feature));
 		btn.valueProperty().addListener(new ChangeListener<String> () {
@@ -104,7 +93,8 @@ public class PaletteView implements SubcomponentAPI {
 				}
 			}			
 		});
-		return btn;
+		group.getChildren().add(btn);
+		return options;
 	}
 	
 	private void updateVariables() {
@@ -114,18 +104,28 @@ public class PaletteView implements SubcomponentAPI {
 	}
 	
 	private void changePenColor() {
-		view.changePenColor(viewOptions[1][1]);
+		if (viewOptions[1][1] != null) {
+			view.changePenColor(viewOptions[1][1]);
+			viewOptions[1][1] = null;
+		}
+		
 	}
 	
 	private void changeBackgroundColor() {
-		view.changeBackground(viewOptions[0][1]);	
+		if (viewOptions[0][1] != null) {
+			view.changeBackground(viewOptions[0][1]);
+			viewOptions[0][1] = null;
+		}	
 	}
 	
 	
 	private void changeImage() {
-		String imageName = resource.getString(viewOptions[3][1]);
-		Image turtleImage = new Image(getClass().getClassLoader().getResourceAsStream(imageName));
-		view.changeImage(turtleImage);
+		if (viewOptions[2][1] != null) {
+			String imageName = resource.getString(viewOptions[3][1]);
+			Image turtleImage = new Image(getClass().getClassLoader().getResourceAsStream(imageName));
+			view.changeImage(turtleImage);
+			viewOptions[2][1] = null;
+		}
 	}
 	
 	@Override
@@ -133,4 +133,13 @@ public class PaletteView implements SubcomponentAPI {
 		return visualViews;
 	}
 
+	public void updateColorPalette(String color, double index) {
+		colorMap.put(index, color);
+		colorButtonLabels = updateLists(colorMap);
+	}
+	
+	public void updateTurtlePalette(String color, double index) {
+		turtleMap.put(index, color);
+		turtleButtonLabels = updateLists(turtleMap);
+	}
 }
