@@ -70,6 +70,7 @@ public class Parser {
 
 		if (s.hasNext()) {
 			String current = s.next();
+			
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
 			currentCommand = myFactory.reflectCommand(current, myPatterns.getSymbol(current), myVariables, myUserMethods);
@@ -106,7 +107,7 @@ public class Parser {
 			return sublist;
 		} else if (myPatterns.getSymbol(current).equals("ListEnd")) {
 			return current;
-		} else if (current.equals("#")) {
+		} else if (myPatterns.getSymbol(current).equals("Comment")){
 			s.nextLine();
 			return recurseParse(s);
 		}

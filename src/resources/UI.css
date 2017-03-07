@@ -9,10 +9,6 @@ HBox {
 	-fx-padding: 10,10,10,10;
 }
 
-Pane {
-	-fx-background-color: #e0e0e0;
-}
-
 .root {
 	-fx-background-color: #4a4f4e;
 }
@@ -39,9 +35,17 @@ Pane {
 	-fx-text-fill: #000000;
 }
 
+.check-box {
+	-fx-text-fill: #ff3d3d;
+}
+
 .combo-box {
 	-fx-background-color: #333333;
 	-fx-text-fill: #5edbbc;
+}
+
+.combo-box:hover {
+	-fx-background-color: #1c1c1c;
 }
 
 .combo-box-popup {
@@ -78,10 +82,13 @@ Pane {
 	-fx-text-fill: #45e03a;
 }
 
-#help {
+#option {
 	-fx-background-color: #333333;
 	-fx-text-fill: #5edbbc;
-	//-fx-background-radius: 45;
+}
+
+#option:hover {
+	-fx-background-color: #1c1c1c;
 }
 
 #submit {

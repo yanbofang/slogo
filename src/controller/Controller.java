@@ -1,9 +1,13 @@
 package controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Observer;
 
+import coordinate.Coordinate;
+import turtles.Turtle;
+import turtles.TurtleManager;
 import backend.Model;
-import backend.Turtle;
 import backend.VariableManager;
 import backend.UserMethodManager;
 import frontend.TurtleObserver;
@@ -24,7 +28,7 @@ public class Controller {
 	private ViewAPI view;
 	private VariableManager variables;
 	private VariableManagerObserver variablesObserver;
-	private Turtle turtle;
+	private TurtleManager turtle;
 	private TurtleObserver turtleObserver;
 	private UserMethodManager userMethods;
 	private UserMethodObserver userMethodsObserver;
@@ -32,8 +36,10 @@ public class Controller {
 	public Controller(Stage arg0) throws Exception {
 		variables = new VariableManager();
 		view = new View(arg0, this);
-		turtle = new Turtle(25, 25, view.getBounds().getX(), view.getBounds().getY());
-		view.setTurtle(turtle.getImage());
+		//THIS WILL NOW HAPPEN IN BACKEND
+		//turtle = new Turtle(25, 25, view.getBounds().getX(), view.getBounds().getY(), 1.0);
+		turtle = new TurtleManager(new Coordinate(view.getBounds().getX(), view.getBounds().getY()));
+		view.setTurtle(turtle);
 		userMethods = new UserMethodManager();
 		model = new Model(ENGLISH_SYNTAX, variables, userMethods, turtle);
 		variablesObserver = new VariableManagerObserver(variables, view);
@@ -62,7 +68,8 @@ public class Controller {
 	}
 
 	public void changeImage(Image a) {
-		turtle.setImage(a);
+		// TODO: update image
+//		turtle.setImage(a);
 	}
 
 	private void addVariableManagerObserver() {
@@ -70,7 +77,8 @@ public class Controller {
 	}
 
 	private void addTurtleObserver() {
-		turtle.addObserver(turtleObserver);
+		// TODO: update turtle observer
+//		turtle.addObserver(turtleObserver);
 	}
 
 	private void addUserMethodsObserver() {

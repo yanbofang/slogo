@@ -5,8 +5,9 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import turtles.Turtle;
+import turtles.TurtleManagerCommandAPI;
 import backend.ParserException;
-import backend.Turtle;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -20,6 +21,7 @@ public abstract class AbstractCommand implements Command {
 	protected VariableManager myVariables;
 	protected Integer myNumOfExpressions;
 	protected UserMethodManager myUserMethods;
+	protected TurtleManagerCommandAPI myTurtleManager;
 
 	public AbstractCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		myArguments = new ArrayList<Object>();
@@ -80,13 +82,15 @@ public abstract class AbstractCommand implements Command {
 	 * 
 	 * @return - value that we want to send to UI to be displayed
 	 */
-	public Double executeCommand(Turtle turtle) {
-		myTurtle = turtle;
+	public Double executeCommand(TurtleManagerCommandAPI turtles, Double k) {
+		myTurtleManager = turtles;
+		myTurtle = turtles.getTurtle(k);
+		System.out.println(myArguments);
 		ArrayList<Object> newArgs = new ArrayList<Object>();
 		for (Object o : myArguments) {
 			if (o instanceof AbstractCommand) {
 				Command c = (Command) o;
-				newArgs.add(c.executeCommand(turtle));
+				newArgs.add(c.executeCommand(turtles, k));
 			} else {
 				// try {
 				// newArgs.add((Double) o);
@@ -127,13 +131,13 @@ public abstract class AbstractCommand implements Command {
 		for (Object each : newList) {
 			if (each instanceof Command) {
 				Command c = (Command) each;
-				returnList.add(c.executeCommand(myTurtle));
+				returnList.add(c.executeCommand(myTurtleManager, myTurtle.getID()));
 			} else {
 				try {
 					if (myVariables.get((String) o) != null) {
 						returnList.add(myVariables.get((String) o).getValue());
 					} else if (myUserMethods.getUserMethodCommand((String) o) != null) {
-						returnList.add(myUserMethods.getUserMethodCommand((String) o).executeCommand(myTurtle));
+						returnList.add(myUserMethods.getUserMethodCommand((String) o).executeCommand(myTurtleManager, myTurtle.getID()));
 					} else {
 						returnList.add(each);
 					}

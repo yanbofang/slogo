@@ -31,7 +31,7 @@ public class UserMethodCommand extends AbstractCommand {
 		for (Command c : commands) {
 			c.resetCommand();
 			while (!c.isFinished()) {
-				returnValue = c.executeCommand(myTurtle);
+				returnValue = c.executeCommand(myTurtleManager, myTurtle.getID());
 			}
 		}
 		return returnValue;
