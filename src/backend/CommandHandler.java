@@ -38,14 +38,17 @@ public class CommandHandler {
 		Double current = null;
 		if (!myCommands.isEmpty()) {
 			currentCommand = myCommands.peek();
+			List<Double> activeTurtles = myTurtles.getActiveTurtleIDs();
 			if (currentCommand.isFinished()) {
 				myCommands.remove();
-			} else {
-				List<Double> activeTurtles = myTurtles.getActiveTurtleIDs();
+			} else if (currentCommand.getRunTurtles()) {
 				for (Double k: activeTurtles) {
 					current = currentCommand.executeCommand(myTurtles, k);
 					System.out.println(current + "   *print statement in CommandHandler");
 				}
+			}
+			else {
+				current = currentCommand.executeCommand(myTurtles, activeTurtles.get(0));
 			}
 		}
 		return current;

@@ -12,39 +12,20 @@ import commands.UserMethodCommand;
 public class UserMethodManager extends Observable {
 
 	private HashMap<String, UserMethod> myMethodMap;
-	private HashMap<String, UserMethodCommand> myMethodCommandMap;
 
 	public UserMethodManager() {
 		myMethodMap = new HashMap<String, UserMethod>();
-		myMethodCommandMap = new HashMap<String, UserMethodCommand>();
 	}
 
-	public void add(String key, UserMethod method, UserMethodCommand methodCommand) {
+	public void add(String key, UserMethod method) {
 		myMethodMap.put(key, method);
-		myMethodCommandMap.put(key, methodCommand);
 		setChanged();
 		notifyObservers(key);
-	}
-	
-	//for testing
-	public HashMap<String, UserMethodCommand> getCommandMap(){
-		return myMethodCommandMap;
 	}
 
 	public UserMethod getUserMethod(String key) {
 		UserMethod method = myMethodMap.get(key);
 		return method;
-	}
-
-	/**
-	 * Return the UserMethodCommand corresponding to the key
-	 * @param key
-	 * @return
-	 */
-	public UserMethodCommand getUserMethodCommand(String key) {
-		UserMethodCommand methodCommand = myMethodCommandMap.get(key);
-		System.out.println("In UserMethodManager: " +  myMethodCommandMap.toString());
-		return methodCommand;
 	}
 
 	/**

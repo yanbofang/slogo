@@ -1,6 +1,7 @@
 package turtles;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,8 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		myTurtleMap = new HashMap<Double, Turtle>();
 		XBOUND = bounds.getX();
 		YBOUND = bounds.getY();
+		getTurtle(1.0);
+		myActiveTurtles = new ArrayList<Double>();
 	}
 
 	@Override
@@ -51,6 +54,12 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		return myTurtleMap.get(id);
 	}
 	
+	private void checkNewInputs() {
+		for (Double d: myActiveTurtles) {
+			checkForTurtle(d);
+		}
+	}
+	
 	private void checkForTurtle(Double k) {
 		if (myTurtleMap.get(k) == null) {
 			myTurtleMap.put(k, new Turtle(WIDTH, HEIGHT, XBOUND, YBOUND, k));
@@ -67,4 +76,10 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		return Collections.unmodifiableList(myActiveTurtles);
 	}
 
+	public void addActiveTurtles(Collection<Double> newActives) {
+		myActiveTurtles.clear();
+		myActiveTurtles.addAll(newActives);
+		checkNewInputs();
+		return;
+	}
 }

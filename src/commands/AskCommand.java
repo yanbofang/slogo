@@ -8,23 +8,22 @@ import backend.UserMethodManager;
 import backend.Variable;
 import backend.VariableManager;
 
-public class ForCommand extends LoopCommand {
+public class AskCommand extends LoopCommand {
 
-	private static final Integer NUM_OF_EXPRESSIONS = 2;
-
-	public ForCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+	private static final int NUM_OF_EXPRESSIONS = 2;
+	public AskCommand(String instruction, VariableManager variables,
+			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		runAllTurtles = true;
 	}
-
 	@Override
 	public Double getValue(List<Object> args) {
 		myCommands = (ArrayList<Command>) args.get(1);
-		List<Object> lst = (List<Object>) args.get(0);
-		//lst = checkList(lst);
-		Variable var = new Variable((String) lst.get(0), (Double) lst.get(1));
-		myVariables.addVariable(var);
-		return runCommands((Double) lst.get(1), (Double) lst.get(2), (Double) lst.get(3), var, myTurtle.getID());
+		List<Double> lst = (List<Double>) args.get(0);
+		Double returnValue = 0.0;
+		for (Double d : lst ){
+			returnValue = runCommands(1.0, 1.0, 1.0, null, d);
+		}
+		return returnValue;
 	}
 	
 	@Override
@@ -37,5 +36,6 @@ public class ForCommand extends LoopCommand {
 		this.changeToFinished();
 		return this.getValue(myConvertedArguments);
 	}
+	
 
 }

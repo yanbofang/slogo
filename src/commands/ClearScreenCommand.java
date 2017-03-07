@@ -14,7 +14,7 @@ public class ClearScreenCommand extends MoveCommand {
 	public ClearScreenCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		// TODO Auto-generated constructor stub
+		runAllTurtles = true;
 	}
 
 	@Override

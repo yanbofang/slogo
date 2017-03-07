@@ -15,6 +15,7 @@ public class RepeatCommand extends LoopCommand {
 
 	public RepeatCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+		runAllTurtles = true;
 	}
 
 	public Double getValue(List<Object> args) {

@@ -12,6 +12,7 @@ public class HeadingCommand extends AbstractCommand {
 	public HeadingCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSION);
+		runAllTurtles = true;
 	}
 
 	

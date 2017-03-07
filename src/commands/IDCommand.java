@@ -5,21 +5,17 @@ import java.util.List;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
-public class YCoordinateCommand extends AbstractCommand {
+public class IDCommand extends AbstractCommand {
 
-	private static final Integer NUM_OF_EXPRESSIONS = 0;
-	
-	public YCoordinateCommand(String instruction, VariableManager variables,
+	private static final int NUM_OF_EXPRESSIONS = 0;
+	public IDCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 		runAllTurtles = true;
 	}
-
 	@Override
 	public Double getValue(List<Object> args) {
-		myValue = myTurtle.getLocation(true).getY();
-		return myValue;
+		return myTurtle.getID();
 	}
-
 
 }
