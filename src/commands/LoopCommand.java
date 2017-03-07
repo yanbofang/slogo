@@ -24,7 +24,7 @@ public abstract class LoopCommand extends AbstractCommand {
 		Double returnValue = 0.0;
 		for (int i = start.intValue(); i < end.intValue() + 1; i += increment.intValue()) {
 			if (var != null) {
-				myVariables.addVariable(new Variable(var.getVariableName(), (double) i));
+				vars.addVariable(new Variable(var.getVariableName(), (double) i));
 			}
 			System.out.println("!!!!My Commands In LoopCommand: " + myCommands);
 			for (Command c : myCommands) {
