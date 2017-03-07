@@ -16,7 +16,7 @@ public class IsPenDownCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		if (myTurtle.showPen()) {
 			myValue = 1.0;
 		} else {

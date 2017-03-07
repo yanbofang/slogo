@@ -14,6 +14,7 @@ public class LeftCommand extends MoveCommand {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 	
+	@Override
 	public Double calculateValue(List<Object> args) {
 		Double degrees = (Double) args.get(0);
 		myTurtle.setRotate(myTurtle.getRotate() - degrees);
