@@ -3,6 +3,7 @@ package frontend.API;
 import coordinate.Coordinate;
 import javafx.scene.Node;
 import turtles.Pen;
+import turtles.Turtle;
 
 /**
  * API for turtle area subcomponent
@@ -47,7 +48,7 @@ public interface TurtleViewerAPI extends SubcomponentAPI{
 	 * Coordinate indicating the new position of the turtle
 	 * Node containing the turtle
 	 */
-	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen);
+	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen, Turtle turtle);
 	
 	/**
 	 * Removes all previously created lines from the screen

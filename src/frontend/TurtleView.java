@@ -63,9 +63,8 @@ public class TurtleView implements TurtleViewerAPI{
 
 	@Override
 	public Coordinate getBounds() {
-		double XCord = viewer.getPrefWidth();
-		System.out.println(XCord);
-		double YCord = viewer.getPrefHeight();
+		double XCord = viewer.getWidth();
+		double YCord = viewer.getHeight();
 		Coordinate cord = new Coordinate(XCord, YCord);
 		return cord;
 	}

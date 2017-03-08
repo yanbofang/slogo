@@ -1,5 +1,4 @@
 package frontend;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,7 +14,6 @@ import java.util.Map;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
-
 import controller.Controller;
 import coordinate.Coordinate;
 import frontend.API.SubcomponentAPI;
@@ -42,7 +40,6 @@ import turtles.Pen;
 import turtles.Turtle;
 import turtles.TurtleManager;
 import turtles.TurtleManagerAPI;
-
 public class View implements ViewAPI, Observer {
 	private static final int HEIGHT = 600;
 	private static final int WIDTH = 1000;
@@ -53,7 +50,6 @@ public class View implements ViewAPI, Observer {
 	private static final String DEFAULT_SER = "src/resources/default.ser";
 	public static final String RESOURCE_BUNDLE = "resources/Display";
 	public static final String CSS_STYLESHEET = "resources/UI.css";
-
 	private Stage stage;
 	private Scene scene;
 	private GridPane root;
@@ -62,7 +58,6 @@ public class View implements ViewAPI, Observer {
 	private ResourceBundle resource;
 	private WorkSpace workSpace;
 	private TurtleManager turtleManager;
-
 	private OptionsTab optionsTab;
 	private TurtleView turtleView;
 	private MethodsView methodsView;
@@ -72,37 +67,30 @@ public class View implements ViewAPI, Observer {
 	private PaletteView paletteView;
 	private PenView penView;
 	private TurtleVisualView turtleVisualView;
-
 	private VBox views;
 	private ViewObservable<String> activeViews;
 	private Map<String, String> filePath;
 	private ObservableList<String> fileName;
-
 	public View(Stage stageIn, Controller controllerIn) {
 		stage = stageIn;
 		controller = controllerIn;
 		timeline = createTimeline();
 		resource = ResourceBundle.getBundle(RESOURCE_BUNDLE);
-
 		this.initializeCore();
 		this.getFilePaths();
 		this.parseWorkspace(DEFAULT_SER);
 		
 		stage.sizeToScene();
-
 		timeline.play();
 	}
-
 	@Override
 	public Coordinate getBounds() {
 		return turtleView.getBounds();
 	}
-
 	@Override
 	public void updateVar(String a, String b) {
 		variablesView.updateVar(a, b);
 	}
-
 	@Override
 	public void showError(String a) {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -111,7 +99,6 @@ public class View implements ViewAPI, Observer {
 		alert.setContentText(a);
 		alert.showAndWait();
 	}
-
 	public void setTurtle(TurtleManager tmIn) {
 		turtleManager = tmIn;
 		tmIn.addObserver(this);
@@ -120,41 +107,33 @@ public class View implements ViewAPI, Observer {
 			t.addObserver(this);
 		}
 	}
-
 	public void updateTurtle(Coordinate oldC, Coordinate newC, Pen p, Turtle t) {
 		turtleView.changePosition(oldC, newC, p, t);
 	}
-
 	@Override
 	public void updateUMethod(String a) {
 		methodsView.updateUMethods(a);
 	}
-
 	@Override
 	public void changeVariable(String a, String b) {
 		controller.updateVariable(a, b);
 	}
-
 	@Override
 	public void useUMethod(String a) {
 		controller.handleInput(a);
 	}
-
 	@Override
 	public void changeBackground(String a) {
 		turtleView.setBackgroundColor(a);
 	}
-
 	@Override
 	public void changeImage(Image a) {
 		controller.changeImage(a);
 	}
-
 	@Override
 	public void changePenColor(String a) {
 		turtleView.setPenColor(a);
 	}
-
 	@Override
 	public void changeLanguage(String a) {
 		try {
@@ -168,24 +147,19 @@ public class View implements ViewAPI, Observer {
 		this.clearHistory();
 		workSpace.language = a;
 	}
-
 	@Override
 	public void runCommand(String a) {
 		controller.handleInput(a);
 	}
-
 	public void clearVariables() {
 		variablesView.clearVars();
 	}
-
 	public void clearMethods() {
 		methodsView.clearMethods();
 	}
-
 	public void clearHistory() {
 		promptView.clearHistory();
 	}
-
 	public void clearLines() {
 		turtleView.clear();
 	}
@@ -196,7 +170,6 @@ public class View implements ViewAPI, Observer {
 		File file = new File(fp);
 		file.delete();
 	}
-
 	public void saveWorkspace(String s) {
 		// TODO: background, files
 		String fp = SER_FILEPATH + s + ".ser";
@@ -215,20 +188,16 @@ public class View implements ViewAPI, Observer {
 			showError(resource.getString("SavingError"));
 		}
 	}
-
 	public void loadWorkspace(String s) {
 		views.getChildren().clear();
 		parseWorkspace(filePath.get(s));
 	}
-
 	public void newWorkspace() throws Exception {
 		new Controller(new Stage());
 	}
-
 	private void step(double dt) {
 		controller.runCommand();
 	}
-
 	private Timeline createTimeline() {
 		Timeline ret = new Timeline();
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
@@ -236,7 +205,6 @@ public class View implements ViewAPI, Observer {
 		ret.getKeyFrames().add(frame);
 		return ret;
 	}
-
 	private void parseWorkspace(String fp) {
 		try {
 			FileInputStream fileIn = new FileInputStream(fp);
@@ -257,7 +225,6 @@ public class View implements ViewAPI, Observer {
 			showError(resource.getString("ClassNotFound"));
 		}
 	}
-
 	private void makeNewDefault() {
 		workSpace = new WorkSpace();
 		workSpace.language = resource.getString("DefaultLanguage");
@@ -289,7 +256,6 @@ public class View implements ViewAPI, Observer {
 		}
 		return map;
 	}
-
 	private void initializeCore() {
 		root = new GridPane();
 		scene = new Scene(root, WIDTH, HEIGHT);
@@ -305,19 +271,15 @@ public class View implements ViewAPI, Observer {
 		RowConstraints row2 = new RowConstraints();
 		row2.setPercentHeight(90);
 		root.getRowConstraints().addAll(row1, row2);
-
 		ScrollPane scrollPane = new ScrollPane();
 		views = new VBox();
 		scrollPane.setContent(views);
 		scrollPane.setFitToWidth(true);
-
 		root.add(scrollPane, 0, 1, 1, 1);
-
 		scene.getStylesheets().add(CSS_STYLESHEET);
 		stage.setScene(scene);
 		stage.show();
 	}
-
 	private Object handleKeyInput(KeyCode code) {
 		double x = 50;
 		double y = 60;
@@ -336,13 +298,11 @@ public class View implements ViewAPI, Observer {
 		}
 		return null;
 	}
-
 	private void showInitialViews(List<String> myViews) {
 		for (String s : myViews) {
 			updateView(s);
 		}
 	}
-
 	private void updateView(String viewName) {
 		try {
 			Field f = this.getClass().getDeclaredField(viewName);
@@ -368,7 +328,6 @@ public class View implements ViewAPI, Observer {
 			showError("Security Exception");
 		}
 	}
-
 	private void initializeViews() {
 		optionsTab = new OptionsTab(this, fileName, activeViews);
 		promptView = new PromptView(this);
@@ -384,7 +343,6 @@ public class View implements ViewAPI, Observer {
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
 		root.add(promptView.getParent(), 2, 1, 1, 1);
 	}
-
 	private void updateWorkspace() {
 		// TODO finish updates i.e. background
 		activeViews = new ViewObservable<String>(workSpace.views);
@@ -393,7 +351,6 @@ public class View implements ViewAPI, Observer {
 		this.showInitialViews(workSpace.views);
 		changeLanguage(workSpace.language);
 	}
-
 	private void getFilePaths() {
 		fileName = FXCollections.observableArrayList();
 		filePath = new HashMap<String, String>();
@@ -406,7 +363,6 @@ public class View implements ViewAPI, Observer {
 			}
 		}
 	}
-
 	public void update(Observable arg0, Object arg1) {
 		if (arg0 instanceof ViewObservable) {
 			updateView((String) arg1);
@@ -425,5 +381,4 @@ public class View implements ViewAPI, Observer {
 			}
 		}
 	}
-
 }
