@@ -1,8 +1,10 @@
 package commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import turtles.Turtle;
+import backend.UserMethod;
 import backend.UserMethodManager;
 import backend.Variable;
 import backend.VariableManager;
@@ -29,8 +31,7 @@ public class MakeVariableCommand extends AbstractCommand {
 	}
 
 	private void checkVariable(VariableManager vars) {
-		System.out.println(myValue);
-		String varName = (String) myArguments.get(0);
+		String varName = (String) myArguments.get(0).getInstruction();
 		if (vars.get(varName) != null) {
 			if (vars.get(varName).getValue() != myValue) {
 				vars.addVariable(new Variable(varName, myValue));
@@ -41,5 +42,6 @@ public class MakeVariableCommand extends AbstractCommand {
 			vars.addVariable(myVariable);
 		}
 	}
+	
 
 }

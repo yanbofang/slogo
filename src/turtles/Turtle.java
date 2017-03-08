@@ -79,7 +79,8 @@ public class Turtle extends Observable implements TurtleAPI{
 		coord.setY(coord.getY() + myImage.getFitHeight()/2);
 		temp.add(coord);
 		setChanged();
-		notifyObservers(temp);
+		//notifyObservers(temp);
+
 		}
 	
 	private Coordinate setUnadjustedLocation(Coordinate coord) {
@@ -100,7 +101,7 @@ public class Turtle extends Observable implements TurtleAPI{
 	
 	@Override
 	public Coordinate getLocation() {
-		return getLocation(false);
+		return getLocation(true);
 	}
 	
 	private Coordinate unadjust(Coordinate coord) {

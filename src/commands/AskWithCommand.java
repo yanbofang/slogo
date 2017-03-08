@@ -18,8 +18,8 @@ public class AskWithCommand extends LoopCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		myCommands = (ArrayList<Command>) args.get(1);
-		Command condition = ((List<Command>) args.get(0)).get(0);
+		myListCommand = (Command) args.get(1);
+		Command condition = ((Command) args.get(0));
 		List<Double> possibleTurtles = getPossibleTurtles(condition, vars);
 		Double returnValue = 0.0;
 		for (Double d : possibleTurtles) {
@@ -33,8 +33,8 @@ public class AskWithCommand extends LoopCommand {
 		myTurtleManager = turtles;
 		myTurtle = turtles.getTurtle(k);
 		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(0), vars, true));
-		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(1), vars, false));
+		myConvertedArguments.add(myArguments.get(0));
+		myConvertedArguments.add(myArguments.get(1));
 		this.changeToFinished();
 		return this.getValue(myConvertedArguments, vars);
 	}

@@ -27,14 +27,14 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 	public void performBeforeExecution() {
 		int numOfVariables = 0;
 		List<String> variablesNameList = new ArrayList<String>();
-		for (String variableName: (List<String>) myArguments.get(1)) {
+		for (Command c : myArguments.get(1).getAllArguments()) {
 			numOfVariables++;
-			variablesNameList.add(variableName);
+			variablesNameList.add(c.getInstruction());
 		}
-		String name = (String) myArguments.get(0);
+		String name = myArguments.get(0).getInstruction();
 		//Create the UserMethod as a command, instruction is the name of the method
 
-		UserMethod method = new UserMethod(name, (List<Command>) myArguments.get(2), variablesNameList);
+		UserMethod method = new UserMethod(name, myArguments.get(2).getAllArguments(), variablesNameList);
 		myUserMethods.add(name, method);
 		myValue = method.getMethodName().isEmpty() ? 0.0 : 1.0;
 		this.changeToFinished();
