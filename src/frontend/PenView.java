@@ -54,7 +54,7 @@ public class PenView implements SubcomponentAPI {
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				p.setPen(true);
+				p.setPen(false);
 				setPenState();
 			}
 		});
@@ -66,7 +66,7 @@ public class PenView implements SubcomponentAPI {
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				p.setPen(false);
+				p.setPen(true);
 				setPenState();
 			}
 		});

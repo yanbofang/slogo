@@ -139,8 +139,7 @@ public class Turtle extends Observable implements TurtleAPI{
 	
 	private void penChange(){
 		this.setChanged();
-		boolean temp[] = {myClear, myPen.showPen()};
-		notifyObservers(temp);
+		notifyObservers(myClear);
 	}
 
 	@Override
