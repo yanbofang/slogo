@@ -1,6 +1,8 @@
 package commands;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import backend.UserMethod;
 import backend.UserMethodManager;
@@ -10,7 +12,7 @@ import backend.VariableManager;
 public class UserMethodCommand extends AbstractCommand {
 
 	private UserMethod myMethod;
-	
+
 	public UserMethodCommand(String instruction, VariableManager variables, UserMethodManager methods,
 			UserMethod method) {
 		super(instruction, variables, methods, method.getListOfVariables().size());
@@ -18,14 +20,20 @@ public class UserMethodCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		Double returnValue = 0.0;
+
+		Map<String, Variable> globalVariables = vars.getVariableMap();
+
+		VariableManager localVariables = new VariableManager();
+
+		localVariables.addAll(globalVariables);
+
 		// Create the variables
 		System.out.println("IN USER METHOD COMMAND " + myMethod.getMethodName());
 		System.out.println("IN USER METHOD COMMAND " + args);
 		for (int i = 0; i < this.getNumOfExpressions(); i++) {
-			myVariables.addVariable(
-					new Variable(myMethod.getListOfVariables().get(i), (Double) args.get(i)));
+			localVariables.addVariable(new Variable(myMethod.getListOfVariables().get(i), (Double) args.get(i)));
 		}
 
 		List<Command> commands = myMethod.getListOfCommands();
@@ -33,10 +41,10 @@ public class UserMethodCommand extends AbstractCommand {
 		for (Command c : commands) {
 			c.resetCommand();
 			while (!c.isFinished()) {
-				returnValue = c.executeCommand(myTurtleManager, myTurtle.getID());
+				returnValue = c.executeCommand(myTurtleManager, localVariables, myTurtle.getID());
 			}
 		}
 		return returnValue;
 	}
-	
+
 }

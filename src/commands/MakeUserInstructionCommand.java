@@ -19,7 +19,7 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		return myValue;
 	}
 
@@ -40,9 +40,9 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 		this.changeToFinished();
 		return;
 	}
-	
-	@Override 
-	public Double executeCommand(TurtleManagerCommandAPI turtles, Double k) {
+
+	@Override
+	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
 		this.changeToFinished();
 		return myValue;
 	}

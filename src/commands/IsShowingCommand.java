@@ -16,7 +16,7 @@ public class IsShowingCommand extends AbstractCommand {
 	}
 	
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		if (myTurtle.showTurtle()) {
 			myValue = 1.0;
 		} else {

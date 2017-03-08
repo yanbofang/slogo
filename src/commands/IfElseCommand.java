@@ -15,9 +15,9 @@ public class IfElseCommand extends ConditionalCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
-		return (Double) args.get(0) == 0.0 ? execute((Double) args.get(0), (List<Command>) args.get(2), true)
-				: execute((Double) args.get(0), (List<Command>) args.get(1), true);
+	public Double getValue(List<Object> args, VariableManager vars) {
+		return (Double) args.get(0) == 0.0 ? execute((Double) args.get(0), (List<Command>) args.get(2), true, vars)
+				: execute((Double) args.get(0), (List<Command>) args.get(1), true, vars);
 	}
 
 }

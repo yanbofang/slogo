@@ -17,13 +17,12 @@ public class Model implements ModelInterface {
 	private Parser myParser;
 	private CommandHandler myCommandHandler;
 
-	public Model(String[] syntax, VariableManager variables, UserMethodManager methods,
-			TurtleManager turtles) {
+	public Model(String[] syntax, VariableManager variables, UserMethodManager methods, TurtleManager turtles) {
 		myVariables = variables;
 		myUserMethods = methods;
 		myTurtles = turtles;
 		myParser = new Parser(syntax, this, myVariables, myUserMethods);
-		myCommandHandler = new CommandHandler(myTurtles);
+		myCommandHandler = new CommandHandler(myTurtles, myVariables);
 	}
 
 	@Override
@@ -62,13 +61,14 @@ public class Model implements ModelInterface {
 			return null;
 		}
 	}
-/*
-	public Command getMethodVariable(String var) {
-		try {
-			return myUserMethods.getUserMethodCommand(var);
-		} catch (Exception e) {
-			return null;
-		}
-	}
-*/
+	/*
+	 * public Command getMethodVariable(String var) { try { return
+	 * myUserMethods.getUserMethodCommand(var); } catch (Exception e) { return
+	 * null; } } <<<<<<< HEAD
+	 * 
+	 * // public void executeCommand(Command c) { // c.executeCommand(myTurtle,
+	 * myVariables); // }
+	 * 
+	 * =======
+	 */
 }
