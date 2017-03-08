@@ -115,24 +115,18 @@ public abstract class AbstractCommand implements Command {
 					UserMethod method = (UserMethod) myUserMethods.getUserMethod((String) o);
 					UserMethodCommand methodCommand = new UserMethodCommand((String) o, localVariables, myUserMethods,
 							method);
-					List<Object> args = list.subList(list.indexOf(o) + 1,
-							list.indexOf(o) + methodCommand.getNumOfExpressions() + 1);
-					methodCommand.add(args);
 					if (nest) {
 						newArgs.add(methodCommand.executeCommand(myTurtleManager, localVariables, myTurtle.getID()));
 					} else {
 						newArgs.add(methodCommand);
 					}
-					k = list.indexOf(args.get(args.size() - 1)) + 1;
 				} else {
 					newArgs.add((String) o);
 				}
 			} else {
 				System.out.println("hereerererer" + o);
-				newArgs.add(convertArguments((List<Object>) o, localVariables, runNested));// methodVarCheck((List<Object>)
-																							// o));
+				newArgs.add(convertArguments((List<Object>) o, localVariables, runNested));
 			}
-			// determineObject(newArgs, list.get(k));
 		}
 		System.out.println("This is args: " + newArgs);
 		return newArgs;
