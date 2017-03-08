@@ -1,13 +1,15 @@
 package turtles;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Observable;
 
-import coordinate.Coordinate;;
+import coordinate.Coordinate;
+import javafx.scene.image.Image;;
 
 public class TurtleManager extends Observable implements TurtleManagerAPI, TurtleManagerCommandAPI{
 	
@@ -63,8 +65,7 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 	private void checkForTurtle(Double k) {
 		if (myTurtleMap.get(k) == null) {
 			myTurtleMap.put(k, new Turtle(WIDTH, HEIGHT, XBOUND, YBOUND, k));
-			this.setChanged();
-			this.notifyObservers(myTurtleMap.get(k));
+			this.flagChange(myTurtleMap.get(k));
 		}
 		return;
 	}
@@ -81,5 +82,42 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		myActiveTurtles.addAll(newActives);
 		checkNewInputs();
 		return;
+	}
+	
+	public boolean isActive(Double k){
+		return myActiveTurtles.contains(k);
+	}
+	
+	public List<Double> getAllTurtleIDs(){
+		return new ArrayList<Double>(myTurtleMap.keySet());
+	}
+	
+	private void flagChange(Turtle t){
+		this.setChanged();
+		this.notifyObservers(t);
+	}
+	
+	public void setPenSize(double d){
+		for(Turtle t : getActiveTurtles()){
+			t.getPen().setSize(d);
+		}
+	}
+	
+	public void setPenState(boolean b){
+		for(Turtle t : getActiveTurtles()){
+			t.getPen().setPen(b);
+		}
+	}
+	
+	public void setPenColor(double d){
+		for(Turtle t : getActiveTurtles()){
+			t.getPen().setColor(d);
+		}
+	}
+	
+	public void setImage(Image a){
+		for(Turtle t : getActiveTurtles()){
+			t.setImage(a);
+		}
 	}
 }

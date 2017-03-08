@@ -66,7 +66,9 @@ public class OptionsTab implements SubcomponentAPI {
 	}
 
 	private void createDeleteCombo() {
-		files.add(0,"   ");
+		if(!files.contains(resource.getString("Blank"))){
+			files.add(0,resource.getString("Blank"));
+		}
 		ComboBox deleteCombo = new ComboBox(files);
 		deleteCombo.setPromptText(resource.getString("Delete"));
 		deleteCombo.setOnAction(e -> deleteWorkspace(deleteCombo, (String) deleteCombo.getValue()));
@@ -74,7 +76,6 @@ public class OptionsTab implements SubcomponentAPI {
 	}
 
 	private void deleteWorkspace(ComboBox cb, String s) {
-		System.out.println(s);
 		if (s!=null&&!s.equals("   ")) {
 			if (s.equals("default")) {
 				Alert alert = new Alert(AlertType.WARNING);
@@ -83,7 +84,7 @@ public class OptionsTab implements SubcomponentAPI {
 				alert.setContentText(resource.getString("DeleteWarningContent"));
 				alert.showAndWait();
 			} else {
-				cb.getItems().remove(s);
+//				cb.getItems().remove(s);
 				view.deleteWorkspace(s);
 			}
 		}

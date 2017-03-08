@@ -119,10 +119,12 @@ public class View implements ViewAPI, Observer {
 			turtleView.placeTurtle(t.getImage());
 			t.addObserver(this);
 		}
+		stateView.setTurtleManager(tmIn);
 	}
 
 	public void updateTurtle(Coordinate oldC, Coordinate newC, Pen p) {
 		turtleView.changePosition(oldC, newC, p);
+		System.out.println("turtle move");
 	}
 
 	@Override
@@ -147,12 +149,12 @@ public class View implements ViewAPI, Observer {
 
 	@Override
 	public void changeImage(Image a) {
-		controller.changeImage(a);
+		turtleManager.setImage(a);
 	}
 
 	@Override
 	public void changePenColor(String a) {
-		turtleView.setPenColor(a);
+//		turtleManager.setPenColor(d);
 	}
 
 	@Override
@@ -223,6 +225,14 @@ public class View implements ViewAPI, Observer {
 
 	public void newWorkspace() throws Exception {
 		new Controller(new Stage());
+	}
+	
+	public void setPenSize(double d){
+		turtleManager.setPenSize(d);
+	}
+	
+	public void setPenState(boolean b){
+		turtleManager.setPenState(b);
 	}
 
 	private void step(double dt) {
@@ -383,6 +393,10 @@ public class View implements ViewAPI, Observer {
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
 		root.add(promptView.getParent(), 2, 1, 1, 1);
+		
+		if(turtleManager!=null){
+			stateView.setTurtleManager(turtleManager);
+		}
 	}
 
 	private void updateWorkspace() {
@@ -416,12 +430,17 @@ public class View implements ViewAPI, Observer {
 			Turtle t = (Turtle) arg1;
 			turtleView.placeTurtle(t.getImage());
 			t.addObserver(this);
+			stateView.updateStatus(t.getID());
 		}
 		if (arg0 instanceof Turtle) {
 			if(arg1 instanceof ArrayList<?>){
-				Turtle t = (Turtle) arg1;
+				Turtle t = (Turtle) arg0;
 				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
-				updateTurtle(temp.get(0),temp.get(1),t.getPen());
+				this.updateTurtle(temp.get(0),temp.get(1),t.getPen());
+				stateView.updateStatus(t.getID());
+			}
+			if(arg1 instanceof Boolean){
+				this.clearLines();
 			}
 		}
 	}
