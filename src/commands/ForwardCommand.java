@@ -19,10 +19,7 @@ public class ForwardCommand extends MoveCommand {
 	@Override
 	public Double calculateValue(List<Object> args) {
 		Double movement = (Double) args.get(0);
-		System.out.println("IN FORWARD" + movement);
 		myCoord = getNewCoord(movement);
-
-		System.out.println("IN FORWARD" + myCoord.getX() + myCoord.getY());
 		myTurtle.setLocation(myCoord, false);
 
 		return movement;

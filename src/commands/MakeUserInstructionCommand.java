@@ -25,6 +25,26 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 
 	@Override
 	public void performBeforeExecution() {
+		UserMethod method = makeMethod(myArguments.get(2).getAllArguments());
+		myValue = method.getMethodName().isEmpty() ? 0.0 : 1.0;
+		return;
+	}
+
+	@Override
+	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
+		this.changeToFinished();
+		return myValue;
+	}
+	
+	@Override
+	public void add(Command ... each) {
+		super.add(each);
+		if (myArguments.size() == 2) {
+			makeMethod(null);
+		}
+	}
+	
+	private UserMethod makeMethod(List<Command> function) {
 		int numOfVariables = 0;
 		List<String> variablesNameList = new ArrayList<String>();
 		for (Command c : myArguments.get(1).getAllArguments()) {
@@ -34,17 +54,9 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 		String name = myArguments.get(0).getInstruction();
 		//Create the UserMethod as a command, instruction is the name of the method
 
-		UserMethod method = new UserMethod(name, myArguments.get(2).getAllArguments(), variablesNameList);
+		UserMethod method = new UserMethod(name, function, variablesNameList);
 		myUserMethods.add(name, method);
-		myValue = method.getMethodName().isEmpty() ? 0.0 : 1.0;
-		this.changeToFinished();
-		return;
-	}
-
-	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		this.changeToFinished();
-		return myValue;
+		return method;
 	}
 
 }

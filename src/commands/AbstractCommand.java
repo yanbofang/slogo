@@ -1,6 +1,7 @@
 package commands;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -97,8 +98,8 @@ public abstract class AbstractCommand implements Command {
 		myTurtleManager = turtles;
 		VariableManager localVariables = vars;
 		myTurtle = turtles.getTurtle(k);
-		this.changeToFinished();
 		myConvertedArguments = convertArguments(myArguments, localVariables, true);
+		this.changeToFinished();
 		return this.getValue(myConvertedArguments, localVariables);
 	}
 
@@ -125,12 +126,21 @@ public abstract class AbstractCommand implements Command {
 			}
 
 		}
-		System.out.println("This is args: " + newArgs);
 		return newArgs;
+	}
+	
+	protected ArrayList<Object> convertArguments(Command list, VariableManager vars, boolean nest) {
+		ArrayList<Command> temp = new ArrayList<Command>();
+		temp.add(list);
+		return convertArguments(temp, vars, nest);
 	}
 	
 	public boolean getRunTurtles() {
 		return runAllTurtles;
+	}
+	
+	protected List<Command> unNestList(Command c) {
+		return c.getAllArguments();
 	}
 
 

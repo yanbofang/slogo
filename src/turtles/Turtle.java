@@ -79,7 +79,7 @@ public class Turtle extends Observable implements TurtleAPI{
 		coord.setY(coord.getY() + myImage.getFitHeight()/2);
 		temp.add(coord);
 		setChanged();
-		//notifyObservers(temp);
+		notifyObservers(temp);
 
 		}
 	

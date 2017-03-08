@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import turtles.TurtleManagerCommandAPI;
 import backend.ParserException;
 import backend.UserMethod;
 import backend.UserMethodManager;
@@ -36,10 +37,8 @@ public class UserMethodCommand extends AbstractCommand {
 	}
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		if (myMethod == null) {
-			if (checkForMethod() == false) {
-				throw new ParserException(String.format("NOT A VALID USER METHOD %s", myInstruction));
-			}
+		if (checkForMethod() == false) {
+			throw new ParserException(String.format("NOT A VALID USER METHOD %s", myInstruction));
 		}
 		
 		Double returnValue = 0.0;
@@ -60,6 +59,15 @@ public class UserMethodCommand extends AbstractCommand {
 			}
 		}
 		return returnValue;
+	}
+	
+	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
+		myTurtleManager = turtles;
+		VariableManager localVariables = vars;
+		myTurtle = turtles.getTurtle(k);
+		myConvertedArguments = convertArguments(myArguments, localVariables, true);
+		this.changeToFinished();
+		return this.getValue(myConvertedArguments, localVariables);
 	}
 
 }
