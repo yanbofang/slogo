@@ -100,7 +100,7 @@ public class Turtle extends Observable implements TurtleAPI{
 	
 	@Override
 	public Coordinate getLocation() {
-		return getLocation(false);
+		return getLocation(true);
 	}
 	
 	private Coordinate unadjust(Coordinate coord) {
@@ -138,8 +138,7 @@ public class Turtle extends Observable implements TurtleAPI{
 	
 	private void penChange(){
 		this.setChanged();
-		boolean temp[] = {myClear, myPen.showPen()};
-		notifyObservers(temp);
+		notifyObservers(myClear);
 	}
 
 	@Override

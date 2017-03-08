@@ -5,17 +5,16 @@ import java.util.List;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
-public class AndCommand extends AbstractCommand{
-	
+public class AndCommand extends AbstractCommand {
+
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
-	
-	public AndCommand(String instruction, VariableManager variables,
-			UserMethodManager methods) {
+
+	public AndCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager localVariables) {
 		Double exp1 = (Double) args.get(0);
 		Double exp2 = (Double) args.get(1);
 		if (exp1 != 0.0 && exp2 != 0.0) {

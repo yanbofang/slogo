@@ -50,9 +50,8 @@ public abstract class AbstractCommand implements Command {
 	}
 
 	/*
-	public void clearArguments() {
-		myArguments.clear();
-	}*/
+	 * public void clearArguments() { myArguments.clear(); }
+	 */
 
 	public Integer getNumOfExpressions() {
 		return myNumOfExpressions;
@@ -78,124 +77,122 @@ public abstract class AbstractCommand implements Command {
 		finished = false;
 	}
 
-	/*public Double getValue(Turtle turtle) {
-		myTurtle = turtle;
-		return getValue(myArguments);
-	}*/
-
-	public abstract Double getValue(List<Object> args);
+	public abstract Double getValue(List<Object> args, VariableManager localVariables);
 
 	/**
 	 * 
 	 * @return - value that we want to send to UI to be displayed
 	 */
-	public Double executeCommand(TurtleManagerCommandAPI turtles, Double k) {
+
+	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
 		myTurtleManager = turtles;
+		VariableManager localVariables = vars;
 		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = convertArguments(myArguments, true);
+		myConvertedArguments = convertArguments(myArguments, localVariables, true);
 		this.changeToFinished();
-		return this.getValue(myConvertedArguments);
+		return this.getValue(myConvertedArguments, localVariables);
 	}
-	
+
 	public void performBeforeExecution() {
 		return;
 	}
-	
 
-	protected ArrayList<Object> convertArguments(List<Object> list, boolean nest) {
+	protected ArrayList<Object> convertArguments(List<Object> list, VariableManager localVariables, boolean nest) {
 		ArrayList<Object> newArgs = new ArrayList<Object>();
 		for (int k = 0; k < list.size(); k++) {
 			Object o = list.get(k);
 			if (o instanceof AbstractCommand) {
 				Command c = (Command) o;
 				if (nest) {
-					newArgs.add(c.executeCommand(myTurtleManager, myTurtle.getID()));
+					newArgs.add(c.executeCommand(myTurtleManager, localVariables, myTurtle.getID()));
 				} else {
 					newArgs.add(c);
 				}
 			} else if (o instanceof String) {
-				if (myVariables.get((String) o) != null){
-					newArgs.add(myVariables.get((String) o).getValue());
+				if (localVariables.get((String) o) != null) {
+					newArgs.add(localVariables.get((String) o).getValue());
 				} else if (myUserMethods.getUserMethod((String) o) != null) {
 					UserMethod method = (UserMethod) myUserMethods.getUserMethod((String) o);
-					UserMethodCommand methodCommand = new UserMethodCommand((String) o, myVariables, myUserMethods, 
+					UserMethodCommand methodCommand = new UserMethodCommand((String) o, localVariables, myUserMethods,
 							method);
-					List<Object> args = list.subList(list.indexOf(o)+1, list.indexOf(o)+methodCommand.getNumOfExpressions()+1 );
+					List<Object> args = list.subList(list.indexOf(o) + 1,
+							list.indexOf(o) + methodCommand.getNumOfExpressions() + 1);
 					methodCommand.add(args);
 					if (nest) {
-						newArgs.add(methodCommand.executeCommand(myTurtleManager, myTurtle.getID()));
+						newArgs.add(methodCommand.executeCommand(myTurtleManager, localVariables, myTurtle.getID()));
 					} else {
 						newArgs.add(methodCommand);
 					}
-					k = list.indexOf(args.get(args.size()-1)) +1;
+					k = list.indexOf(args.get(args.size() - 1)) + 1;
 				} else {
 					newArgs.add((String) o);
 				}
 			} else {
 				System.out.println("hereerererer" + o);
-				newArgs.add(convertArguments((List<Object>) o,  runNested));//methodVarCheck((List<Object>) o));
+				newArgs.add(convertArguments((List<Object>) o, localVariables, runNested));// methodVarCheck((List<Object>)
+																							// o));
 			}
-			//determineObject(newArgs, list.get(k));
+			// determineObject(newArgs, list.get(k));
 		}
 		System.out.println("This is args: " + newArgs);
 		return newArgs;
 	}
 
-	private List<Object> methodVarCheck(List<Object> o) {
-		List<Object> check = new ArrayList<Object>();
-		for (Object each: o) {
-			if (each instanceof String) {
-				if (myUserMethods.getUserMethod((String) each) != null) {
-					UserMethod method = (UserMethod) myUserMethods.getUserMethod((String) each);
-					UserMethodCommand methodCommand = new UserMethodCommand((String) each, myVariables, myUserMethods, 
-							method);
-					check.add(methodCommand);
-				} else {
-					check.add(each);
-				}
-			} else {
-				determineObject(check, each);
-			}
-		}
-		return check;
-	}
-	
-	private void determineObject(List<Object> newArgs, Object o) {
-		if (o instanceof AbstractCommand) {
-			Command c = (Command) o;
-			newArgs.add(c.executeCommand(myTurtleManager, myTurtle.getID()));
-		} else if (o instanceof String) {
-			if (myVariables.get((String) o) != null){
-				newArgs.add(myVariables.get((String) o).getValue());
-			} else if (myUserMethods.getUserMethod((String) o) != null) {
-				UserMethod method = (UserMethod) myUserMethods.getUserMethod((String) o);
-				UserMethodCommand methodCommand = new UserMethodCommand((String) o, myVariables, myUserMethods, 
-						method);
-				
-				//List<Object> args = list.subList(list.indexOf(o)+1, list.indexOf(o)+methodCommand.getNumOfExpressions()+1 );
-				//methodCommand.add(args);
-				newArgs.add(methodCommand.executeCommand(myTurtleManager, myTurtle.getID()));
-				//k = list.indexOf(args.get(args.size()-1)) +1;
-			} else {
-				newArgs.add((String) o);
-			}
-		} else {
-			System.out.println("hereerererer" + o);
-			newArgs.add(methodVarCheck((List<Object>) o));
-		}
-	}
-	
-	protected List<Object> checkList(Object o) {
+//	private List<Object> methodVarCheck(List<Object> o) {
+//		List<Object> check = new ArrayList<Object>();
+//		for (Object each : o) {
+//			if (each instanceof String) {
+//				if (myUserMethods.getUserMethod((String) each) != null) {
+//					UserMethod method = (UserMethod) myUserMethods.getUserMethod((String) each);
+//					UserMethodCommand methodCommand = new UserMethodCommand((String) each, myVariables, myUserMethods,
+//							method);
+//					check.add(methodCommand);
+//				} else {
+//					check.add(each);
+//				}
+//			} else {
+//				determineObject(check, each);
+//			}
+//		}
+//		return check;
+//	}
+//
+//	private void determineObject(List<Object> newArgs, Object o) {
+//		if (o instanceof AbstractCommand) {
+//			Command c = (Command) o;
+//			newArgs.add(c.executeCommand(myTurtleManager, myTurtle.getID()));
+//		} else if (o instanceof String) {
+//			if (myVariables.get((String) o) != null) {
+//				newArgs.add(myVariables.get((String) o).getValue());
+//			} else if (myUserMethods.getUserMethod((String) o) != null) {
+//				UserMethod method = (UserMethod) myUserMethods.getUserMethod((String) o);
+//				UserMethodCommand methodCommand = new UserMethodCommand((String) o, myVariables, myUserMethods, method);
+//
+//				// List<Object> args = list.subList(list.indexOf(o)+1,
+//				// list.indexOf(o)+methodCommand.getNumOfExpressions()+1 );
+//				// methodCommand.add(args);
+//				newArgs.add(methodCommand.executeCommand(myTurtleManager, myTurtle.getID()));
+//				// k = list.indexOf(args.get(args.size()-1)) +1;
+//			} else {
+//				newArgs.add((String) o);
+//			}
+//		} else {
+//			System.out.println("hereerererer" + o);
+//			newArgs.add(methodVarCheck((List<Object>) o));
+//		}
+//	}
+
+	protected List<Object> checkList(Object o, VariableManager vars) {
 		List<Object> returnList = new ArrayList<Object>();
 		List<Object> newList = (List<Object>) o;
 		for (Object each : newList) {
 			if (each instanceof Command) {
 				Command c = (Command) each;
-				returnList.add(c.executeCommand(myTurtleManager, myTurtle.getID()));
+				returnList.add(c.executeCommand(myTurtleManager, vars, myTurtle.getID()));
 			} else {
 				try {
-					if (myVariables.get((String) o) != null) {
-						returnList.add(myVariables.get((String) o).getValue());
+					if (vars.get((String) o) != null) {
+						returnList.add(vars.get((String) o).getValue());
 					} else {
 						returnList.add(each);
 					}
@@ -206,7 +203,7 @@ public abstract class AbstractCommand implements Command {
 		}
 		return returnList;
 	}
-	
+
 	public boolean getRunTurtles() {
 		return runAllTurtles;
 	}
