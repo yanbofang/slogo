@@ -8,6 +8,7 @@ import java.util.Queue;
 import backend.UserMethodManager;
 import backend.Variable;
 import backend.VariableManager;
+import turtles.TurtleManagerCommandAPI;
 
 public abstract class LoopCommand extends AbstractCommand {
 
@@ -33,5 +34,17 @@ public abstract class LoopCommand extends AbstractCommand {
 			returnValue = myListCommand.executeCommand(myTurtleManager, vars, k);
 		}
 		return returnValue;
+	}
+	
+	@Override
+	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
+		myTurtleManager = turtles;
+		VariableManager localVariables = vars;
+		myTurtle = turtles.getTurtle(k);
+		myConvertedArguments = new ArrayList<Object>();
+		myConvertedArguments.add(myArguments.get(0).executeCommand(turtles, vars, k));
+		myConvertedArguments.add(myArguments.get(1));
+		this.changeToFinished();
+		return this.getValue(myConvertedArguments, localVariables);
 	}
 }

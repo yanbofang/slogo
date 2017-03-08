@@ -26,15 +26,4 @@ public class DoTimesCommand extends LoopCommand {
 				1.0, var, vars, myTurtle.getID());
 	}
 
-	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(myArguments.get(0).getAllArguments());
-		myConvertedArguments.add(myArguments.get(1));
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, vars);
-	}
-
 }

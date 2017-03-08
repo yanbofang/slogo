@@ -24,15 +24,4 @@ public class RepeatCommand extends LoopCommand {
 		System.out.println("myCommands in RepeatCommand: " + myListCommand.getAllArguments());
 		return runCommands(1.0, (Double) args.get(0), 1.0, null, vars, myTurtle.getID());
 	}
-	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		VariableManager localVariables = vars;
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(myArguments.get(0).executeCommand(turtles, vars, k));
-		myConvertedArguments.add(myArguments.get(1));
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, localVariables);
-	}
 }
