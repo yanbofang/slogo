@@ -103,16 +103,14 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		}
 	}
 	
-	public void setPenState(boolean b){
-		for(Turtle t : getActiveTurtles()){
-			t.getPen().setPen(b);
-		}
+	public void setPenState(boolean b, Double id){
+		Turtle t = myTurtleMap.get(id);
+		t.getPen().setPen(b);
 	}
 	
-	public void setPenColor(double d){
-		for(Turtle t : getActiveTurtles()){
-			t.getPen().setColor(d);
-		}
+	public void setPenColor(double d, Double id){
+		Turtle t = myTurtleMap.get(id);
+		t.getPen().setColor(d);
 	}
 	
 	public void setImage(Image a){

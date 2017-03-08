@@ -11,7 +11,7 @@ import backend.VariableManager;
 
 public abstract class LoopCommand extends AbstractCommand {
 
-	protected List<Command> myCommands;
+	protected Command myListCommand;
 
 	public LoopCommand(String instruction, VariableManager variables, UserMethodManager methods, int numOfExpressions) {
 		super(instruction, variables, methods, numOfExpressions);
@@ -29,13 +29,8 @@ public abstract class LoopCommand extends AbstractCommand {
 			if (var != null) {
 				vars.addVariable(new Variable(var.getVariableName(), (double) i));
 			}
-			for (Command c : myCommands) {
-				c.resetCommand();
-				while (!c.isFinished()) {
-					returnValue = c.executeCommand(myTurtleManager, vars, k);
-				}
-			}
-
+			myListCommand.resetCommand();
+			returnValue = myListCommand.executeCommand(myTurtleManager, vars, k);
 		}
 		return returnValue;
 	}

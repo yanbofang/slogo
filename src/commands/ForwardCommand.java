@@ -21,6 +21,7 @@ public class ForwardCommand extends MoveCommand {
 		Double movement = (Double) args.get(0);
 		myCoord = getNewCoord(movement);
 		myTurtle.setLocation(myCoord, false);
+
 		return movement;
 	}
 

@@ -18,12 +18,12 @@ public class DoTimesCommand extends LoopCommand {
 	}
 
 	public Double getValue(List<Object> args, VariableManager vars) {
-		myCommands = (ArrayList<Command>) args.get(1);
+		myListCommand = (Command) args.get(1);
 		List<Object> lst = (List<Object>) args.get(0);
-		// lst = checkList(lst);
-		Variable var = new Variable((String) lst.get(0), 1.0);
+		Variable var = new Variable(((Command) lst.get(0)).getInstruction(), 1.0);
 		myVariables.addVariable(var);
-		return runCommands(1.0, (Double) lst.get(1), 1.0, var, vars, myTurtle.getID());
+		return runCommands(1.0, ((Command) lst.get(1)).executeCommand(myTurtleManager, vars, myTurtle.getID()), 
+				1.0, var, vars, myTurtle.getID());
 	}
 
 	@Override
@@ -31,8 +31,8 @@ public class DoTimesCommand extends LoopCommand {
 		myTurtleManager = turtles;
 		myTurtle = turtles.getTurtle(k);
 		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(0), vars, true));
-		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(1), vars, false));
+		myConvertedArguments.add(myArguments.get(0).getAllArguments());
+		myConvertedArguments.add(myArguments.get(1));
 		this.changeToFinished();
 		return this.getValue(myConvertedArguments, vars);
 	}

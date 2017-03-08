@@ -80,6 +80,7 @@ public class Turtle extends Observable implements TurtleAPI{
 		temp.add(coord);
 		setChanged();
 		notifyObservers(temp);
+
 		}
 	
 	private Coordinate setUnadjustedLocation(Coordinate coord) {

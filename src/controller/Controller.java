@@ -36,8 +36,6 @@ public class Controller {
 	public Controller(Stage arg0) throws Exception {
 		variables = new VariableManager();
 		view = new View(arg0, this);
-		//THIS WILL NOW HAPPEN IN BACKEND
-		//turtle = new Turtle(25, 25, view.getBounds().getX(), view.getBounds().getY(), 1.0);
 		turtle = new TurtleManager(new Coordinate(view.getBounds().getX(), view.getBounds().getY()));
 		view.setTurtle(turtle);
 		userMethods = new UserMethodManager();
