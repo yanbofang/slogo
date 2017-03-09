@@ -3,7 +3,7 @@ package backend;
 import commands.Command;
 import java.util.List;
 
-public class UserMethod {
+public class UserMethod implements java.io.Serializable {
 
 	private String myMethodName;
 	private List<Command> myListOfCommands;

@@ -16,6 +16,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import controller.Controller;
+import controller.ControllerAPI;
 import coordinate.Coordinate;
 import frontend.API.SubcomponentAPI;
 import frontend.API.ViewAPI;
@@ -56,7 +57,7 @@ public class View implements ViewAPI, Observer {
 	private Stage stage;
 	private Scene scene;
 	private GridPane root;
-	private Controller controller;
+	private ControllerAPI controller;
 	private Timeline timeline;
 	private ResourceBundle resource;
 	private WorkSpace workSpace;
@@ -224,24 +225,8 @@ public class View implements ViewAPI, Observer {
 
 	public void saveWorkspace(String s) {
 		// TODO: background, files
-		String fp = SER_FILEPATH + s + ".ser";
-		filePath.put(s, fp);
-		if (!fileName.contains(s)) {
-			fileName.add(s);
-		}
 		workSpace.turtles = turtleManager.getAllTurtleIDs();
-		try {
-			File file = new File(fp);
-			file.getParentFile().mkdirs();
-			file.createNewFile();
-			FileOutputStream fileOut = new FileOutputStream(file);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(workSpace);
-			out.close();
-			fileOut.close();
-		} catch (IOException i) {
-			showError(resource.getString("SavingError"));
-		}
+		controller.saveWorkspace(s, filePath, fileName, resource, workSpace);
 	}
 
 	public void loadWorkspace(String s) {
@@ -283,6 +268,7 @@ public class View implements ViewAPI, Observer {
 			in.close();
 			fileIn.close();
 			updateWorkspace();
+			updateVariablesAndMethods();
 		} catch (IOException i) {
 			if (!fp.equals(DEFAULT_SER)) {
 				showError(resource.getString("FileNotFound"));
@@ -307,6 +293,7 @@ public class View implements ViewAPI, Observer {
 		workSpace.imagePalette = createMap("defaultImages");
 		String[] temp = resource.getString("DefaultTurtles").split(",");
 		workSpace.turtles = new ArrayList<Double>();
+
 		for (String s : temp) {
 			workSpace.turtles.add(Double.parseDouble(s));
 		}
@@ -420,6 +407,7 @@ public class View implements ViewAPI, Observer {
 		stateView = new StateView(this);
 		paletteView = new PaletteView(this, workSpace.colorPalette, workSpace.imagePalette);
 		penView = new PenView(this);
+
 		turtleVisualView = new TurtleVisualView(this, workSpace.colorPalette, workSpace.background);
 
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
@@ -443,6 +431,10 @@ public class View implements ViewAPI, Observer {
 		this.initializeViews();
 		this.showInitialViews(workSpace.views);
 		changeLanguage(workSpace.language);
+	}
+
+	private void updateVariablesAndMethods() {
+		controller.loadVariablesandMethods(workSpace);
 	}
 
 	private void getFilePaths() {
