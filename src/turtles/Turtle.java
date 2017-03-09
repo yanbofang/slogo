@@ -3,6 +3,7 @@ package turtles;
 import java.util.ArrayList;
 import java.util.Observable;
 
+import animation.MoveAnimation;
 import coordinate.Coordinate;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -57,7 +58,7 @@ public class Turtle extends Observable implements TurtleAPI{
 		} else if (x < 0) {
 			x += myWidthBounds;
 		}
-		myImage.setTranslateX(x);
+		//myImage.setTranslateX(x);
 		return x;
 	}
 	
@@ -67,7 +68,7 @@ public class Turtle extends Observable implements TurtleAPI{
 		} else if (y < 0) {
 			y += myHeightBounds;
 		}
-		myImage.setTranslateY(y);
+		//myImage.setTranslateY(y);
 		return y;
 	}
 	
@@ -77,8 +78,9 @@ public class Turtle extends Observable implements TurtleAPI{
 		}
 		ArrayList<Coordinate> temp = new ArrayList<Coordinate>();
 		temp.add(new Coordinate(myImage.getTranslateX() + myImage.getFitWidth()/2, myImage.getTranslateY() + myImage.getFitHeight()/2));
-		setX(coord.getX());
-		setY(coord.getY());
+		Double newX = setX(coord.getX());
+		Double newY = setY(coord.getY());
+		MoveAnimation animation = new MoveAnimation(myImage, getLocation(false), new Coordinate(newX, newY));
 		coord.setX(coord.getX() + myImage.getFitWidth()/2);
 		coord.setY(coord.getY() + myImage.getFitHeight()/2);
 		temp.add(coord);
