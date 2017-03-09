@@ -125,11 +125,12 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 	
 	public void reset() {
 		myTurtleMap.clear();
-		getTurtle(1.0);
+		this.getTurtle(1.0);
 	}
 	
 	public void addColor(Double index, Double r, Double g, Double b) {
 		myColors.addColor(index,  r,  g,  b);
 		setBackground(index);
 	}
+	
 }

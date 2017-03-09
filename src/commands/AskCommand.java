@@ -17,17 +17,6 @@ public class AskCommand extends LoopCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args, VariableManager vars) {
-		myListCommand = (Command) args.get(1);
-		List<Double> lst = (List<Double>) args.get(0);
-		Double returnValue = 0.0;
-		for (Double d : lst) {
-			returnValue = runCommands(1.0, 1.0, 1.0, null, vars, d);
-		}
-		return returnValue;
-	}
-
-	@Override
 	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
 		myTurtleManager = turtles;
 		myTurtle = turtles.getTurtle(k);
@@ -36,6 +25,16 @@ public class AskCommand extends LoopCommand {
 		myConvertedArguments.add(myArguments.get(1));
 		this.changeToFinished();
 		return this.getValue(myConvertedArguments, vars);
+	}
+
+	@Override
+	protected Double calculate(List<Object> args, VariableManager vars) {
+		List<Double> lst = (List<Double>) args.get(0);
+		Double returnValue = 0.0;
+		for (Double d : lst) {
+			returnValue = runCommands(1.0, 1.0, 1.0, null, vars, d);
+		}
+		return returnValue;
 	}
 
 }
