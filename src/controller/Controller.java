@@ -14,13 +14,13 @@ import turtles.Turtle;
 import turtles.TurtleManager;
 import backend.Model;
 import backend.VariableManager;
+import backend.API.ModelAPI;
 import backend.UserMethodManager;
 import frontend.UserMethodObserver;
 import frontend.VariableManagerObserver;
 import frontend.View;
 import frontend.WorkSpace;
 import frontend.API.ViewAPI;
-import interfaces.ModelInterface;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -28,11 +28,9 @@ import javafx.stage.Stage;
 
 public class Controller implements ControllerAPI {
 
-	private final String[] ENGLISH_SYNTAX = new String[] { "resources/languages/English",
-			"resources/languages/Syntax" };
 	private static final String SER_FILEPATH = "src/resources/";
 	private static final String DEFAULT_SER = "src/resources/default.ser";
-	private ModelInterface model;
+	private ModelAPI model;
 	private ViewAPI view;
 	private VariableManager variables;
 	private VariableManagerObserver variablesObserver;
@@ -46,10 +44,9 @@ public class Controller implements ControllerAPI {
 		turtle = new TurtleManager(new Coordinate(view.getBounds().getX(), view.getBounds().getY()));
 		view.setTurtle(turtle);
 		userMethods = new UserMethodManager();
-		model = new Model(ENGLISH_SYNTAX, variables, userMethods, turtle);
+		changeLanguage("English");
 		variablesObserver = new VariableManagerObserver(variables, view);
 		addVariableManagerObserver();
-		addTurtleObserver();
 		userMethodsObserver = new UserMethodObserver(userMethods, view);
 		addUserMethodsObserver();
 	}
@@ -71,12 +68,6 @@ public class Controller implements ControllerAPI {
 		model = new Model(newSyntax, variables, userMethods, turtle);
 	}
 
-	public void changeImage(Image a) {
-
-		// TODO: update image
-		// turtle.setImage(a);
-	}
-
 	public void saveWorkspace(String s, Map<String, String> filePath, ObservableList<String> fileName,
 			ResourceBundle resource, WorkSpace workspace) {
 		String fp = SER_FILEPATH + s + ".ser";
@@ -84,8 +75,8 @@ public class Controller implements ControllerAPI {
 		if (!fileName.contains(s)) {
 			fileName.add(s);
 		}
-		workspace.variables = variables.getVariableMap();
-		workspace.userMethods = userMethods.getMethodMap();
+		workspace.setVariables(variables.getVariableMap());
+		workspace.setUserMethods(userMethods.getMethodMap());
 		try {
 			File file = new File(fp);
 			file.getParentFile().mkdirs();
@@ -104,22 +95,17 @@ public class Controller implements ControllerAPI {
 		variables.addObserver(variablesObserver);
 	}
 
-	private void addTurtleObserver() {
-		// TODO: update turtle observer
-		// turtle.addObserver(turtleObserver);
-	}
-
 	private void addUserMethodsObserver() {
 		userMethods.addObserver(userMethodsObserver);
 	}
 
 	@Override
 	public void loadVariablesandMethods(WorkSpace workspace) {
-		if (workspace.variables != null && workspace.variables.size() != 0) {
-			variables.addAll(workspace.variables);
+		if (workspace.getVariables() != null && workspace.getVariables().size() != 0) {
+			variables.addAll(workspace.getVariables());
 		}
-		if (workspace.userMethods != null && workspace.userMethods.size() != 0) {
-			userMethods.addAll(workspace.userMethods);
+		if (workspace.getUserMethods() != null && workspace.getUserMethods().size() != 0) {
+			userMethods.addAll(workspace.getUserMethods());
 		}
 	}
 

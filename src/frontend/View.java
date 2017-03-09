@@ -113,7 +113,7 @@ public class View implements ViewAPI, Observer {
 
 	public void setTurtle(TurtleManager tmIn) {
 		turtleManager = tmIn;
-		turtleManager.addActiveTurtles(workSpace.turtles);
+		turtleManager.addActiveTurtles(workSpace.getTurtles());
 		tmIn.addObserver(this);
 		for (Turtle t : turtleManager.allTurtles()) {
 			turtleView.placeTurtle(t.getImage());
@@ -193,7 +193,7 @@ public class View implements ViewAPI, Observer {
 		this.clearVariables();
 		this.clearMethods();
 		this.clearHistory();
-		workSpace.language = a;
+		workSpace.setLanguage(a);
 	}
 
 	@Override
@@ -234,8 +234,8 @@ public class View implements ViewAPI, Observer {
 	}
 
 	public void saveWorkspace(String s) {
-		workSpace.turtles = turtleManager.getAllTurtleIDs();
-		workSpace.background = turtleView.getBackgroundColor();
+		workSpace.setTurtles(turtleManager.getAllTurtleIDs());
+		workSpace.setBackground(turtleView.getBackgroundColor());
 		controller.saveWorkspace(s, filePath, fileName, resource, workSpace);
 	}
 
@@ -298,16 +298,16 @@ public class View implements ViewAPI, Observer {
 
 	private void makeNewDefault() {
 		workSpace = new WorkSpace();
-		workSpace.language = resource.getString("DefaultLanguage");
-		workSpace.background = Double.parseDouble(resource.getString("DefaultBackground"));
-		workSpace.views = new ArrayList<String>(Arrays.asList(resource.getString("DefaultViews").split(",")));
-		workSpace.colorPalette = createMap("defaultColors");
-		workSpace.imagePalette = createMap("defaultImages");
+		workSpace.setLanguage(resource.getString("DefaultLanguage"));
+		workSpace.setBackground(Double.parseDouble(resource.getString("DefaultBackground")));
+		workSpace.setViews(new ArrayList<String>(Arrays.asList(resource.getString("DefaultViews").split(","))));
+		workSpace.setColorPalette(createMap("defaultColors"));
+		workSpace.setImagePalette(createMap("defaultImages"));
 		String[] temp = resource.getString("DefaultTurtles").split(",");
-		workSpace.turtles = new ArrayList<Double>();
+		workSpace.setTurtles(new ArrayList<Double>());
 
 		for (String s : temp) {
-			workSpace.turtles.add(Double.parseDouble(s));
+			workSpace.getTurtles().add(Double.parseDouble(s));
 		}
 
 		try {
@@ -413,14 +413,14 @@ public class View implements ViewAPI, Observer {
 	private void initializeViews() {
 		optionsTab = new OptionsTab(this, fileName, activeViews);
 		promptView = new PromptView(this);
-		turtleView = new TurtleView(this, colorPalette.getPalette(), workSpace.background);
+		turtleView = new TurtleView(this, colorPalette.getPalette(), workSpace.getBackground());
 		methodsView = new MethodsView(this);
 		variablesView = new VariablesView(this);
 		stateView = new StateView(this);
-		paletteView = new PaletteView(this, colorPalette.getPalette(), workSpace.imagePalette);
+		paletteView = new PaletteView(this, colorPalette.getPalette(), workSpace.getImagePalette());
 		penView = new PenView(this);
 
-		turtleVisualView = new TurtleVisualView(this, workSpace.background);
+		turtleVisualView = new TurtleVisualView(this, workSpace.getBackground());
 
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
@@ -429,23 +429,23 @@ public class View implements ViewAPI, Observer {
 		if (turtleManager != null) {
 			stateView.setTurtleManager(turtleManager);
 			turtleVisualView.setTurtleManager(turtleManager);
-			turtleManager.addActiveTurtles(workSpace.turtles);
+			turtleManager.addActiveTurtles(workSpace.getTurtles());
 		}
 	}
 
 	private void updateWorkspace() {
 		// TODO finish updates i.e. background
-		activeViews = new ViewObservable<String>(workSpace.views);
+		activeViews = new ViewObservable<String>(workSpace.getViews());
 		activeViews.addObserver(this);
-		colorPalette = new ColorPalette(workSpace.colorPalette);
+		colorPalette = new ColorPalette(workSpace.getColorPalette());
 		colorPalette.addObserver(this);
 		if (turtleManager != null) {
 			turtleManager.reset();
 			turtleManager.setPalette(colorPalette);
 		}
 		this.initializeViews();
-		this.showInitialViews(workSpace.views);
-		changeLanguage(workSpace.language);
+		this.showInitialViews(workSpace.getViews());
+		changeLanguage(workSpace.getLanguage());
 	}
 
 	private void updateVariablesAndMethods() {
@@ -468,7 +468,7 @@ public class View implements ViewAPI, Observer {
 	public void update(Observable arg0, Object arg1) {
 		if (arg0 instanceof ViewObservable) {
 			updateView((String) arg1);
-			workSpace.views = activeViews.getList();
+			workSpace.setViews(activeViews.getList());
 		}
 		if (arg0 instanceof TurtleManager) {
 			if (arg1 == null) {

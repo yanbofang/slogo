@@ -3,13 +3,13 @@ package backend;
 import java.util.Arrays;
 import java.util.List;
 
+import backend.API.ModelAPI;
 import turtles.Turtle;
 import turtles.TurtleManager;
 import commands.Command;
 import javafx.scene.Node;
-import interfaces.ModelInterface;
 
-public class Model implements ModelInterface {
+public class Model implements ModelAPI {
 
 	private VariableManager myVariables;
 	private UserMethodManager myUserMethods;

@@ -1,8 +1,8 @@
-package interfaces;
+package backend.API;
 
 import javafx.scene.Node;
 
-public interface ModelInterface {
+public interface ModelAPI {
 
 	
 	/**
