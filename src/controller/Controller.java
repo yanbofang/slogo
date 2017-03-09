@@ -15,7 +15,6 @@ import turtles.TurtleManager;
 import backend.Model;
 import backend.VariableManager;
 import backend.UserMethodManager;
-import frontend.TurtleObserver;
 import frontend.UserMethodObserver;
 import frontend.VariableManagerObserver;
 import frontend.View;
@@ -38,7 +37,6 @@ public class Controller implements ControllerAPI {
 	private VariableManager variables;
 	private VariableManagerObserver variablesObserver;
 	private TurtleManager turtle;
-	private TurtleObserver turtleObserver;
 	private UserMethodManager userMethods;
 	private UserMethodObserver userMethodsObserver;
 
@@ -117,10 +115,10 @@ public class Controller implements ControllerAPI {
 
 	@Override
 	public void loadVariablesandMethods(WorkSpace workspace) {
-		if (workspace.variables != null) {
+		if (workspace.variables != null && workspace.variables.size() != 0) {
 			variables.addAll(workspace.variables);
 		}
-		if (workspace.userMethods != null) {
+		if (workspace.userMethods != null && workspace.userMethods.size() != 0) {
 			userMethods.addAll(workspace.userMethods);
 		}
 	}

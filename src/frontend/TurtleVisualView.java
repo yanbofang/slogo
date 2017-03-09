@@ -28,7 +28,7 @@ public class TurtleVisualView implements SubcomponentAPI {
 	private List<Turtle> activeTurtles;
 	private List<Label> labels;
 	
-	public TurtleVisualView(View viewIn, Map map, double gbIndex){
+	public TurtleVisualView(View viewIn, double gbIndex){
 		view = viewIn;
 		labels = new ArrayList<Label>();
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);

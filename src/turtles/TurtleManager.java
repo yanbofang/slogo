@@ -11,8 +11,8 @@ import java.util.Observable;
 import coordinate.Coordinate;
 import javafx.scene.image.Image;;
 
-public class TurtleManager extends Observable implements TurtleManagerAPI, TurtleManagerCommandAPI{
-	
+public class TurtleManager extends Observable implements TurtleManagerAPI, TurtleManagerCommandAPI {
+
 	private HashMap<Double, Turtle> myTurtleMap;
 	private List<Double> myActiveTurtles;
 	private Double XBOUND;
@@ -21,7 +21,7 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 	private static final Double WIDTH = 25.0;
 	private ColorPalette myColors;
 	private Shapes myShapes;
-	
+
 	public TurtleManager(Coordinate bounds) {
 		myTurtleMap = new HashMap<Double, Turtle>();
 		XBOUND = bounds.getX();
@@ -52,18 +52,18 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 	public Turtle getAPI(Double id) {
 		return myTurtleMap.get(id);
 	}
-	
+
 	public Turtle getTurtle(Double id) {
 		checkForTurtle(id);
 		return myTurtleMap.get(id);
 	}
-	
+
 	private void checkNewInputs() {
-		for (Double d: myActiveTurtles) {
+		for (Double d : myActiveTurtles) {
 			checkForTurtle(d);
 		}
 	}
-	
+
 	private void checkForTurtle(Double k) {
 		if (myTurtleMap.get(k) == null) {
 			myTurtleMap.put(k, new Turtle(WIDTH, HEIGHT, XBOUND, YBOUND, k));
@@ -71,7 +71,7 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		}
 		return;
 	}
-	
+
 	public List<Double> getActiveTurtleIDs() {
 		if (myActiveTurtles.size() == 0) {
 			myActiveTurtles.addAll(myTurtleMap.keySet());
@@ -86,56 +86,58 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		flagChange(null);
 		return;
 	}
-	
-	public boolean isActive(Double k){
+
+	public boolean isActive(Double k) {
 		return myActiveTurtles.contains(k);
 	}
-	
-	public List<Double> getAllTurtleIDs(){
+
+	public List<Double> getAllTurtleIDs() {
 		return new ArrayList<Double>(myTurtleMap.keySet());
 	}
-	
-	private void flagChange(Turtle t){
+
+	private void flagChange(Turtle t) {
 		this.setChanged();
 		this.notifyObservers(t);
 	}
-	
-	public void setPenSize(double d, Double id){
+
+	public void setPenSize(double d, Double id) {
 		Turtle t = myTurtleMap.get(id);
 		t.getPen().setSize(d);
 	}
-	
-	public void setPenState(boolean b, Double id){
+
+	public void setPenState(boolean b, Double id) {
 		Turtle t = myTurtleMap.get(id);
 		t.getPen().setPen(b);
 	}
-	
-	public void setPenColor(double d, Double id){
-		Turtle t = myTurtleMap.get(id);
-		t.getPen().setColor(d);
+
+	public void setPenColor(double d, Double id) {
+		if (myColors.checkValid(d)) {
+			Turtle t = myTurtleMap.get(id);
+			t.getPen().setColor(d);
+		}
 	}
-	
-	public void setImage(Image a, Double id){
+
+	public void setImage(Image a, Double id) {
 		Turtle t = myTurtleMap.get(id);
 		t.setImage(a);
 	}
-	
+
 	public void setBackground(Double index) {
 		myColors.setBackgroundColor(index);
 	}
-	
+
 	public void reset() {
 		myTurtleMap.clear();
 		myActiveTurtles.clear();
 	}
-	
+
 	public void addColor(Double index, Double r, Double g, Double b) {
-		myColors.addColor(index,  r,  g,  b);
+		myColors.addColor(index, r, g, b);
 		setBackground(index);
 	}
-	
-	public void setPalette(ColorPalette cp){
+
+	public void setPalette(ColorPalette cp) {
 		myColors = cp;
 	}
-	
+
 }

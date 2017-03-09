@@ -39,7 +39,9 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import turtles.ColorPalette;
 import turtles.Pen;
+import turtles.SingleColor;
 import turtles.Turtle;
 import turtles.TurtleManager;
 import turtles.TurtleManagerAPI;
@@ -75,6 +77,7 @@ public class View implements ViewAPI, Observer {
 	private ViewObservable<String> activeViews;
 	private Map<String, String> filePath;
 	private ObservableList<String> fileName;
+	private ColorPalette colorPalette;
 
 	public View(Stage stageIn, Controller controllerIn) {
 		stage = stageIn;
@@ -118,6 +121,7 @@ public class View implements ViewAPI, Observer {
 		}
 		stateView.setTurtleManager(tmIn);
 		turtleVisualView.setTurtleManager(tmIn);
+		turtleManager.setPalette(colorPalette);
 	}
 
 	public void addTurtle(Node n) {
@@ -163,9 +167,18 @@ public class View implements ViewAPI, Observer {
 		}
 	}
 
+	public void changeImage(Turtle t, double d) {
+		Image temp = paletteView.getImageOf(d);
+		if (temp != null) {
+			t.setImage(temp);
+		}
+	}
+
 	public void changePenColor(double color) {
-		for (double d : turtleManager.getActiveTurtleIDs()) {
-			turtleManager.setPenColor(color, d);
+		if (colorPalette.checkValid(color)) {
+			for (double d : turtleManager.getActiveTurtleIDs()) {
+				turtleManager.setPenColor(color, d);
+			}
 		}
 	}
 
@@ -221,8 +234,8 @@ public class View implements ViewAPI, Observer {
 	}
 
 	public void saveWorkspace(String s) {
-		// TODO: background, files
 		workSpace.turtles = turtleManager.getAllTurtleIDs();
+		workSpace.background = turtleView.getBackgroundColor();
 		controller.saveWorkspace(s, filePath, fileName, resource, workSpace);
 	}
 
@@ -286,7 +299,7 @@ public class View implements ViewAPI, Observer {
 	private void makeNewDefault() {
 		workSpace = new WorkSpace();
 		workSpace.language = resource.getString("DefaultLanguage");
-		workSpace.background = Integer.parseInt(resource.getString("DefaultBackground"));
+		workSpace.background = Double.parseDouble(resource.getString("DefaultBackground"));
 		workSpace.views = new ArrayList<String>(Arrays.asList(resource.getString("DefaultViews").split(",")));
 		workSpace.colorPalette = createMap("defaultColors");
 		workSpace.imagePalette = createMap("defaultImages");
@@ -400,14 +413,14 @@ public class View implements ViewAPI, Observer {
 	private void initializeViews() {
 		optionsTab = new OptionsTab(this, fileName, activeViews);
 		promptView = new PromptView(this);
-		turtleView = new TurtleView(this, workSpace.colorPalette, workSpace.background);
+		turtleView = new TurtleView(this, colorPalette.getPalette(), workSpace.background);
 		methodsView = new MethodsView(this);
 		variablesView = new VariablesView(this);
 		stateView = new StateView(this);
-		paletteView = new PaletteView(this, workSpace.colorPalette, workSpace.imagePalette);
+		paletteView = new PaletteView(this, colorPalette.getPalette(), workSpace.imagePalette);
 		penView = new PenView(this);
 
-		turtleVisualView = new TurtleVisualView(this, workSpace.colorPalette, workSpace.background);
+		turtleVisualView = new TurtleVisualView(this, workSpace.background);
 
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
@@ -424,8 +437,11 @@ public class View implements ViewAPI, Observer {
 		// TODO finish updates i.e. background
 		activeViews = new ViewObservable<String>(workSpace.views);
 		activeViews.addObserver(this);
+		colorPalette = new ColorPalette(workSpace.colorPalette);
+		colorPalette.addObserver(this);
 		if (turtleManager != null) {
 			turtleManager.reset();
+			turtleManager.setPalette(colorPalette);
 		}
 		this.initializeViews();
 		this.showInitialViews(workSpace.views);
@@ -465,23 +481,36 @@ public class View implements ViewAPI, Observer {
 			}
 		}
 		if (arg0 instanceof Turtle) {
+			Turtle t = (Turtle) arg0;
 			if (arg1 == null) {
 				this.clearLines();
 			} else if (arg1 instanceof ArrayList<?>) {
-				Turtle t = (Turtle) arg0;
 				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
 				updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
 
 				this.updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
 				stateView.updateStatus(t.getID());
 			} else if (arg1 instanceof Boolean) {
-				Turtle t = (Turtle) arg0;
 				boolean b = (boolean) arg1;
 				if (b) {
 					this.addTurtle(t.getImage());
 				} else {
 					this.removeTurtle(t.getImage());
 				}
+			} else if (arg1 instanceof Double) {
+				double d = (double) arg1;
+				this.changeImage(t, d);
+			}
+		}
+		if (arg0 instanceof ColorPalette) {
+			ColorPalette cp = (ColorPalette) arg0;
+			if (arg1 == null) {
+				turtleView.setBackgroundColor(cp.getBackgroundColor());
+			}
+			if (arg1 instanceof SingleColor) {
+				SingleColor temp = (SingleColor) arg1;
+				turtleView.updateColor(temp.getIndex(), temp.getColor());
+				paletteView.updateColorPalette(temp.getColor(), temp.getIndex());
 			}
 		}
 	}
