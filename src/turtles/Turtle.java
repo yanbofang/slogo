@@ -19,7 +19,7 @@ public class Turtle extends Observable implements TurtleAPI{
 	private boolean showTurtle;
 	private boolean myClear;
 	private Double myID;
-	
+	private Double myImageIndex;
 
 	
 	public Turtle(double width, double height, double widthBounds, double heightBounds, Double id) {
@@ -45,6 +45,10 @@ public class Turtle extends Observable implements TurtleAPI{
 
 	public void setImage(Image a) {
 		myImage.setImage(a);
+	}
+	
+	public void setImage(Double index) {
+		myImageIndex = index;
 	}
 	
 	private Double setX(double x) {
@@ -129,6 +133,10 @@ public class Turtle extends Observable implements TurtleAPI{
 		showTurtle = b;
 		this.setChanged();
 		notifyObservers(b);
+	}
+	
+	public Double getShape() {
+		return myImageIndex;
 	}
 
 	

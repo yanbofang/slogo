@@ -32,4 +32,6 @@ public interface Command {
 	boolean getRunTurtles();
 	
 	public int getCurrentArgumentSize();
+	
+//	public boolean infiniteArguments();
 }

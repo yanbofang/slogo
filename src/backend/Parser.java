@@ -46,6 +46,17 @@ public class Parser {
 		Command currentCommand = myFactory.reflectCommand(current, myPatterns.getSymbol(current), myVariables, myUserMethods);
 		return currentCommand;
 	}
+	
+	private void runArguments(Command command, Scanner s, int numberOfTimes) {
+		while (command.getCurrentArgumentSize() < numberOfTimes ||
+				numberOfTimes < 0) {
+			Command toBeAdded = recurseParse(s);
+			if (toBeAdded == null) {
+				break;
+			}
+			command.add(toBeAdded);
+		}
+	}
 
 
 	/**
@@ -68,17 +79,8 @@ public class Parser {
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
 			currentCommand = reflect(current);
-			// System.out.println(current);
 			if (currentCommand != null) {
-
-				while (currentCommand.getCurrentArgumentSize() < currentCommand.getNumOfExpressions() ||
-						currentCommand.getNumOfExpressions() < 0) {
-					Command toBeAdded = recurseParse(s);
-					if (toBeAdded == null) {
-						break;
-					}
-					currentCommand.add(toBeAdded);
-				}
+				runArguments(currentCommand, s, currentCommand.getNumOfExpressions());
 				currentCommand.performBeforeExecution();
 				return currentCommand;
 			} else {
@@ -90,35 +92,26 @@ public class Parser {
 	}
 
 	private Command getDataObject(String current, Scanner s) {
-		if (myPatterns.getSymbol(current).equals("ListEnd")) {
+		if (myPatterns.getSymbol(current).equals("ListEnd") ||
+				myPatterns.getSymbol(current).equals("GroupEnd")) {
 			return null;
 		} else if (myPatterns.getSymbol(current).equals("Comment")){
 			s.nextLine();
 			return recurseParse(s);
+		} else if (myPatterns.getSymbol(current).equals("GroupStart")) {
+			current = s.next();
+			Command infiniteCommand = reflect(current);
+			if (infiniteCommand  != null && infiniteCommand.getNumOfExpressions() != 0) {
+				runArguments(infiniteCommand, s, -1);
+				if (infiniteCommand.getAllArguments().size()%infiniteCommand.getNumOfExpressions() != 0) {
+					throw new ParserException(String.format("WRONG NUMBER OF ARGUMENTS FOR %s", current));				}
+				return infiniteCommand;
+			}
+			throw new ParserException(String.format("DOESN'T TAKE IN INFINITE ARGUMENTS %s", current));
 		} else {
+		
 			throw new ParserException(String.format("NOT A VALID TYPE %s", current));
 		}
 	}
-
-	/*
-	private ArrayList<Object> getSubList(Scanner s) {
-		ArrayList<Object> subList = new ArrayList<Object>();
-		Object current;
-		while (s.hasNext()) {
-			current = recurseParse(s);
-			try {
-				String check = (String) current;
-				if (myPatterns.getSymbol(check).equals("ListEnd")) {
-					return subList;
-				} else if (myPatterns.getSymbol(check).equals("Variable")) {
-					subList.add(current);
-				}
-			} catch (Exception e) {
-				subList.add(current);
-			}
-		}
-		throw new ParserException(String.format("NO LIST END CHARACTER"));
-	}
-	*/
 
 }

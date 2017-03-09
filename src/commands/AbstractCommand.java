@@ -24,8 +24,9 @@ public abstract class AbstractCommand implements Command {
 	protected VariableManager myVariables;
 	protected UserMethodManager myUserMethods;
 	protected TurtleManagerCommandAPI myTurtleManager;
-	protected boolean runNested;
-	protected boolean runAllTurtles;
+	protected boolean runNested; //NEED TO GO THROUGH AND ADD TO ALL NECESSARY COMMANDS
+	protected boolean runAllTurtles; //NEED TO GO THROUGH AND ADD TO ALL NECESSARY COMMANDS
+	//protected boolean infiniteArguments; //NEED TO GO THROUGH AND ADD TO ALL NECESSARY COMMANDS
 
 	public AbstractCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		myArguments = new ArrayList<Command>();
@@ -36,6 +37,7 @@ public abstract class AbstractCommand implements Command {
 		finished = false;
 		runNested = true;
 		runAllTurtles = false;
+		//infiniteArguments = true;
 	}
 
 	public AbstractCommand(String instruction, VariableManager variables, UserMethodManager methods,
@@ -141,4 +143,5 @@ public abstract class AbstractCommand implements Command {
 	protected List<Command> unNestList(Command c) {
 		return c.getAllArguments();
 	}
+
 }

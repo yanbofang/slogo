@@ -22,9 +22,10 @@ public class ForCommand extends LoopCommand {
 		List<Command> lst = (List<Command>) args.get(0);
 		List<Object> positions = convertArguments(lst.subList(1, lst.size()), vars, true);
 		Variable var = new Variable(lst.get(0).getInstruction(), (Double) positions.get(0));
-		vars.addVariable(var);
-		return runCommands((Double) positions.get(0), (Double) positions.get(1), (Double) positions.get(2), var, vars,
-				myTurtle.getID());
+		myVariables.addVariable(var);
+		return runCommands((Double) positions.get(0), (Double) positions.get(1), (Double) positions.get(2), 
+				var, vars, myTurtle.getID());
 	}
+
 
 }

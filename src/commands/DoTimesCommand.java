@@ -26,15 +26,4 @@ public class DoTimesCommand extends LoopCommand {
 				var, vars, myTurtle.getID());
 	}
 
-	
-//	@Override
-//	protected Double calculate(List<Object> args, VariableManager vars) {
-//		List<Command> lst = (List<Command>) args.get(0);
-//		System.out.println("Im in DoTimesCommand: "+ lst);
-//		List<Object> positions = convertArguments(lst.subList(1, lst.size()), vars, true);
-//		Variable var = new Variable(lst.get(0).getInstruction(), 1.0);
-//		vars.addVariable(var);
-//		return runCommands(1.0, (Double) positions.get(1), 1.0,
-//				var, vars, myTurtle.getID());
-//	}
 }
