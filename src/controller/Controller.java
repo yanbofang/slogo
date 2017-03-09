@@ -20,7 +20,7 @@ import javafx.scene.Node;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
-public class Controller {
+public class Controller implements ControllerAPI{
 
 	private final String[] ENGLISH_SYNTAX = new String[] { "resources/languages/English",
 			"resources/languages/Syntax" };
@@ -43,7 +43,7 @@ public class Controller {
 		variablesObserver = new VariableManagerObserver(variables, view);
 		addVariableManagerObserver();
 		//turtleObserver = new TurtleObserver(turtle, view);
-		addTurtleObserver();
+		//addTurtleObserver();
 		userMethodsObserver = new UserMethodObserver(userMethods, view);
 		addUserMethodsObserver();
 	}

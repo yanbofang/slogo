@@ -9,7 +9,7 @@ import java.util.Observable;
 import commands.Command;
 import commands.UserMethodCommand;
 
-public class UserMethodManager extends Observable {
+public class UserMethodManager extends Observable implements java.io.Serializable{
 
 	private HashMap<String, UserMethod> myMethodMap;
 
@@ -24,8 +24,7 @@ public class UserMethodManager extends Observable {
 	}
 
 	public UserMethod getUserMethod(String key) {
-		UserMethod method = myMethodMap.get(key);
-		return method;
+		return myMethodMap.get(key);
 	}
 
 	/**
