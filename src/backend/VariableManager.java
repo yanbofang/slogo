@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
-public class VariableManager extends Observable {
+public class VariableManager extends Observable implements java.io.Serializable {
 
 	private HashMap<String, Variable> myVariableMap;
 
