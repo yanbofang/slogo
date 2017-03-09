@@ -19,16 +19,16 @@ import javafx.scene.shape.Line;
 import turtles.Pen;
 import turtles.Turtle;
 
-public class TurtleView implements TurtleViewerAPI{
+public class TurtleView implements TurtleViewerAPI {
 
 	private View view;
 	private ResourceBundle resource;
 	private Pane viewer;
 	private ArrayList<Line> lines;
 	private Color penColor;
-	private Map<Double,String> colorMap;
+	private Map<Double, String> colorMap;
 	private MoveAnimation animation;
-	
+
 	public TurtleView(View viewIn, Map mapIn, double gbIndex) {
 		view = viewIn;
 		colorMap = mapIn;
@@ -37,7 +37,7 @@ public class TurtleView implements TurtleViewerAPI{
 		viewer.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
 		lines = new ArrayList<Line>();
 	}
-	
+
 	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen, Turtle turtle) {
 		//animation = new MoveAnimation(view, turtle.getImage(), oldC, newC);
 		if (pen.showPen()) {
@@ -46,15 +46,15 @@ public class TurtleView implements TurtleViewerAPI{
 			newLine.setStrokeWidth(pen.getSize());
 			lines.add(newLine);
 			viewer.getChildren().add(newLine);
-		}	
+		}
 	}
 
 	public void clear() {
-		for (Line line: lines) {
+		for (Line line : lines) {
 			viewer.getChildren().remove(line);
 		}
 	}
-	
+
 	@Override
 	public Parent getParent() {
 		return viewer;
@@ -81,12 +81,11 @@ public class TurtleView implements TurtleViewerAPI{
 
 	@Override
 	public void placeTurtle(Node a) {
-		viewer.getChildren().add(a);	
+		viewer.getChildren().add(a);
 	}
-	
+
 	public void removeTurtle(Node a) {
 		viewer.getChildren().remove(a);
 	}
-
 
 }

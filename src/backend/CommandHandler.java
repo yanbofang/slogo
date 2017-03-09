@@ -43,6 +43,8 @@ public class CommandHandler {
 		if (!myCommands.isEmpty()) {
 			currentCommand = myCommands.peek();
 			List<Double> activeTurtles = myTurtles.getActiveTurtleIDs();
+			System.out.println(currentCommand);
+			System.out.println(currentCommand.getAllArguments());
 			if (currentCommand.isFinished()) {
 				myCommands.remove();
 			} else if (currentCommand.getRunTurtles()) {

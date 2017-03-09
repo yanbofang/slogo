@@ -18,24 +18,13 @@ public class ForCommand extends LoopCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args, VariableManager vars) {
-		myCommands = (ArrayList<Command>) args.get(1);
-		List<Object> lst = (List<Object>) args.get(0);
-		// lst = checkList(lst);
-		Variable var = new Variable((String) lst.get(0), (Double) lst.get(1));
-		myVariables.addVariable(var);
-		return runCommands((Double) lst.get(1), (Double) lst.get(2), (Double) lst.get(3), var, vars, myTurtle.getID());
-	}
-
-	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(0), vars, true));
-		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(1), vars, false));
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, vars);
+	protected Double calculate(List<Object> args, VariableManager vars) {
+		List<Command> lst = (List<Command>) args.get(0);
+		List<Object> positions = convertArguments(lst.subList(1, lst.size()), vars, true);
+		Variable var = new Variable(lst.get(0).getInstruction(), (Double) positions.get(0));
+		vars.addVariable(var);
+		return runCommands((Double) positions.get(0), (Double) positions.get(1), (Double) positions.get(2), var, vars,
+				myTurtle.getID());
 	}
 
 }
