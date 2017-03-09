@@ -3,30 +3,30 @@ package commands;
 import java.util.ArrayList;
 import java.util.List;
 
+import turtles.Turtle;
 import turtles.TurtleManagerCommandAPI;
 import backend.UserMethodManager;
-import backend.Variable;
 import backend.VariableManager;
 
-public class ForCommand extends LoopCommand {
+public class AskWithCommand extends LoopCommand{
 
-	private static final Integer NUM_OF_EXPRESSIONS = 2;
-
-	public ForCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+	private static final int NUM_OF_EXPRESSIONS = 2;
+	public AskWithCommand(String instruction, VariableManager variables,
+			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		runAllTurtles = true;
 	}
-
 	@Override
 	public Double getValue(List<Object> args) {
 		myCommands = (ArrayList<Command>) args.get(1);
-		List<Object> lst = (List<Object>) args.get(0);
-		//lst = checkList(lst);
-		Variable var = new Variable((String) lst.get(0), (Double) lst.get(1));
-		myVariables.addVariable(var);
-		return runCommands((Double) lst.get(1), (Double) lst.get(2), (Double) lst.get(3), var, myTurtle.getID());
+		Command condition = ((List<Command>) args.get(0)).get(0);
+		List<Double> possibleTurtles = getPossibleTurtles(condition);
+		Double returnValue = 0.0;
+		for (Double d : possibleTurtles ){
+			returnValue = runCommands(1.0, 1.0, 1.0, null, d);
+		}
+		return returnValue;
 	}
-	
+
 	@Override
 	public Double executeCommand(TurtleManagerCommandAPI turtles, Double k) {
 		myTurtleManager = turtles;
@@ -37,5 +37,16 @@ public class ForCommand extends LoopCommand {
 		this.changeToFinished();
 		return this.getValue(myConvertedArguments);
 	}
+	
+	private List<Double> getPossibleTurtles(Command condition) {
+		List<Double> myIDList = new ArrayList<Double>();
+		for (Turtle t: myTurtleManager.allTurtles()) {
+			if (condition.executeCommand(myTurtleManager, t.getID()) == 1) {
+				myIDList.add(t.getID());
+			}
+		}
+		return myIDList;
+	}
+	
 
 }

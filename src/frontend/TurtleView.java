@@ -7,22 +7,13 @@ import java.util.ResourceBundle;
 import animation.MoveAnimation;
 import coordinate.Coordinate;
 import frontend.API.TurtleViewerAPI;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.image.ImageView;
-import javafx.scene.input.InputEvent;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import turtles.Pen;
@@ -47,13 +38,15 @@ public class TurtleView implements TurtleViewerAPI{
 	}
 	
 	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen) {
-		// need turtle
-//		animation = new MoveAnimation(view, pen, oldC, newC);
-		Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
-		newLine.setStroke(Color.valueOf(colorMap.get(pen.getColor())));
-		newLine.setStrokeWidth(pen.getSize());
-		lines.add(newLine);
-		viewer.getChildren().add(newLine);
+		if (pen.showPen()) {
+			// need turtle
+//			animation = new MoveAnimation(view, pen, oldC, newC);
+			Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
+			newLine.setStroke(Color.valueOf(colorMap.get(pen.getColor())));
+			newLine.setStrokeWidth(pen.getSize());
+			lines.add(newLine);
+			viewer.getChildren().add(newLine);
+		}	
 	}
 
 	public void clear() {

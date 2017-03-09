@@ -51,7 +51,6 @@ public class View implements ViewAPI, Observer {
 	private static final double SECOND_DELAY = 1.0 / FRAMES_PER_SECOND;
 	private static final String SER_FILEPATH = "src/resources/";
 	private static final String DEFAULT_SER = "src/resources/default.ser";
-	private static final String FILEPATHS = "src/resources/paths.ser";
 	public static final String RESOURCE_BUNDLE = "resources/Display";
 	public static final String CSS_STYLESHEET = "resources/UI.css";
 
@@ -67,11 +66,12 @@ public class View implements ViewAPI, Observer {
 	private OptionsTab optionsTab;
 	private TurtleView turtleView;
 	private MethodsView methodsView;
-	private OptionsView optionsView;
 	private VariablesView variablesView;
 	private PromptView promptView;
 	private StateView stateView;
 	private PaletteView paletteView;
+	private PenView penView;
+	private TurtleVisualView turtleVisualView;
 
 	private VBox views;
 	private ViewObservable<String> activeViews;
@@ -87,6 +87,8 @@ public class View implements ViewAPI, Observer {
 		this.initializeCore();
 		this.getFilePaths();
 		this.parseWorkspace(DEFAULT_SER);
+		
+		stage.sizeToScene();
 
 		timeline.play();
 	}
@@ -117,10 +119,12 @@ public class View implements ViewAPI, Observer {
 			turtleView.placeTurtle(t.getImage());
 			t.addObserver(this);
 		}
+		stateView.setTurtleManager(tmIn);
 	}
 
 	public void updateTurtle(Coordinate oldC, Coordinate newC, Pen p) {
 		turtleView.changePosition(oldC, newC, p);
+		System.out.println("turtle move");
 	}
 
 	@Override
@@ -145,12 +149,12 @@ public class View implements ViewAPI, Observer {
 
 	@Override
 	public void changeImage(Image a) {
-		controller.changeImage(a);
+		turtleManager.setImage(a);
 	}
 
 	@Override
 	public void changePenColor(String a) {
-		turtleView.setPenColor(a);
+//		turtleManager.setPenColor(d);
 	}
 
 	@Override
@@ -230,6 +234,14 @@ public class View implements ViewAPI, Observer {
 
 	public void newWorkspace() throws Exception {
 		new Controller(new Stage());
+	}
+	
+	public void setPenSize(double d){
+		turtleManager.setPenSize(d);
+	}
+	
+	public void setPenState(boolean b){
+		turtleManager.setPenState(b);
 	}
 
 	private void step(double dt) {
@@ -381,14 +393,19 @@ public class View implements ViewAPI, Observer {
 		promptView = new PromptView(this);
 		turtleView = new TurtleView(this, workSpace.colorPalette, workSpace.background);
 		methodsView = new MethodsView(this);
-		optionsView = new OptionsView(this);
 		variablesView = new VariablesView(this);
 		stateView = new StateView(this);
 		paletteView = new PaletteView(this, workSpace.colorPalette, workSpace.imagePalette);
-
+		penView = new PenView(this);
+		turtleVisualView = new TurtleVisualView(this, workSpace.colorPalette, workSpace.background, turtleManager);
+		
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
 		root.add(promptView.getParent(), 2, 1, 1, 1);
+		
+		if(turtleManager!=null){
+			stateView.setTurtleManager(turtleManager);
+		}
 	}
 
 	private void updateWorkspace() {
@@ -422,12 +439,17 @@ public class View implements ViewAPI, Observer {
 			Turtle t = (Turtle) arg1;
 			turtleView.placeTurtle(t.getImage());
 			t.addObserver(this);
+			stateView.updateStatus(t.getID());
 		}
 		if (arg0 instanceof Turtle) {
 			if(arg1 instanceof ArrayList<?>){
-				Turtle t = (Turtle) arg1;
+				Turtle t = (Turtle) arg0;
 				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
-				updateTurtle(temp.get(0),temp.get(1),t.getPen());
+				this.updateTurtle(temp.get(0),temp.get(1),t.getPen());
+				stateView.updateStatus(t.getID());
+			}
+			if(arg1 instanceof Boolean){
+				this.clearLines();
 			}
 		}
 	}

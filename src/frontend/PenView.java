@@ -11,19 +11,22 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import turtles.Pen;
 
 public class PenView implements SubcomponentAPI {
 
 	
-	View view;
-	ResourceBundle resource;
-	HBox box;
+	private View view;
+	private ResourceBundle resource;
+	private VBox box;
+	private Pen p;
 	
 	
 	public PenView(View viewIn) {
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
-		box = new HBox();
+		box = new VBox();
+		p = new Pen();
 		createBox();
 	}
 	
@@ -35,7 +38,7 @@ public class PenView implements SubcomponentAPI {
 	}
 	
 	private void setPenPosition() {
-		HBox positionOptions = new HBox();
+		VBox positionOptions = new VBox();
 		Label positionTitle = new Label("Choose the state of the pen: \n"
 				+ "if pen is up, the turtle will not draw a line \n"
 				+ "if the pen is down, the turtle will draw a line");
@@ -45,24 +48,26 @@ public class PenView implements SubcomponentAPI {
 		box.getChildren().add(positionOptions);
 	}
 	
-	private void createPenUpBtn(HBox group) {
+	private void createPenUpBtn(VBox group) {
 		Button btn = new Button(resource.getString("penUp"));
 		group.getChildren().add(btn);
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				view.setPen(true);
+				p.setPen(false);
+				setPenState();
 			}
 		});
 	}
 	
-	private void createPenDownBtn(HBox group) {
+	private void createPenDownBtn(VBox group) {
 		Button btn = new Button(resource.getString("penDown"));
 		group.getChildren().add(btn);
 		btn.setOnAction(new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent e) {
-				view.setPen(false);
+				p.setPen(true);
+				setPenState();
 			}
 		});
 	}
@@ -70,15 +75,23 @@ public class PenView implements SubcomponentAPI {
 	private void setPenWidth() {
 		Slider sizeSlide = new Slider(1, 100, 10);
 		sizeSlide.valueProperty().addListener(e -> {
-			view.setPenSize(sizeSlide.getValue());
+			p.setSize(sizeSlide.getValue());
+			setPenSize();
 		});
 		box.getChildren().add(sizeSlide);
 	}
 	
+	private void setPenSize() {
+		view.setPenSize(p.getSize());
+	}
+	
+	private void setPenState() {
+		view.setPenState(p.showPen());
+	}
+	
 	@Override
 	public Parent getParent() {
-		// TODO Auto-generated method stub
-		return null;
+		return box;
 	}
 	
 }

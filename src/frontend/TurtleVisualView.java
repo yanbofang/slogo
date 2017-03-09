@@ -2,6 +2,7 @@ package frontend;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 import frontend.API.SubcomponentAPI;
@@ -27,13 +28,14 @@ public class TurtleVisualView implements SubcomponentAPI {
 	private FlowPane activeListDisplay;
 	private List<Turtle> activeTurtles;
 	
-	public TurtleVisualView(View viewIn){
+	public TurtleVisualView(View viewIn, Map map, double gbIndex, TurtleManager tManIn){
 		view = viewIn;
-		tView = new TurtleView(view);
+		tView = new TurtleView(view, map, gbIndex);
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		turtleView = new VBox();
 		Label title = new Label("Toggle Visibility of Active Turtle");
 		turtleView.getChildren().add(title);
+		tManager = tManIn;
 		activeTurtles = createActiveDisplay();
 		
 	}  
@@ -41,13 +43,16 @@ public class TurtleVisualView implements SubcomponentAPI {
 	private List<Turtle> createActiveDisplay() {
 		activeListDisplay = new FlowPane();
 		activeListDisplay.setPrefWrapLength(turtleView.getWidth());
-		activeTurtles = tManager.getActiveTurtles();
-		for(Turtle turtle: activeTurtles) {
-			Label currentTurtle = new Label(turtle.toString());
-			turtleView.getChildren().add(currentTurtle);
-			toggleTurtle(currentTurtle, turtle);
+		if (tManager != null) {
+			activeTurtles = tManager.getActiveTurtles();
+			for(Turtle turtle: activeTurtles) {
+				Label currentTurtle = new Label(turtle.toString());
+				turtleView.getChildren().add(currentTurtle);
+				toggleTurtle(currentTurtle, turtle);
+			}
+			return activeTurtles;
 		}
-		return activeTurtles;
+		return null;
 	}
 	
 	private void toggleTurtle(Label display, Turtle turtle) {

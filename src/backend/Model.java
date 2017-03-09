@@ -62,7 +62,7 @@ public class Model implements ModelInterface {
 			return null;
 		}
 	}
-
+/*
 	public Command getMethodVariable(String var) {
 		try {
 			return myUserMethods.getUserMethodCommand(var);
@@ -70,5 +70,5 @@ public class Model implements ModelInterface {
 			return null;
 		}
 	}
-
+*/
 }
