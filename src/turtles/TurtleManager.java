@@ -19,13 +19,15 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 	private Double YBOUND;
 	private static final Double HEIGHT = 25.0;
 	private static final Double WIDTH = 25.0;
+	private ColorPalette myColors;
+	private Shapes myShapes;
 	
 	public TurtleManager(Coordinate bounds) {
 		myTurtleMap = new HashMap<Double, Turtle>();
 		XBOUND = bounds.getX();
 		YBOUND = bounds.getY();
-		getTurtle(1.0);
 		myActiveTurtles = new ArrayList<Double>();
+		reset();
 	}
 
 	@Override
@@ -97,10 +99,9 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		this.notifyObservers(t);
 	}
 	
-	public void setPenSize(double d){
-		for(Turtle t : getActiveTurtles()){
-			t.getPen().setSize(d);
-		}
+	public void setPenSize(double d, Double id){
+		Turtle t = myTurtleMap.get(id);
+		t.getPen().setSize(d);
 	}
 	
 	public void setPenState(boolean b, Double id){
@@ -113,9 +114,22 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		t.getPen().setColor(d);
 	}
 	
-	public void setImage(Image a){
-		for(Turtle t : getActiveTurtles()){
-			t.setImage(a);
-		}
+	public void setImage(Image a, Double id){
+		Turtle t = myTurtleMap.get(id);
+		t.setImage(a);
+	}
+	
+	public void setBackground(Double index) {
+		myColors.setBackgroundColor(index);
+	}
+	
+	public void reset() {
+		myTurtleMap.clear();
+		getTurtle(1.0);
+	}
+	
+	public void addColor(Double index, Double r, Double g, Double b) {
+		myColors.addColor(index,  r,  g,  b);
+		setBackground(index);
 	}
 }

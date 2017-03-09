@@ -12,6 +12,7 @@ public abstract class ConditionalCommand extends AbstractCommand {
 	public ConditionalCommand(String instruction, VariableManager variables, UserMethodManager methods,
 			int numOfExpressions) {
 		super(instruction, variables, methods, numOfExpressions);
+		runAllTurtles = true;
 	}
 
 	@Override

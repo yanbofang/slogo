@@ -19,11 +19,13 @@ public class UserMethodCommand extends AbstractCommand {
 			UserMethod method) {
 		super(instruction, variables, methods, method.getListOfVariables().size());
 		myMethod = method;
+		runAllTurtles = true;
 	}
 	
 	public UserMethodCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods);
 		checkForMethod();
+		runAllTurtles = true;
 	}
 
 	private boolean checkForMethod() {
