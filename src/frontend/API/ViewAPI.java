@@ -67,7 +67,7 @@ public interface ViewAPI {
 	 * @param a
 	 * 6 hexadecimal values specifying a color i.e. "FFFFFF"
 	 */
-	public void changeBackground(String a);
+	public void changeBackground(Double a);
 	
 	/**
 	 * Change the image of the turtle with a specified image

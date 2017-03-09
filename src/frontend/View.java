@@ -156,7 +156,7 @@ public class View implements ViewAPI, Observer {
 	}
 
 	@Override
-	public void changeBackground(String a) {
+	public void changeBackground(Double a) {
 		turtleView.setBackgroundColor(a);
 	}
 
@@ -388,7 +388,7 @@ public class View implements ViewAPI, Observer {
 		try {
 			Field f = this.getClass().getDeclaredField(viewName);
 			try {
-				SubcomponentAPI temp = (SubcomponentAPI) f.get(this);
+			SubcomponentAPI temp = (SubcomponentAPI) f.get(this);
 				Parent toAdd = temp.getParent();
 				if (views.getChildren().contains(toAdd)) {
 					views.getChildren().remove(toAdd);
