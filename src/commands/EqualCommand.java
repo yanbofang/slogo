@@ -1,5 +1,6 @@
 package commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import backend.UserMethodManager;
@@ -16,9 +17,13 @@ public class EqualCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		Double exp1 = (Double) args.get(0);
-		Double exp2 = (Double) args.get(1);
-		if (exp1 == exp2) {
+		Double reference = (Double) args.get(0);
+		ArrayList<Double> compareList = new ArrayList<Double>();
+		args.stream()
+			.mapToDouble(d -> (Double) d)
+			.filter(d -> d == reference)
+			.forEach(d -> compareList.add(d));
+		if (compareList.size() == args.size()) {
 			myValue = 1.0;
 		} else {
 			myValue = 0.0;

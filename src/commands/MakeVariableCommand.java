@@ -62,11 +62,16 @@ public class MakeVariableCommand extends AbstractCommand {
 		myTurtleManager = turtles;
 		VariableManager localVariables = vars;
 		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(myArguments.get(0));
-		myConvertedArguments.addAll(convertArguments(myArguments.get(1), localVariables, true));
+		myConvertedArguments = argumentsToConvert(localVariables);
 		this.changeToFinished();
 		return this.getValue(myConvertedArguments, localVariables);
+	}
+	
+	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
+		ArrayList<Object> convArgs = new ArrayList<Object>();
+		convArgs.add(myArguments.get(0));
+		convArgs.addAll(convertArguments(myArguments.get(1), vars, true));
+		return convArgs;
 	}
 
 	

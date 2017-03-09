@@ -11,6 +11,7 @@ public class SetPenColorCommand extends AbstractCommand {
 	public SetPenColorCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+		runAllTurtles = true;
 	}
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {

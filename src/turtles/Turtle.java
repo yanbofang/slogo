@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Observable;
 
 import animation.MoveAnimation;
+import animation.RotateAnimation;
 import coordinate.Coordinate;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -59,7 +60,7 @@ public class Turtle extends Observable implements TurtleAPI{
 		} else if (x < 0) {
 			x += myWidthBounds;
 		}
-		//myImage.setTranslateX(x);
+		myImage.setTranslateX(x); //COMMENTED OUT FOR ANIMATION
 		return x;
 	}
 	
@@ -69,7 +70,7 @@ public class Turtle extends Observable implements TurtleAPI{
 		} else if (y < 0) {
 			y += myHeightBounds;
 		}
-		//myImage.setTranslateY(y);
+		myImage.setTranslateY(y); //COMMENTED OUT FOR ANIMATION
 		return y;
 	}
 	
@@ -81,9 +82,9 @@ public class Turtle extends Observable implements TurtleAPI{
 		temp.add(new Coordinate(myImage.getTranslateX() + myImage.getFitWidth()/2, myImage.getTranslateY() + myImage.getFitHeight()/2));
 		Double newX = setX(coord.getX());
 		Double newY = setY(coord.getY());
-		MoveAnimation animation = new MoveAnimation(myImage, getLocation(false), new Coordinate(newX, newY));
 		coord.setX(coord.getX() + myImage.getFitWidth()/2);
 		coord.setY(coord.getY() + myImage.getFitHeight()/2);
+		//MoveAnimation animation = new MoveAnimation(myImage,temp.get(0) , coord);
 		temp.add(coord);
 		this.setFlag(temp);
 
@@ -121,6 +122,7 @@ public class Turtle extends Observable implements TurtleAPI{
 			rotate -= 360;
 		}
 		myImage.setRotate(rotate);
+		//RotateAnimation animation = new RotateAnimation(myImage,rotate);
 	}
 	
 	public Double getRotate() {

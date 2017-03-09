@@ -14,7 +14,7 @@ import turtles.TurtleManagerCommandAPI;
 public abstract class LoopCommand extends AbstractCommand {
 
 	protected Command myListCommand;
-	protected VariableManager localVariables;
+	//protected VariableManager localVariables;
 
 	public LoopCommand(String instruction, VariableManager variables, UserMethodManager methods, int numOfExpressions) {
 		super(instruction, variables, methods, numOfExpressions);
@@ -42,17 +42,12 @@ public abstract class LoopCommand extends AbstractCommand {
 		}
 		return returnValue;
 	}
-
+	
 	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		localVariables = new VariableManager();
-		localVariables.addAll(vars.getVariableMap());
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(myArguments.get(0).getAllArguments());
-		myConvertedArguments.add(myArguments.get(1));
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, localVariables);
+	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
+		ArrayList<Object> convArgs = new ArrayList<Object>();
+		convArgs.add(myArguments.get(0).getAllArguments());
+		convArgs.add(myArguments.get(1));
+		return convArgs;
 	}
 }

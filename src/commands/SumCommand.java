@@ -17,12 +17,12 @@ public class SumCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		Double total = 0.0;
-		args.forEach(s -> { s = (Double) s;
-							total += s;};
-		total += (Double) s;
+		Double total = args.stream()
+						.mapToDouble(d -> (Double) d)
+						.sum();
 		return total;
 	}
 
-
 }
+
+	

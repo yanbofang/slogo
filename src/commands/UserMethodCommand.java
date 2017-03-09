@@ -1,5 +1,6 @@
 package commands;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +30,8 @@ public class UserMethodCommand extends AbstractCommand {
 	}
 
 	private boolean checkForMethod() {
-		if (myUserMethods.getUserMethod(myInstruction) != null) {
-			myMethod = myUserMethods.getUserMethod(myInstruction);
+		if (myUserMethods.getUserMethod(getInstruction()) != null) {
+			myMethod = myUserMethods.getUserMethod(getInstruction());
 			setNumOfExpressions(myMethod.getListOfVariables().size());
 			return true;
 		} else {
@@ -41,7 +42,7 @@ public class UserMethodCommand extends AbstractCommand {
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
 		if (checkForMethod() == false) {
-			throw new ParserException(String.format("NOT A VALID USER METHOD %s", myInstruction));
+			throw new ParserException(String.format("NOT A VALID USER METHOD %s", getInstruction()));
 		}
 
 		Double returnValue = 0.0;
@@ -63,13 +64,5 @@ public class UserMethodCommand extends AbstractCommand {
 		return returnValue;
 	}
 
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		VariableManager localVariables = vars;
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = convertArguments(myArguments, localVariables, true);
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, localVariables);
-	}
 
 }
