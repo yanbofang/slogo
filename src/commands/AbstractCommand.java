@@ -94,7 +94,9 @@ public abstract class AbstractCommand implements Command {
 	 */
 	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
 		myTurtleManager = turtles;
-		VariableManager localVariables = vars;
+		VariableManager localVariables = new VariableManager();
+		localVariables.addAll(vars.getVariableMap());
+
 		myTurtle = turtles.getTurtle(k);
 		myConvertedArguments = convertArguments(myArguments, localVariables, true);
 		this.changeToFinished();

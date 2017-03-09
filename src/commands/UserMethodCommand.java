@@ -20,7 +20,7 @@ public class UserMethodCommand extends AbstractCommand {
 		super(instruction, variables, methods, method.getListOfVariables().size());
 		myMethod = method;
 	}
-	
+
 	public UserMethodCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods);
 		checkForMethod();
@@ -35,17 +35,17 @@ public class UserMethodCommand extends AbstractCommand {
 			return false;
 		}
 	}
+
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
 		if (checkForMethod() == false) {
 			throw new ParserException(String.format("NOT A VALID USER METHOD %s", myInstruction));
 		}
-		
+
 		Double returnValue = 0.0;
-		Map<String, Variable> globalVariables = vars.getVariableMap();
 		VariableManager localVariables = new VariableManager();
-		localVariables.addAll(globalVariables);
-		
+		localVariables.addAll(vars.getVariableMap());
+
 		for (int i = 0; i < this.getNumOfExpressions(); i++) {
 			localVariables.addVariable(new Variable(myMethod.getListOfVariables().get(i), (Double) args.get(i)));
 		}
@@ -60,7 +60,7 @@ public class UserMethodCommand extends AbstractCommand {
 		}
 		return returnValue;
 	}
-	
+
 	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
 		myTurtleManager = turtles;
 		VariableManager localVariables = vars;
