@@ -17,14 +17,11 @@ public class AskWithCommand extends LoopCommand {
 	}
 
 	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(myArguments.get(0));
-		myConvertedArguments.add(myArguments.get(1));
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, vars);
+	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
+		ArrayList<Object> convArgs = new ArrayList<Object>();
+		convArgs.add(myArguments.get(0));
+		convArgs.add(myArguments.get(1));
+		return convArgs;
 	}
 
 	private List<Double> getPossibleTurtles(Command condition, VariableManager vars) {

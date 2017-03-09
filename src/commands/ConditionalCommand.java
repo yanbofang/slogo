@@ -29,21 +29,18 @@ public abstract class ConditionalCommand extends AbstractCommand {
 		}
 		return returnValue;
 	}
-	
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		VariableManager localVariables = vars;
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = new ArrayList<Object>();
+
+	@Override
+	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
+		ArrayList<Object> convArgs = new ArrayList<Object>();
 		for (Command c: myArguments) {
 			if (myArguments.indexOf(c) == 0) {
-				myConvertedArguments.addAll(convertArguments(c, localVariables, true));
+				convArgs.addAll(convertArguments(c, vars, true));
 			} else {
 				myConvertedArguments.add(c);
 			}
 		}
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, localVariables);
+		return convArgs;
 	}
 
 }

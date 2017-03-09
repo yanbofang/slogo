@@ -14,6 +14,6 @@ public class ArcTangentCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
-		return Math.atan(Math.toRadians((Double) args.get(0)));
+		return Math.atan(Math.toRadians((Double) args.get(args.size()-1)));
 	}
 }
