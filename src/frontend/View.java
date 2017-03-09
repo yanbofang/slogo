@@ -213,6 +213,7 @@ public class View implements ViewAPI, Observer {
 		String fp = SER_FILEPATH + s + ".ser";
 		filePath.put(s, fp);
 		fileName.add(s);
+		workSpace.turtles = turtleManager.getAllTurtleIDs();
 		try {
 			File file = new File(fp);
 			file.getParentFile().mkdirs();
@@ -284,6 +285,12 @@ public class View implements ViewAPI, Observer {
 		workSpace.views = new ArrayList<String>(Arrays.asList(resource.getString("DefaultViews").split(",")));
 		workSpace.colorPalette = createMap("defaultColors");
 		workSpace.imagePalette = createMap("defaultImages");
+		String[] temp = resource.getString("DefaultTurtles").split(",");
+		workSpace.turtles = new ArrayList<Double>();
+		for(String s : temp){
+			workSpace.turtles.add(Double.parseDouble(s));
+		}
+		
 		try {
 			File file = new File(DEFAULT_SER);
 			file.getParentFile().mkdirs();
@@ -293,6 +300,7 @@ public class View implements ViewAPI, Observer {
 			out.writeObject(workSpace);
 			out.close();
 			fileOut.close();
+			getFilePaths();
 			updateWorkspace();
 		} catch (IOException i) {
 			showError(resource.getString("SavingError"));
@@ -412,6 +420,10 @@ public class View implements ViewAPI, Observer {
 		// TODO finish updates i.e. background
 		activeViews = new ViewObservable<String>(workSpace.views);
 		activeViews.addObserver(this);
+		if(turtleManager!=null){
+			turtleManager.reset();
+			turtleManager.addActiveTurtles(workSpace.turtles);
+		}
 		this.initializeViews();
 		this.showInitialViews(workSpace.views);
 		changeLanguage(workSpace.language);
