@@ -1,51 +1,12 @@
 package frontend.API;
 
 import coordinate.Coordinate;
-import javafx.scene.Node;
 import javafx.scene.image.Image;
 import turtles.Pen;
 import turtles.Turtle;
 import turtles.TurtleManager;
-import turtles.TurtleManagerAPI;
-/**
- * API for View class
- * Serves as communicator between frontend and backend
- * Serves as central hub for front end
- * @author Gordon
- *
- */
-public interface ViewAPI {
-	// External API
-	/**
-	 * Returns a Coordinate of the bottom-right most corner of the turtle's area
-	 * @return
-	 */
-	public Coordinate getBounds();
-	
-	/**
-	 * Update the frontend display of variables generated in the environment
-	 * @param a
-	 * The name of the variable
-	 * @param b
-	 * The value of the variable
-	 */
-	public void updateVar(String a, String b);
-	
-	/**
-	 * Display an error with a specific reason
-	 * @param a
-	 * The specific error
-	 */
-	public void showError(String a);
-	
-	/**
-	 * Update the frontend display of user defined methods
-	 * @param a
-	 * The method selected
-	 */
-	public void updateUMethod(String a);
-	
-	// Internal API
+
+public interface InternalViewAPI {
 	/**
 	 * Have the backend update a variable changed in the UI
 	 * @param a
@@ -54,13 +15,6 @@ public interface ViewAPI {
 	 * The value of the variable
 	 */
 	public void changeVariable(String a, String b);
-	
-	/**
-	 * Have the backend run a user method selected in the UI
-	 * @param a
-	 * The name of the method
-	 */
-	public void useUMethod(String a);
 	
 	/**
 	 * Change the background color of the turtle's area
@@ -102,7 +56,7 @@ public interface ViewAPI {
 	 * Set Turtle
 	 * @param n
 	 */
-	public void setTurtle(TurtleManager tm);	
+//	public void setTurtle(TurtleManager tm);	
 	
 	public void updateTurtle(Coordinate x, Coordinate y, Pen p, Turtle t);
 

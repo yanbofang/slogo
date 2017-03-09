@@ -66,6 +66,6 @@ public class MethodsView implements MethodsViewAPI{
 	
 	private void clickedMethod(Hyperlink source){
 		String method = source.getText();
-		view.useUMethod(method);
+		view.runCommand(method);
 	}
 }

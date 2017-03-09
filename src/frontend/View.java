@@ -19,7 +19,8 @@ import controller.Controller;
 import controller.ControllerAPI;
 import coordinate.Coordinate;
 import frontend.API.SubcomponentAPI;
-import frontend.API.ViewAPI;
+import frontend.API.ExternalViewAPI;
+import frontend.API.InternalViewAPI;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -46,7 +47,7 @@ import turtles.Turtle;
 import turtles.TurtleManager;
 import turtles.TurtleManagerAPI;
 
-public class View implements ViewAPI, Observer {
+public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 	private static final int HEIGHT = 600;
 	private static final int WIDTH = 1000;
 	private static final int FRAMES_PER_SECOND = 60;
@@ -56,15 +57,18 @@ public class View implements ViewAPI, Observer {
 	private static final String DEFAULT_SER = "src/resources/default.ser";
 	public static final String RESOURCE_BUNDLE = "resources/Display";
 	public static final String CSS_STYLESHEET = "resources/UI.css";
+	
 	private Stage stage;
 	private Scene scene;
 	private GridPane root;
-	private ControllerAPI controller;
 	private Timeline timeline;
+	private VBox views;
+	
+	private ControllerAPI controller;
 	private ResourceBundle resource;
-	private WorkSpace workSpace;
 	private TurtleManager turtleManager;
 	private OptionsTab optionsTab;
+	
 	private TurtleView turtleView;
 	private MethodsView methodsView;
 	private VariablesView variablesView;
@@ -73,12 +77,14 @@ public class View implements ViewAPI, Observer {
 	private PaletteView paletteView;
 	private PenView penView;
 	private TurtleVisualView turtleVisualView;
-	private VBox views;
+
+	private WorkSpace workSpace;
 	private ViewObservable<String> activeViews;
 	private Map<String, String> filePath;
 	private ObservableList<String> fileName;
 	private ColorPalette colorPalette;
 
+	// Constructor
 	public View(Stage stageIn, Controller controllerIn) {
 		stage = stageIn;
 		controller = controllerIn;
@@ -92,6 +98,7 @@ public class View implements ViewAPI, Observer {
 		timeline.play();
 	}
 
+//*************************External API Methods******************************
 	@Override
 	public Coordinate getBounds() {
 		return turtleView.getBounds();
@@ -110,8 +117,18 @@ public class View implements ViewAPI, Observer {
 		alert.setContentText(a);
 		alert.showAndWait();
 	}
+	
+	@Override
+	public void updateUMethod(String a) {
+		methodsView.updateUMethods(a);
+	}
 
-	public void setTurtle(TurtleManager tmIn) {
+	@Override
+	public void changeVariable(String a, String b) {
+		controller.updateVariable(a, b);
+	}
+
+	public void setTurtleManager(TurtleManager tmIn) {
 		turtleManager = tmIn;
 		turtleManager.addActiveTurtles(workSpace.turtles);
 		tmIn.addObserver(this);
@@ -122,6 +139,62 @@ public class View implements ViewAPI, Observer {
 		stateView.setTurtleManager(tmIn);
 		turtleVisualView.setTurtleManager(tmIn);
 		turtleManager.setPalette(colorPalette);
+	}
+
+	public void update(Observable arg0, Object arg1) {
+		if (arg0 instanceof ViewObservable) {
+			updateView((String) arg1);
+			workSpace.views = activeViews.getList();
+		}
+		if (arg0 instanceof TurtleManager) {
+			if (arg1 == null) {
+				turtleVisualView.updateActive();
+			} else if (arg1 instanceof Turtle) {
+				Turtle t = (Turtle) arg1;
+				turtleView.placeTurtle(t.getImage());
+				t.addObserver(this);
+				stateView.updateStatus(t.getID());
+			}
+		}
+		if (arg0 instanceof Turtle) {
+			Turtle t = (Turtle) arg0;
+			if (arg1 == null) {
+				this.clearLines();
+			} else if (arg1 instanceof ArrayList<?>) {
+				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
+				updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
+
+				this.updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
+				stateView.updateStatus(t.getID());
+			} else if (arg1 instanceof Boolean) {
+				boolean b = (boolean) arg1;
+				if (b) {
+					this.addTurtle(t.getImage());
+				} else {
+					this.removeTurtle(t.getImage());
+				}
+			} else if (arg1 instanceof Double) {
+				double d = (double) arg1;
+				this.changeImage(t, d);
+			}
+		}
+		if (arg0 instanceof ColorPalette) {
+			ColorPalette cp = (ColorPalette) arg0;
+			if (arg1 == null) {
+				turtleView.setBackgroundColor(cp.getBackgroundColor());
+			}
+			if (arg1 instanceof SingleColor) {
+				SingleColor temp = (SingleColor) arg1;
+				turtleView.updateColor(temp.getIndex(), temp.getColor());
+				paletteView.updateColorPalette(temp.getColor(), temp.getIndex());
+			}
+		}
+	}
+	
+//*****************************Internal API********************************
+	@Override
+	public void runCommand(String a) {
+		controller.handleInput(a);
 	}
 
 	public void addTurtle(Node n) {
@@ -138,21 +211,6 @@ public class View implements ViewAPI, Observer {
 
 	public void updateTurtle(Coordinate oldC, Coordinate newC, Pen p, Turtle t) {
 		turtleView.changePosition(oldC, newC, p, t);
-	}
-
-	@Override
-	public void updateUMethod(String a) {
-		methodsView.updateUMethods(a);
-	}
-
-	@Override
-	public void changeVariable(String a, String b) {
-		controller.updateVariable(a, b);
-	}
-
-	@Override
-	public void useUMethod(String a) {
-		controller.handleInput(a);
 	}
 
 	@Override
@@ -181,6 +239,18 @@ public class View implements ViewAPI, Observer {
 			}
 		}
 	}
+	
+	public void setPenSize(double size) {
+		for (double d : turtleManager.getActiveTurtleIDs()) {
+			turtleManager.setPenSize(size, d);
+		}
+	}
+
+	public void setPenState(boolean b) {
+		for (double d : turtleManager.getActiveTurtleIDs()) {
+			turtleManager.setPenState(b, d);
+		}
+	}
 
 	@Override
 	public void changeLanguage(String a) {
@@ -194,11 +264,6 @@ public class View implements ViewAPI, Observer {
 		this.clearMethods();
 		this.clearHistory();
 		workSpace.language = a;
-	}
-
-	@Override
-	public void runCommand(String a) {
-		controller.handleInput(a);
 	}
 
 	public void clearVariables() {
@@ -248,28 +313,56 @@ public class View implements ViewAPI, Observer {
 		new Controller(new Stage());
 	}
 
-	public void setPenSize(double size) {
-		for (double d : turtleManager.getActiveTurtleIDs()) {
-			turtleManager.setPenSize(size, d);
-		}
-	}
-
-	public void setPenState(boolean b) {
-		for (double d : turtleManager.getActiveTurtleIDs()) {
-			turtleManager.setPenState(b, d);
-		}
-	}
-
-	private void step(double dt) {
-		controller.runCommand();
-	}
-
+//******************************Private Methods******************************
 	private Timeline createTimeline() {
 		Timeline ret = new Timeline();
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
 		ret.setCycleCount(Animation.INDEFINITE);
 		ret.getKeyFrames().add(frame);
 		return ret;
+	}
+
+	private void step(double dt) {
+		controller.runCommand();
+	}
+	
+	private void initializeCore() {
+		root = new GridPane();
+		scene = new Scene(root, WIDTH, HEIGHT);
+		ColumnConstraints column1 = new ColumnConstraints();
+		column1.setPercentWidth(25);
+		ColumnConstraints column2 = new ColumnConstraints();
+		column2.setPercentWidth(50);
+		ColumnConstraints column3 = new ColumnConstraints();
+		column3.setPercentWidth(25);
+		root.getColumnConstraints().addAll(column1, column2, column3);
+		RowConstraints row1 = new RowConstraints();
+		row1.setPercentHeight(10);
+		RowConstraints row2 = new RowConstraints();
+		row2.setPercentHeight(90);
+		root.getRowConstraints().addAll(row1, row2);
+		ScrollPane scrollPane = new ScrollPane();
+		views = new VBox();
+		scrollPane.setContent(views);
+		scrollPane.setFitToWidth(true);
+		root.add(scrollPane, 0, 1, 1, 1);
+		root.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
+		scene.getStylesheets().add(CSS_STYLESHEET);
+		stage.setScene(scene);
+		stage.show();
+	}
+
+	private void getFilePaths() {
+		fileName = FXCollections.observableArrayList();
+		filePath = new HashMap<String, String>();
+		File dir = new File(SER_FILEPATH);
+		for (File file : dir.listFiles()) {
+			if (file.getName().endsWith(".ser")) {
+				String tempName = file.getName().replaceAll(".ser", "");
+				fileName.add(tempName);
+				filePath.put(tempName, file.getPath());
+			}
+		}
 	}
 
 	private void parseWorkspace(String fp) {
@@ -336,46 +429,42 @@ public class View implements ViewAPI, Observer {
 		return map;
 	}
 
-	private void initializeCore() {
-		root = new GridPane();
-		scene = new Scene(root, WIDTH, HEIGHT);
-		ColumnConstraints column1 = new ColumnConstraints();
-		column1.setPercentWidth(25);
-		ColumnConstraints column2 = new ColumnConstraints();
-		column2.setPercentWidth(50);
-		ColumnConstraints column3 = new ColumnConstraints();
-		column3.setPercentWidth(25);
-		root.getColumnConstraints().addAll(column1, column2, column3);
-		RowConstraints row1 = new RowConstraints();
-		row1.setPercentHeight(10);
-		RowConstraints row2 = new RowConstraints();
-		row2.setPercentHeight(90);
-		root.getRowConstraints().addAll(row1, row2);
-		ScrollPane scrollPane = new ScrollPane();
-		views = new VBox();
-		scrollPane.setContent(views);
-		scrollPane.setFitToWidth(true);
-		root.add(scrollPane, 0, 1, 1, 1);
-		root.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
-		scene.getStylesheets().add(CSS_STYLESHEET);
-		stage.setScene(scene);
-		stage.show();
+	private void updateWorkspace() {
+		// TODO finish updates i.e. background
+		activeViews = new ViewObservable<String>(workSpace.views);
+		activeViews.addObserver(this);
+		colorPalette = new ColorPalette(workSpace.colorPalette);
+		colorPalette.addObserver(this);
+		if (turtleManager != null) {
+			turtleManager.reset();
+			turtleManager.setPalette(colorPalette);
+		}
+		this.initializeViews();
+		this.showInitialViews(workSpace.views);
+		changeLanguage(workSpace.language);
 	}
 
-	private Object handleKeyInput(KeyCode code) {
-		if (code == KeyCode.L) {
-			controller.handleInput("left 5");
+	private void initializeViews() {
+		optionsTab = new OptionsTab(this, fileName, activeViews);
+		promptView = new PromptView(this);
+		turtleView = new TurtleView(this, colorPalette.getPalette(), workSpace.background);
+		methodsView = new MethodsView(this);
+		variablesView = new VariablesView(this);
+		stateView = new StateView(this);
+		paletteView = new PaletteView(this, colorPalette.getPalette(), workSpace.imagePalette);
+		penView = new PenView(this);
+
+		turtleVisualView = new TurtleVisualView(this, workSpace.background);
+
+		root.add(optionsTab.getParent(), 0, 0, 3, 1);
+		root.add(turtleView.getParent(), 1, 1, 1, 1);
+		root.add(promptView.getParent(), 2, 1, 1, 1);
+
+		if (turtleManager != null) {
+			stateView.setTurtleManager(turtleManager);
+			turtleVisualView.setTurtleManager(turtleManager);
+			turtleManager.addActiveTurtles(workSpace.turtles);
 		}
-		if (code == KeyCode.R) {
-			controller.handleInput("right 5");
-		}
-		if (code == KeyCode.F) {
-			controller.handleInput("forward 5");
-		}
-		if (code == KeyCode.B) {
-			controller.handleInput("back 5");
-		}
-		return null;
 	}
 
 	private void showInitialViews(List<String> myViews) {
@@ -410,109 +499,24 @@ public class View implements ViewAPI, Observer {
 		}
 	}
 
-	private void initializeViews() {
-		optionsTab = new OptionsTab(this, fileName, activeViews);
-		promptView = new PromptView(this);
-		turtleView = new TurtleView(this, colorPalette.getPalette(), workSpace.background);
-		methodsView = new MethodsView(this);
-		variablesView = new VariablesView(this);
-		stateView = new StateView(this);
-		paletteView = new PaletteView(this, colorPalette.getPalette(), workSpace.imagePalette);
-		penView = new PenView(this);
-
-		turtleVisualView = new TurtleVisualView(this, workSpace.background);
-
-		root.add(optionsTab.getParent(), 0, 0, 3, 1);
-		root.add(turtleView.getParent(), 1, 1, 1, 1);
-		root.add(promptView.getParent(), 2, 1, 1, 1);
-
-		if (turtleManager != null) {
-			stateView.setTurtleManager(turtleManager);
-			turtleVisualView.setTurtleManager(turtleManager);
-			turtleManager.addActiveTurtles(workSpace.turtles);
-		}
-	}
-
-	private void updateWorkspace() {
-		// TODO finish updates i.e. background
-		activeViews = new ViewObservable<String>(workSpace.views);
-		activeViews.addObserver(this);
-		colorPalette = new ColorPalette(workSpace.colorPalette);
-		colorPalette.addObserver(this);
-		if (turtleManager != null) {
-			turtleManager.reset();
-			turtleManager.setPalette(colorPalette);
-		}
-		this.initializeViews();
-		this.showInitialViews(workSpace.views);
-		changeLanguage(workSpace.language);
-	}
-
 	private void updateVariablesAndMethods() {
 		controller.loadVariablesandMethods(workSpace);
 	}
 
-	private void getFilePaths() {
-		fileName = FXCollections.observableArrayList();
-		filePath = new HashMap<String, String>();
-		File dir = new File(SER_FILEPATH);
-		for (File file : dir.listFiles()) {
-			if (file.getName().endsWith(".ser")) {
-				String tempName = file.getName().replaceAll(".ser", "");
-				fileName.add(tempName);
-				filePath.put(tempName, file.getPath());
-			}
+	private Object handleKeyInput(KeyCode code) {
+		if (code == KeyCode.L) {
+			controller.handleInput("left 5");
 		}
-	}
-
-	public void update(Observable arg0, Object arg1) {
-		if (arg0 instanceof ViewObservable) {
-			updateView((String) arg1);
-			workSpace.views = activeViews.getList();
+		if (code == KeyCode.R) {
+			controller.handleInput("right 5");
 		}
-		if (arg0 instanceof TurtleManager) {
-			if (arg1 == null) {
-				turtleVisualView.updateActive();
-			} else if (arg1 instanceof Turtle) {
-				Turtle t = (Turtle) arg1;
-				turtleView.placeTurtle(t.getImage());
-				t.addObserver(this);
-				stateView.updateStatus(t.getID());
-			}
+		if (code == KeyCode.F) {
+			controller.handleInput("forward 5");
 		}
-		if (arg0 instanceof Turtle) {
-			Turtle t = (Turtle) arg0;
-			if (arg1 == null) {
-				this.clearLines();
-			} else if (arg1 instanceof ArrayList<?>) {
-				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
-				updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
-
-				this.updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
-				stateView.updateStatus(t.getID());
-			} else if (arg1 instanceof Boolean) {
-				boolean b = (boolean) arg1;
-				if (b) {
-					this.addTurtle(t.getImage());
-				} else {
-					this.removeTurtle(t.getImage());
-				}
-			} else if (arg1 instanceof Double) {
-				double d = (double) arg1;
-				this.changeImage(t, d);
-			}
+		if (code == KeyCode.B) {
+			controller.handleInput("back 5");
 		}
-		if (arg0 instanceof ColorPalette) {
-			ColorPalette cp = (ColorPalette) arg0;
-			if (arg1 == null) {
-				turtleView.setBackgroundColor(cp.getBackgroundColor());
-			}
-			if (arg1 instanceof SingleColor) {
-				SingleColor temp = (SingleColor) arg1;
-				turtleView.updateColor(temp.getIndex(), temp.getColor());
-				paletteView.updateColorPalette(temp.getColor(), temp.getIndex());
-			}
-		}
+		return null;
 	}
 
 }
