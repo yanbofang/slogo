@@ -135,8 +135,8 @@ public class View implements ViewAPI, Observer {
 		turtleManager.setImage(a);
 	}
 	@Override
-	public void changePenColor(String a) {
-//		turtleManager.setPenColor(d);
+	public void changePenColor(Double a) {
+		turtleManager.setPenColor(a);
 	}
 	@Override
 	public void changeLanguage(String a) {
@@ -289,14 +289,12 @@ public class View implements ViewAPI, Observer {
 		scrollPane.setContent(views);
 		scrollPane.setFitToWidth(true);
 		root.add(scrollPane, 0, 1, 1, 1);
+		root.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
 		scene.getStylesheets().add(CSS_STYLESHEET);
 		stage.setScene(scene);
 		stage.show();
 	}
 	private Object handleKeyInput(KeyCode code) {
-		double x = 50;
-		double y = 60;
-		Coordinate current = new Coordinate(x, y);
 		if (code == KeyCode.L) {
 			controller.handleInput("left 5");
 		}
@@ -304,7 +302,7 @@ public class View implements ViewAPI, Observer {
 			controller.handleInput("right 5");
 		}
 		if (code == KeyCode.F) {
-			controller.handleInput("fd 5");
+			controller.handleInput("forward 5");
 		}
 		if (code == KeyCode.B) {
 			controller.handleInput("back 5");
@@ -350,7 +348,7 @@ public class View implements ViewAPI, Observer {
 		stateView = new StateView(this);
 		paletteView = new PaletteView(this, workSpace.colorPalette, workSpace.imagePalette);
 		penView = new PenView(this);
-		turtleVisualView = new TurtleVisualView(this, workSpace.colorPalette, workSpace.background, turtleManager);
+		turtleVisualView = new TurtleVisualView(this, workSpace.colorPalette, workSpace.background);
 		
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
@@ -405,4 +403,5 @@ public class View implements ViewAPI, Observer {
 			}
 		}
 	}
+
 }
