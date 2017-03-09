@@ -157,7 +157,9 @@ public class View implements ViewAPI, Observer {
 
 	@Override
 	public void changeImage(Image a) {
-		turtleManager.setImage(a);
+		for (double d : turtleManager.getActiveTurtleIDs()) {
+			turtleManager.setImage(a, d);
+		}
 	}
 
 	public void changePenColor(double color) {
@@ -205,11 +207,6 @@ public class View implements ViewAPI, Observer {
 		return turtleManager;
 	}
 
-	// @Override
-	// public void setPen(Boolean penIn) {
-	// penDown = penIn;
-	// }
-
 	public void setDefaultWorkspace() {
 		saveWorkspace(resource.getString("Default"));
 	}
@@ -253,8 +250,10 @@ public class View implements ViewAPI, Observer {
 		new Controller(new Stage());
 	}
 
-	public void setPenSize(double d) {
-		turtleManager.setPenSize(d);
+	public void setPenSize(double size) {
+		for (double d : turtleManager.getActiveTurtleIDs()) {
+			turtleManager.setPenSize(size, d);
+		}
 	}
 
 	public void setPenState(boolean b) {

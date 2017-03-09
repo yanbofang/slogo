@@ -42,7 +42,6 @@ public class Controller {
 		model = new Model(ENGLISH_SYNTAX, variables, userMethods, turtle);
 		variablesObserver = new VariableManagerObserver(variables, view);
 		addVariableManagerObserver();
-		//turtleObserver = new TurtleObserver(turtle, view);
 		addTurtleObserver();
 		userMethodsObserver = new UserMethodObserver(userMethods, view);
 		addUserMethodsObserver();

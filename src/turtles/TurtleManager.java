@@ -134,4 +134,8 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		setBackground(index);
 	}
 	
+	public void setPalette(ColorPalette cp){
+		myColors = cp;
+	}
+	
 }
