@@ -8,7 +8,7 @@ import javafx.scene.paint.Color;
 
 public class ColorPalette extends Observable {
 
-	private HashMap<Double, String> myColorMap;
+	private Map<Double, String> myColorMap;
 	private Double myBackgroundColor;
 	
 	public ColorPalette() {
@@ -34,7 +34,7 @@ public class ColorPalette extends Observable {
 		return myBackgroundColor;
 	}
 	
-	public HashMap<Double, String> getPalette(){
+	public Map<Double, String> getPalette(){
 		return myColorMap;
 	}
 	
