@@ -12,7 +12,7 @@ import backend.UserMethod;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
-public abstract class AbstractCommand implements Command {
+public abstract class AbstractCommand implements Command, java.io.Serializable {
 
 	private Integer myNumOfExpressions;
 	protected String myInstruction;

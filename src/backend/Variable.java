@@ -1,24 +1,24 @@
 package backend;
 
-public class Variable {
+public class Variable implements java.io.Serializable {
 
 	private String myName;
 	private Double myValue;
-	
+
 	public Variable(String variable, Double value) {
 		myName = variable;
 		myValue = value;
 	}
-	
-	public String getVariableName(){
+
+	public String getVariableName() {
 		return myName;
 	}
 
-	public Double getValue(){
+	public Double getValue() {
 		return myValue;
 	}
-	
-	public void setValue(Double value){
+
+	public void setValue(Double value) {
 		myValue = value;
 	}
 }
