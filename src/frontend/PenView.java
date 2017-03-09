@@ -35,6 +35,7 @@ public class PenView implements SubcomponentAPI {
 		box.getChildren().add(boxTitle);
 		setPenPosition();
 		setPenWidth();
+		box.setStyle(resource.getString("Border"));
 	}
 	
 	private void setPenPosition() {
@@ -73,7 +74,7 @@ public class PenView implements SubcomponentAPI {
 	}
 	
 	private void setPenWidth() {
-		Slider sizeSlide = new Slider(1, 100, 10);
+		Slider sizeSlide = new Slider(1, 10, 10);
 		sizeSlide.valueProperty().addListener(e -> {
 			p.setSize(sizeSlide.getValue());
 			setPenSize();

@@ -28,15 +28,15 @@ public class TurtleVisualView implements SubcomponentAPI {
 	private FlowPane activeListDisplay;
 	private List<Turtle> activeTurtles;
 	
-	public TurtleVisualView(View viewIn, Map map, double gbIndex, TurtleManager tManIn){
+	public TurtleVisualView(View viewIn, Map map, double gbIndex){
 		view = viewIn;
 		tView = new TurtleView(view, map, gbIndex);
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		turtleView = new VBox();
 		Label title = new Label("Toggle Visibility of Active Turtle");
 		turtleView.getChildren().add(title);
-		tManager = tManIn;
-		activeTurtles = createActiveDisplay();
+		turtleView.setStyle(resource.getString("Border"));
+		
 		
 	}  
 	
@@ -80,4 +80,8 @@ public class TurtleVisualView implements SubcomponentAPI {
 		createActiveDisplay();
 	}
 
+	public void setTurtleManager(TurtleManager tIn) {
+		tManager = tIn;
+		activeTurtles = createActiveDisplay();
+	}
 }
