@@ -87,5 +87,9 @@ public class TurtleView implements TurtleViewerAPI {
 	public void removeTurtle(Node a) {
 		viewer.getChildren().remove(a);
 	}
+	
+	public boolean containsTurtle(Node n) {
+		return viewer.getChildren().contains(n);
+	}
 
 }

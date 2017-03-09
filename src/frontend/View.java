@@ -24,6 +24,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -115,6 +116,19 @@ public class View implements ViewAPI, Observer {
 			t.addObserver(this);
 		}
 		stateView.setTurtleManager(tmIn);
+		turtleVisualView.setTurtleManager(tmIn);
+	}
+
+	public void addTurtle(Node n) {
+		turtleView.placeTurtle(n);
+	}
+
+	public void removeTurtle(Node n) {
+		turtleView.removeTurtle(n);
+	}
+
+	public boolean containsTurtle(Node n) {
+		return turtleView.containsTurtle(n);
 	}
 
 	public void updateTurtle(Coordinate oldC, Coordinate newC, Pen p, Turtle t) {
@@ -414,6 +428,7 @@ public class View implements ViewAPI, Observer {
 
 		if (turtleManager != null) {
 			stateView.setTurtleManager(turtleManager);
+			turtleVisualView.setTurtleManager(turtleManager);
 			turtleManager.addActiveTurtles(workSpace.turtles);
 		}
 	}
@@ -449,22 +464,33 @@ public class View implements ViewAPI, Observer {
 			workSpace.views = activeViews.getList();
 		}
 		if (arg0 instanceof TurtleManager) {
-			Turtle t = (Turtle) arg1;
-			turtleView.placeTurtle(t.getImage());
-			t.addObserver(this);
-			stateView.updateStatus(t.getID());
+			if (arg1 == null) {
+				turtleVisualView.updateActive();
+			} else if (arg1 instanceof Turtle) {
+				Turtle t = (Turtle) arg1;
+				turtleView.placeTurtle(t.getImage());
+				t.addObserver(this);
+				stateView.updateStatus(t.getID());
+			}
 		}
 		if (arg0 instanceof Turtle) {
-			if (arg1 instanceof ArrayList<?>) {
+			if (arg1 == null) {
+				this.clearLines();
+			} else if (arg1 instanceof ArrayList<?>) {
 				Turtle t = (Turtle) arg0;
 				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
 				updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
 
 				this.updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
 				stateView.updateStatus(t.getID());
-			}
-			if (arg1 instanceof Boolean) {
-				this.clearLines();
+			} else if (arg1 instanceof Boolean) {
+				Turtle t = (Turtle) arg0;
+				boolean b = (boolean) arg1;
+				if (b) {
+					this.addTurtle(t.getImage());
+				} else {
+					this.removeTurtle(t.getImage());
+				}
 			}
 		}
 	}

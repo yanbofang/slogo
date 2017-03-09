@@ -81,6 +81,7 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		myActiveTurtles.clear();
 		myActiveTurtles.addAll(newActives);
 		checkNewInputs();
+		flagChange(null);
 		return;
 	}
 	

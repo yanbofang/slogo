@@ -127,6 +127,8 @@ public class Turtle extends Observable implements TurtleAPI{
 	
 	public void setShow(boolean b) {
 		showTurtle = b;
+		this.setChanged();
+		notifyObservers(b);
 	}
 
 	
@@ -139,7 +141,8 @@ public class Turtle extends Observable implements TurtleAPI{
 	
 	private void penChange(){
 		this.setChanged();
-		notifyObservers(myClear);
+		notifyObservers();
+		myClear = false;
 	}
 
 	@Override
