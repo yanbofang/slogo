@@ -17,7 +17,7 @@ public class HeadingCommand extends AbstractCommand {
 
 	
 
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		return myTurtle.getRotate();
 	}
 

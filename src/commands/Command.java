@@ -2,32 +2,34 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import turtles.Turtle;
 import turtles.TurtleManagerCommandAPI;
 import backend.CommandHandler;
+import backend.VariableManager;
 
 public interface Command {
 
-	void add(Object... args);
-	
-	//void clearArguments();
+	void add(Command... args);
 
 	String getInstruction();
 
-	Object getArguments(int k);
+	Command getArguments(int k);
+	
+	List<Command> getAllArguments();
 
 	boolean isFinished();
 
-	//Double getValue(Turtle t);
+	Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k);
 
-	Double executeCommand(TurtleManagerCommandAPI turtles, Double k);
-	
 	void resetCommand();
 
 	Integer getNumOfExpressions();
-	
+
 	void performBeforeExecution();
-	
+
 	boolean getRunTurtles();
+	
+	public int getCurrentArgumentSize();
 }

@@ -4,6 +4,7 @@ import coordinate.Coordinate;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
 import turtles.Pen;
+import turtles.Turtle;
 import turtles.TurtleManager;
 import turtles.TurtleManagerAPI;
 /**
@@ -103,7 +104,7 @@ public interface ViewAPI {
 	 */
 	public void setTurtle(TurtleManager tm);	
 	
-	public void updateTurtle(Coordinate x, Coordinate y, Pen p);
+	public void updateTurtle(Coordinate x, Coordinate y, Pen p, Turtle t);
 
 	public void clearLines();
 

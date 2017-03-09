@@ -16,7 +16,7 @@ public class SineCommand extends AbstractCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args) {
+	public Double getValue(List<Object> args, VariableManager vars) {
 		return Math.sin(Math.toRadians((Double) args.get(0)));
 	}
 

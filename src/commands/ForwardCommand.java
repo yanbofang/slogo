@@ -16,10 +16,12 @@ public class ForwardCommand extends MoveCommand {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 	
+	@Override
 	public Double calculateValue(List<Object> args) {
 		Double movement = (Double) args.get(0);
 		myCoord = getNewCoord(movement);
 		myTurtle.setLocation(myCoord, false);
+
 		return movement;
 	}
 
