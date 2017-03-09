@@ -1,6 +1,8 @@
 package backend;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
@@ -27,10 +29,23 @@ public class VariableManager extends Observable implements java.io.Serializable 
 		return myVariableMap;
 	}
 
+	public List<String> getInputString() {
+		List<String> strList = new ArrayList<String>();
+		for (String s : myVariableMap.keySet()) {
+			strList.add(" " + s + " " + myVariableMap.get(s).getValue().toString());
+		}
+		return strList;
+	}
+
 	public void addAll(Map<String, Variable> variableMap) {
+		if(variableMap == null){
+			System.out.println("VariableMap is null!");
+			return;
+		}
 		for (String key : variableMap.keySet()) {
 			Variable newVar = new Variable(key, variableMap.get(key).getValue());
-			myVariableMap.put(key, newVar);
+//			myVariableMap.put(key, newVar);
+			addVariable(newVar);
 		}
 	}
 
