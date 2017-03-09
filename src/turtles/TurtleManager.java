@@ -118,4 +118,9 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 			t.setImage(a);
 		}
 	}
+	
+	public void reset(){
+		myTurtleMap.clear();
+		this.getTurtle(1.0);
+	}
 }
