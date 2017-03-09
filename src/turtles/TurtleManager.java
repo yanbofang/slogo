@@ -121,6 +121,6 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 	
 	public void reset(){
 		myTurtleMap.clear();
-		this.getTurtle(1.0);
+		myActiveTurtles.clear();
 	}
 }
