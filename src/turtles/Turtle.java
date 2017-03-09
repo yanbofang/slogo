@@ -50,6 +50,7 @@ public class Turtle extends Observable implements TurtleAPI{
 	
 	public void setImage(Double index) {
 		myImageIndex = index;
+		this.setFlag(myImageIndex);
 	}
 	
 	private Double setX(double x) {
@@ -84,8 +85,7 @@ public class Turtle extends Observable implements TurtleAPI{
 		coord.setX(coord.getX() + myImage.getFitWidth()/2);
 		coord.setY(coord.getY() + myImage.getFitHeight()/2);
 		temp.add(coord);
-		setChanged();
-		notifyObservers(temp);
+		this.setFlag(temp);
 
 		}
 	
@@ -133,6 +133,7 @@ public class Turtle extends Observable implements TurtleAPI{
 	
 	public void setShow(boolean b) {
 		showTurtle = b;
+		this.setFlag(b);
 	}
 	
 	public Double getShape() {
@@ -148,8 +149,8 @@ public class Turtle extends Observable implements TurtleAPI{
 	}
 	
 	private void penChange(){
-		this.setChanged();
-		notifyObservers(myClear);
+		this.setFlag(null);
+		myClear = false;
 	}
 
 	@Override
@@ -159,5 +160,10 @@ public class Turtle extends Observable implements TurtleAPI{
 	
 	public Double getID() {
 		return myID;
+	}
+	
+	private void setFlag(Object o){
+		this.setChanged();
+		this.notifyObservers(o);
 	}
 }

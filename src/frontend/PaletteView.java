@@ -15,9 +15,12 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Border;
 import javafx.scene.layout.VBox;
 
 public class PaletteView implements SubcomponentAPI {
@@ -28,6 +31,7 @@ public class PaletteView implements SubcomponentAPI {
 	private VBox visualViews;
 	Map<Double,String> colorMap;
 	Map<Double,String> turtleMap;
+	private String tempChoice;
 
 	private String[][] viewOptions = {{"backgroundColor", null},{"penColor", null}, 
 			{"turtle", null}};
@@ -49,6 +53,7 @@ public class PaletteView implements SubcomponentAPI {
 		visualViews = new VBox();
 		visualViews.getChildren().add(createColorView());
 		visualViews.getChildren().add(createImageView());
+		visualViews.setStyle(resource.getString("Border"));
 	}  
 	
 	private VBox createColorView() {
@@ -90,6 +95,7 @@ public class PaletteView implements SubcomponentAPI {
 					if (feature.equals(option[0])) {
 						String[] choice = (String[]) (Arrays.asList(newValue.split(": "))).toArray();
 						option[1] = choice[1];
+						tempChoice = choice[0];
 						updateVariables();
 					}
 				}
@@ -107,7 +113,8 @@ public class PaletteView implements SubcomponentAPI {
 	
 	private void changePenColor() {
 		if (viewOptions[1][1] != null) {
-			view.changePenColor(viewOptions[1][1]);
+			Double temp = Double.parseDouble(tempChoice);
+			view.changePenColor(temp);
 			viewOptions[1][1] = null;
 		}
 		
@@ -143,5 +150,14 @@ public class PaletteView implements SubcomponentAPI {
 	public void updateTurtlePalette(String color, double index) {
 		turtleMap.put(index, color);
 		turtleButtonLabels = updateLists(turtleMap);
+	}
+	
+	public Image getImageOf(double d){
+		if(turtleMap.containsKey(d)){
+			return new Image(this.getClass().getClassLoader().getResourceAsStream(resource.getString(turtleMap.get(d))));
+		}
+		else{
+			return null;
+		}
 	}
 }

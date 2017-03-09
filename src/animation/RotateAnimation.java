@@ -23,7 +23,7 @@ public class RotateAnimation {
 	    
 	    
     
-    public RotateAnimation(View viewIn, Node actor, double rotation) {
+    public RotateAnimation(Node actor, double rotation) {
     	myActor = actor;
 		myAnimation = makeAnimation(myActor, rotation);
 		// start animation
