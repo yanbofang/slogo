@@ -16,7 +16,12 @@ public class DifferenceCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		return (Double) args.get(0) - (Double) args.get(1);
+		Double start = (Double) args.get(0);
+		args.remove(start);
+		Double difference = args.stream()
+			.mapToDouble(d -> (Double) d)
+			.sum();	
+		return start - difference;
 	}
 
 }

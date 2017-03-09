@@ -18,10 +18,13 @@ public class BackwardCommand extends MoveCommand {
 	
 	@Override
 	public Double calculateValue(List<Object> args) {
-		Double movement = (Double) args.get(0);
-		myCoord = getNewCoord(movement*-1);
-		myTurtle.setLocation(myCoord, false);
-		return movement;
+		args.stream()
+			.mapToDouble(d -> (Double) d)
+			.forEach(d -> {
+				myCoord = getNewCoord(d*-1);
+				myTurtle.setLocation(myCoord, false);
+			});
+		return (Double) args.get(args.size()-1);
 	}
 
 }

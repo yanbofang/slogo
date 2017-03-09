@@ -15,10 +15,10 @@ public class VariableCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
-		if (localVariables.get(myInstruction) == null ){
+		if (localVariables.get(getInstruction()) == null ){
 			return null;
 		}
-		return localVariables.get(myInstruction).getValue();
+		return localVariables.get(getInstruction()).getValue();
 	}
 
 }

@@ -15,16 +15,13 @@ public class AskCommand extends LoopCommand {
 	public AskCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
-
+	
 	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(convertArguments(myArguments.get(0).getAllArguments(), vars, true));
-		myConvertedArguments.add(myArguments.get(1));
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, vars);
+	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
+		ArrayList<Object> convArgs = new ArrayList<Object>();
+		convArgs.add(convertArguments(myArguments.get(0).getAllArguments(), vars, true));
+		convArgs.add(myArguments.get(1));
+		return convArgs;
 	}
 
 	@Override
