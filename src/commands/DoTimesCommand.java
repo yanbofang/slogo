@@ -17,24 +17,24 @@ public class DoTimesCommand extends LoopCommand {
 		runAllTurtles = true;
 	}
 
-	public Double getValue(List<Object> args, VariableManager vars) {
-		myListCommand = (Command) args.get(1);
-		List<Object> lst = (List<Object>) args.get(0);
-		Variable var = new Variable(((Command) lst.get(0)).getInstruction(), 1.0);
-		myVariables.addVariable(var);
-		return runCommands(1.0, ((Command) lst.get(1)).executeCommand(myTurtleManager, vars, myTurtle.getID()), 
-				1.0, var, vars, myTurtle.getID());
-	}
-
 	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(myArguments.get(0).getAllArguments());
-		myConvertedArguments.add(myArguments.get(1));
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, vars);
+	protected Double calculate(List<Object> args, VariableManager vars) {
+		List<Command> lst = (List<Command>) args.get(0);
+		Variable var = new Variable(((Command) lst.get(0)).getInstruction(), 1.0);
+		vars.addVariable(var);
+		return runCommands(1.0, ((Command) lst.get(1)).executeCommand(myTurtleManager, vars, myTurtle.getID()), 1.0,
+				var, vars, myTurtle.getID());
 	}
 
+	
+//	@Override
+//	protected Double calculate(List<Object> args, VariableManager vars) {
+//		List<Command> lst = (List<Command>) args.get(0);
+//		System.out.println("Im in DoTimesCommand: "+ lst);
+//		List<Object> positions = convertArguments(lst.subList(1, lst.size()), vars, true);
+//		Variable var = new Variable(lst.get(0).getInstruction(), 1.0);
+//		vars.addVariable(var);
+//		return runCommands(1.0, (Double) positions.get(1), 1.0,
+//				var, vars, myTurtle.getID());
+//	}
 }

@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
-
 import turtles.Turtle;
 import turtles.TurtleManagerCommandAPI;
 import backend.ParserException;
@@ -14,7 +13,7 @@ import backend.UserMethodManager;
 import backend.VariableManager;
 
 public abstract class AbstractCommand implements Command {
-	
+
 	private Integer myNumOfExpressions;
 	protected String myInstruction;
 	protected ArrayList<Command> myArguments;
@@ -45,7 +44,7 @@ public abstract class AbstractCommand implements Command {
 		myNumOfExpressions = numOfExpressions;
 	}
 
-	public void add(Command ... args) {
+	public void add(Command... args) {
 		for (Command each : args) {
 			myArguments.add(each);
 		}
@@ -54,7 +53,7 @@ public abstract class AbstractCommand implements Command {
 	public Integer getNumOfExpressions() {
 		return myNumOfExpressions;
 	}
-	
+
 	protected void setNumOfExpressions(int k) {
 		myNumOfExpressions = k;
 	}
@@ -66,11 +65,11 @@ public abstract class AbstractCommand implements Command {
 	public Command getArguments(int k) {
 		return myArguments.get(k);
 	}
-	
+
 	public int getCurrentArgumentSize() {
 		return myArguments.size();
 	}
-	
+
 	public List<Command> getAllArguments() {
 		return myArguments;
 	}
@@ -93,10 +92,11 @@ public abstract class AbstractCommand implements Command {
 	 * 
 	 * @return - value that we want to send to UI to be displayed
 	 */
-
 	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
 		myTurtleManager = turtles;
-		VariableManager localVariables = vars;
+		VariableManager localVariables = new VariableManager();
+		localVariables.addAll(vars.getVariableMap());
+
 		myTurtle = turtles.getTurtle(k);
 		myConvertedArguments = convertArguments(myArguments, localVariables, true);
 		this.changeToFinished();
@@ -124,24 +124,21 @@ public abstract class AbstractCommand implements Command {
 			} catch (Exception e) {
 				throw new ParserException(String.format("WRONG INPUT %s", o));
 			}
-
 		}
 		return newArgs;
 	}
-	
+
 	protected ArrayList<Object> convertArguments(Command list, VariableManager vars, boolean nest) {
 		ArrayList<Command> temp = new ArrayList<Command>();
 		temp.add(list);
 		return convertArguments(temp, vars, nest);
 	}
-	
+
 	public boolean getRunTurtles() {
 		return runAllTurtles;
 	}
-	
+
 	protected List<Command> unNestList(Command c) {
 		return c.getAllArguments();
 	}
-
-
 }
