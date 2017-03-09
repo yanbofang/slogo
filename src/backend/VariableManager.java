@@ -38,13 +38,11 @@ public class VariableManager extends Observable implements java.io.Serializable 
 	}
 
 	public void addAll(Map<String, Variable> variableMap) {
-		if(variableMap == null){
-			System.out.println("VariableMap is null!");
+		if (variableMap == null)
 			return;
-		}
 		for (String key : variableMap.keySet()) {
 			Variable newVar = new Variable(key, variableMap.get(key).getValue());
-//			myVariableMap.put(key, newVar);
+			// myVariableMap.put(key, newVar);
 			addVariable(newVar);
 		}
 	}

@@ -25,9 +25,8 @@ public class UserMethodManager extends Observable implements java.io.Serializabl
 	}
 
 	public void addAll(Map<String, UserMethod> methodMap) {
-		if (methodMap == null) {
+		if (methodMap == null)
 			return;
-		}
 		for (String key : methodMap.keySet()) {
 			UserMethod newMethod = new UserMethod(key, methodMap.get(key).getListOfCommands(),
 					methodMap.get(key).getListOfVariables());

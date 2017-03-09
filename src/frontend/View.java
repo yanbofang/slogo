@@ -25,6 +25,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -42,8 +43,6 @@ import turtles.Pen;
 import turtles.Turtle;
 import turtles.TurtleManager;
 import turtles.TurtleManagerAPI;
-import backend.UserMethod;
-import backend.Variable;
 
 public class View implements ViewAPI, Observer {
 	private static final int HEIGHT = 600;
@@ -111,12 +110,26 @@ public class View implements ViewAPI, Observer {
 
 	public void setTurtle(TurtleManager tmIn) {
 		turtleManager = tmIn;
+		turtleManager.addActiveTurtles(workSpace.turtles);
 		tmIn.addObserver(this);
 		for (Turtle t : turtleManager.allTurtles()) {
 			turtleView.placeTurtle(t.getImage());
 			t.addObserver(this);
 		}
 		stateView.setTurtleManager(tmIn);
+		turtleVisualView.setTurtleManager(tmIn);
+	}
+
+	public void addTurtle(Node n) {
+		turtleView.placeTurtle(n);
+	}
+
+	public void removeTurtle(Node n) {
+		turtleView.removeTurtle(n);
+	}
+
+	public boolean containsTurtle(Node n) {
+		return turtleView.containsTurtle(n);
 	}
 
 	public void updateTurtle(Coordinate oldC, Coordinate newC, Pen p, Turtle t) {
@@ -148,9 +161,10 @@ public class View implements ViewAPI, Observer {
 		turtleManager.setImage(a);
 	}
 
-	@Override
-	public void changePenColor(String a) {
-		// turtleManager.setPenColor(d);
+	public void changePenColor(double color) {
+		for (double d : turtleManager.getActiveTurtleIDs()) {
+			turtleManager.setPenColor(color, d);
+		}
 	}
 
 	@Override
@@ -197,9 +211,14 @@ public class View implements ViewAPI, Observer {
 	// penDown = penIn;
 	// }
 
+	public void setDefaultWorkspace() {
+		saveWorkspace(resource.getString("Default"));
+	}
+
 	public void deleteWorkspace(String s) {
 		String fp = filePath.get(s);
 		fileName.remove(s);
+		filePath.remove(s);
 		File file = new File(fp);
 		file.delete();
 	}
@@ -224,7 +243,9 @@ public class View implements ViewAPI, Observer {
 	}
 
 	public void setPenState(boolean b) {
-		turtleManager.setPenState(b);
+		for (double d : turtleManager.getActiveTurtleIDs()) {
+			turtleManager.setPenState(b, d);
+		}
 	}
 
 	private void step(double dt) {
@@ -249,7 +270,9 @@ public class View implements ViewAPI, Observer {
 			updateWorkspace();
 			updateVariablesAndMethods();
 		} catch (IOException i) {
-			showError(resource.getString("FileNotFound"));
+			if (!fp.equals(DEFAULT_SER)) {
+				showError(resource.getString("FileNotFound"));
+			}
 			if (fp.equals(DEFAULT_SER)) {
 				showError(resource.getString("DefaultMissing"));
 				makeNewDefault();
@@ -270,8 +293,7 @@ public class View implements ViewAPI, Observer {
 		workSpace.imagePalette = createMap("defaultImages");
 		String[] temp = resource.getString("DefaultTurtles").split(",");
 		workSpace.turtles = new ArrayList<Double>();
-		workSpace.variables = new HashMap<String, Variable>();
-		workSpace.userMethods = new HashMap<String, UserMethod>();
+
 		for (String s : temp) {
 			workSpace.turtles.add(Double.parseDouble(s));
 		}
@@ -322,15 +344,13 @@ public class View implements ViewAPI, Observer {
 		scrollPane.setContent(views);
 		scrollPane.setFitToWidth(true);
 		root.add(scrollPane, 0, 1, 1, 1);
+		root.setOnKeyPressed(e -> handleKeyInput(e.getCode()));
 		scene.getStylesheets().add(CSS_STYLESHEET);
 		stage.setScene(scene);
 		stage.show();
 	}
 
 	private Object handleKeyInput(KeyCode code) {
-		double x = 50;
-		double y = 60;
-		Coordinate current = new Coordinate(x, y);
 		if (code == KeyCode.L) {
 			controller.handleInput("left 5");
 		}
@@ -338,7 +358,7 @@ public class View implements ViewAPI, Observer {
 			controller.handleInput("right 5");
 		}
 		if (code == KeyCode.F) {
-			controller.handleInput("fd 5");
+			controller.handleInput("forward 5");
 		}
 		if (code == KeyCode.B) {
 			controller.handleInput("back 5");
@@ -387,7 +407,8 @@ public class View implements ViewAPI, Observer {
 		stateView = new StateView(this);
 		paletteView = new PaletteView(this, workSpace.colorPalette, workSpace.imagePalette);
 		penView = new PenView(this);
-		turtleVisualView = new TurtleVisualView(this, workSpace.colorPalette, workSpace.background, turtleManager);
+
+		turtleVisualView = new TurtleVisualView(this, workSpace.colorPalette, workSpace.background);
 
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
@@ -395,6 +416,8 @@ public class View implements ViewAPI, Observer {
 
 		if (turtleManager != null) {
 			stateView.setTurtleManager(turtleManager);
+			turtleVisualView.setTurtleManager(turtleManager);
+			turtleManager.addActiveTurtles(workSpace.turtles);
 		}
 	}
 
@@ -404,7 +427,6 @@ public class View implements ViewAPI, Observer {
 		activeViews.addObserver(this);
 		if (turtleManager != null) {
 			turtleManager.reset();
-			turtleManager.addActiveTurtles(workSpace.turtles);
 		}
 		this.initializeViews();
 		this.showInitialViews(workSpace.views);
@@ -434,23 +456,35 @@ public class View implements ViewAPI, Observer {
 			workSpace.views = activeViews.getList();
 		}
 		if (arg0 instanceof TurtleManager) {
-			Turtle t = (Turtle) arg1;
-			turtleView.placeTurtle(t.getImage());
-			t.addObserver(this);
-			stateView.updateStatus(t.getID());
+			if (arg1 == null) {
+				turtleVisualView.updateActive();
+			} else if (arg1 instanceof Turtle) {
+				Turtle t = (Turtle) arg1;
+				turtleView.placeTurtle(t.getImage());
+				t.addObserver(this);
+				stateView.updateStatus(t.getID());
+			}
 		}
 		if (arg0 instanceof Turtle) {
-			if (arg1 instanceof ArrayList<?>) {
+			if (arg1 == null) {
+				this.clearLines();
+			} else if (arg1 instanceof ArrayList<?>) {
 				Turtle t = (Turtle) arg0;
 				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
 				updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
 
 				this.updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
 				stateView.updateStatus(t.getID());
-			}
-			if (arg1 instanceof Boolean) {
-				this.clearLines();
+			} else if (arg1 instanceof Boolean) {
+				Turtle t = (Turtle) arg0;
+				boolean b = (boolean) arg1;
+				if (b) {
+					this.addTurtle(t.getImage());
+				} else {
+					this.removeTurtle(t.getImage());
+				}
 			}
 		}
 	}
+
 }

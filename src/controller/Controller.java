@@ -84,7 +84,9 @@ public class Controller implements ControllerAPI {
 			ResourceBundle resource, WorkSpace workspace) {
 		String fp = SER_FILEPATH + s + ".ser";
 		filePath.put(s, fp);
-		fileName.add(s);
+		if (!fileName.contains(s)) {
+			fileName.add(s);
+		}
 		workspace.variables = variables.getVariableMap();
 		workspace.userMethods = userMethods.getMethodMap();
 		try {
