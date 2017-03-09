@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import turtles.TurtleManagerCommandAPI;
+import backend.ParserException;
 import backend.UserMethod;
 import backend.UserMethodManager;
 import backend.Variable;
@@ -17,21 +19,35 @@ public class UserMethodCommand extends AbstractCommand {
 			UserMethod method) {
 		super(instruction, variables, methods, method.getListOfVariables().size());
 		myMethod = method;
+		runAllTurtles = true;
+	}
+
+	public UserMethodCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+		super(instruction, variables, methods);
+		checkForMethod();
+		runAllTurtles = true;
+	}
+
+	private boolean checkForMethod() {
+		if (myUserMethods.getUserMethod(myInstruction) != null) {
+			myMethod = myUserMethods.getUserMethod(myInstruction);
+			setNumOfExpressions(myMethod.getListOfVariables().size());
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
+		if (checkForMethod() == false) {
+			throw new ParserException(String.format("NOT A VALID USER METHOD %s", myInstruction));
+		}
+
 		Double returnValue = 0.0;
-
-		Map<String, Variable> globalVariables = vars.getVariableMap();
-
 		VariableManager localVariables = new VariableManager();
+		localVariables.addAll(vars.getVariableMap());
 
-		localVariables.addAll(globalVariables);
-
-		// Create the variables
-		System.out.println("IN USER METHOD COMMAND " + myMethod.getMethodName());
-		System.out.println("IN USER METHOD COMMAND " + args);
 		for (int i = 0; i < this.getNumOfExpressions(); i++) {
 			localVariables.addVariable(new Variable(myMethod.getListOfVariables().get(i), (Double) args.get(i)));
 		}
@@ -45,6 +61,15 @@ public class UserMethodCommand extends AbstractCommand {
 			}
 		}
 		return returnValue;
+	}
+
+	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
+		myTurtleManager = turtles;
+		VariableManager localVariables = vars;
+		myTurtle = turtles.getTurtle(k);
+		myConvertedArguments = convertArguments(myArguments, localVariables, true);
+		this.changeToFinished();
+		return this.getValue(myConvertedArguments, localVariables);
 	}
 
 }

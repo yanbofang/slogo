@@ -1,4 +1,5 @@
 package frontend;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -15,6 +16,7 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.ResourceBundle;
 import controller.Controller;
+import controller.ControllerAPI;
 import coordinate.Coordinate;
 import frontend.API.SubcomponentAPI;
 import frontend.API.ViewAPI;
@@ -23,6 +25,7 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -36,10 +39,13 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import turtles.ColorPalette;
 import turtles.Pen;
+import turtles.SingleColor;
 import turtles.Turtle;
 import turtles.TurtleManager;
 import turtles.TurtleManagerAPI;
+
 public class View implements ViewAPI, Observer {
 	private static final int HEIGHT = 600;
 	private static final int WIDTH = 1000;
@@ -53,7 +59,7 @@ public class View implements ViewAPI, Observer {
 	private Stage stage;
 	private Scene scene;
 	private GridPane root;
-	private Controller controller;
+	private ControllerAPI controller;
 	private Timeline timeline;
 	private ResourceBundle resource;
 	private WorkSpace workSpace;
@@ -71,6 +77,8 @@ public class View implements ViewAPI, Observer {
 	private ViewObservable<String> activeViews;
 	private Map<String, String> filePath;
 	private ObservableList<String> fileName;
+	private ColorPalette colorPalette;
+
 	public View(Stage stageIn, Controller controllerIn) {
 		stage = stageIn;
 		controller = controllerIn;
@@ -79,18 +87,21 @@ public class View implements ViewAPI, Observer {
 		this.initializeCore();
 		this.getFilePaths();
 		this.parseWorkspace(DEFAULT_SER);
-		
+
 		stage.sizeToScene();
 		timeline.play();
 	}
+
 	@Override
 	public Coordinate getBounds() {
 		return turtleView.getBounds();
 	}
+
 	@Override
 	public void updateVar(String a, String b) {
 		variablesView.updateVar(a, b);
 	}
+
 	@Override
 	public void showError(String a) {
 		Alert alert = new Alert(AlertType.ERROR);
@@ -99,45 +110,78 @@ public class View implements ViewAPI, Observer {
 		alert.setContentText(a);
 		alert.showAndWait();
 	}
+
 	public void setTurtle(TurtleManager tmIn) {
 		turtleManager = tmIn;
+		turtleManager.addActiveTurtles(workSpace.turtles);
 		tmIn.addObserver(this);
 		for (Turtle t : turtleManager.allTurtles()) {
 			turtleView.placeTurtle(t.getImage());
 			t.addObserver(this);
 		}
 		stateView.setTurtleManager(tmIn);
+		turtleVisualView.setTurtleManager(tmIn);
+		turtleManager.setPalette(colorPalette);
+	}
+
+	public void addTurtle(Node n) {
+		turtleView.placeTurtle(n);
+	}
+
+	public void removeTurtle(Node n) {
+		turtleView.removeTurtle(n);
+	}
+
+	public boolean containsTurtle(Node n) {
+		return turtleView.containsTurtle(n);
 	}
 
 	public void updateTurtle(Coordinate oldC, Coordinate newC, Pen p, Turtle t) {
 		turtleView.changePosition(oldC, newC, p, t);
 	}
 
-
 	@Override
 	public void updateUMethod(String a) {
 		methodsView.updateUMethods(a);
 	}
+
 	@Override
 	public void changeVariable(String a, String b) {
 		controller.updateVariable(a, b);
 	}
+
 	@Override
 	public void useUMethod(String a) {
 		controller.handleInput(a);
 	}
+
 	@Override
 	public void changeBackground(String a) {
 		turtleView.setBackgroundColor(a);
 	}
+
 	@Override
 	public void changeImage(Image a) {
-		turtleManager.setImage(a);
+		for (double d : turtleManager.getActiveTurtleIDs()) {
+			turtleManager.setImage(a, d);
+		}
 	}
-	@Override
-	public void changePenColor(Double a) {
-		turtleManager.setPenColor(a);
+
+	public void changeImage(Turtle t, double d) {
+		Image temp = paletteView.getImageOf(d);
+		if (temp != null) {
+			t.setImage(temp);
+		}
 	}
+
+	public void changePenColor(double color) {
+		if (colorPalette.checkValid(color)) {
+			for (double d : turtleManager.getActiveTurtleIDs()) {
+				turtleManager.setPenColor(color, d);
+			}
+		}
+	}
+
 	@Override
 	public void changeLanguage(String a) {
 		try {
@@ -151,66 +195,75 @@ public class View implements ViewAPI, Observer {
 		this.clearHistory();
 		workSpace.language = a;
 	}
+
 	@Override
 	public void runCommand(String a) {
 		controller.handleInput(a);
 	}
+
 	public void clearVariables() {
 		variablesView.clearVars();
 	}
+
 	public void clearMethods() {
 		methodsView.clearMethods();
 	}
+
 	public void clearHistory() {
 		promptView.clearHistory();
 	}
+
 	public void clearLines() {
 		turtleView.clear();
 	}
-	
+
+	public TurtleManager getTurtleManager() {
+		return turtleManager;
+	}
+
+	public void setDefaultWorkspace() {
+		saveWorkspace(resource.getString("Default"));
+	}
+
 	public void deleteWorkspace(String s) {
 		String fp = filePath.get(s);
 		fileName.remove(s);
+		filePath.remove(s);
 		File file = new File(fp);
 		file.delete();
 	}
+
 	public void saveWorkspace(String s) {
-		// TODO: background, files
-		String fp = SER_FILEPATH + s + ".ser";
-		filePath.put(s, fp);
-		fileName.add(s);
-		try {
-			File file = new File(fp);
-			file.getParentFile().mkdirs();
-			file.createNewFile();
-			FileOutputStream fileOut = new FileOutputStream(file);
-			ObjectOutputStream out = new ObjectOutputStream(fileOut);
-			out.writeObject(workSpace);
-			out.close();
-			fileOut.close();
-		} catch (IOException i) {
-			showError(resource.getString("SavingError"));
-		}
+		workSpace.turtles = turtleManager.getAllTurtleIDs();
+		workSpace.background = turtleView.getBackgroundColor();
+		controller.saveWorkspace(s, filePath, fileName, resource, workSpace);
 	}
+
 	public void loadWorkspace(String s) {
 		views.getChildren().clear();
 		parseWorkspace(filePath.get(s));
 	}
+
 	public void newWorkspace() throws Exception {
 		new Controller(new Stage());
 	}
-	
-	public void setPenSize(double d){
-		turtleManager.setPenSize(d);
+
+	public void setPenSize(double size) {
+		for (double d : turtleManager.getActiveTurtleIDs()) {
+			turtleManager.setPenSize(size, d);
+		}
 	}
-	
-	public void setPenState(boolean b){
-		turtleManager.setPenState(b);
+
+	public void setPenState(boolean b) {
+		for (double d : turtleManager.getActiveTurtleIDs()) {
+			turtleManager.setPenState(b, d);
+		}
 	}
 
 	private void step(double dt) {
 		controller.runCommand();
 	}
+
 	private Timeline createTimeline() {
 		Timeline ret = new Timeline();
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
@@ -218,6 +271,7 @@ public class View implements ViewAPI, Observer {
 		ret.getKeyFrames().add(frame);
 		return ret;
 	}
+
 	private void parseWorkspace(String fp) {
 		try {
 			FileInputStream fileIn = new FileInputStream(fp);
@@ -226,8 +280,11 @@ public class View implements ViewAPI, Observer {
 			in.close();
 			fileIn.close();
 			updateWorkspace();
+			updateVariablesAndMethods();
 		} catch (IOException i) {
-			showError(resource.getString("FileNotFound"));
+			if (!fp.equals(DEFAULT_SER)) {
+				showError(resource.getString("FileNotFound"));
+			}
 			if (fp.equals(DEFAULT_SER)) {
 				showError(resource.getString("DefaultMissing"));
 				makeNewDefault();
@@ -238,13 +295,21 @@ public class View implements ViewAPI, Observer {
 			showError(resource.getString("ClassNotFound"));
 		}
 	}
+
 	private void makeNewDefault() {
 		workSpace = new WorkSpace();
 		workSpace.language = resource.getString("DefaultLanguage");
-		workSpace.background = Integer.parseInt(resource.getString("DefaultBackground"));
+		workSpace.background = Double.parseDouble(resource.getString("DefaultBackground"));
 		workSpace.views = new ArrayList<String>(Arrays.asList(resource.getString("DefaultViews").split(",")));
 		workSpace.colorPalette = createMap("defaultColors");
 		workSpace.imagePalette = createMap("defaultImages");
+		String[] temp = resource.getString("DefaultTurtles").split(",");
+		workSpace.turtles = new ArrayList<Double>();
+
+		for (String s : temp) {
+			workSpace.turtles.add(Double.parseDouble(s));
+		}
+
 		try {
 			File file = new File(DEFAULT_SER);
 			file.getParentFile().mkdirs();
@@ -254,21 +319,23 @@ public class View implements ViewAPI, Observer {
 			out.writeObject(workSpace);
 			out.close();
 			fileOut.close();
+			getFilePaths();
 			updateWorkspace();
 		} catch (IOException i) {
 			showError(resource.getString("SavingError"));
 		}
 	}
-	
+
 	private Map<Double, String> createMap(String keysAndValues) {
-		Map<Double, String> map = new HashMap<Double,String>();
+		Map<Double, String> map = new HashMap<Double, String>();
 		String[] defaults = (String[]) (Arrays.asList(resource.getString(keysAndValues).split(";"))).toArray();
-		for(String defaultChoice: defaults) {
+		for (String defaultChoice : defaults) {
 			String[] tempChoice = (String[]) (Arrays.asList(defaultChoice.split(","))).toArray();
 			map.put(Double.parseDouble(tempChoice[1]), tempChoice[0]);
 		}
 		return map;
 	}
+
 	private void initializeCore() {
 		root = new GridPane();
 		scene = new Scene(root, WIDTH, HEIGHT);
@@ -294,6 +361,7 @@ public class View implements ViewAPI, Observer {
 		stage.setScene(scene);
 		stage.show();
 	}
+
 	private Object handleKeyInput(KeyCode code) {
 		if (code == KeyCode.L) {
 			controller.handleInput("left 5");
@@ -309,11 +377,13 @@ public class View implements ViewAPI, Observer {
 		}
 		return null;
 	}
+
 	private void showInitialViews(List<String> myViews) {
 		for (String s : myViews) {
 			updateView(s);
 		}
 	}
+
 	private void updateView(String viewName) {
 		try {
 			Field f = this.getClass().getDeclaredField(viewName);
@@ -339,33 +409,49 @@ public class View implements ViewAPI, Observer {
 			showError("Security Exception");
 		}
 	}
+
 	private void initializeViews() {
 		optionsTab = new OptionsTab(this, fileName, activeViews);
 		promptView = new PromptView(this);
-		turtleView = new TurtleView(this, workSpace.colorPalette, workSpace.background);
+		turtleView = new TurtleView(this, colorPalette.getPalette(), workSpace.background);
 		methodsView = new MethodsView(this);
 		variablesView = new VariablesView(this);
 		stateView = new StateView(this);
-		paletteView = new PaletteView(this, workSpace.colorPalette, workSpace.imagePalette);
+		paletteView = new PaletteView(this, colorPalette.getPalette(), workSpace.imagePalette);
 		penView = new PenView(this);
-		turtleVisualView = new TurtleVisualView(this, workSpace.colorPalette, workSpace.background);
-		
+
+		turtleVisualView = new TurtleVisualView(this, workSpace.background);
+
 		root.add(optionsTab.getParent(), 0, 0, 3, 1);
 		root.add(turtleView.getParent(), 1, 1, 1, 1);
 		root.add(promptView.getParent(), 2, 1, 1, 1);
-		
-		if(turtleManager!=null){
+
+		if (turtleManager != null) {
 			stateView.setTurtleManager(turtleManager);
+			turtleVisualView.setTurtleManager(turtleManager);
+			turtleManager.addActiveTurtles(workSpace.turtles);
 		}
 	}
+
 	private void updateWorkspace() {
 		// TODO finish updates i.e. background
 		activeViews = new ViewObservable<String>(workSpace.views);
 		activeViews.addObserver(this);
+		colorPalette = new ColorPalette(workSpace.colorPalette);
+		colorPalette.addObserver(this);
+		if (turtleManager != null) {
+			turtleManager.reset();
+			turtleManager.setPalette(colorPalette);
+		}
 		this.initializeViews();
 		this.showInitialViews(workSpace.views);
 		changeLanguage(workSpace.language);
 	}
+
+	private void updateVariablesAndMethods() {
+		controller.loadVariablesandMethods(workSpace);
+	}
+
 	private void getFilePaths() {
 		fileName = FXCollections.observableArrayList();
 		filePath = new HashMap<String, String>();
@@ -378,28 +464,53 @@ public class View implements ViewAPI, Observer {
 			}
 		}
 	}
+
 	public void update(Observable arg0, Object arg1) {
 		if (arg0 instanceof ViewObservable) {
 			updateView((String) arg1);
 			workSpace.views = activeViews.getList();
 		}
 		if (arg0 instanceof TurtleManager) {
-			Turtle t = (Turtle) arg1;
-			turtleView.placeTurtle(t.getImage());
-			t.addObserver(this);
-			stateView.updateStatus(t.getID());
-		}
-		if (arg0 instanceof Turtle) {
-			if(arg1 instanceof ArrayList<?>){
-				Turtle t = (Turtle) arg0;
-				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
-				updateTurtle(temp.get(0),temp.get(1),t.getPen(), t);
-
-				this.updateTurtle(temp.get(0),temp.get(1),t.getPen(),t);
+			if (arg1 == null) {
+				turtleVisualView.updateActive();
+			} else if (arg1 instanceof Turtle) {
+				Turtle t = (Turtle) arg1;
+				turtleView.placeTurtle(t.getImage());
+				t.addObserver(this);
 				stateView.updateStatus(t.getID());
 			}
-			if(arg1 instanceof Boolean){
+		}
+		if (arg0 instanceof Turtle) {
+			Turtle t = (Turtle) arg0;
+			if (arg1 == null) {
 				this.clearLines();
+			} else if (arg1 instanceof ArrayList<?>) {
+				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
+				updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
+
+				this.updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
+				stateView.updateStatus(t.getID());
+			} else if (arg1 instanceof Boolean) {
+				boolean b = (boolean) arg1;
+				if (b) {
+					this.addTurtle(t.getImage());
+				} else {
+					this.removeTurtle(t.getImage());
+				}
+			} else if (arg1 instanceof Double) {
+				double d = (double) arg1;
+				this.changeImage(t, d);
+			}
+		}
+		if (arg0 instanceof ColorPalette) {
+			ColorPalette cp = (ColorPalette) arg0;
+			if (arg1 == null) {
+				turtleView.setBackgroundColor(cp.getBackgroundColor());
+			}
+			if (arg1 instanceof SingleColor) {
+				SingleColor temp = (SingleColor) arg1;
+				turtleView.updateColor(temp.getIndex(), temp.getColor());
+				paletteView.updateColorPalette(temp.getColor(), temp.getIndex());
 			}
 		}
 	}

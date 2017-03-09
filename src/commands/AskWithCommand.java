@@ -17,24 +17,12 @@ public class AskWithCommand extends LoopCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args, VariableManager vars) {
-		myCommands = (ArrayList<Command>) args.get(1);
-		Command condition = ((List<Command>) args.get(0)).get(0);
-		List<Double> possibleTurtles = getPossibleTurtles(condition, vars);
-		Double returnValue = 0.0;
-		for (Double d : possibleTurtles) {
-			returnValue = runCommands(1.0, 1.0, 1.0, null, vars, d);
-		}
-		return returnValue;
-	}
-
-	@Override
 	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
 		myTurtleManager = turtles;
 		myTurtle = turtles.getTurtle(k);
 		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(0), vars, true));
-		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(1), vars, false));
+		myConvertedArguments.add(myArguments.get(0));
+		myConvertedArguments.add(myArguments.get(1));
 		this.changeToFinished();
 		return this.getValue(myConvertedArguments, vars);
 	}
@@ -47,6 +35,17 @@ public class AskWithCommand extends LoopCommand {
 			}
 		}
 		return myIDList;
+	}
+
+	@Override
+	protected Double calculate(List<Object> args, VariableManager vars) {
+		Command condition = ((Command) args.get(0));
+		List<Double> possibleTurtles = getPossibleTurtles(condition, vars);
+		Double returnValue = 0.0;
+		for (Double d : possibleTurtles) {
+			returnValue = runCommands(1.0, 1.0, 1.0, null, vars, d);
+		}
+		return returnValue;
 	}
 
 }

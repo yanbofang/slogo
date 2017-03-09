@@ -61,8 +61,19 @@ public class OptionsTab implements SubcomponentAPI {
 		createSaveButton();
 		createLoadCombo();
 		createDeleteCombo();
+		createSetButton();
 		createLanguageCombo();
 		createHelpButton();
+	}
+	
+	private void createSetButton(){
+		Button helpBtn = createButton(resource.getString("Set"));
+		helpBtn.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent event) {
+				view.setDefaultWorkspace();
+			}
+		});
 	}
 
 	private void createDeleteCombo() {

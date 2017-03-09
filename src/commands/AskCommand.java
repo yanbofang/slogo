@@ -17,25 +17,24 @@ public class AskCommand extends LoopCommand {
 	}
 
 	@Override
-	public Double getValue(List<Object> args, VariableManager vars) {
-		myCommands = (ArrayList<Command>) args.get(1);
+	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
+		myTurtleManager = turtles;
+		myTurtle = turtles.getTurtle(k);
+		myConvertedArguments = new ArrayList<Object>();
+		myConvertedArguments.add(convertArguments(myArguments.get(0).getAllArguments(), vars, true));
+		myConvertedArguments.add(myArguments.get(1));
+		this.changeToFinished();
+		return this.getValue(myConvertedArguments, vars);
+	}
+
+	@Override
+	protected Double calculate(List<Object> args, VariableManager vars) {
 		List<Double> lst = (List<Double>) args.get(0);
 		Double returnValue = 0.0;
 		for (Double d : lst) {
 			returnValue = runCommands(1.0, 1.0, 1.0, null, vars, d);
 		}
 		return returnValue;
-	}
-
-	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(0), vars, true));
-		myConvertedArguments.add(convertArguments((List<Object>) myArguments.get(1), vars, false));
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, vars);
 	}
 
 }

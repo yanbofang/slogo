@@ -2,13 +2,13 @@ package turtles;
 
 public class Pen {
 	boolean penDown;
-	double penSize;
-	double penColor;
+	Double penSize;
+	Double penColor;
 	
 	public Pen() {
 		penDown = true;
-		penSize = 1;
-		penColor = 0;
+		penSize = 1.0;
+		penColor = 0.0;
 	}
 	
 	public boolean showPen() {

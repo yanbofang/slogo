@@ -21,16 +21,16 @@ import turtles.TurtleManager;
 public class TurtleVisualView implements SubcomponentAPI {
 
 	private View view;
-	private TurtleView tView;
 	private ResourceBundle resource;
 	private VBox turtleView;
 	private TurtleManager tManager;
 	private FlowPane activeListDisplay;
 	private List<Turtle> activeTurtles;
+	private List<Label> labels;
 	
-	public TurtleVisualView(View viewIn, Map map, double gbIndex){
+	public TurtleVisualView(View viewIn, double gbIndex){
 		view = viewIn;
-		tView = new TurtleView(view, map, gbIndex);
+		labels = new ArrayList<Label>();
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		turtleView = new VBox();
 		Label title = new Label("Toggle Visibility of Active Turtle");
@@ -46,8 +46,9 @@ public class TurtleVisualView implements SubcomponentAPI {
 		if (tManager != null) {
 			activeTurtles = tManager.getActiveTurtles();
 			for(Turtle turtle: activeTurtles) {
-				Label currentTurtle = new Label(turtle.toString());
+				Label currentTurtle = new Label(Double.toString(turtle.getID()));
 				turtleView.getChildren().add(currentTurtle);
+				labels.add(currentTurtle);
 				toggleTurtle(currentTurtle, turtle);
 			}
 			return activeTurtles;
@@ -60,11 +61,11 @@ public class TurtleVisualView implements SubcomponentAPI {
 
 	        @Override
 	        public void handle(MouseEvent t) {
-	            if (tView.getParent().getChildrenUnmodifiable().contains(turtle.getImage())) {
-	            	tView.removeTurtle(turtle.getImage());
+	            if (view.containsTurtle(turtle.getImage())) {
+	            	view.removeTurtle(turtle.getImage());
 	            }
 	            else {
-	            	tView.placeTurtle(turtle.getImage());
+	            	view.addTurtle(turtle.getImage());
 	            }
 	        }
 	    });
@@ -76,7 +77,9 @@ public class TurtleVisualView implements SubcomponentAPI {
 	}
 	
 	public void updateActive() {
-		turtleView.getChildren().remove(activeTurtles);
+		for(Label l : labels){
+			turtleView.getChildren().remove(l);
+		}
 		createActiveDisplay();
 	}
 

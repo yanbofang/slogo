@@ -81,7 +81,7 @@ public interface ViewAPI {
 	 * @param a
 	 * 6 hexadecimal values specifying a color i.e. "FFFFFF"
 	 */
-	public void changePenColor(Double a);
+	public void changePenColor(double a);
 	
 	/**
 	 * Change the language of the input commands

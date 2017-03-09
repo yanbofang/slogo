@@ -15,8 +15,10 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.VBox;
@@ -148,5 +150,14 @@ public class PaletteView implements SubcomponentAPI {
 	public void updateTurtlePalette(String color, double index) {
 		turtleMap.put(index, color);
 		turtleButtonLabels = updateLists(turtleMap);
+	}
+	
+	public Image getImageOf(double d){
+		if(turtleMap.containsKey(d)){
+			return new Image(this.getClass().getClassLoader().getResourceAsStream(resource.getString(turtleMap.get(d))));
+		}
+		else{
+			return null;
+		}
 	}
 }

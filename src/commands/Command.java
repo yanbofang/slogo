@@ -2,22 +2,22 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import turtles.Turtle;
 import turtles.TurtleManagerCommandAPI;
 import backend.CommandHandler;
-
 import backend.VariableManager;
 
 public interface Command {
 
-	void add(Object... args);
-
-	// void clearArguments();
+	void add(Command... args);
 
 	String getInstruction();
 
-	Object getArguments(int k);
+	Command getArguments(int k);
+	
+	List<Command> getAllArguments();
 
 	boolean isFinished();
 
@@ -30,4 +30,8 @@ public interface Command {
 	void performBeforeExecution();
 
 	boolean getRunTurtles();
+	
+	public int getCurrentArgumentSize();
+	
+//	public boolean infiniteArguments();
 }

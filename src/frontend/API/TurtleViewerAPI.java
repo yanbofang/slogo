@@ -31,7 +31,7 @@ public interface TurtleViewerAPI extends SubcomponentAPI{
 	 * @param a
 	 * 6 hexidecimal string of color (ex: 3c3c3c)
 	 */
-	public void setPenColor(String a);
+//	public void setPenColor(String a);
 	
 	/**
 	 * Places turtle on the screen

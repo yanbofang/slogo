@@ -19,25 +19,26 @@ import javafx.scene.shape.Line;
 import turtles.Pen;
 import turtles.Turtle;
 
-public class TurtleView implements TurtleViewerAPI{
+public class TurtleView implements TurtleViewerAPI {
 
 	private View view;
 	private ResourceBundle resource;
 	private Pane viewer;
 	private ArrayList<Line> lines;
-	private Color penColor;
-	private Map<Double,String> colorMap;
+	private Map<Double, String> colorMap;
 	private MoveAnimation animation;
-	
-	public TurtleView(View viewIn, Map mapIn, double gbIndex) {
+	private double colorIndex;
+
+	public TurtleView(View viewIn, Map<Double, String> mapIn, double bgIndex) {
 		view = viewIn;
 		colorMap = mapIn;
+		colorIndex = bgIndex;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		viewer = new Pane();
-		viewer.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
+		viewer.setBackground(new Background(new BackgroundFill(Color.valueOf(colorMap.get(colorIndex)), CornerRadii.EMPTY, Insets.EMPTY)));
 		lines = new ArrayList<Line>();
 	}
-	
+
 	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen, Turtle turtle) {
 		//animation = new MoveAnimation(view, turtle.getImage(), oldC, newC);
 		if (pen.showPen()) {
@@ -46,15 +47,15 @@ public class TurtleView implements TurtleViewerAPI{
 			newLine.setStrokeWidth(pen.getSize());
 			lines.add(newLine);
 			viewer.getChildren().add(newLine);
-		}	
+		}
 	}
 
 	public void clear() {
-		for (Line line: lines) {
+		for (Line line : lines) {
 			viewer.getChildren().remove(line);
 		}
 	}
-	
+
 	@Override
 	public Parent getParent() {
 		return viewer;
@@ -70,23 +71,40 @@ public class TurtleView implements TurtleViewerAPI{
 
 	@Override
 	public void setBackgroundColor(String a) {
+		for(double k : colorMap.keySet()){
+			if(a.equals(colorMap.get(k))){
+				colorIndex = k;
+			}
+		}
 		Color tempColor = Color.valueOf(a);
+		viewer.setBackground(new Background(new BackgroundFill(tempColor, CornerRadii.EMPTY, Insets.EMPTY)));
+	}
+	
+	public void setBackgroundColor(double d){
+		colorIndex = d;
+		Color tempColor = Color.valueOf(colorMap.get(d));
 		viewer.setBackground(new Background(new BackgroundFill(tempColor, CornerRadii.EMPTY, Insets.EMPTY)));
 	}
 
 	@Override
-	public void setPenColor(String a) {
-		penColor = Color.valueOf(a);
+	public void placeTurtle(Node a) {
+		viewer.getChildren().add(a);
 	}
 
-	@Override
-	public void placeTurtle(Node a) {
-		viewer.getChildren().add(a);	
-	}
-	
 	public void removeTurtle(Node a) {
 		viewer.getChildren().remove(a);
 	}
-
+	
+	public boolean containsTurtle(Node n) {
+		return viewer.getChildren().contains(n);
+	}
+	
+	public void updateColor(double indexIn, String colorIn){
+		colorMap.put(indexIn, colorIn);
+	}
+	
+	public double getBackgroundColor(){
+		return colorIndex;
+	}
 
 }
