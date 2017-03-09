@@ -39,15 +39,9 @@ public class TurtleView implements TurtleViewerAPI {
 	}
 
 	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen, Turtle turtle) {
+		//animation = new MoveAnimation(view, turtle.getImage(), oldC, newC);
 		if (pen.showPen()) {
-
-			// animation = new MoveAnimation(view, turtle.getImage(), oldC,
-			// newC);
-			// need turtle
-			// animation = new MoveAnimation(view, pen, oldC, newC);
-			// animation = new MoveAnimation(view, turtle.getImage(), oldC,
-			// newC);
-			Line newLine = new Line(oldC.getX(), oldC.getY(), newC.getX(), newC.getY());
+			Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
 			newLine.setStroke(Color.valueOf(colorMap.get(pen.getColor())));
 			newLine.setStrokeWidth(pen.getSize());
 			lines.add(newLine);

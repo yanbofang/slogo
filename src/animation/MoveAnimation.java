@@ -24,7 +24,7 @@ public class MoveAnimation {
     private Animation myAnimation;
 	    
 	    
-    public MoveAnimation(View viewIn, Node actor, Coordinate oldC, Coordinate newC) {
+    public MoveAnimation(Node actor, Coordinate oldC, Coordinate newC) {
     	myActor = actor;
 		myAnimation = makeAnimation(myActor, oldC, newC);
 		// start animation
