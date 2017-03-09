@@ -59,7 +59,7 @@ public class VisualOptionsView implements SubcomponentAPI {
 		layout.getChildren().add(mView.getParent());
 		vView = new VariablesView(view);
 		layout.getChildren().add(vView.getParent());
-		pView = new PaletteView(view);
+		pView = new PaletteView(view, null, null);
 		layout.getChildren().add(pView.getParent());
 		tView = new TurtleVisualView(view);
 		layout.getChildren().add(tView.getParent());

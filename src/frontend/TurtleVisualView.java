@@ -60,7 +60,7 @@ public class TurtleVisualView implements SubcomponentAPI {
 
 	        @Override
 	        public void handle(MouseEvent t) {
-	            if (tView.getParent().getChildrenUnmodifiable().contains(turtle)) {
+	            if (tView.getParent().getChildrenUnmodifiable().contains(turtle.getImage())) {
 	            	tView.removeTurtle(turtle.getImage());
 	            }
 	            else {
