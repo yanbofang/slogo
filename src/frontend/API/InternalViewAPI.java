@@ -1,12 +1,43 @@
 package frontend.API;
 
 import coordinate.Coordinate;
+import javafx.scene.Node;
 import javafx.scene.image.Image;
 import turtles.Pen;
 import turtles.Turtle;
 import turtles.TurtleManager;
 
 public interface InternalViewAPI {
+	/**
+	 * Have Model run the given string as code
+	 * @param a
+	 * Text input from user
+	 */
+	public void runCommand(String a);
+	
+	/**
+	 * Add turtle to be displayed in the UI
+	 * @param n
+	 * Node of turtle
+	 */
+	public void addTurtle(Node n);
+	
+	/**
+	 * Remove turtle from display in the UI
+	 * @param n
+	 * Node of turtle
+	 */
+	public void removeTurtle(Node n);
+	
+	/**
+	 * Checks if current turtle is on display
+	 * @param n
+	 * Node of turtle
+	 * @return
+	 * True if turtle is on display
+	 */
+	public boolean containsTurtle(Node n);
+	
 	/**
 	 * Have the backend update a variable changed in the UI
 	 * @param a
@@ -44,12 +75,6 @@ public interface InternalViewAPI {
 	 */
 	public void changeLanguage(String a);
 	
-	/**
-	 * Have Model run the given string as code
-	 * @param a
-	 * Text input from user
-	 */
-	public void runCommand(String a);
 	
 	
 	/**

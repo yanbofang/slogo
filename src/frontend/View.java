@@ -162,9 +162,7 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 				this.clearLines();
 			} else if (arg1 instanceof ArrayList<?>) {
 				ArrayList<Coordinate> temp = (ArrayList<Coordinate>) arg1;
-				updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
-
-				this.updateTurtle(temp.get(0), temp.get(1), t.getPen(), t);
+				turtleView.changePosition(temp.get(0), temp.get(1), t.getPen(), t);
 				stateView.updateStatus(t.getID());
 			} else if (arg1 instanceof Boolean) {
 				boolean b = (boolean) arg1;
@@ -207,10 +205,6 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 
 	public boolean containsTurtle(Node n) {
 		return turtleView.containsTurtle(n);
-	}
-
-	public void updateTurtle(Coordinate oldC, Coordinate newC, Pen p, Turtle t) {
-		turtleView.changePosition(oldC, newC, p, t);
 	}
 
 	@Override
@@ -314,6 +308,11 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 	}
 
 //******************************Private Methods******************************
+	
+	/**
+	 * Create the timeline for animations to run off of
+	 * @return
+	 */
 	private Timeline createTimeline() {
 		Timeline ret = new Timeline();
 		KeyFrame frame = new KeyFrame(Duration.millis(MILLISECOND_DELAY), e -> step(SECOND_DELAY));
@@ -322,10 +321,18 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		return ret;
 	}
 
+	/**
+	 * executes on each frame
+	 * @param dt
+	 * Change in time
+	 */
 	private void step(double dt) {
 		controller.runCommand();
 	}
 	
+	/**
+	 * Creates the skeleton UI of the workspace
+	 */
 	private void initializeCore() {
 		root = new GridPane();
 		scene = new Scene(root, WIDTH, HEIGHT);
@@ -352,6 +359,9 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		stage.show();
 	}
 
+	/**
+	 * Find all workspace files saved
+	 */
 	private void getFilePaths() {
 		fileName = FXCollections.observableArrayList();
 		filePath = new HashMap<String, String>();
@@ -365,6 +375,11 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		}
 	}
 
+	/**
+	 * Parse the workspace save file
+	 * @param fp
+	 * filepath of the workspace save file
+	 */
 	private void parseWorkspace(String fp) {
 		try {
 			FileInputStream fileIn = new FileInputStream(fp);
@@ -389,6 +404,9 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		}
 	}
 
+	/**
+	 * default workspace not found, create new default file from bundle
+	 */
 	private void makeNewDefault() {
 		workSpace = new WorkSpace();
 		workSpace.language = resource.getString("DefaultLanguage");
@@ -419,6 +437,13 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		}
 	}
 
+	/**
+	 * Create a map for default values to be saved in workspace
+	 * @param keysAndValues
+	 * Single string of keys and values as: key,value,key,value
+	 * @return
+	 * map of double to string
+	 */
 	private Map<Double, String> createMap(String keysAndValues) {
 		Map<Double, String> map = new HashMap<Double, String>();
 		String[] defaults = (String[]) (Arrays.asList(resource.getString(keysAndValues).split(";"))).toArray();
@@ -429,6 +454,9 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		return map;
 	}
 
+	/**
+	 * update environment with parameters defined in workspace
+	 */
 	private void updateWorkspace() {
 		// TODO finish updates i.e. background
 		activeViews = new ViewObservable<String>(workSpace.views);
@@ -444,6 +472,9 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		changeLanguage(workSpace.language);
 	}
 
+	/**
+	 * Generate subcomponents with necessary information
+	 */
 	private void initializeViews() {
 		optionsTab = new OptionsTab(this, fileName, activeViews);
 		promptView = new PromptView(this);
@@ -467,12 +498,22 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		}
 	}
 
+	/**
+	 * Display views in UI
+	 * @param myViews
+	 * Views to be displayed in the UI
+	 */
 	private void showInitialViews(List<String> myViews) {
 		for (String s : myViews) {
 			updateView(s);
 		}
 	}
 
+	/**
+	 * Add or remove parents of subcomponents to UI
+	 * @param viewName
+	 * the subcomponent to add or remove
+	 */
 	private void updateView(String viewName) {
 		try {
 			Field f = this.getClass().getDeclaredField(viewName);
@@ -499,10 +540,19 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		}
 	}
 
+	/**
+	 * Have backend load libraries of variables and methods from workspace
+	 */
 	private void updateVariablesAndMethods() {
 		controller.loadVariablesandMethods(workSpace);
 	}
 
+	/**
+	 * Allow user to move the turtle through the UI
+	 * @param code
+	 * key pressed
+	 * @return
+	 */
 	private Object handleKeyInput(KeyCode code) {
 		if (code == KeyCode.L) {
 			controller.handleInput("left 5");
