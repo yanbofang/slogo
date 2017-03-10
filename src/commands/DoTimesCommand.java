@@ -14,7 +14,6 @@ public class DoTimesCommand extends LoopCommand {
 
 	public DoTimesCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		setRunAllTurtles(true);
 	}
 
 	@Override

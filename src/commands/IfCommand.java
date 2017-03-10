@@ -11,7 +11,6 @@ public class IfCommand extends ConditionalCommand {
 
 	public IfCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		setRunAllTurtles(true);
 	}
 
 	@Override

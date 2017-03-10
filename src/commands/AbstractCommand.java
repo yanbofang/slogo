@@ -8,7 +8,7 @@ import backend.ParserException;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
-public abstract class AbstractCommand implements Command{
+public abstract class AbstractCommand implements Command {
 
 	/**
 	 * 
@@ -173,21 +173,23 @@ public abstract class AbstractCommand implements Command{
 
 	public abstract Double getValue(List<Object> args, VariableManager localVariables);
 
-//	/**
-//	 * 
-//	 * @return - value that we want to send to UI to be displayed
-//	 */
-//	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-//		myTurtleManager = turtles;
-//		VariableManager localVariables = new VariableManager();
-//		localVariables.addAll(vars.getVariableMap());
-//		myTurtle = turtles.getTurtle(k);
-//		myConvertedArguments = argumentsToConvert(localVariables);// convertArguments(myArguments,													// true);
-//		this.changeToFinished();
-//		return this.getValue(myConvertedArguments, localVariables);
-//	}
-//	
-	
+	// /**
+	// *
+	// * @return - value that we want to send to UI to be displayed
+	// */
+	// public Double executeCommand(TurtleManagerCommandAPI turtles,
+	// VariableManager vars, Double k) {
+	// myTurtleManager = turtles;
+	// VariableManager localVariables = new VariableManager();
+	// localVariables.addAll(vars.getVariableMap());
+	// myTurtle = turtles.getTurtle(k);
+	// myConvertedArguments = argumentsToConvert(localVariables);//
+	// convertArguments(myArguments, // true);
+	// this.changeToFinished();
+	// return this.getValue(myConvertedArguments, localVariables);
+	// }
+	//
+
 	/**
 	 * 
 	 * @return - value that we want to send to UI to be displayed
@@ -197,7 +199,8 @@ public abstract class AbstractCommand implements Command{
 		VariableManager localVariables = new VariableManager();
 		localVariables.addAll(vars.getVariableMap());
 		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = argumentsToConvert(localVariables);// convertArguments(myArguments,													// true);
+		myConvertedArguments = argumentsToConvert(localVariables);// convertArguments(myArguments,
+																	// // true);
 		this.changeToFinished();
 		return this.getValue(myConvertedArguments, localVariables);
 	}
