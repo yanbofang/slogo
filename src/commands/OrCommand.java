@@ -21,10 +21,10 @@ public class OrCommand extends AbstractCommand {
 				.filter(d -> d != 0.0)
 				.toArray();
 		if (testArray.length > 0) {
-			myValue = 1.0;
+			setValue(1.0);
 		} else {
-			myValue = 0.0;
+			setValue(0.0);
 		}
-		return myValue;
+		return getValue();
 	}
 }

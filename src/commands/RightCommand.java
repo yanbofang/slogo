@@ -15,7 +15,7 @@ public class RightCommand extends MoveCommand {
 	
 	public Double calculateValue(List<Object> args) {
 		args.stream()
-			.forEach(d-> myTurtle.setRotate(myTurtle.getRotate() + (Double) d));
+			.forEach(d-> getTurtle().setRotate(getTurtle().getRotate() + (Double) d));
 		return (Double) args.get(0);
 	}
 	

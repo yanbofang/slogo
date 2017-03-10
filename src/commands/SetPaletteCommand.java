@@ -15,7 +15,7 @@ public class SetPaletteCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
-		myTurtleManager.addColor((Double) args.get(0), (Double) args.get(1), (Double) args.get(2),
+		getTurtleManager().addColor((Double) args.get(0), (Double) args.get(1), (Double) args.get(2),
 				(Double) args.get(3));
 		return (Double) args.get(0);
 	}

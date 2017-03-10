@@ -14,7 +14,6 @@ public class DoTimesCommand extends LoopCommand {
 
 	public DoTimesCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		runAllTurtles = true;
 	}
 
 	@Override
@@ -22,8 +21,8 @@ public class DoTimesCommand extends LoopCommand {
 		List<Command> lst = (List<Command>) args.get(0);
 		Variable var = new Variable(((Command) lst.get(0)).getInstruction(), 1.0);
 		vars.addVariable(var);
-		return runCommands(1.0, ((Command) lst.get(1)).executeCommand(myTurtleManager, vars, myTurtle.getID()), 1.0,
-				var, vars, myTurtle.getID());
+		return runCommands(1.0, ((Command) lst.get(1)).executeCommand(getTurtleManager(), vars, getTurtle().getID()), 1.0,
+				var, vars, getTurtle().getID());
 	}
 
 }

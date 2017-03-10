@@ -14,7 +14,7 @@ public class ForCommand extends LoopCommand {
 
 	public ForCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		runAllTurtles = true;
+		setRunAllTurtles(true);
 	}
 
 	@Override
@@ -22,9 +22,9 @@ public class ForCommand extends LoopCommand {
 		List<Command> lst = (List<Command>) args.get(0);
 		List<Object> positions = convertArguments(lst.subList(1, lst.size()), vars, true);
 		Variable var = new Variable(lst.get(0).getInstruction(), (Double) positions.get(0));
-		myVariables.addVariable(var);
+		vars.addVariable(var);
 		return runCommands((Double) positions.get(0), (Double) positions.get(1), (Double) positions.get(2), 
-				var, vars, myTurtle.getID());
+				var, vars, getTurtle().getID());
 	}
 
 

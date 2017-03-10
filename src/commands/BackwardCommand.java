@@ -22,7 +22,7 @@ public class BackwardCommand extends MoveCommand {
 			.mapToDouble(d -> (Double) d)
 			.forEach(d -> {
 				myCoord = getNewCoord(d*-1);
-				myTurtle.setLocation(myCoord, false);
+				getTurtle().setLocation(myCoord, false);
 			});
 		return (Double) args.get(args.size()-1);
 	}

@@ -16,7 +16,7 @@ public class GetPenColorCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
-		return myTurtle.getPen().getColor();
+		return getTurtle().getPen().getColor();
 	}
 
 }

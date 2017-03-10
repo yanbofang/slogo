@@ -19,8 +19,8 @@ public class AskCommand extends LoopCommand {
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		convArgs.add(convertArguments(myArguments.get(0).getAllArguments(), vars, true));
-		convArgs.add(myArguments.get(1));
+		convArgs.add(convertArguments(getArguments().get(0).getAllArguments(), vars, true));
+		convArgs.add(getArguments().get(1));
 		return convArgs;
 	}
 

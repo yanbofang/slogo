@@ -23,11 +23,11 @@ public class EqualCommand extends AbstractCommand {
 			.filter(d -> d == reference)
 			.toArray();
 		if (compareList.length == args.size()) {
-			myValue = 1.0;
+			setValue(1.0);
 		} else {
-			myValue = 0.0;
+			setValue(0.0);
 		}
-		return myValue;
+		return getValue();
 	}
 
 }

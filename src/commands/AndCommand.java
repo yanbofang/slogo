@@ -22,11 +22,11 @@ public class AndCommand extends AbstractCommand {
 			.filter(d -> d != 0.0)
 			.forEach(d -> correctList.add(d));
 		if (correctList.size() == args.size()) {
-			myValue = 1.0;
+			setValue(1.0);
 		} else {
-			myValue = 0.0;
+			setValue(0.0);
 		}
-		return myValue;
+		return getValue();
 	}
 
 }

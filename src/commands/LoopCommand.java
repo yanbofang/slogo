@@ -18,8 +18,8 @@ public abstract class LoopCommand extends AbstractCommand {
 
 	public LoopCommand(String instruction, VariableManager variables, UserMethodManager methods, int numOfExpressions) {
 		super(instruction, variables, methods, numOfExpressions);
-		runNested = false;
-		runAllTurtles = true;
+		setRunNested(false);
+		setRunAllTurtles(true);
 	}
 
 	@Override
@@ -38,7 +38,7 @@ public abstract class LoopCommand extends AbstractCommand {
 				vars.addVariable(new Variable(var.getVariableName(), (double) i));
 			}
 			myListCommand.resetCommand();
-			returnValue = myListCommand.executeCommand(myTurtleManager, vars, k);
+			returnValue = myListCommand.executeCommand(getTurtleManager(), vars, k);
 		}
 		return returnValue;
 	}
@@ -46,8 +46,8 @@ public abstract class LoopCommand extends AbstractCommand {
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		convArgs.add(myArguments.get(0).getAllArguments());
-		convArgs.add(myArguments.get(1));
+		convArgs.add(getArguments().get(0).getAllArguments());
+		convArgs.add(getArguments().get(1));
 		return convArgs;
 	}
 }

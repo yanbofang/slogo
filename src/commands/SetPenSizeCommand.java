@@ -18,7 +18,7 @@ public class SetPenSizeCommand extends AbstractCommand {
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
 		Double value = (Double) args.get(args.size()-1);
-		myTurtleManager.setPenSize(value, myTurtle.getID());
+		getTurtleManager().setPenSize(value, getTurtle().getID());
 		return value;
 	}
 

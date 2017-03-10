@@ -12,13 +12,13 @@ public class HeadingCommand extends AbstractCommand {
 	public HeadingCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSION);
-		runAllTurtles = true;
+		setRunAllTurtles(true);
 	}
 
 	
 
 	public Double getValue(List<Object> args, VariableManager vars) {
-		return myTurtle.getRotate();
+		return getTurtle().getRotate();
 	}
 
 }

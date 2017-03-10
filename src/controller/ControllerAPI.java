@@ -16,8 +16,6 @@ public interface ControllerAPI {
 
 	void changeLanguage(String newLanguage) throws Exception;
 
-	void changeImage(Image a);
-
 	void saveWorkspace(String s, Map<String, String> filePath, ObservableList<String> fileName, ResourceBundle resource,
 			WorkSpace workspace);
 
