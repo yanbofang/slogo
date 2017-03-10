@@ -35,3 +35,7 @@ When frontend is parsing a workspace, frontend will signal for backend to also p
 * `update(Obj arg0, obj arg1);`
 
 Adding this method was necessary for making the `View` class become an observer. By doing this, we avoid multiple changes to API for frontend to react to changes in the backend. This is a major change, since it allows us to observe multiple objects that are only changed in the backend. By being an observer, this change gives us a much wider range of implementation without having to create more calls between the frontend and the backend.
+
+* `setTurtleManager(TurtleManager tmIn)`
+
+This method is necessary for frontend to be able to visually interact with turtles. Originally our intentions were to leave `TurtleManager` in the backend; however, it made more sense to have it be able to be changed in the frontend and the backend. The only times changes affected the other is only when a executes a command that changes a visual in the backend which is reflected in the frontend through the observer. This gives us much more versatility with how frontend can retrieve information about turtles, without having to make several extra calls.

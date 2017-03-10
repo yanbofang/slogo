@@ -12,6 +12,8 @@ import turtles.Turtle;
  *
  */
 public interface TurtleViewerAPI extends SubcomponentAPI{
+	
+	
 	/**
 	 * Get the size of the subcomponent as the bottom-rightmost point
 	 * @return
@@ -22,16 +24,9 @@ public interface TurtleViewerAPI extends SubcomponentAPI{
 	/**
 	 * Change the background color of the turtle area
 	 * @param a
-	 * 6 hexidecimal string of color (ex: 3c3c3c)
+	 * Double of an index of a color in colorPalette
 	 */
-	public void setBackgroundColor(String a);
-	
-	/**
-	 * Change the pen color of the turtle area
-	 * @param a
-	 * 6 hexidecimal string of color (ex: 3c3c3c)
-	 */
-//	public void setPenColor(String a);
+	public void setBackgroundColor(Double a);
 	
 	/**
 	 * Places turtle on the screen
@@ -39,6 +34,13 @@ public interface TurtleViewerAPI extends SubcomponentAPI{
 	 * Node containing the turtle
 	 */
 	public void placeTurtle(Node a);
+	
+	/**
+	 * Removes turtle on the screen
+	 * @param a
+	 * Node containing the turtle
+	 */
+	public void removeTurtle(Node a);
 	
 	/**
 	 * Adds a line to the screen that indicates the change in position for the turtle
@@ -54,4 +56,27 @@ public interface TurtleViewerAPI extends SubcomponentAPI{
 	 * Removes all previously created lines from the screen
 	 */
 	public void clear();
+	
+	/**
+	 * Returns a boolean indicating whether the root contains node n
+	 * @return
+	 * @param n
+	 * Node containing the turtle
+	 */
+	public boolean containsTurtle(Node n);
+	
+	/**
+	 * Adds a index color pair to the colorPalette
+	 * @param indexIn
+	 * User defined index number
+	 * @param colorIn	
+	 * String of color name
+	 */
+	public void updateColor(double indexIn, String colorIn);
+	
+	/**
+	 * Returns index of current background color
+	 * @return
+	 */
+	public double getBackgroundColor();
 }

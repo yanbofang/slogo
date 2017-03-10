@@ -16,11 +16,10 @@ import backend.Model;
 import backend.VariableManager;
 import backend.API.ModelAPI;
 import backend.UserMethodManager;
-import frontend.UserMethodObserver;
-import frontend.VariableManagerObserver;
 import frontend.View;
 import frontend.WorkSpace;
-import frontend.API.ViewAPI;
+import frontend.API.ExternalViewAPI;
+
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.image.Image;
@@ -31,7 +30,7 @@ public class Controller implements ControllerAPI {
 	private static final String SER_FILEPATH = "src/resources/";
 	private static final String DEFAULT_SER = "src/resources/default.ser";
 	private ModelAPI model;
-	private ViewAPI view;
+	private ExternalViewAPI view;
 	private VariableManager variables;
 	private VariableManagerObserver variablesObserver;
 	private TurtleManager turtle;
@@ -42,7 +41,7 @@ public class Controller implements ControllerAPI {
 		variables = new VariableManager();
 		view = new View(arg0, this);
 		turtle = new TurtleManager(new Coordinate(view.getBounds().getX(), view.getBounds().getY()));
-		view.setTurtle(turtle);
+		view.setTurtleManager(turtle);
 		userMethods = new UserMethodManager();
 		changeLanguage("English");
 		variablesObserver = new VariableManagerObserver(variables, view);

@@ -1,11 +1,13 @@
-package frontend;
+package frontend.subcomponents;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import frontend.View;
 import frontend.API.SubcomponentAPI;
+import frontend.API.TurtleVisualViewAPI;
 import javafx.event.EventHandler;
 import javafx.scene.Node;
 import javafx.scene.Parent;
@@ -18,7 +20,7 @@ import turtles.Turtle;
 import turtles.TurtleAPI;
 import turtles.TurtleManager;
 
-public class TurtleVisualView implements SubcomponentAPI {
+public class TurtleVisualView implements TurtleVisualViewAPI {
 
 	private View view;
 	private ResourceBundle resource;
@@ -76,6 +78,7 @@ public class TurtleVisualView implements SubcomponentAPI {
 		return turtleView;
 	}
 	
+	@Override
 	public void updateActive() {
 		for(Label l : labels){
 			turtleView.getChildren().remove(l);
@@ -83,6 +86,7 @@ public class TurtleVisualView implements SubcomponentAPI {
 		createActiveDisplay();
 	}
 
+	@Override
 	public void setTurtleManager(TurtleManager tIn) {
 		tManager = tIn;
 		activeTurtles = createActiveDisplay();
