@@ -1,4 +1,4 @@
-package frontend;
+package frontend.subcomponents;
 
 import java.util.HashMap;
 import java.util.ResourceBundle;
@@ -6,6 +6,7 @@ import java.util.TreeSet;
 
 import controller.TurtleInfo;
 import coordinate.Coordinate;
+import frontend.View;
 import frontend.API.StateViewAPI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -19,6 +20,11 @@ import turtles.Pen;
 import turtles.Turtle;
 import turtles.TurtleManager;
 
+/**
+ * Subcomponent to handle display of information of all turtles
+ * @author Gordon
+ *
+ */
 public class StateView implements StateViewAPI {
 	
 	private HashMap<Double, Label> turtleStatus;
@@ -35,6 +41,10 @@ public class StateView implements StateViewAPI {
 		turtleStatus = new HashMap<Double, Label>();
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		setUpParent();
+	}
+	
+	public Parent getParent() {
+		return scrollPane;
 	}
 	
 	public void setTurtleManager(TurtleManager tmIn){
@@ -54,6 +64,9 @@ public class StateView implements StateViewAPI {
 		temp.setText(turtleInfoString(tm.getTurtle(turtleID)));
 	}
 	
+	/**
+	 * Generate the initial list of turtle information
+	 */
 	private void initialTurtles(){
 		TreeSet<Double> temp = new TreeSet<Double>(tm.getAllTurtleIDs());
 		for(Double d : temp){
@@ -62,6 +75,13 @@ public class StateView implements StateViewAPI {
 		}
 	}
 	
+	/**
+	 * Make a label of information for a specified turtle
+	 * @param t
+	 * Turtle to get information from
+	 * @return
+	 * Label with turtle information
+	 */
 	private Label makeLabel(Turtle t){
 		Label ret = new Label();
 		ret.setText(turtleInfoString(t));
@@ -69,6 +89,13 @@ public class StateView implements StateViewAPI {
 		return ret;
 	}
 	
+	/**
+	 * Create a string that contains important information of a turtle
+	 * @param t
+	 * Turtle to get information from
+	 * @return
+	 * String with fully formatted information of the turtle
+	 */
 	private String turtleInfoString(Turtle t){
 		StringBuilder sb = new StringBuilder();
 		sb.append(String.format(resource.getString("TurtleID"), t.getID()));
@@ -81,6 +108,9 @@ public class StateView implements StateViewAPI {
 		return sb.toString();
 	}
 	
+	/**
+	 * Set up the parent
+	 */
 	private void setUpParent(){
 		scrollPane = new ScrollPane();
 		scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
@@ -99,7 +129,4 @@ public class StateView implements StateViewAPI {
 		layout.getChildren().addAll(title, vBox);
 	}
 
-	public Parent getParent() {
-		return scrollPane;
-	}
 }

@@ -13,4 +13,9 @@ public interface MethodsViewAPI extends SubcomponentAPI{
 	 * The name of the user defined method
 	 */
 	public void updateUMethods(String a);
+	
+	/**
+	 * Empty current list of methods
+	 */
+	public void clearMethods();
 }

@@ -28,6 +28,11 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
+/**
+ * Class to manage workspace options
+ * @author Gordon
+ *
+ */
 public class OptionsTab implements SubcomponentAPI {
 
 	private ResourceBundle resource;
@@ -42,10 +47,7 @@ public class OptionsTab implements SubcomponentAPI {
 	
 	private ObservableList<String> files;
 
-	public Parent getParent() {
-		return buttonPanel;
-	}
-
+	// Constructor
 	public OptionsTab(View viewIn, ObservableList<String> filesIn, ViewObservable<String> views) {
 		view = viewIn;
 		files = filesIn;
@@ -65,7 +67,14 @@ public class OptionsTab implements SubcomponentAPI {
 		createLanguageCombo();
 		createHelpButton();
 	}
+
+	public Parent getParent() {
+		return buttonPanel;
+	}
 	
+	/**
+	 * Create the Set Default Workspace button
+	 */
 	private void createSetButton(){
 		Button helpBtn = createButton(resource.getString("Set"));
 		helpBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -76,31 +85,41 @@ public class OptionsTab implements SubcomponentAPI {
 		});
 	}
 
+	/**
+	 * Create the delete workspace combo box
+	 */
 	private void createDeleteCombo() {
 		if(!files.contains(resource.getString("Blank"))){
 			files.add(0,resource.getString("Blank"));
 		}
 		ComboBox deleteCombo = new ComboBox(files);
 		deleteCombo.setPromptText(resource.getString("Delete"));
-		deleteCombo.setOnAction(e -> deleteWorkspace(deleteCombo, (String) deleteCombo.getValue()));
+		deleteCombo.setOnAction(e -> deleteWorkspace((String) deleteCombo.getValue()));
 		buttonPanel.getChildren().add(deleteCombo);
 	}
 
-	private void deleteWorkspace(ComboBox cb, String s) {
-		if (s!=null&&!s.equals("   ")) {
-			if (s.equals("default")) {
+	/**
+	 * Listener method to delete a workspace, can't delete default workspace
+	 * @param s
+	 * The name of the workspace to be deleted
+	 */
+	private void deleteWorkspace(String s) {
+		if (s!=null&&!s.equals(resource.getString("Blank"))) {
+			if (s.equals(resource.getString("Default"))) {
 				Alert alert = new Alert(AlertType.WARNING);
 				alert.setTitle(resource.getString("DeleteWarningTitle"));
 				alert.setHeaderText(resource.getString("DeleteWarningHeader"));
 				alert.setContentText(resource.getString("DeleteWarningContent"));
 				alert.showAndWait();
 			} else {
-//				cb.getItems().remove(s);
 				view.deleteWorkspace(s);
 			}
 		}
 	}
 
+	/**
+	 * Create load workspace combo box
+	 */
 	private void createLoadCombo() {
 		ComboBox loadCombo = new ComboBox(files);
 		loadCombo.setPromptText(resource.getString("Load"));
@@ -108,6 +127,9 @@ public class OptionsTab implements SubcomponentAPI {
 		buttonPanel.getChildren().add(loadCombo);
 	}
 
+	/**
+	 * Create button to save current workspace to file
+	 */
 	private void createSaveButton() {
 		Button saveButton = createButton(resource.getString("Save"));
 		saveButton.setOnAction(new EventHandler<ActionEvent>() {
@@ -124,6 +146,9 @@ public class OptionsTab implements SubcomponentAPI {
 		});
 	}
 
+	/**
+	 * Open a new workspace with default parameters
+	 */
 	private void createNewWorkspaceButton() {
 		Button newWorkSpace = createButton(resource.getString("NewWS"));
 		newWorkSpace.setOnAction(e -> {
@@ -135,24 +160,31 @@ public class OptionsTab implements SubcomponentAPI {
 		});
 	}
 
+	/**
+	 * Create button to prompt user to select views to display
+	 * @param views
+	 * List of strings containing the name of views
+	 */
 	private void createViewsButton(ViewObservable<String> views) {
 		viewSelector = new ViewSelector(views);
 		Button openViews = createButton(resource.getString("ViewButton"));
 		openViews.setOnAction(e -> viewSelector.run());
 	}
-
+	
+	/**
+	 * Create combo box to select a language for commands to be interpreted with
+	 */
 	private void createLanguageCombo() {
 		ComboBox<String> langCombo = new ComboBox<String>();
 		langCombo.setPromptText(resource.getString("lang"));
 		langCombo.getItems().addAll(resource.getString("Languages").split(","));
-		langCombo.setOnAction(e -> changeLanguage(langCombo.getValue()));
+		langCombo.setOnAction(e -> view.changeLanguage(langCombo.getValue()));
 		buttonPanel.getChildren().add(langCombo);
 	}
 
-	private void changeLanguage(String language) {
-		view.changeLanguage(language);
-	}
-
+	/**
+	 * Create a help button to display html formatted help window
+	 */
 	private void createHelpButton() {
 		Button helpBtn = createButton(resource.getString("help"));
 		helpBtn.setOnAction(new EventHandler<ActionEvent>() {
@@ -165,6 +197,13 @@ public class OptionsTab implements SubcomponentAPI {
 		});
 	}
 
+	/**
+	 * Create a generic button that is automatically added to parent
+	 * @param s
+	 * text for the button
+	 * @return
+	 * button
+	 */
 	private Button createButton(String s) {
 		Button ret = new Button(s);
 		ret.setId("option");

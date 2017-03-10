@@ -1,8 +1,9 @@
-package frontend;
+package frontend.subcomponents;
 
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
+import frontend.View;
 import frontend.API.MethodsViewAPI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -14,6 +15,11 @@ import javafx.scene.control.ScrollPane.ScrollBarPolicy;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * Subcomponent to oversee user defined methods
+ * @author Gordon
+ *
+ */
 public class MethodsView implements MethodsViewAPI{
 	private HashMap<String, Hyperlink> hyperlinks;
 	
@@ -22,6 +28,7 @@ public class MethodsView implements MethodsViewAPI{
 	private ScrollPane scrollPane;
 	private ResourceBundle resource;
 	
+	// Constructor
 	public MethodsView(View viewIn){
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
@@ -64,6 +71,10 @@ public class MethodsView implements MethodsViewAPI{
 		vBox.getChildren().clear();
 	}
 	
+	/**
+	 * Listener method that runs the user method when hyperlink is clicked
+	 * @param source
+	 */
 	private void clickedMethod(Hyperlink source){
 		String method = source.getText();
 		view.runCommand(method);

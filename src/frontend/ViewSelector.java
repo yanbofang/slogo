@@ -13,6 +13,11 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+/**
+ * Pop up window to allow user to select which views to display
+ * @author Gordon
+ *
+ */
 public class ViewSelector {
 	private ResourceBundle resource;
 	private HashMap<String, String> viewToField;
@@ -22,6 +27,7 @@ public class ViewSelector {
 	private Scene scene;
 	private VBox views;
 	
+	// Constructor
 	public ViewSelector(ViewObservable<String> initViews){
 		resource = ResourceBundle.getBundle(View.RESOURCE_BUNDLE);
 		activeViews = initViews;
@@ -32,10 +38,16 @@ public class ViewSelector {
 		setUpSubmitButton();
 	}
 	
+	/**
+	 * run the window
+	 */
 	public void run(){
 		stage.show();
 	}
 	
+	/**
+	 * Set up the submit button
+	 */
 	private void setUpSubmitButton(){
 		Button submit = new Button(resource.getString("Submit"));
 		submit.setOnAction(e -> submitViews());
@@ -43,10 +55,16 @@ public class ViewSelector {
 		views.getChildren().add(submit);
 	}
 	
+	/**
+	 * Listener event for submit button
+	 */
 	private void submitViews(){
 		stage.hide();
 	}
 	
+	/**
+	 * Set up check boxes to select views
+	 */
 	private void setUpCheckBoxes(){
 		String[] temp = resource.getString("ViewName").split(",");
 		for(int i = 0; i < temp.length; i = i + 2){
@@ -55,6 +73,13 @@ public class ViewSelector {
 		}
 	}
 	
+	/**
+	 * Create actual check box instances
+	 * @param text
+	 * text for check box
+	 * @return
+	 * check box instance
+	 */
 	private CheckBox makeCheckBox(String text){
 		CheckBox tempCB = new CheckBox(text);
 		if(activeViews.contains(viewToField.get(text))){
@@ -64,6 +89,10 @@ public class ViewSelector {
 		return tempCB;
 	}
 	
+	/**
+	 * records which views are to be shown
+	 * @param target
+	 */
 	private void viewChanged(CheckBox target){
 		if(target.isSelected()){
 			activeViews.add(viewToField.get(target.getText()));
@@ -73,6 +102,9 @@ public class ViewSelector {
 		}
 	}
 	
+	/**
+	 * Sets up the initial view of the window
+	 */
 	private void setUpWindow(){
 		stage = new Stage();
 		views = new VBox();

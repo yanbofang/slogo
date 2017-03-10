@@ -19,6 +19,12 @@ import controller.Controller;
 import controller.ControllerAPI;
 import coordinate.Coordinate;
 import frontend.API.SubcomponentAPI;
+import frontend.subcomponents.MethodsView;
+import frontend.subcomponents.PaletteView;
+import frontend.subcomponents.PenView;
+import frontend.subcomponents.StateView;
+import frontend.subcomponents.TurtleVisualView;
+import frontend.subcomponents.VariablesView;
 import frontend.API.ExternalViewAPI;
 import frontend.API.InternalViewAPI;
 import javafx.animation.Animation;
@@ -57,18 +63,18 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 	private static final String DEFAULT_SER = "src/resources/default.ser";
 	public static final String RESOURCE_BUNDLE = "resources/Display";
 	public static final String CSS_STYLESHEET = "resources/UI.css";
-	
+
 	private Stage stage;
 	private Scene scene;
 	private GridPane root;
 	private Timeline timeline;
 	private VBox views;
-	
+
 	private ControllerAPI controller;
 	private ResourceBundle resource;
 	private TurtleManager turtleManager;
 	private OptionsTab optionsTab;
-	
+
 	private TurtleView turtleView;
 	private MethodsView methodsView;
 	private VariablesView variablesView;
@@ -98,7 +104,8 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		timeline.play();
 	}
 
-//*************************External API Methods******************************
+	// *************************External API
+	// Methods******************************
 	@Override
 	public Coordinate getBounds() {
 		return turtleView.getBounds();
@@ -117,7 +124,7 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		alert.setContentText(a);
 		alert.showAndWait();
 	}
-	
+
 	@Override
 	public void updateUMethod(String a) {
 		methodsView.updateUMethods(a);
@@ -173,7 +180,10 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 				}
 			} else if (arg1 instanceof Double) {
 				double d = (double) arg1;
-				this.changeImage(t, d);
+				Image temp = paletteView.getImageOf(d);
+				if (temp != null) {
+					t.setImage(temp);
+				}
 			}
 		}
 		if (arg0 instanceof ColorPalette) {
@@ -188,8 +198,8 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 			}
 		}
 	}
-	
-//*****************************Internal API********************************
+
+	// *****************************Internal API********************************
 	@Override
 	public void runCommand(String a) {
 		controller.handleInput(a);
@@ -219,13 +229,6 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		}
 	}
 
-	public void changeImage(Turtle t, double d) {
-		Image temp = paletteView.getImageOf(d);
-		if (temp != null) {
-			t.setImage(temp);
-		}
-	}
-
 	public void changePenColor(double color) {
 		if (colorPalette.checkValid(color)) {
 			for (double d : turtleManager.getActiveTurtleIDs()) {
@@ -233,7 +236,7 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 			}
 		}
 	}
-	
+
 	public void setPenSize(double size) {
 		for (double d : turtleManager.getActiveTurtleIDs()) {
 			turtleManager.setPenSize(size, d);
@@ -307,10 +310,11 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 		new Controller(new Stage());
 	}
 
-//******************************Private Methods******************************
-	
+	// *********************Private Methods***********************
+
 	/**
 	 * Create the timeline for animations to run off of
+	 * 
 	 * @return
 	 */
 	private Timeline createTimeline() {
@@ -323,13 +327,14 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 
 	/**
 	 * executes on each frame
+	 * 
 	 * @param dt
-	 * Change in time
+	 *            Change in time
 	 */
 	private void step(double dt) {
 		controller.runCommand();
 	}
-	
+
 	/**
 	 * Creates the skeleton UI of the workspace
 	 */
@@ -377,8 +382,9 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 
 	/**
 	 * Parse the workspace save file
+	 * 
 	 * @param fp
-	 * filepath of the workspace save file
+	 *            filepath of the workspace save file
 	 */
 	private void parseWorkspace(String fp) {
 		try {
@@ -439,10 +445,10 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 
 	/**
 	 * Create a map for default values to be saved in workspace
+	 * 
 	 * @param keysAndValues
-	 * Single string of keys and values as: key,value,key,value
-	 * @return
-	 * map of double to string
+	 *            Single string of keys and values as: key,value,key,value
+	 * @return map of double to string
 	 */
 	private Map<Double, String> createMap(String keysAndValues) {
 		Map<Double, String> map = new HashMap<Double, String>();
@@ -500,8 +506,9 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 
 	/**
 	 * Display views in UI
+	 * 
 	 * @param myViews
-	 * Views to be displayed in the UI
+	 *            Views to be displayed in the UI
 	 */
 	private void showInitialViews(List<String> myViews) {
 		for (String s : myViews) {
@@ -511,14 +518,15 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 
 	/**
 	 * Add or remove parents of subcomponents to UI
+	 * 
 	 * @param viewName
-	 * the subcomponent to add or remove
+	 *            the subcomponent to add or remove
 	 */
 	private void updateView(String viewName) {
 		try {
 			Field f = this.getClass().getDeclaredField(viewName);
 			try {
-			SubcomponentAPI temp = (SubcomponentAPI) f.get(this);
+				SubcomponentAPI temp = (SubcomponentAPI) f.get(this);
 				Parent toAdd = temp.getParent();
 				if (views.getChildren().contains(toAdd)) {
 					views.getChildren().remove(toAdd);
@@ -549,8 +557,9 @@ public class View implements ExternalViewAPI, InternalViewAPI, Observer {
 
 	/**
 	 * Allow user to move the turtle through the UI
+	 * 
 	 * @param code
-	 * key pressed
+	 *            key pressed
 	 * @return
 	 */
 	private Object handleKeyInput(KeyCode code) {

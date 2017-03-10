@@ -1,10 +1,11 @@
-package frontend;
+package frontend.subcomponents;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
+import frontend.View;
 import frontend.API.SubcomponentAPI;
 import frontend.API.TurtleVisualViewAPI;
 import javafx.event.EventHandler;
