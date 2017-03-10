@@ -26,15 +26,19 @@ public class MakeVariableCommand extends AbstractCommand {
 	 */
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		setValue((Double) args.get(1));
-		checkVariable(vars);
+		setValue((Double) args.get(args.size()-1));
+		int k = 0;
+		while (k < args.size()) {
+			checkVariable(vars, k, args);
+			k += 2;
+		}
 		return getValue();
 	}
 
-	private void checkVariable(VariableManager vars) {
-		String varName = (String) getArguments().get(0).getInstruction();
+	private void checkVariable(VariableManager vars, int k, List<Object> args) {
+		String varName = (String) ((Command) args.get(k)).getInstruction();
 		if (vars.get(varName) != null) {
-			if (vars.get(varName).getValue() != getValue()) {
+			if (vars.get(varName).getValue() != (Double) args.get(k+1)) {
 				vars.addVariable(new Variable(varName, getValue()));
 				return;
 			}
@@ -69,8 +73,13 @@ public class MakeVariableCommand extends AbstractCommand {
 	
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		convArgs.add(getArguments().get(0));
-		convArgs.addAll(convertArguments(getArguments().get(1), vars, true));
+		getArguments().stream()
+			.forEach(c -> {if (getArguments().indexOf(c)%2 == 0) {
+				convArgs.add(c);
+			} else  {
+				convArgs.addAll(convertArguments(c, vars, true));
+			}
+			});
 		return convArgs;
 	}
 
