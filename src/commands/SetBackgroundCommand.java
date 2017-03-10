@@ -14,7 +14,7 @@ public class SetBackgroundCommand extends AbstractCommand {
 	}
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
-		Double value = (Double) args.get(0);
+		Double value = (Double) args.get(args.size()-1);
 		getTurtleManager().setBackground(value);
 		return value;
 	}

@@ -16,6 +16,6 @@ public class TangentCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		return Math.tan(Math.toRadians((Double) args.get(0)));
+		return Math.tan(Math.toRadians((Double) args.get(args.size()-1)));
 	}
 }

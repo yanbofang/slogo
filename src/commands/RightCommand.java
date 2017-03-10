@@ -14,9 +14,9 @@ public class RightCommand extends MoveCommand {
 	}
 	
 	public Double calculateValue(List<Object> args) {
-		Double degrees = (Double) args.get(0);
-		getTurtle().setRotate(getTurtle().getRotate() + degrees);
-		return degrees;
+		args.stream()
+			.forEach(d-> getTurtle().setRotate(getTurtle().getRotate() + (Double) d));
+		return (Double) args.get(0);
 	}
 	
 }

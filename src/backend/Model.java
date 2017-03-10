@@ -35,7 +35,6 @@ public class Model implements ModelAPI {
 			}
 		}
 		myCommandHandler.addCommands(commands);
-		// myCommandHandler.executeCommands();
 	}
 
 	// The actual call from the simulation to get the next and move the turtle
@@ -61,14 +60,4 @@ public class Model implements ModelAPI {
 			return null;
 		}
 	}
-	/*
-	 * public Command getMethodVariable(String var) { try { return
-	 * myUserMethods.getUserMethodCommand(var); } catch (Exception e) { return
-	 * null; } } <<<<<<< HEAD
-	 * 
-	 * // public void executeCommand(Command c) { // c.executeCommand(myTurtle,
-	 * myVariables); // }
-	 * 
-	 * =======
-	 */
 }

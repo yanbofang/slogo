@@ -1,6 +1,10 @@
 package commands;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import backend.UserMethodManager;
 import backend.VariableManager;
@@ -16,9 +20,11 @@ public class NotEqualCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		Double exp1 = (Double) args.get(0);
-		Double exp2 = (Double) args.get(1);
-		if (exp1 != exp2) {
+		Set<Double> mySet = new HashSet<Double>();	
+		args.stream()
+			.mapToDouble(d-> (Double) d)
+			.forEach(d -> mySet.add((Double) d));
+		if (mySet.size() == args.size()) {
 			setValue(1.0);
 		} else {
 			setValue(0.0);

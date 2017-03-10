@@ -18,12 +18,11 @@ public class EqualCommand extends AbstractCommand {
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
 		Double reference = (Double) args.get(0);
-		ArrayList<Double> compareList = new ArrayList<Double>();
-		args.stream()
+		double[] compareList = args.stream()
 			.mapToDouble(d -> (Double) d)
 			.filter(d -> d == reference)
-			.forEach(d -> compareList.add(d));
-		if (compareList.size() == args.size()) {
+			.toArray();
+		if (compareList.length == args.size()) {
 			setValue(1.0);
 		} else {
 			setValue(0.0);

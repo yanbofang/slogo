@@ -17,7 +17,7 @@ public class SetShapeCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
-		Double value = (Double) args.get(0);
+		Double value = (Double) args.get(args.size()-1);
 		getTurtle().setImage(value);
 		return value;
 	}

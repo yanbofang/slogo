@@ -25,7 +25,12 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 
 	@Override
 	public void performBeforeExecution() {
-		UserMethod method = makeMethod(getArguments().get(2).getAllArguments());
+		int k = 0;
+		UserMethod method = null;
+		while (k < getArguments().size()) {
+			method = makeMethod(getArguments().get(k+2).getAllArguments(), k);
+			k+= 3;
+		}
 		setValue(method.getMethodName().isEmpty() ? 0.0 : 1.0);
 		return;
 	}
@@ -39,19 +44,19 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 	@Override
 	public void add(Command... each) {
 		super.add(each);
-		if (getArguments().size() == 2) {
-			makeMethod(null);
+		if ((getArguments().size()+1)%3 == 0) {
+			makeMethod(null, getArguments().size()-2);
 		}
 	}
 
-	private UserMethod makeMethod(List<Command> function) {
+	private UserMethod makeMethod(List<Command> function, int k) {
 		int numOfVariables = 0;
 		List<String> variablesNameList = new ArrayList<String>();
-		for (Command c : getArguments().get(1).getAllArguments()) {
+		for (Command c : getArguments().get(k+1).getAllArguments()) {
 			numOfVariables++;
 			variablesNameList.add(c.getInstruction());
 		}
-		String name = getArguments().get(0).getInstruction();
+		String name = getArguments().get(k).getInstruction();
 		// Create the UserMethod as a command, instruction is the name of the
 		// method
 
@@ -59,5 +64,6 @@ public class MakeUserInstructionCommand extends AbstractCommand {
 		getUserMethods().add(name, method);
 		return method;
 	}
+
 
 }

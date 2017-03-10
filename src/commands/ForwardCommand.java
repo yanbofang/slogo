@@ -18,11 +18,13 @@ public class ForwardCommand extends MoveCommand {
 	
 	@Override
 	public Double calculateValue(List<Object> args) {
-		Double movement = (Double) args.get(0);
-		myCoord = getNewCoord(movement);
-		getTurtle().setLocation(myCoord, false);
-
-		return movement;
+		args.stream()
+		.mapToDouble(d -> (Double) d)
+		.forEach(d -> {
+			myCoord = getNewCoord(d);
+			getTurtle().setLocation(myCoord, false);
+		});
+		return (Double) args.get(args.size()-1);
 	}
 
 }
