@@ -81,9 +81,7 @@ public interface InternalViewAPI {
 	 * Set Turtle
 	 * @param n
 	 */
-//	public void setTurtle(TurtleManager tm);	
-	
-	public void updateTurtle(Coordinate x, Coordinate y, Pen p, Turtle t);
+//	public void setTurtle(TurtleManager tm);
 
 	public void clearLines();
 
