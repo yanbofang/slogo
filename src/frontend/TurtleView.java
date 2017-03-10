@@ -70,17 +70,7 @@ public class TurtleView implements TurtleViewerAPI {
 	}
 
 	@Override
-	public void setBackgroundColor(String a) {
-		for(double k : colorMap.keySet()){
-			if(a.equals(colorMap.get(k))){
-				colorIndex = k;
-			}
-		}
-		Color tempColor = Color.valueOf(a);
-		viewer.setBackground(new Background(new BackgroundFill(tempColor, CornerRadii.EMPTY, Insets.EMPTY)));
-	}
-	
-	public void setBackgroundColor(double d){
+	public void setBackgroundColor(Double d){
 		colorIndex = d;
 		Color tempColor = Color.valueOf(colorMap.get(d));
 		viewer.setBackground(new Background(new BackgroundFill(tempColor, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -91,20 +81,23 @@ public class TurtleView implements TurtleViewerAPI {
 		viewer.getChildren().add(a);
 	}
 
+	@Override
 	public void removeTurtle(Node a) {
 		viewer.getChildren().remove(a);
 	}
 	
+	@Override
 	public boolean containsTurtle(Node n) {
 		return viewer.getChildren().contains(n);
 	}
 	
+	@Override
 	public void updateColor(double indexIn, String colorIn){
 		colorMap.put(indexIn, colorIn);
 	}
 	
+	@Override
 	public double getBackgroundColor(){
 		return colorIndex;
 	}
-
 }

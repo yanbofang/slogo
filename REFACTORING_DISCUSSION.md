@@ -1,0 +1,1 @@
+All the team members were here to disucss refactoring changes and agreed to make merges to master with changes.

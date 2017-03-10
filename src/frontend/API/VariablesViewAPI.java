@@ -14,4 +14,9 @@ public interface VariablesViewAPI extends SubcomponentAPI{
 	 * The value of the variable
 	 */
 	public void updateVar(String a, String b);
+	
+	/**
+	 * Clear all current variables from display
+	 */
+	public void clearVars();
 }
