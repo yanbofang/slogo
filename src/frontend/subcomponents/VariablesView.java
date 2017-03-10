@@ -1,9 +1,10 @@
-package frontend;
+package frontend.subcomponents;
 
 import java.util.HashMap;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import frontend.View;
 import frontend.API.VariablesViewAPI;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -16,6 +17,11 @@ import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.TextAlignment;
 
+/**
+ * Subcomponent to handle variables in workspace
+ * @author Gordon
+ *
+ */
 public class VariablesView implements VariablesViewAPI{
 	private HashMap<String, String> values;
 	private HashMap<String, Hyperlink> hyperlinks;
@@ -25,6 +31,7 @@ public class VariablesView implements VariablesViewAPI{
 	private ScrollPane scrollPane;
 	private ResourceBundle resource;
 	
+	// Constructor
 	public VariablesView(View viewIn){
 		view = viewIn;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
@@ -72,6 +79,11 @@ public class VariablesView implements VariablesViewAPI{
 		vBox.getChildren().clear();
 	}
 	
+	/**
+	 * Create a hyperlink with a listener event
+	 * @return
+	 * hyperlink
+	 */
 	private Hyperlink makeHyperlink(){
 		Hyperlink ret = new Hyperlink();
 		ret.setId("variable");
@@ -80,6 +92,11 @@ public class VariablesView implements VariablesViewAPI{
 		return ret;
 	}
 	
+	/**
+	 * Listener event for a hyperlink. Allows user to change the variable value
+	 * @param source
+	 * Which hyperlink that was called on
+	 */
 	private void clickedVariable(Hyperlink source){
 		source.setVisited(false);
 		String[] variableArr = source.getText().split(" = ");
@@ -92,6 +109,15 @@ public class VariablesView implements VariablesViewAPI{
 		view.changeVariable(variableArr[0], newValue);
 	}
 	
+	/**
+	 * Get user response for updated value
+	 * @param dialog
+	 * The dialog to prompt the user
+	 * @param original
+	 * The original value of the variable
+	 * @return
+	 * String with new value of variable or old variable if user cancels change
+	 */
 	private String getResult(TextInputDialog dialog, String original){
 		Optional<String> output = dialog.showAndWait();
 		if(output.isPresent()){

@@ -1,4 +1,4 @@
-package frontend;
+package frontend.subcomponents;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 
+import frontend.View;
 import frontend.API.PaletteViewAPI;
 import frontend.API.SubcomponentAPI;
 import javafx.beans.value.ChangeListener;

@@ -1,7 +1,8 @@
-package frontend;
+package frontend.subcomponents;
 
 import java.util.ResourceBundle;
 
+import frontend.View;
 import frontend.API.SubcomponentAPI;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;

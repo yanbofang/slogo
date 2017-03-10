@@ -15,8 +15,6 @@ import turtles.TurtleManager;
 import backend.Model;
 import backend.VariableManager;
 import backend.UserMethodManager;
-import frontend.UserMethodObserver;
-import frontend.VariableManagerObserver;
 import frontend.View;
 import frontend.WorkSpace;
 import frontend.API.ExternalViewAPI;
