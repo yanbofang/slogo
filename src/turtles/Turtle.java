@@ -60,7 +60,7 @@ public class Turtle extends Observable implements TurtleAPI{
 		} else if (x < 0) {
 			x += myWidthBounds;
 		}
-		myImage.setTranslateX(x); //COMMENTED OUT FOR ANIMATION
+		myImage.setTranslateX(x); 
 		return x;
 	}
 	
@@ -70,7 +70,7 @@ public class Turtle extends Observable implements TurtleAPI{
 		} else if (y < 0) {
 			y += myHeightBounds;
 		}
-		myImage.setTranslateY(y); //COMMENTED OUT FOR ANIMATION
+		myImage.setTranslateY(y);
 		return y;
 	}
 	
@@ -84,7 +84,6 @@ public class Turtle extends Observable implements TurtleAPI{
 		Double newY = setY(coord.getY());
 		coord.setX(coord.getX() + myImage.getFitWidth()/2);
 		coord.setY(coord.getY() + myImage.getFitHeight()/2);
-		//MoveAnimation animation = new MoveAnimation(myImage,temp.get(0) , coord);
 		temp.add(coord);
 		this.setFlag(temp);
 
@@ -122,7 +121,6 @@ public class Turtle extends Observable implements TurtleAPI{
 			rotate -= 360;
 		}
 		myImage.setRotate(rotate);
-		//RotateAnimation animation = new RotateAnimation(myImage,rotate);
 	}
 	
 	public Double getRotate() {

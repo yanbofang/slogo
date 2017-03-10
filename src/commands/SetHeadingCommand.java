@@ -15,7 +15,7 @@ public class SetHeadingCommand extends MoveCommand {
 	}
 	
 	public Double calculateValue(List<Object> args) {
-		Double degrees = (Double) args.get(0);
+		Double degrees = (Double) args.get(args.size()-1);
 		Double difference = myTurtle.getRotate() - degrees;
 		myTurtle.setRotate(degrees);;
 		return difference;

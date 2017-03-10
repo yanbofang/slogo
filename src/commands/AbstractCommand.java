@@ -1,14 +1,10 @@
 package commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import turtles.Turtle;
 import turtles.TurtleManagerCommandAPI;
 import backend.ParserException;
-import backend.UserMethod;
 import backend.UserMethodManager;
 import backend.VariableManager;
 

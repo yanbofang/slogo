@@ -16,8 +16,8 @@ public class SetTowardsCommand extends MoveCommand {
 	}
 	
 	public Double calculateValue(List<Object> args) {
-		Coordinate newDirection = new Coordinate((Double) args.get(0), 
-				(Double) args.get(1));
+		Coordinate newDirection = new Coordinate((Double) args.get(args.size()-2), 
+				(Double) args.get(args.size()-1));
 		Coordinate currentPosition = myTurtle.getLocation(true);
 		Coordinate neutralDirection = new Coordinate(currentPosition.getX(), currentPosition.getY()-10);
 		Double turtleToNew = calcDistance(newDirection, currentPosition);

@@ -15,9 +15,10 @@ public class ProductCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		myValue = (Double) args.get(0) * (Double) args.get(1);
-		System.out.println("MY PRODUCT VALUE " + myValue);
-		return myValue;
+		Double[] array = {1.0};
+		args.stream()
+			.forEach(d -> array[0] *= (Double) d);
+		return array[0];
 	}
 
 

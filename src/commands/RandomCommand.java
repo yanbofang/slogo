@@ -16,7 +16,7 @@ public class RandomCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		Double max = (Double) args.get(0);
+		Double max = (Double) args.get(args.size()-1);
 		return Math.random() * (max - 0) + 0;
 	}
 	

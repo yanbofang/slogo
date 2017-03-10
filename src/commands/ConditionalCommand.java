@@ -37,7 +37,7 @@ public abstract class ConditionalCommand extends AbstractCommand {
 			if (myArguments.indexOf(c) == 0) {
 				convArgs.addAll(convertArguments(c, vars, true));
 			} else {
-				myConvertedArguments.add(c);
+				convArgs.add(c);
 			}
 		}
 		return convArgs;

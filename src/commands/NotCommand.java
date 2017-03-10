@@ -16,7 +16,7 @@ public class NotCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		Double exp1 = (Double) args.get(0);
+		Double exp1 = (Double) args.get(args.size()-1);
 		if (exp1 == 0.0) {
 			myValue = 1.0;
 		} else {

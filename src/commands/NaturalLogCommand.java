@@ -16,6 +16,6 @@ public class NaturalLogCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		return Math.log((Double) args.get(0));
+		return Math.log((Double) args.get(args.size()-1));
 	}
 }
