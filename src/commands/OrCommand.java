@@ -19,10 +19,10 @@ public class OrCommand extends AbstractCommand {
 		Double exp1 = (Double) args.get(0);
 		Double exp2 = (Double) args.get(1);
 		if (exp1 != 0.0 || exp2 != 0.0) {
-			myValue = 1.0;
+			setValue(1.0);
 		} else {
-			myValue = 0.0;
+			setValue(0.0);
 		}
-		return myValue;
+		return getValue();
 	}
 }

@@ -1,25 +1,20 @@
 package commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import turtles.Turtle;
 import turtles.TurtleManagerCommandAPI;
-import backend.CommandHandler;
+import backend.UserMethodManager;
 import backend.VariableManager;
 
-public interface Command {
+public interface Command extends java.io.Serializable {
 
 	void add(Command... args);
 
-	String getInstruction();
-
 	Command getArguments(int k);
-	
-	List<Command> getAllArguments();
 
-	boolean isFinished();
+	List<Command> getAllArguments();
 
 	Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k);
 
@@ -27,11 +22,53 @@ public interface Command {
 
 	Integer getNumOfExpressions();
 
+	void setNumOfExpressions(int myNumOfExpressions);
+	
+	String getInstruction();
+
+	void setInstruction(String myInstruction);
+
+	ArrayList<Command> getArguments();
+
+	void setArguments(ArrayList<Command> myArguments);
+
+	ArrayList<Object> getConvertedArguments();
+
+	void setConvertedArguments(ArrayList<Object> myConvertedArguments);
+
+	boolean isFinished();
+
+	void setFinished(boolean myFinished);
+
+	Turtle getTurtle();
+
+	void setTurtle(Turtle myTurtle);
+
+	Double getValue();
+
+	void setValue(Double myValue);
+
+	VariableManager getVariables();
+
+	void setVariables(VariableManager myVariables);
+
+	UserMethodManager getUserMethods();
+
+	void setUserMethods(UserMethodManager myUserMethods);
+
+	TurtleManagerCommandAPI getTurtleManager();
+
+	void setTurtleManager(TurtleManagerCommandAPI myTurtleManager);
+
+	boolean isRunNested();
+
+	void setRunNested(boolean myRunNested);
+
+	boolean isRunAllTurtles();
+
+	void setRunAllTurtles(boolean myRunAllTurtles);
+
 	void performBeforeExecution();
 
-	boolean getRunTurtles();
-	
 	public int getCurrentArgumentSize();
-	
-//	public boolean infiniteArguments();
 }

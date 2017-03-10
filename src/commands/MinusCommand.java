@@ -16,8 +16,8 @@ public class MinusCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		myValue = -1.0 * (Double) args.get(0);
-		return myValue;
+		setValue(-1.0 * (Double) args.get(0));
+		return getValue();
 	}
 
 }

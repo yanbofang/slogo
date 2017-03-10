@@ -20,18 +20,18 @@ public class UserMethodCommand extends AbstractCommand {
 			UserMethod method) {
 		super(instruction, variables, methods, method.getListOfVariables().size());
 		myMethod = method;
-		runAllTurtles = true;
+		setRunAllTurtles(true);
 	}
 
 	public UserMethodCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods);
 		checkForMethod();
-		runAllTurtles = true;
+		setRunAllTurtles(true);
 	}
 
 	private boolean checkForMethod() {
-		if (myUserMethods.getUserMethod(getInstruction()) != null) {
-			myMethod = myUserMethods.getUserMethod(getInstruction());
+		if (getUserMethods().getUserMethod(getInstruction()) != null) {
+			myMethod = getUserMethods().getUserMethod(getInstruction());
 			setNumOfExpressions(myMethod.getListOfVariables().size());
 			return true;
 		} else {
@@ -58,7 +58,7 @@ public class UserMethodCommand extends AbstractCommand {
 		for (Command c : commands) {
 			c.resetCommand();
 			while (!c.isFinished()) {
-				returnValue = c.executeCommand(myTurtleManager, localVariables, myTurtle.getID());
+				returnValue = c.executeCommand(getTurtleManager(), localVariables, getTurtle().getID());
 			}
 		}
 		return returnValue;

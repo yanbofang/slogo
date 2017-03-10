@@ -1,13 +1,9 @@
 package backend;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Queue;
 
-import turtles.Turtle;
 import turtles.TurtleManager;
 import commands.Command;
 
@@ -47,7 +43,7 @@ public class CommandHandler {
 			System.out.println(currentCommand.getAllArguments());
 			if (currentCommand.isFinished()) {
 				myCommands.remove();
-			} else if (currentCommand.getRunTurtles()) {
+			} else if (currentCommand.isRunAllTurtles()) {
 				for (Double k : activeTurtles) {
 					current = currentCommand.executeCommand(myTurtles, myVariables, k);
 					System.out.println(current + "   *print statement in CommandHandler");

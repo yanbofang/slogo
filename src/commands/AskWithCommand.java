@@ -19,15 +19,15 @@ public class AskWithCommand extends LoopCommand {
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		convArgs.add(myArguments.get(0));
-		convArgs.add(myArguments.get(1));
+		convArgs.add(getArguments().get(0));
+		convArgs.add(getArguments().get(1));
 		return convArgs;
 	}
 
 	private List<Double> getPossibleTurtles(Command condition, VariableManager vars) {
 		List<Double> myIDList = new ArrayList<Double>();
-		for (Turtle t : myTurtleManager.allTurtles()) {
-			if (condition.executeCommand(myTurtleManager, vars, t.getID()) == 1) {
+		for (Turtle t : getTurtleManager().allTurtles()) {
+			if (condition.executeCommand(getTurtleManager(), vars, t.getID()) == 1) {
 				myIDList.add(t.getID());
 			}
 		}
