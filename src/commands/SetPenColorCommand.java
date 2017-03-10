@@ -11,12 +11,12 @@ public class SetPenColorCommand extends AbstractCommand {
 	public SetPenColorCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		runAllTurtles = true;
+		setRunAllTurtles(true);
 	}
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
 		Double value = (Double) args.get(0);
-		myTurtleManager.setPenColor(value, myTurtle.getID());
+		getTurtleManager().setPenColor(value, getTurtle().getID());
 		return value;
 	}
 

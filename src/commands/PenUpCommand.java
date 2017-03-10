@@ -12,14 +12,14 @@ public class PenUpCommand extends AbstractCommand {
 	public PenUpCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		runAllTurtles = true;
+		setRunAllTurtles(true);
 	}
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		myValue = 0.0;
-		myTurtleManager.setPenState(false, myTurtle.getID());
-		return myValue;
+		setValue(0.0);
+		getTurtleManager().setPenState(false, getTurtle().getID());
+		return getValue();
 	}
 
 }

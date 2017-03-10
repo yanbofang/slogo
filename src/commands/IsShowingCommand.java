@@ -11,18 +11,18 @@ public class IsShowingCommand extends AbstractCommand {
 	public IsShowingCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		runAllTurtles = true;
+		setRunAllTurtles(true);
 		
 	}
 	
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		if (myTurtle.showTurtle()) {
-			myValue = 1.0;
+		if (getTurtle().showTurtle()) {
+			setValue(1.0);
 		} else {
-			myValue = 0.0;
+			setValue(0.0);
 		}
-		return myValue;
+		return getValue();
 	}
 
 

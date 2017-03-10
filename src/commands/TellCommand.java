@@ -26,13 +26,13 @@ public class TellCommand extends AbstractCommand {
 				throw new ParserException(String.format("NOT A VALID TURTLE ID %s", o));
 			}
 		}
-		myTurtleManager.addActiveTurtles(newActiveTurtles);
+		getTurtleManager().addActiveTurtles(newActiveTurtles);
 		return newActiveTurtles.get(newActiveTurtles.size() - 1);
 	}
 	
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
-		ArrayList<Object> convArgs = convertArguments(myArguments.get(0).getAllArguments(), vars, true);
+		ArrayList<Object> convArgs = convertArguments(getArguments().get(0).getAllArguments(), vars, true);
 		return convArgs;
 	}
 

@@ -26,20 +26,20 @@ public class MakeVariableCommand extends AbstractCommand {
 	 */
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		myValue = (Double) args.get(1);
+		setValue((Double) args.get(1));
 		checkVariable(vars);
-		return myValue;
+		return getValue();
 	}
 
 	private void checkVariable(VariableManager vars) {
-		String varName = (String) myArguments.get(0).getInstruction();
+		String varName = (String) getArguments().get(0).getInstruction();
 		if (vars.get(varName) != null) {
-			if (vars.get(varName).getValue() != myValue) {
-				vars.addVariable(new Variable(varName, myValue));
+			if (vars.get(varName).getValue() != getValue()) {
+				vars.addVariable(new Variable(varName, getValue()));
 				return;
 			}
 		} else {
-			myVariable = new Variable(varName, myValue);
+			myVariable = new Variable(varName, getValue());
 			vars.addVariable(myVariable);
 		}
 	}
@@ -59,18 +59,18 @@ public class MakeVariableCommand extends AbstractCommand {
 	}*/
 	
 	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
+		setTurtleManager(turtles);
 		VariableManager localVariables = vars;
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = argumentsToConvert(localVariables);
+		setTurtle(turtles.getTurtle(k));
+		setConvertedArguments(argumentsToConvert(localVariables));
 		this.changeToFinished();
-		return this.getValue(myConvertedArguments, localVariables);
+		return this.getValue(getConvertedArguments(), localVariables);
 	}
 	
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		convArgs.add(myArguments.get(0));
-		convArgs.addAll(convertArguments(myArguments.get(1), vars, true));
+		convArgs.add(getArguments().get(0));
+		convArgs.addAll(convertArguments(getArguments().get(1), vars, true));
 		return convArgs;
 	}
 

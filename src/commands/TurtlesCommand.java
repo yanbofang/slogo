@@ -15,7 +15,7 @@ public class TurtlesCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		Double returnValue = new Double(myTurtleManager.allTurtles().size());
+		Double returnValue = new Double(getTurtleManager().allTurtles().size());
 		return returnValue;
 	}
 

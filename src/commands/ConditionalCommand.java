@@ -2,8 +2,6 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import turtles.TurtleManagerCommandAPI;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -12,7 +10,7 @@ public abstract class ConditionalCommand extends AbstractCommand {
 	public ConditionalCommand(String instruction, VariableManager variables, UserMethodManager methods,
 			int numOfExpressions) {
 		super(instruction, variables, methods, numOfExpressions);
-		runAllTurtles = true;
+		setRunAllTurtles(true);
 	}
 
 	@Override
@@ -25,7 +23,7 @@ public abstract class ConditionalCommand extends AbstractCommand {
 		}
 		commandList.resetCommand();
 		while (!commandList.isFinished()) {
-			returnValue = commandList.executeCommand(myTurtleManager, vars, myTurtle.getID());
+			returnValue = commandList.executeCommand(getTurtleManager(), vars, getTurtle().getID());
 		}
 		return returnValue;
 	}
@@ -33,11 +31,11 @@ public abstract class ConditionalCommand extends AbstractCommand {
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		for (Command c: myArguments) {
-			if (myArguments.indexOf(c) == 0) {
+		for (Command c: getArguments()) {
+			if (getArguments().indexOf(c) == 0) {
 				convArgs.addAll(convertArguments(c, vars, true));
 			} else {
-				myConvertedArguments.add(c);
+				getArguments().add(c);
 			}
 		}
 		return convArgs;

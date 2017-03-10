@@ -11,7 +11,7 @@ public class ListCommand extends AbstractCommand {
 	public ListCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		runAllTurtles = true;
+		setRunAllTurtles(true);
 	}
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {

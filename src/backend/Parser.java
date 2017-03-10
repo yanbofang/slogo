@@ -72,13 +72,13 @@ public class Parser {
 	private Command recurseParse(Scanner s) {
 
 		Command currentCommand;
-
 		if (s.hasNext()) {
 			String current = s.next();
 			
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
 			currentCommand = reflect(current);
+			System.out.println(currentCommand);
 			if (currentCommand != null) {
 				runArguments(currentCommand, s, currentCommand.getNumOfExpressions());
 				currentCommand.performBeforeExecution();

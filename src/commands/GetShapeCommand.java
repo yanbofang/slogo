@@ -17,7 +17,7 @@ public class GetShapeCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
-		return myTurtle.getShape();
+		return getTurtle().getShape();
 	}
 
 	

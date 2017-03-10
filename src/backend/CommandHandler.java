@@ -47,7 +47,7 @@ public class CommandHandler {
 			System.out.println(currentCommand.getAllArguments());
 			if (currentCommand.isFinished()) {
 				myCommands.remove();
-			} else if (currentCommand.getRunTurtles()) {
+			} else if (currentCommand.isRunAllTurtles()) {
 				for (Double k : activeTurtles) {
 					current = currentCommand.executeCommand(myTurtles, myVariables, k);
 					System.out.println(current + "   *print statement in CommandHandler");

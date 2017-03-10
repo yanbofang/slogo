@@ -18,11 +18,11 @@ public class NotCommand extends AbstractCommand {
 	public Double getValue(List<Object> args, VariableManager vars) {
 		Double exp1 = (Double) args.get(0);
 		if (exp1 == 0.0) {
-			myValue = 1.0;
+			setValue(1.0);
 		} else {
-			myValue = 0.0;
+			setValue(0.0);
 		}
-		return myValue;
+		return getValue();
 	}
 
 }

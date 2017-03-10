@@ -13,24 +13,24 @@ public abstract class MoveCommand extends AbstractCommand {
 	public MoveCommand(String instruction, VariableManager variables, UserMethodManager methods,
 			int numberOfExpressions) {
 		super(instruction, variables, methods, numberOfExpressions);
-		runAllTurtles = true;
+		setRunAllTurtles(true);
 	}
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		myValue = 0.0;
+		setValue(0.0);
 		try {
-			myValue = calculateValue(args);
+			setValue(calculateValue(args));
 		} catch (Exception e) {
 			return null;
 		}
-		return myValue;
+		return getValue();
 	}
 
 	public abstract Double calculateValue(List<Object> args);
 
 	protected Coordinate getNewCoord(Double movement) {
-		double rotate = myTurtle.getRotate();
+		double rotate = getTurtle().getRotate();
 		myQuadrant = 1;
 		while (rotate - 90 >= 0) {
 			rotate -= 90;
@@ -39,7 +39,7 @@ public abstract class MoveCommand extends AbstractCommand {
 		if (myQuadrant == 1 || myQuadrant == 3) {
 			rotate = 90 - rotate;
 		}
-		Coordinate currLocation = myTurtle.getLocation(true);
+		Coordinate currLocation = getTurtle().getLocation(true);
 		Coordinate movementCoord = new Coordinate(movement * Math.cos(Math.toRadians(rotate)),
 				movement * Math.sin(Math.toRadians(rotate)));
 		updateCoords(movementCoord, myQuadrant);
@@ -76,8 +76,8 @@ public abstract class MoveCommand extends AbstractCommand {
 
 	protected Coordinate toHome() {
 		Coordinate coord = new Coordinate(0.0, 0.0);
-		myValue = calcDistance(coord, myTurtle.getLocation(true));
-		myTurtle.setLocation(coord, false);
+		setValue(calcDistance(coord, getTurtle().getLocation(true)));
+		getTurtle().setLocation(coord, false);
 		return coord;
 	}
 

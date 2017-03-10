@@ -14,14 +14,13 @@ public class ClearScreenCommand extends MoveCommand {
 	public ClearScreenCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		runAllTurtles = true;
 	}
 
 	@Override
 	public Double calculateValue(List<Object> args) {
 		myCoord = toHome();
-		myTurtle.setClear(true);
-		return myValue;
+		getTurtle().setClear(true);
+		return getValue();
 	}
 
 

@@ -1,32 +1,35 @@
 package commands;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
-import java.util.Objects;
 import turtles.Turtle;
 import turtles.TurtleManagerCommandAPI;
 import backend.ParserException;
-import backend.UserMethod;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
-public abstract class AbstractCommand implements Command, java.io.Serializable {
+public abstract class AbstractCommand implements Command{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7877106052459852818L;
 	private Integer myNumOfExpressions;
 	private String myInstruction;
-	protected ArrayList<Command> myArguments;
-	protected ArrayList<Object> myConvertedArguments;
-	protected boolean finished;
-	protected Turtle myTurtle;
-	protected Double myValue;
-	protected VariableManager myVariables;
-	protected UserMethodManager myUserMethods;
-	protected TurtleManagerCommandAPI myTurtleManager;
-	protected boolean runNested; //NEED TO GO THROUGH AND ADD TO ALL NECESSARY COMMANDS
-	protected boolean runAllTurtles; //NEED TO GO THROUGH AND ADD TO ALL NECESSARY COMMANDS
-	//protected boolean infiniteArguments; //NEED TO GO THROUGH AND ADD TO ALL NECESSARY COMMANDS
+	private ArrayList<Command> myArguments;
+	private ArrayList<Object> myConvertedArguments;
+	private boolean myFinished;
+	private Turtle myTurtle;
+	private Double myValue;
+	private VariableManager myVariables;
+	private UserMethodManager myUserMethods;
+	private TurtleManagerCommandAPI myTurtleManager;
+	private boolean myRunNested; // NEED TO GO THROUGH AND ADD TO ALL NECESSARY
+									// COMMANDS
+	private boolean myRunAllTurtles; // NEED TO GO THROUGH AND ADD TO ALL
+										// NECESSARY COMMANDS
+	// protected boolean infiniteArguments; //NEED TO GO THROUGH AND ADD TO ALL
+	// NECESSARY COMMANDS
 
 	public AbstractCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		myArguments = new ArrayList<Command>();
@@ -34,10 +37,10 @@ public abstract class AbstractCommand implements Command, java.io.Serializable {
 		myVariables = variables;
 		myInstruction = instruction.toLowerCase();
 		myUserMethods = methods;
-		finished = false;
-		runNested = true;
-		runAllTurtles = false;
-		//infiniteArguments = true;
+		myFinished = false;
+		myRunNested = true;
+		myRunAllTurtles = false;
+		// infiniteArguments = true;
 	}
 
 	public AbstractCommand(String instruction, VariableManager variables, UserMethodManager methods,
@@ -46,22 +49,106 @@ public abstract class AbstractCommand implements Command, java.io.Serializable {
 		myNumOfExpressions = numOfExpressions;
 	}
 
-	public void add(Command... args) {
-		for (Command each : args) {
-			myArguments.add(each);
-		}
-	}
-
 	public Integer getNumOfExpressions() {
 		return myNumOfExpressions;
 	}
 
-	protected void setNumOfExpressions(int k) {
-		myNumOfExpressions = k;
+	public void setNumOfExpressions(int myNumOfExpressions) {
+		this.myNumOfExpressions = myNumOfExpressions;
 	}
 
 	public String getInstruction() {
 		return myInstruction;
+	}
+
+	public void setInstruction(String myInstruction) {
+		this.myInstruction = myInstruction;
+	}
+
+	public ArrayList<Command> getArguments() {
+		return myArguments;
+	}
+
+	public void setArguments(ArrayList<Command> myArguments) {
+		this.myArguments = myArguments;
+	}
+
+	public ArrayList<Object> getConvertedArguments() {
+		return myConvertedArguments;
+	}
+
+	public void setConvertedArguments(ArrayList<Object> myConvertedArguments) {
+		this.myConvertedArguments = myConvertedArguments;
+	}
+
+	public boolean isFinished() {
+		return myFinished;
+	}
+
+	public void setFinished(boolean myFinished) {
+		this.myFinished = myFinished;
+	}
+
+	public Turtle getTurtle() {
+		return myTurtle;
+	}
+
+	public void setTurtle(Turtle myTurtle) {
+		this.myTurtle = myTurtle;
+	}
+
+	public Double getValue() {
+		return myValue;
+	}
+
+	public void setValue(Double myValue) {
+		this.myValue = myValue;
+	}
+
+	public VariableManager getVariables() {
+		return myVariables;
+	}
+
+	public void setVariables(VariableManager myVariables) {
+		this.myVariables = myVariables;
+	}
+
+	public UserMethodManager getUserMethods() {
+		return myUserMethods;
+	}
+
+	public void setUserMethods(UserMethodManager myUserMethods) {
+		this.myUserMethods = myUserMethods;
+	}
+
+	public TurtleManagerCommandAPI getTurtleManager() {
+		return myTurtleManager;
+	}
+
+	public void setTurtleManager(TurtleManagerCommandAPI myTurtleManager) {
+		this.myTurtleManager = myTurtleManager;
+	}
+
+	public boolean isRunNested() {
+		return myRunNested;
+	}
+
+	public void setRunNested(boolean myRunNested) {
+		this.myRunNested = myRunNested;
+	}
+
+	public boolean isRunAllTurtles() {
+		return myRunAllTurtles;
+	}
+
+	public void setRunAllTurtles(boolean myRunAllTurtles) {
+		this.myRunAllTurtles = myRunAllTurtles;
+	}
+
+	public void add(Command... args) {
+		for (Command each : args) {
+			myArguments.add(each);
+		}
 	}
 
 	public Command getArguments(int k) {
@@ -76,20 +163,31 @@ public abstract class AbstractCommand implements Command, java.io.Serializable {
 		return myArguments;
 	}
 
-	public boolean isFinished() {
-		return finished;
-	}
-
 	protected void changeToFinished() {
-		finished = true;
+		myFinished = true;
 	}
 
 	public void resetCommand() {
-		finished = false;
+		myFinished = false;
 	}
 
 	public abstract Double getValue(List<Object> args, VariableManager localVariables);
 
+//	/**
+//	 * 
+//	 * @return - value that we want to send to UI to be displayed
+//	 */
+//	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
+//		myTurtleManager = turtles;
+//		VariableManager localVariables = new VariableManager();
+//		localVariables.addAll(vars.getVariableMap());
+//		myTurtle = turtles.getTurtle(k);
+//		myConvertedArguments = argumentsToConvert(localVariables);// convertArguments(myArguments,													// true);
+//		this.changeToFinished();
+//		return this.getValue(myConvertedArguments, localVariables);
+//	}
+//	
+	
 	/**
 	 * 
 	 * @return - value that we want to send to UI to be displayed
@@ -99,11 +197,11 @@ public abstract class AbstractCommand implements Command, java.io.Serializable {
 		VariableManager localVariables = new VariableManager();
 		localVariables.addAll(vars.getVariableMap());
 		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = argumentsToConvert(localVariables);//convertArguments(myArguments, localVariables, true);
+		myConvertedArguments = argumentsToConvert(localVariables);// convertArguments(myArguments,													// true);
 		this.changeToFinished();
 		return this.getValue(myConvertedArguments, localVariables);
 	}
-	
+
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = convertArguments(myArguments, vars, true);
 		return convArgs;
@@ -140,13 +238,8 @@ public abstract class AbstractCommand implements Command, java.io.Serializable {
 		return convertArguments(temp, vars, nest);
 	}
 
-	public boolean getRunTurtles() {
-		return runAllTurtles;
-	}
-
 	protected List<Command> unNestList(Command c) {
 		return c.getAllArguments();
 	}
-	
 
 }

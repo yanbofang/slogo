@@ -12,13 +12,13 @@ public class XCoordinateCommand extends AbstractCommand {
 	public XCoordinateCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		runAllTurtles = true;
+		setRunAllTurtles(true);
 	}
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		myValue = myTurtle.getLocation(true).getX();
-		return myValue;
+		setValue(getTurtle().getLocation(true).getX());
+		return getValue();
 	}
 
 }
