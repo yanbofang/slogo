@@ -1,7 +1,6 @@
 package turtles;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -20,7 +19,7 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 	private static final Double HEIGHT = 25.0;
 	private static final Double WIDTH = 25.0;
 	private ColorPalette myColors;
-	private Shapes myShapes;
+	//private Shapes myShapes;
 
 	public TurtleManager(Coordinate bounds) {
 		myTurtleMap = new HashMap<Double, Turtle>();

@@ -18,7 +18,6 @@ public class RepeatCommand extends LoopCommand {
 
 	public RepeatCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		runAllTurtles = true;
 	}
 
 	@Override
@@ -29,16 +28,11 @@ public class RepeatCommand extends LoopCommand {
 	}
 	
 	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		localVariables = new VariableManager();
-		localVariables.addAll(vars.getVariableMap());
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = new ArrayList<Object>();
-		myConvertedArguments.add(myArguments.get(0).executeCommand(turtles, vars, k));
-		myConvertedArguments.add(myArguments.get(1));
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, localVariables);
+	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
+		ArrayList<Object> convArgs = new ArrayList<Object>();
+		convArgs.add(myArguments.get(0).executeCommand(myTurtleManager, vars, myTurtle.getID()));
+		convArgs.add(myArguments.get(1));
+		return convArgs;
 	}
 
 }

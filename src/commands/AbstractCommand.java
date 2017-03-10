@@ -15,7 +15,7 @@ import backend.VariableManager;
 public abstract class AbstractCommand implements Command, java.io.Serializable {
 
 	private Integer myNumOfExpressions;
-	protected String myInstruction;
+	private String myInstruction;
 	protected ArrayList<Command> myArguments;
 	protected ArrayList<Object> myConvertedArguments;
 	protected boolean finished;
@@ -98,11 +98,15 @@ public abstract class AbstractCommand implements Command, java.io.Serializable {
 		myTurtleManager = turtles;
 		VariableManager localVariables = new VariableManager();
 		localVariables.addAll(vars.getVariableMap());
-
 		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = convertArguments(myArguments, localVariables, true);
+		myConvertedArguments = argumentsToConvert(localVariables);//convertArguments(myArguments, localVariables, true);
 		this.changeToFinished();
 		return this.getValue(myConvertedArguments, localVariables);
+	}
+	
+	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
+		ArrayList<Object> convArgs = convertArguments(myArguments, vars, true);
+		return convArgs;
 	}
 
 	public void performBeforeExecution() {
@@ -143,5 +147,6 @@ public abstract class AbstractCommand implements Command, java.io.Serializable {
 	protected List<Command> unNestList(Command c) {
 		return c.getAllArguments();
 	}
+	
 
 }

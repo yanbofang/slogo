@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeMap;
 
+import frontend.API.PaletteViewAPI;
 import frontend.API.SubcomponentAPI;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -23,7 +24,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.VBox;
 
-public class PaletteView implements SubcomponentAPI {
+public class PaletteView implements PaletteViewAPI {
 
 
 	private ResourceBundle resource;
@@ -58,7 +59,7 @@ public class PaletteView implements SubcomponentAPI {
 	
 	private VBox createColorView() {
 		VBox colorView = new VBox();
-		String text = "Color Pallete \n";
+		String text = resource.getString("CPalette");
 		Label colorPalette = new Label(text);
 		colorView.getChildren().add(colorPalette);
 		colorButtonLabels = createFeatureButton("backgroundColor", colorMap, colorView);
@@ -68,7 +69,7 @@ public class PaletteView implements SubcomponentAPI {
 	
 	private VBox createImageView() {
 		VBox imageView = new VBox();
-		Label imagePallete = new Label("Image Pallete \n");
+		Label imagePallete = new Label(resource.getString("TPalette"));
 		imageView.getChildren().add(imagePallete);
 		turtleButtonLabels = createFeatureButton("turtle", turtleMap, imageView);
 		return imageView;
@@ -122,7 +123,8 @@ public class PaletteView implements SubcomponentAPI {
 	
 	private void changeBackgroundColor() {
 		if (viewOptions[0][1] != null) {
-			view.changeBackground(viewOptions[0][1]);
+			Double temp = Double.parseDouble(tempChoice);
+			view.changeBackground(temp);
 			viewOptions[0][1] = null;
 		}	
 	}
@@ -141,17 +143,20 @@ public class PaletteView implements SubcomponentAPI {
 	public Parent getParent() {
 		return visualViews;
 	}
-
+	
+	@Override
 	public void updateColorPalette(String color, double index) {
 		colorMap.put(index, color);
 		colorButtonLabels = updateLists(colorMap);
 	}
 	
+	@Override
 	public void updateTurtlePalette(String color, double index) {
 		turtleMap.put(index, color);
 		turtleButtonLabels = updateLists(turtleMap);
 	}
 	
+	@Override
 	public Image getImageOf(double d){
 		if(turtleMap.containsKey(d)){
 			return new Image(this.getClass().getClassLoader().getResourceAsStream(resource.getString(turtleMap.get(d))));

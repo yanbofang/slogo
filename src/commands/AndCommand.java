@@ -1,5 +1,6 @@
 package commands;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import backend.UserMethodManager;
@@ -15,9 +16,12 @@ public class AndCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
-		Double exp1 = (Double) args.get(0);
-		Double exp2 = (Double) args.get(1);
-		if (exp1 != 0.0 && exp2 != 0.0) {
+		List<Double> correctList = new ArrayList<Double>();
+		args.stream()
+			.mapToDouble(d -> (Double) d)
+			.filter(d -> d != 0.0)
+			.forEach(d -> correctList.add(d));
+		if (correctList.size() == args.size()) {
 			myValue = 1.0;
 		} else {
 			myValue = 0.0;

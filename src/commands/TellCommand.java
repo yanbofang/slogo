@@ -31,13 +31,9 @@ public class TellCommand extends AbstractCommand {
 	}
 	
 	@Override
-	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
-		myTurtleManager = turtles;
-		VariableManager localVariables = vars;
-		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = convertArguments(myArguments.get(0).getAllArguments(), localVariables, true);
-		this.changeToFinished();
-		return this.getValue(myConvertedArguments, localVariables);
+	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
+		ArrayList<Object> convArgs = convertArguments(myArguments.get(0).getAllArguments(), vars, true);
+		return convArgs;
 	}
 
 
