@@ -15,13 +15,11 @@ public class Parser {
 	private PatternParse myPatterns;
 	private CommandFactory myFactory;
 	private List<Command> myCommands;
-	private Model myModel;
 	private VariableManager myVariables;
 	private UserMethodManager myUserMethods;
-	private Command myCurrentCommand;
+
 
 	public Parser(String[] syntax, Model m, VariableManager variables, UserMethodManager methods) {
-		myModel = m;
 		myPatterns = new PatternParse();
 		for (String each : syntax) {
 			myPatterns.addPattern(each);

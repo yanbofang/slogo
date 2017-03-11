@@ -19,17 +19,22 @@ public class AskCommand extends LoopCommand {
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		convArgs.add(convertArguments(getArguments().get(0).getAllArguments(), vars, true));
-		convArgs.add(getArguments().get(1));
+		getArguments().stream()
+			.forEach(c -> {
+				if (getArguments().indexOf(c)%2 == 0) {
+					convArgs.add(convertArguments(c.getAllArguments(), vars, true));
+				} else {
+					convArgs.add(c);
+				}
+			});
 		return convArgs;
 	}
 
 	@Override
 	protected Double calculate(List<Object> args, VariableManager vars) {
-		List<Double> lst = (List<Double>) args.get(0);
 		Double returnValue = 0.0;
-		for (Double d : lst) {
-			returnValue = runCommands(1.0, 1.0, 1.0, null, vars, d);
+		for (Object d : args) {
+			returnValue = runCommands(1.0, 1.0, 1.0, null, vars, (Double) d);
 		}
 		return returnValue;
 	}
