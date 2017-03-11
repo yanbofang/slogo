@@ -21,9 +21,10 @@ public class IfCommand extends ConditionalCommand {
 	public Double getValue(List<Object> args, VariableManager vars) {
 		Double returnValue = 0.0;
 		int k = 0;
+		System.out.println(args);
 		while ( k < args.size()) {
 			returnValue = execute((Double) args.get(k), (Command) args.get(k+1), false, vars);
-			k += 2;
+			k += NUM_OF_EXPRESSIONS;
 		}
 		return returnValue;
 	}

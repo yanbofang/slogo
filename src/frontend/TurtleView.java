@@ -35,14 +35,15 @@ public class TurtleView implements TurtleViewerAPI {
 		colorIndex = bgIndex;
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
 		viewer = new Pane();
-		viewer.setBackground(new Background(new BackgroundFill(Color.valueOf(colorMap.get(colorIndex)), CornerRadii.EMPTY, Insets.EMPTY)));
+		viewer.setBackground(new Background(
+				new BackgroundFill(Color.valueOf(colorMap.get(colorIndex)), CornerRadii.EMPTY, Insets.EMPTY)));
 		lines = new ArrayList<Line>();
 	}
 
 	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen, Turtle turtle) {
-		//animation = new MoveAnimation(view, turtle.getImage(), oldC, newC);
+		// animation = new MoveAnimation(view, turtle.getImage(), oldC, newC);
 		if (pen.showPen()) {
-			Line newLine = new Line(oldC.getX(),oldC.getY(),newC.getX(),newC.getY());
+			Line newLine = new Line(oldC.getX(), oldC.getY(), newC.getX(), newC.getY());
 			newLine.setStroke(Color.valueOf(colorMap.get(pen.getColor())));
 			newLine.setStrokeWidth(pen.getSize());
 			lines.add(newLine);
@@ -70,7 +71,7 @@ public class TurtleView implements TurtleViewerAPI {
 	}
 
 	@Override
-	public void setBackgroundColor(Double d){
+	public void setBackgroundColor(Double d) {
 		colorIndex = d;
 		Color tempColor = Color.valueOf(colorMap.get(d));
 		viewer.setBackground(new Background(new BackgroundFill(tempColor, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -78,26 +79,28 @@ public class TurtleView implements TurtleViewerAPI {
 
 	@Override
 	public void placeTurtle(Node a) {
-		viewer.getChildren().add(a);
+		if (!viewer.getChildren().contains(a)) {
+			viewer.getChildren().add(a);
+		}
 	}
 
 	@Override
 	public void removeTurtle(Node a) {
 		viewer.getChildren().remove(a);
 	}
-	
+
 	@Override
 	public boolean containsTurtle(Node n) {
 		return viewer.getChildren().contains(n);
 	}
-	
+
 	@Override
-	public void updateColor(double indexIn, String colorIn){
+	public void updateColor(double indexIn, String colorIn) {
 		colorMap.put(indexIn, colorIn);
 	}
-	
+
 	@Override
-	public double getBackgroundColor(){
+	public double getBackgroundColor() {
 		return colorIndex;
 	}
 }

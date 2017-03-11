@@ -39,7 +39,7 @@ public abstract class ConditionalCommand extends AbstractCommand {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
 		getArguments().stream()
 			.forEach(c -> {
-				if (getArguments().indexOf(c)%2 == 0){
+				if (getArguments().indexOf(c) % 3 == 0){
 					convArgs.addAll(convertArguments(c, vars, true));
 				} else {
 					convArgs.add(c);

@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 public class Controller implements ControllerAPI {
 
 	private static final String SER_FILEPATH = "src/resources/";
-	private static final String DEFAULT_SER = "src/resources/default.ser";
+	private static final String INITIAL_LANGUAGE = "English";
 	private ModelAPI model;
 	private ExternalViewAPI view;
 	private VariableManager variables;
@@ -38,7 +38,7 @@ public class Controller implements ControllerAPI {
 		turtle = new TurtleManager(new Coordinate(view.getBounds().getX(), view.getBounds().getY()));
 		view.setTurtleManager(turtle);
 		userMethods = new UserMethodManager();
-		changeLanguage("English");
+		changeLanguage(INITIAL_LANGUAGE);
 		variablesObserver = new VariableManagerObserver(variables, view);
 		addVariableManagerObserver();
 		userMethodsObserver = new UserMethodObserver(userMethods, view);

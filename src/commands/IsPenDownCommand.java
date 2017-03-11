@@ -12,20 +12,15 @@ public class IsPenDownCommand extends AbstractCommand {
 	 */
 	private static final long serialVersionUID = 7047672167745985902L;
 	private static final Integer NUM_OF_EXPRESSION = 0;
-	
-	public IsPenDownCommand(String instruction, VariableManager variables,
-			UserMethodManager methods) {
+
+	public IsPenDownCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSION);
 		setRunAllTurtles(true);
 	}
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		if (getTurtle().getPen().showPen()) {
-			setValue(1.0);
-		} else {
-			setValue(0.0);
-		}
+		setValue(getTurtle().getPen().showPen() ? 1.0 : 0.0);
 		return getValue();
 	}
 
