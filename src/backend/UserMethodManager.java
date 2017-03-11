@@ -1,17 +1,15 @@
 package backend;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Observable;
 
-import commands.Command;
-import commands.UserMethodCommand;
-
 public class UserMethodManager extends Observable implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -992355869776980965L;
 	private HashMap<String, UserMethod> myMethodMap;
 
 	public UserMethodManager() {

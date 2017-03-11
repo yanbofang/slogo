@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import frontend.WorkSpace;
 import javafx.collections.ObservableList;
-import javafx.scene.image.Image;
 
 public interface ControllerAPI {
 	void handleInput(String input);

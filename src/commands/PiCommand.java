@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class PiCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6595070706710694910L;
 	private static final Integer NUM_OF_EXPRESSIONS = 0;
 	
 	public PiCommand(String instruction, VariableManager variables,

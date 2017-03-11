@@ -3,17 +3,18 @@ package commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import turtles.TurtleManagerCommandAPI;
 import backend.UserMethodManager;
-import backend.Variable;
 import backend.VariableManager;
 
 public class AskCommand extends LoopCommand {
 
-	private static final int NUM_OF_EXPRESSIONS = 2;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2539398430320890157L;
 
 	public AskCommand(String instruction, VariableManager variables, UserMethodManager methods) {
-		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+		super(instruction, variables, methods);
 	}
 	
 	@Override

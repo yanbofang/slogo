@@ -8,6 +8,10 @@ import backend.VariableManager;
 
 public class ClearScreenCommand extends MoveCommand {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6908412808584611193L;
 	private static final Integer NUM_OF_EXPRESSIONS = 0;
 	private Coordinate myCoord;
 

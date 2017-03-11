@@ -3,15 +3,17 @@ package commands;
 import java.util.ArrayList;
 import java.util.List;
 
-import turtles.Turtle;
 import turtles.TurtleManagerCommandAPI;
-import backend.UserMethod;
 import backend.UserMethodManager;
 import backend.Variable;
 import backend.VariableManager;
 
 public class MakeVariableCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2565186453840421257L;
 	private String myVariableName;
 	private Variable myVariable;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
@@ -30,7 +32,7 @@ public class MakeVariableCommand extends AbstractCommand {
 		int k = 0;
 		while (k < args.size()) {
 			checkVariable(vars, k, args);
-			k += 2;
+			k += NUM_OF_EXPRESSIONS;
 		}
 		return getValue();
 	}

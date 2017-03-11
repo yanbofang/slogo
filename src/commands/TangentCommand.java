@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class TangentCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2373777639184541473L;
 	private static final Integer NUM_OF_EXPRESSIONS = 1;
 	
 	public TangentCommand(String instruction, VariableManager variables,

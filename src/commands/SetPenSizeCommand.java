@@ -8,6 +8,10 @@ import backend.VariableManager;
 public class SetPenSizeCommand extends AbstractCommand {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3242226893608105750L;
 	private static final int NUM_OF_EXPRESSIONS = 1;
 	
 	public SetPenSizeCommand(String instruction, VariableManager variables,

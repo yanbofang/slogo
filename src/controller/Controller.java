@@ -4,13 +4,10 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
 import coordinate.Coordinate;
-import turtles.Turtle;
 import turtles.TurtleManager;
 import backend.Model;
 import backend.VariableManager;
@@ -21,8 +18,6 @@ import frontend.WorkSpace;
 import frontend.API.ExternalViewAPI;
 
 import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class Controller implements ControllerAPI {

@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class ProductCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1130203569956614952L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public ProductCommand(String instruction, VariableManager variables, UserMethodManager methods) {

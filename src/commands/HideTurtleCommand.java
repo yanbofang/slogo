@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class HideTurtleCommand extends AbstractCommand {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -215612221642102269L;
 	private static final Integer NUM_OF_EXPRESSION = 0;
 	
 	public HideTurtleCommand(String instruction, VariableManager variables,
