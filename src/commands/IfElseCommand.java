@@ -24,7 +24,7 @@ public class IfElseCommand extends ConditionalCommand {
 		while ( k < args.size()) {
 			returnValue = (Double) args.get(k) == 0.0 ? execute((Double) args.get(k), (Command) args.get(k+2), true, vars)
 					: execute((Double) args.get(k), (Command) args.get(k+1), true, vars);
-			k += 3;
+			k += NUM_OF_EXPRESSIONS;
 		}
 		return returnValue;
 	}
