@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class DoTimesCommand extends LoopCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5748896836448534960L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public DoTimesCommand(String instruction, VariableManager variables, UserMethodManager methods) {

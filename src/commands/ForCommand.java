@@ -7,11 +7,14 @@ import backend.VariableManager;
 
 public class ForCommand extends LoopCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8273555395033115049L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public ForCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		setRunAllTurtles(true);
 	}
 
 	@Override

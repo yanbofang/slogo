@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class OrCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1436369049962324149L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 	
 	public OrCommand(String instruction, VariableManager variables,

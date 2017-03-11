@@ -1,7 +1,5 @@
 package commands;
 
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -11,6 +9,10 @@ import backend.VariableManager;
 
 public class NotEqualCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1150959654000201655L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 	
 	public NotEqualCommand(String instruction, VariableManager variables,

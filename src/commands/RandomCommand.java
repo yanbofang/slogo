@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class RandomCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2218264768113738642L;
 	private static final Integer NUM_OF_EXPRESSIONS = 1;
 	
 	public RandomCommand(String instruction, VariableManager variables,

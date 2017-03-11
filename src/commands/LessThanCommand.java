@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class LessThanCommand extends AbstractCommand {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1985738851272177631L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public LessThanCommand(String instruction, VariableManager variables,

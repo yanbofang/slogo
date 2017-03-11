@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class SetPaletteCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6343818229656607112L;
 	private static final int NUM_OF_EXPRESSIONS = 4;
 	public SetPaletteCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {

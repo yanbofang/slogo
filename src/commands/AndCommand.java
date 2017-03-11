@@ -11,6 +11,10 @@ public class AndCommand extends AbstractCommand {
 	/**
 	 * 
 	 */
+	private static final long serialVersionUID = 1021018639939721241L;
+	/**
+	 * 
+	 */
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public AndCommand(String instruction, VariableManager variables, UserMethodManager methods) {

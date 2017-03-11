@@ -1,18 +1,17 @@
 package commands;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-
-import turtles.TurtleManagerCommandAPI;
-import backend.CommandFactory;
 import backend.UserMethodManager;
 import backend.Variable;
 import backend.VariableManager;
 
 public class RepeatCommand extends LoopCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5560327249224036748L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 	private static final String REPEAT_VARIABLE_NAME = ":repcount";
 

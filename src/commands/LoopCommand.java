@@ -1,18 +1,18 @@
 package commands;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
-import java.util.Queue;
 
 import backend.UserMethodManager;
 import backend.Variable;
 import backend.VariableManager;
-import turtles.TurtleManagerCommandAPI;
 
 public abstract class LoopCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2305722461849866639L;
 	protected Command myListCommand;
 
 	public LoopCommand(String instruction, VariableManager variables, UserMethodManager methods, int numOfExpressions) {

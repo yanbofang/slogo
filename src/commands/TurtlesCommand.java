@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class TurtlesCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7453547348846595875L;
 	private static final int NUM_OF_EXPRESSIONS = 0;
 
 	public TurtlesCommand(String instruction, VariableManager variables, UserMethodManager methods) {
@@ -15,8 +19,7 @@ public class TurtlesCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		Double returnValue = new Double(getTurtleManager().allTurtles().size());
-		return returnValue;
+		return new Double(getTurtleManager().allTurtles().size());
 	}
 
 }

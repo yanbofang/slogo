@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class DifferenceCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8490462159227604653L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public DifferenceCommand(String instruction, VariableManager variables, UserMethodManager methods) {

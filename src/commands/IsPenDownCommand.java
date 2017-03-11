@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class IsPenDownCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7047672167745985902L;
 	private static final Integer NUM_OF_EXPRESSION = 0;
 	
 	public IsPenDownCommand(String instruction, VariableManager variables,

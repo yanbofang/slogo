@@ -7,10 +7,13 @@ import backend.VariableManager;
 
 public class EqualCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3687395848956032308L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
-	
-	public EqualCommand(String instruction, VariableManager variables,
-			UserMethodManager methods) {
+
+	public EqualCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 

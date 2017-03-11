@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class ShowTurtleCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -4725764100771427793L;
 	private static final Integer NUM_OF_EXPRESSIONS = 0;
 	
 	public ShowTurtleCommand(String instruction, VariableManager variables,

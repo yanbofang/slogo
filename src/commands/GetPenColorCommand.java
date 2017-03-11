@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class GetPenColorCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8665450371251237597L;
 	private static final int NUM_OF_EXPRESSIONS = 0;
 	
 	public GetPenColorCommand(String instruction, VariableManager variables,

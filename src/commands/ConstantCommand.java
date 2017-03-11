@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class ConstantCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 834632117687447006L;
 	private static final Integer NUM_OF_EXPRESSIONS = 0;
 
 	public ConstantCommand(String instruction, VariableManager variables, UserMethodManager methods) {

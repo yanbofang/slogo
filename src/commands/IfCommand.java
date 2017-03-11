@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class IfCommand extends ConditionalCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8889501036189048184L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public IfCommand(String instruction, VariableManager variables, UserMethodManager methods) {

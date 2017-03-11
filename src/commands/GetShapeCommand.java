@@ -8,6 +8,10 @@ import backend.VariableManager;
 public class GetShapeCommand extends AbstractCommand {
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 8560847640187359737L;
 	private static final int NUM_OF_EXPRESSIONS = 0;
 	
 	public GetShapeCommand(String instruction, VariableManager variables,
