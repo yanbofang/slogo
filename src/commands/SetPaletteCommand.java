@@ -10,14 +10,15 @@ public class SetPaletteCommand extends AbstractCommand {
 	private static final int NUM_OF_EXPRESSIONS = 4;
 	public SetPaletteCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
-		super(instruction, variables, methods);
+		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
-		getTurtleManager().addColor((Double) args.get(0), (Double) args.get(1), (Double) args.get(2),
-				(Double) args.get(3));
-		return (Double) args.get(0);
+		int size = args.size();
+		getTurtleManager().addColor((Double) args.get(size-4), (Double) args.get(size -3), 
+				(Double) args.get(size -2), (Double) args.get(size -1));
+		return (Double) args.get(size-4);
 	}
 
 }

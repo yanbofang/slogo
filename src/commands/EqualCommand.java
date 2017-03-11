@@ -1,6 +1,5 @@
 package commands;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import backend.UserMethodManager;
