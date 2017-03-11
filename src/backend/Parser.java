@@ -3,9 +3,7 @@ package backend;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import commands.Command;
-
 public class Parser {
 
 	private PatternParse myPatterns;
@@ -62,7 +60,6 @@ public class Parser {
 	 * @return - returns an object depending on the the command/value
 	 */
 	private Command recurseParse(Scanner s) {
-
 		Command currentCommand;
 		if (s.hasNext()) {
 			String current = s.next();
@@ -70,7 +67,6 @@ public class Parser {
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
 			currentCommand = reflect(current);
-			System.out.println(currentCommand);
 			if (currentCommand != null) {
 				runArguments(currentCommand, s, currentCommand.getNumOfExpressions());
 				currentCommand.performBeforeExecution();
@@ -79,12 +75,13 @@ public class Parser {
 				return getDataObject(current, s);
 			}
 		} else {
-			throw new ParserException(String.format("Improper input"));
+			throw new ParserException(String.format("Improper input"), new Exception());
 		}
 	}
 
 	private Command getDataObject(String current, Scanner s) {
-		if (myPatterns.getSymbol(current).equals("ListEnd") || myPatterns.getSymbol(current).equals("GroupEnd")) {
+		if (myPatterns.getSymbol(current).equals("ListEnd") ||
+			myPatterns.getSymbol(current).equals("GroupEnd")) {
 			return null;
 		} else if (myPatterns.getSymbol(current).equals("Comment")) {
 			s.nextLine();
@@ -95,15 +92,14 @@ public class Parser {
 			if (infiniteCommand != null && infiniteCommand.getNumOfExpressions() != 0) {
 				runArguments(infiniteCommand, s, -1);
 				if (infiniteCommand.getAllArguments().size() % infiniteCommand.getNumOfExpressions() != 0) {
-					throw new ParserException(String.format("WRONG NUMBER OF ARGUMENTS FOR %s", current));
+					throw new ParserException(String.format("WRONG NUMBER OF ARGUMENTS FOR %s", current), new Exception());
 				}
 				infiniteCommand.performBeforeExecution();
 				return infiniteCommand;
 			}
-			throw new ParserException(String.format("DOESN'T TAKE IN INFINITE ARGUMENTS %s", current));
+			throw new ParserException(String.format("DOESN'T TAKE IN INFINITE ARGUMENTS %s", current), new Exception());
 		} else {
-
-			throw new ParserException(String.format("NOT A VALID TYPE %s", current));
+			throw new ParserException(String.format("NOT A VALID TYPE %s", current), new Exception());
 		}
 	}
 

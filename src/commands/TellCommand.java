@@ -25,7 +25,7 @@ public class TellCommand extends AbstractCommand {
 			try {
 				newActiveTurtles.add((Double) o);
 			} catch (Exception e) {
-				throw new ParserException(String.format("NOT A VALID TURTLE ID %s", o));
+				throw new ParserException(String.format("NOT A VALID TURTLE ID %s", o), new Exception());
 			}
 		}
 		getTurtleManager().addActiveTurtles(newActiveTurtles);

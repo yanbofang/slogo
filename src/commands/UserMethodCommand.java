@@ -40,7 +40,7 @@ public class UserMethodCommand extends AbstractCommand {
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
 		if (checkForMethod() == false) {
-			throw new ParserException(String.format("NOT A VALID USER METHOD %s", getInstruction()));
+			throw new ParserException(String.format("NOT A VALID USER METHOD %s", getInstruction()), new Exception());
 		}
 
 		Double returnValue = 0.0;
