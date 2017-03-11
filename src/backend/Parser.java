@@ -5,10 +5,6 @@ import java.util.List;
 import java.util.Scanner;
 
 import commands.Command;
-import commands.ListCommand;
-import commands.MakeUserInstructionCommand;
-import commands.MakeVariableCommand;
-import commands.UserMethodCommand;
 
 public class Parser {
 
@@ -17,7 +13,6 @@ public class Parser {
 	private List<Command> myCommands;
 	private VariableManager myVariables;
 	private UserMethodManager myUserMethods;
-
 
 	public Parser(String[] syntax, Model m, VariableManager variables, UserMethodManager methods) {
 		myPatterns = new PatternParse();
@@ -39,15 +34,15 @@ public class Parser {
 		}
 		return myCommands;
 	}
-	
+
 	private Command reflect(String current) {
-		Command currentCommand = myFactory.reflectCommand(current, myPatterns.getSymbol(current), myVariables, myUserMethods);
+		Command currentCommand = myFactory.reflectCommand(current, myPatterns.getSymbol(current), myVariables,
+				myUserMethods);
 		return currentCommand;
 	}
-	
+
 	private void runArguments(Command command, Scanner s, int numberOfTimes) {
-		while (command.getCurrentArgumentSize() < numberOfTimes ||
-				numberOfTimes < 0) {
+		while (command.getCurrentArgumentSize() < numberOfTimes || numberOfTimes < 0) {
 			Command toBeAdded = recurseParse(s);
 			if (toBeAdded == null) {
 				break;
@@ -55,7 +50,6 @@ public class Parser {
 			command.add(toBeAdded);
 		}
 	}
-
 
 	/**
 	 * Pass in a single instruction, iterate through the scanner recursively
@@ -72,7 +66,7 @@ public class Parser {
 		Command currentCommand;
 		if (s.hasNext()) {
 			String current = s.next();
-			
+
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
 			currentCommand = reflect(current);
@@ -90,26 +84,25 @@ public class Parser {
 	}
 
 	private Command getDataObject(String current, Scanner s) {
-		if (myPatterns.getSymbol(current).equals("ListEnd") ||
-				myPatterns.getSymbol(current).equals("GroupEnd")) {
+		if (myPatterns.getSymbol(current).equals("ListEnd") || myPatterns.getSymbol(current).equals("GroupEnd")) {
 			return null;
-		} else if (myPatterns.getSymbol(current).equals("Comment")){
+		} else if (myPatterns.getSymbol(current).equals("Comment")) {
 			s.nextLine();
 			return recurseParse(s);
 		} else if (myPatterns.getSymbol(current).equals("GroupStart")) {
 			current = s.next();
 			Command infiniteCommand = reflect(current);
-			if (infiniteCommand  != null && infiniteCommand.getNumOfExpressions() != 0) {
+			if (infiniteCommand != null && infiniteCommand.getNumOfExpressions() != 0) {
 				runArguments(infiniteCommand, s, -1);
-				if (infiniteCommand.getAllArguments().size()%infiniteCommand.getNumOfExpressions() != 0) {
-					throw new ParserException(String.format("WRONG NUMBER OF ARGUMENTS FOR %s", current));				
+				if (infiniteCommand.getAllArguments().size() % infiniteCommand.getNumOfExpressions() != 0) {
+					throw new ParserException(String.format("WRONG NUMBER OF ARGUMENTS FOR %s", current));
 				}
 				infiniteCommand.performBeforeExecution();
 				return infiniteCommand;
 			}
 			throw new ParserException(String.format("DOESN'T TAKE IN INFINITE ARGUMENTS %s", current));
 		} else {
-		
+
 			throw new ParserException(String.format("NOT A VALID TYPE %s", current));
 		}
 	}

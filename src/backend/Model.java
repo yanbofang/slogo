@@ -1,13 +1,10 @@
 package backend;
 
-import java.util.Arrays;
 import java.util.List;
 
 import backend.API.ModelAPI;
-import turtles.Turtle;
 import turtles.TurtleManager;
 import commands.Command;
-import javafx.scene.Node;
 
 public class Model implements ModelAPI {
 
@@ -31,7 +28,6 @@ public class Model implements ModelAPI {
 		for (Command c : commands) {
 			if (c instanceof Command) {
 				c.resetCommand();
-
 			}
 		}
 		myCommandHandler.addCommands(commands);

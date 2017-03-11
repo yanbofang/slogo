@@ -12,10 +12,9 @@ public class AskCommand extends LoopCommand {
 	 * 
 	 */
 	private static final long serialVersionUID = 2539398430320890157L;
-	private static final int NUM_OF_EXPRESSIONS = 2;
 
 	public AskCommand(String instruction, VariableManager variables, UserMethodManager methods) {
-		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+		super(instruction, variables, methods);
 	}
 	
 	@Override

@@ -32,21 +32,16 @@ public class CommandHandler {
 	 * @return
 	 */
 
-	// will need to change something in commands -- need to check to see if the
-	// command runs with turtles
 	public Double executeCommands() {
 		Double current = null;
 		if (!myCommands.isEmpty()) {
 			currentCommand = myCommands.peek();
 			List<Double> activeTurtles = myTurtles.getActiveTurtleIDs();
-			System.out.println(currentCommand);
-			System.out.println(currentCommand.getAllArguments());
 			if (currentCommand.isFinished()) {
 				myCommands.remove();
 			} else if (currentCommand.isRunAllTurtles()) {
 				for (Double k : activeTurtles) {
 					current = currentCommand.executeCommand(myTurtles, myVariables, k);
-					System.out.println(current + "   *print statement in CommandHandler");
 				}
 			} else {
 				current = currentCommand.executeCommand(myTurtles, myVariables, activeTurtles.get(0));

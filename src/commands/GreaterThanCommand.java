@@ -12,24 +12,17 @@ public class GreaterThanCommand extends AbstractCommand {
 	 */
 	private static final long serialVersionUID = 6232006930610750365L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
-	
-	public GreaterThanCommand(String instruction, VariableManager variables,
-			UserMethodManager methods) {
+
+	public GreaterThanCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 	}
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		Double exp1 = (Double) args.get(args.size()-2);
-		Double exp2 = (Double) args.get(args.size()-1);
-		if (exp1 > exp2) {
-			setValue(1.0);
-		} else {
-			setValue(0.0);
-		}
+		Double exp1 = (Double) args.get(args.size() - 2);
+		Double exp2 = (Double) args.get(args.size() - 1);
+		setValue(exp1 > exp2 ? 1.0 : 0.0);
 		return getValue();
 	}
-	
-	
 
 }

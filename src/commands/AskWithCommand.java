@@ -13,17 +13,15 @@ public class AskWithCommand extends LoopCommand {
 	 * 
 	 */
 	private static final long serialVersionUID = -8958314693164883784L;
-	private static final int NUM_OF_EXPRESSIONS = 2;
 
 	public AskWithCommand(String instruction, VariableManager variables, UserMethodManager methods) {
-		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+		super(instruction, variables, methods);
 	}
 
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		getArguments().stream()
-			.forEach(c -> convArgs.add(c));
+		getArguments().stream().forEach(c -> convArgs.add(c));
 		return convArgs;
 	}
 

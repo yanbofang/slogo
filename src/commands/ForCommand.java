@@ -11,10 +11,9 @@ public class ForCommand extends LoopCommand {
 	 * 
 	 */
 	private static final long serialVersionUID = -8273555395033115049L;
-	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public ForCommand(String instruction, VariableManager variables, UserMethodManager methods) {
-		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
+		super(instruction, variables, methods);
 	}
 
 	@Override
@@ -23,9 +22,8 @@ public class ForCommand extends LoopCommand {
 		List<Object> positions = convertArguments(lst.subList(1, lst.size()), vars, true);
 		Variable var = new Variable(lst.get(0).getInstruction(), (Double) positions.get(0));
 		vars.addVariable(var);
-		return runCommands((Double) positions.get(0), (Double) positions.get(1), (Double) positions.get(2), 
-				var, vars, getTurtle().getID());
+		return runCommands((Double) positions.get(0), (Double) positions.get(1), (Double) positions.get(2), var, vars,
+				getTurtle().getID());
 	}
-
 
 }

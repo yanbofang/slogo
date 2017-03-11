@@ -13,10 +13,11 @@ public abstract class LoopCommand extends AbstractCommand {
 	 * 
 	 */
 	private static final long serialVersionUID = -2305722461849866639L;
+	private static final Integer NUM_OF_EXPRESSIONS = 2;
 	protected Command myListCommand;
 
-	public LoopCommand(String instruction, VariableManager variables, UserMethodManager methods, int numOfExpressions) {
-		super(instruction, variables, methods, numOfExpressions);
+	public LoopCommand(String instruction, VariableManager variables, UserMethodManager methods) {
+		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
 		setRunAllTurtles(true);
 	}
 
@@ -25,9 +26,9 @@ public abstract class LoopCommand extends AbstractCommand {
 		int k = 0;
 		Double returnValue = 0.0;
 		while (k < args.size()) {
-			myListCommand = (Command) args.get(k+1);
+			myListCommand = (Command) args.get(k + 1);
 			returnValue = calculate((List<Object>) args.get(k), vars);
-			k += 2;
+			k += NUM_OF_EXPRESSIONS;
 		}
 		return returnValue;
 	}
@@ -46,18 +47,17 @@ public abstract class LoopCommand extends AbstractCommand {
 		}
 		return returnValue;
 	}
-	
+
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		getArguments().stream()
-			.forEach(c -> {
-				if (getArguments().indexOf(c)%2 == 0) {
-					convArgs.add(c.getAllArguments());
-				} else {
-					convArgs.add(c);
-				}
-			});
+		getArguments().stream().forEach(c -> {
+			if (getArguments().indexOf(c) % 2 == 0) {
+				convArgs.add(c.getAllArguments());
+			} else {
+				convArgs.add(c);
+			}
+		});
 		return convArgs;
 	}
 }

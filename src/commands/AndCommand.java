@@ -24,15 +24,8 @@ public class AndCommand extends AbstractCommand {
 	@Override
 	public Double getValue(List<Object> args, VariableManager localVariables) {
 		List<Double> correctList = new ArrayList<Double>();
-		args.stream()
-			.mapToDouble(d -> (Double) d)
-			.filter(d -> d != 0.0)
-			.forEach(d -> correctList.add(d));
-		if (correctList.size() == args.size()) {
-			setValue(1.0);
-		} else {
-			setValue(0.0);
-		}
+		args.stream().mapToDouble(d -> (Double) d).filter(d -> d != 0.0).forEach(d -> correctList.add(d));
+		setValue(correctList.size() == args.size() ? 1.0 : 0.0);
 		return getValue();
 	}
 
