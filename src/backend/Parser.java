@@ -3,13 +3,7 @@ package backend;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import commands.Command;
-import commands.ListCommand;
-import commands.MakeUserInstructionCommand;
-import commands.MakeVariableCommand;
-import commands.UserMethodCommand;
-
 public class Parser {
 
 	private PatternParse myPatterns;
@@ -68,7 +62,6 @@ public class Parser {
 	 * @return - returns an object depending on the the command/value
 	 */
 	private Command recurseParse(Scanner s) {
-
 		Command currentCommand;
 		if (s.hasNext()) {
 			String current = s.next();
@@ -76,7 +69,6 @@ public class Parser {
 			// Creates the actual command (i.e. movement, math)
 			// from the user input translation (i.e. sum, forward)
 			currentCommand = reflect(current);
-			System.out.println(currentCommand);
 			if (currentCommand != null) {
 				runArguments(currentCommand, s, currentCommand.getNumOfExpressions());
 				currentCommand.performBeforeExecution();
@@ -91,7 +83,7 @@ public class Parser {
 
 	private Command getDataObject(String current, Scanner s) {
 		if (myPatterns.getSymbol(current).equals("ListEnd") ||
-				myPatterns.getSymbol(current).equals("GroupEnd")) {
+			myPatterns.getSymbol(current).equals("GroupEnd")) {
 			return null;
 		} else if (myPatterns.getSymbol(current).equals("Comment")){
 			s.nextLine();

@@ -12,7 +12,7 @@ public class ParserException extends RuntimeException{
 
 	
 	public ParserException(String error) {
-		super(error);
+		//super(error);
 		Alert a = new Alert(AlertType.ERROR);
         a.setContentText(String.format("ERROR reading file: %s", error));
         a.showAndWait();
