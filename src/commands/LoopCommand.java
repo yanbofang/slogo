@@ -14,18 +14,22 @@ import turtles.TurtleManagerCommandAPI;
 public abstract class LoopCommand extends AbstractCommand {
 
 	protected Command myListCommand;
-	//protected VariableManager localVariables;
 
 	public LoopCommand(String instruction, VariableManager variables, UserMethodManager methods, int numOfExpressions) {
 		super(instruction, variables, methods, numOfExpressions);
-		setRunNested(false);
 		setRunAllTurtles(true);
 	}
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		myListCommand = (Command) args.get(1);
-		return calculate(args, vars);
+		int k = 0;
+		Double returnValue = 0.0;
+		while (k < args.size()) {
+			myListCommand = (Command) args.get(k+1);
+			returnValue = calculate((List<Object>) args.get(k), vars);
+			k += 2;
+		}
+		return returnValue;
 	}
 
 	protected abstract Double calculate(List<Object> args, VariableManager vars);
@@ -46,8 +50,14 @@ public abstract class LoopCommand extends AbstractCommand {
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		convArgs.add(getArguments().get(0).getAllArguments());
-		convArgs.add(getArguments().get(1));
+		getArguments().stream()
+			.forEach(c -> {
+				if (getArguments().indexOf(c)%2 == 0) {
+					convArgs.add(c.getAllArguments());
+				} else {
+					convArgs.add(c);
+				}
+			});
 		return convArgs;
 	}
 }

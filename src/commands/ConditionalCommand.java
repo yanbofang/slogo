@@ -2,6 +2,7 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import backend.UserMethodManager;
 import backend.VariableManager;
 
@@ -31,13 +32,14 @@ public abstract class ConditionalCommand extends AbstractCommand {
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		for (Command c: getArguments()) {
-			if (getArguments().indexOf(c) == 0) {
-				convArgs.addAll(convertArguments(c, vars, true));
-			} else {
-				convArgs.add(c);
-			}
-		}
+		getArguments().stream()
+			.forEach(c -> {
+				if (getArguments().indexOf(c)%2 == 0){
+					convArgs.addAll(convertArguments(c, vars, true));
+				} else {
+					convArgs.add(c);
+				}
+			});
 		return convArgs;
 	}
 

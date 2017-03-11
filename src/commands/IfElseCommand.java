@@ -16,8 +16,14 @@ public class IfElseCommand extends ConditionalCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		return (Double) args.get(0) == 0.0 ? execute((Double) args.get(0), (Command) args.get(2), true, vars)
-				: execute((Double) args.get(0), (Command) args.get(1), true, vars);
+		Double returnValue = 0.0;
+		int k = 0;
+		while ( k < args.size()) {
+			returnValue = (Double) args.get(k) == 0.0 ? execute((Double) args.get(k), (Command) args.get(k+2), true, vars)
+					: execute((Double) args.get(k), (Command) args.get(k+1), true, vars);
+			k += 3;
+		}
+		return returnValue;
 	}
 
 }

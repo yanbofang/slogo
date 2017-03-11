@@ -8,6 +8,9 @@ import backend.VariableManager;
 
 public class AndCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public AndCommand(String instruction, VariableManager variables, UserMethodManager methods) {

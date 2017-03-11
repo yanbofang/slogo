@@ -30,8 +30,14 @@ public class RepeatCommand extends LoopCommand {
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		convArgs.add(getArguments().get(0).executeCommand(getTurtleManager(), vars, getTurtle().getID()));
-		convArgs.add(getArguments().get(1));
+		getArguments().stream()
+			.forEach(c -> {
+				if (getArguments().indexOf(c)%2 == 0) {
+					convArgs.add(convertArguments(c, vars, true));
+				} else {
+					convArgs.add(c);
+				}
+			});
 		return convArgs;
 	}
 

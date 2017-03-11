@@ -47,20 +47,6 @@ public class MakeVariableCommand extends AbstractCommand {
 			vars.addVariable(myVariable);
 		}
 	}
-	/*
-	public void performBeforeExecution() {
-		String varName = (String) myArguments.get(0).getInstruction();
-		if (myVariables.get(varName) != null) {
-			if (myVariables.get(varName).getValue() != myValue) {
-				myVariables.addVariable(new Variable(varName, myValue));
-				return;
-			}
-		} else {
-			myVariable = new Variable(varName, myValue);
-			myVariables.addVariable(myVariable);
-		}
-		return;
-	}*/
 	
 	public Double executeCommand(TurtleManagerCommandAPI turtles, VariableManager vars, Double k) {
 		setTurtleManager(turtles);

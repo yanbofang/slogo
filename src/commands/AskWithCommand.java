@@ -19,8 +19,8 @@ public class AskWithCommand extends LoopCommand {
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
-		convArgs.add(getArguments().get(0));
-		convArgs.add(getArguments().get(1));
+		getArguments().stream()
+			.forEach(c -> convArgs.add(c));
 		return convArgs;
 	}
 
