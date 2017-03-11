@@ -75,7 +75,7 @@ public class Parser {
 				return getDataObject(current, s);
 			}
 		} else {
-			throw new ParserException(String.format("Improper input"));
+			throw new ParserException(String.format("Improper input"), new Exception());
 		}
 	}
 
@@ -92,15 +92,14 @@ public class Parser {
 			if (infiniteCommand != null && infiniteCommand.getNumOfExpressions() != 0) {
 				runArguments(infiniteCommand, s, -1);
 				if (infiniteCommand.getAllArguments().size() % infiniteCommand.getNumOfExpressions() != 0) {
-					throw new ParserException(String.format("WRONG NUMBER OF ARGUMENTS FOR %s", current));
+					throw new ParserException(String.format("WRONG NUMBER OF ARGUMENTS FOR %s", current), new Exception());
 				}
 				infiniteCommand.performBeforeExecution();
 				return infiniteCommand;
 			}
-			throw new ParserException(String.format("DOESN'T TAKE IN INFINITE ARGUMENTS %s", current));
+			throw new ParserException(String.format("DOESN'T TAKE IN INFINITE ARGUMENTS %s", current), new Exception());
 		} else {
-
-			throw new ParserException(String.format("NOT A VALID TYPE %s", current));
+			throw new ParserException(String.format("NOT A VALID TYPE %s", current), new Exception());
 		}
 	}
 

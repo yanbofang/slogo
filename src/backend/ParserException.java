@@ -11,11 +11,11 @@ public class ParserException extends RuntimeException{
 	private static final long serialVersionUID = 1L;
 
 	
-	public ParserException(String error) {
-		//super(error);
+	public ParserException(String error, Throwable e) {
+		//super(e);
 		Alert a = new Alert(AlertType.ERROR);
         a.setContentText(String.format("ERROR reading file: %s", error));
-        a.showAndWait();
+        a.show();//a.showAndWait();
 	}
 }
 

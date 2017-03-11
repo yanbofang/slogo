@@ -179,13 +179,13 @@ public abstract class AbstractCommand implements Command {
 					if (value != null) {
 						newArgs.add(value);
 					} else {
-						throw new ParserException(String.format("WRONG INPUT %s", o));
+						throw new ParserException(String.format("WRONG INPUT %s", o), new Exception());
 					}
 				} else {
 					newArgs.add(o);
 				}
 			} catch (Exception e) {
-				throw new ParserException(String.format("WRONG INPUT %s", o));
+				throw new ParserException(String.format("WRONG INPUT %s", o), new Exception());
 			}
 		}
 		return newArgs;
