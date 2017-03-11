@@ -9,6 +9,10 @@ import coordinate.Coordinate;
 public class BackwardCommand extends MoveCommand {
 	
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3231308603871665816L;
 	private static final Integer NUM_OF_EXPRESSIONS = 1;
 	private Coordinate myCoord;
 	

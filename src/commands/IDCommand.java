@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class IDCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4931527663220004673L;
 	private static final int NUM_OF_EXPRESSIONS = 0;
 	public IDCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {

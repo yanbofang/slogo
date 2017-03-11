@@ -8,13 +8,16 @@ import backend.VariableManager;
 
 public class HomeCommand extends MoveCommand {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3926349367468371091L;
 	private static final Integer NUM_OF_EXPRESSIONS = 0;
 	private Coordinate myCoord;
 	
 	public HomeCommand(String instruction, VariableManager variables,
 			UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		setRunAllTurtles(true);
 	}
 
 	@Override

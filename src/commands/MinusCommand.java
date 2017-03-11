@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class MinusCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2941347859485134480L;
 	private static final Integer NUM_OF_EXPRESSIONS = 1;
 
 	public MinusCommand(String instruction, VariableManager variables, UserMethodManager methods) {

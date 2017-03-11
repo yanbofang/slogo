@@ -7,11 +7,14 @@ import backend.VariableManager;
 
 public class IfElseCommand extends ConditionalCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -695618966888197503L;
 	private static final Integer NUM_OF_EXPRESSIONS = 3;
 
 	public IfElseCommand(String instruction, VariableManager variables, UserMethodManager methods) {
 		super(instruction, variables, methods, NUM_OF_EXPRESSIONS);
-		setRunAllTurtles(true);
 	}
 
 	@Override

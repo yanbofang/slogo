@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class SetShapeCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -874875269929958110L;
 	private static final int NUM_OF_EXPRESSIONS = 1;
 	
 	public SetShapeCommand(String instruction, VariableManager variables,

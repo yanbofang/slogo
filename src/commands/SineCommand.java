@@ -8,6 +8,10 @@ import backend.VariableManager;
 
 public class SineCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6778962290512794615L;
 	private static final Integer NUM_OF_EXPRESSIONS = 1;
 	
 	public SineCommand(String instruction, VariableManager variables,

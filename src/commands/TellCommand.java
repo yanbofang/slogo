@@ -2,14 +2,16 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import turtles.TurtleManagerCommandAPI;
 import backend.ParserException;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
 public class TellCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7735245879905342633L;
 	private static final int NUM_OF_EXPRESSIONS = 1;
 
 	public TellCommand(String instruction, VariableManager variables, UserMethodManager methods) {

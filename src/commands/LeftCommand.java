@@ -8,6 +8,10 @@ import backend.VariableManager;
 
 public class LeftCommand extends MoveCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -5696799279296128657L;
 	private static final Integer NUM_OF_EXPRESSIONS = 1;
 	
 	public LeftCommand(String instruction, VariableManager variables, UserMethodManager methods) {

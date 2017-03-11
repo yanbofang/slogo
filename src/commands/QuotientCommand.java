@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class QuotientCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6193171677458971186L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public QuotientCommand(String instruction, VariableManager variables, UserMethodManager methods) {

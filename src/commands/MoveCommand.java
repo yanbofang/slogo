@@ -8,6 +8,10 @@ import coordinate.Coordinate;
 
 public abstract class MoveCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2746325331777941415L;
 	protected int myQuadrant;
 
 	public MoveCommand(String instruction, VariableManager variables, UserMethodManager methods,

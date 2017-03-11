@@ -8,6 +8,10 @@ import backend.VariableManager;
 
 public class SetHeadingCommand extends MoveCommand {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8147616540009761382L;
 	private static final Integer NUM_OF_EXPRESSIONS = 1;
 
 	public SetHeadingCommand(String instruction, VariableManager variables, UserMethodManager methods) {

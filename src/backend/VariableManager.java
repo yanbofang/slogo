@@ -8,6 +8,10 @@ import java.util.Observable;
 
 public class VariableManager extends Observable implements java.io.Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -265641316491387581L;
 	private HashMap<String, Variable> myVariableMap;
 
 	public VariableManager() {

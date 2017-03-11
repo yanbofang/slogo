@@ -9,6 +9,10 @@ import backend.VariableManager;
 
 public class UserMethodCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8919002370699505597L;
 	private UserMethod myMethod;
 
 	public UserMethodCommand(String instruction, VariableManager variables, UserMethodManager methods,
@@ -29,9 +33,8 @@ public class UserMethodCommand extends AbstractCommand {
 			myMethod = getUserMethods().getUserMethod(getInstruction());
 			setNumOfExpressions(myMethod.getListOfVariables().size());
 			return true;
-		} else {
-			return false;
 		}
+		return false;
 	}
 
 	@Override

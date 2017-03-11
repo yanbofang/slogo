@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class RemainderCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2120506756051656970L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 
 	public RemainderCommand(String instruction, VariableManager variables, UserMethodManager methods) {

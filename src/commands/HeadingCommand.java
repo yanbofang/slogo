@@ -7,6 +7,10 @@ import backend.VariableManager;
 
 public class HeadingCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6622070321152005115L;
 	private static final Integer NUM_OF_EXPRESSION = 0;
 	
 	public HeadingCommand(String instruction, VariableManager variables,

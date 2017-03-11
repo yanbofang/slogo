@@ -8,6 +8,10 @@ import coordinate.Coordinate;
 
 public class SetTowardsCommand extends MoveCommand {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1795431800077266963L;
 	private static final Integer NUM_OF_EXPRESSIONS = 2;
 	private Double myRotate;
 

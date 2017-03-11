@@ -8,6 +8,11 @@ import backend.VariableManager;
 
 public abstract class ConditionalCommand extends AbstractCommand {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -3640331309373660433L;
+
 	public ConditionalCommand(String instruction, VariableManager variables, UserMethodManager methods,
 			int numOfExpressions) {
 		super(instruction, variables, methods, numOfExpressions);
