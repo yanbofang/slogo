@@ -16,9 +16,9 @@ public class QuotientCommand extends AbstractCommand {
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
 		Double[] start = {(Double) args.get(0)};
-		args.remove(start);
+		args.remove(start[0]);
 		args.stream()
-			.forEach(d -> start[0] /= (Double) d);
+			.forEach(d -> start[0]  /= (Double) d);
 		return start[0];
 	}
 

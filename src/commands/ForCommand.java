@@ -1,9 +1,6 @@
 package commands;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import turtles.TurtleManagerCommandAPI;
 import backend.UserMethodManager;
 import backend.Variable;
 import backend.VariableManager;

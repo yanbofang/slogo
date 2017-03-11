@@ -15,6 +15,6 @@ public class CosineCommand extends AbstractCommand {
 
 	@Override
 	public Double getValue(List<Object> args, VariableManager vars) {
-		return Math.cos(Math.toRadians((Double) args.get(0)));
+		return Math.cos(Math.toRadians((Double) args.get(args.size()-1)));
 	}
 }

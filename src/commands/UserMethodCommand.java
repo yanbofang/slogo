@@ -1,11 +1,6 @@
 package commands;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import turtles.TurtleManagerCommandAPI;
 import backend.ParserException;
 import backend.UserMethod;
 import backend.UserMethodManager;
@@ -54,7 +49,6 @@ public class UserMethodCommand extends AbstractCommand {
 		}
 
 		List<Command> commands = myMethod.getListOfCommands();
-		System.out.println(commands + "IN USER METHOD COMMAND");
 		for (Command c : commands) {
 			c.resetCommand();
 			while (!c.isFinished()) {

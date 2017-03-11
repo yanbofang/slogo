@@ -18,13 +18,18 @@ public class SetPositionCommand extends MoveCommand {
 	
 	@Override
 	public Double calculateValue(List<Object> args) {
-		Double updatedX = (Double) args.get(0);
-		Double updatedY = (Double) args.get(1);
-		myCoord = new Coordinate(updatedX, updatedY*-1);
-		updateCoords(myCoord, myQuadrant);
-		Double distance = calcDistance(myCoord, getTurtle().getLocation(true));
-		getTurtle().setLocation(myCoord, false);
-		return distance;
+		Double returnValue = 0.0;
+		int k = 0;
+		while (k < args.size()) {
+			Double updatedX = (Double) args.get(k);
+			Double updatedY = (Double) args.get(k+1);
+			myCoord = new Coordinate(updatedX, updatedY*-1);
+			updateCoords(myCoord, myQuadrant);
+			returnValue = calcDistance(myCoord, getTurtle().getLocation(true));
+			getTurtle().setLocation(myCoord, false);
+			k += 2;
+		}
+		return returnValue;
 	}
 
 }
