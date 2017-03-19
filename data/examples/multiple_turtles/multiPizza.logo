@@ -10,11 +10,9 @@ to angle [ ]
 ]
 
 tell [ 1 2 3 4 5 6 7 8 9 10 11 12 ]
-st
+#st
 pd
-repeat 12
-[
-  rt product id 30
-  setpc id
-]
+rt product id 30
+setpc id
+
 angle
