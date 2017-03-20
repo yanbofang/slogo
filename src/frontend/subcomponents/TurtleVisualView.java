@@ -20,6 +20,11 @@ import turtles.Turtle;
 import turtles.TurtleAPI;
 import turtles.TurtleManager;
 
+/**
+ * creates and controls window that allows the visibility of a turtle to be changed
+ * @author Faith
+ * Relies on View class
+ */
 public class TurtleVisualView implements TurtleVisualViewAPI {
 
 	private View view;
@@ -30,6 +35,7 @@ public class TurtleVisualView implements TurtleVisualViewAPI {
 	private List<Turtle> activeTurtles;
 	private List<Label> labels;
 	
+	// Constructor
 	public TurtleVisualView(View viewIn, double gbIndex){
 		view = viewIn;
 		labels = new ArrayList<Label>();
@@ -37,11 +43,14 @@ public class TurtleVisualView implements TurtleVisualViewAPI {
 		turtleView = new VBox();
 		Label title = new Label("Toggle Visibility of Active Turtle");
 		turtleView.getChildren().add(title);
-		turtleView.setStyle(resource.getString("Border"));
-		
-		
+		turtleView.setStyle(resource.getString("Border"));	
 	}  
 	
+	/**
+	 * creates window that shows list of active turtles and allows their visibility to be toggled
+	 * @return activeTurtles
+	 * List of active turtles
+	 */
 	private List<Turtle> createActiveDisplay() {
 		activeListDisplay = new FlowPane();
 		activeListDisplay.setPrefWrapLength(turtleView.getWidth());
@@ -58,6 +67,13 @@ public class TurtleVisualView implements TurtleVisualViewAPI {
 		return null;
 	}
 	
+	/**
+	 * 
+	 * @param display
+	 * Label of turtle number
+	 * @param turtle
+	 * Turtle whose visibility is to be changed
+	 */
 	private void toggleTurtle(Label display, Turtle turtle) {
 		display.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
