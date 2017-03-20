@@ -25,6 +25,12 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Border;
 import javafx.scene.layout.VBox;
 
+/**
+ * Creates the subcomponent that displays current Color and Image palette 
+ * and allows the user to select an option
+ * @author Faith
+ *
+ */
 public class PaletteView implements PaletteViewAPI {
 
 
@@ -45,7 +51,7 @@ public class PaletteView implements PaletteViewAPI {
 	private ObservableList<String> turtleButtonLabels = FXCollections.observableArrayList();
 	
 	
-
+	// Constructor
 	public PaletteView(View viewIn, Map<Double,String> colorIn, Map<Double,String> turtleIn){
 
 		view = viewIn;
@@ -58,6 +64,11 @@ public class PaletteView implements PaletteViewAPI {
 		visualViews.setStyle(resource.getString("Border"));
 	}  
 	
+	/** 
+	 * creates a VBox that allows user to control color options
+	 * @return colorView
+	 * VBox containing buttons to set new background and pen colors
+	 */
 	private VBox createColorView() {
 		VBox colorView = new VBox();
 		String text = resource.getString("CPalette");
@@ -68,6 +79,11 @@ public class PaletteView implements PaletteViewAPI {
 		return colorView;
 		}
 	
+	/**
+	 * creates VBox that allows user to control turtle image
+	 * @return imageView
+	 * VBox containing button to set new turtle image
+	 */
 	private VBox createImageView() {
 		VBox imageView = new VBox();
 		Label imagePallete = new Label(resource.getString("TPalette"));
@@ -76,15 +92,33 @@ public class PaletteView implements PaletteViewAPI {
 		return imageView;
 	}
 	
+	/**
+	 * updates the contents of the drop down options within a button based on keys in map
+	 * @param map
+	 * Map containing a color or image palette
+	 * @return buttonLabels
+	 * An observable list of colors or images contained within the map
+	 */
 	private ObservableList<String> updateLists(Map map) {
-		List<Double> values = new ArrayList<Double>(map.keySet());	
+		List<Double> keys = new ArrayList<Double>(map.keySet());	
 		ObservableList<String> buttonLabels = FXCollections.observableArrayList();
-		for (Double value: values) {
-			buttonLabels.add(value.toString() + ": " + map.get(value));
+		for (Double key: keys) {
+			buttonLabels.add(key.toString() + ": " + map.get(key));
 		}
 		return buttonLabels;
 	}
 	
+	/**
+	 * creates an options button based on parameters
+	 * @param feature
+	 * String that determines whether pen color, background color, or turle image are being set
+	 * @param map 
+	 * map whose keys are being used to create observable list for the button 
+	 * @param group
+	 * VBox of which the button is being added as a child
+	 * @return options
+	 * ObservableList<String> for the button created
+	 */
 	@SuppressWarnings("unchecked")
 	private ObservableList<String> createFeatureButton(String feature, Map map, VBox group) {
 		ObservableList<String> options = FXCollections.observableArrayList(updateLists(map));
@@ -107,12 +141,19 @@ public class PaletteView implements PaletteViewAPI {
 		return options;
 	}
 	
+	/**
+	 * updates the current colors and image
+	 */
 	private void updateVariables() {
 		changePenColor();
 		changeBackgroundColor();
 		changeImage();
 	}
 	
+	/**
+	 * changes color of pen
+	 * Assumes that tempChoice has not been altered since createFeatureButtons was called
+	 */
 	private void changePenColor() {
 		if (viewOptions[1][1] != null) {
 			Double temp = Double.parseDouble(tempChoice);
@@ -122,6 +163,10 @@ public class PaletteView implements PaletteViewAPI {
 		
 	}
 	
+	/**
+	 * changes color of background
+	 * Assumes that tempChoice has not been altered since createFeatureButtons was called
+	 */
 	private void changeBackgroundColor() {
 		if (viewOptions[0][1] != null) {
 			Double temp = Double.parseDouble(tempChoice);
@@ -130,7 +175,9 @@ public class PaletteView implements PaletteViewAPI {
 		}	
 	}
 	
-	
+	/**
+	 * changes turtle image
+	 */
 	private void changeImage() {
 		if (viewOptions[2][1] != null) {
 			String imageName = resource.getString(viewOptions[2][1]);
