@@ -1,9 +1,5 @@
 package backend;
 
-
-//This entire file is a part of my masterpiece 
-//Henry Taylor
-
 /***
  * This class is the class that's responsible for parsing the data input as given by a string.
  * This class takes advantage of recursion and reflection to effectively parse the input. For our
@@ -26,7 +22,12 @@ public class Parser {
 	private VariableManager myVariables;
 	private UserMethodManager myUserMethods;
 
-	public Parser(String[] syntax, Model m, VariableManager variables, UserMethodManager methods) {
+	/**
+	 * @param syntax - relevant reg-ex expression files for pattern parsing and reflection
+	 * @param variables - variable manager 
+	 * @param methods - userMethod manager
+	 */
+	public Parser(String[] syntax, VariableManager variables, UserMethodManager methods) {
 		myPatterns = new PatternParse();
 		for (String each : syntax) {
 			myPatterns.addPattern(each);

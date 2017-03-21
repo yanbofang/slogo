@@ -10,6 +10,11 @@ import java.util.Observable;
 import coordinate.Coordinate;
 import javafx.scene.image.Image;;
 
+/**
+ * This is the manager that tracks all of the turtles, especially the current active turtles. 
+ * @author Henry
+ *
+ */
 public class TurtleManager extends Observable implements TurtleManagerAPI, TurtleManagerCommandAPI {
 
 	private HashMap<Double, Turtle> myTurtleMap;
@@ -19,8 +24,11 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 	private static final Double HEIGHT = 25.0;
 	private static final Double WIDTH = 25.0;
 	private ColorPalette myColors;
-	//private Shapes myShapes;
 
+	/**
+	 * 
+	 * @param bounds - bounds of UI viewer
+	 */
 	public TurtleManager(Coordinate bounds) {
 		myTurtleMap = new HashMap<Double, Turtle>();
 		XBOUND = bounds.getX();
@@ -29,6 +37,9 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		reset();
 	}
 
+	/**
+	 * @return - list of all active turtles (returns list of actual Turtles)
+	 */
 	@Override
 	public List<Turtle> getActiveTurtles() {
 		ArrayList<Turtle> apiList = new ArrayList<Turtle>();
@@ -38,6 +49,9 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		return Collections.unmodifiableList(apiList);
 	}
 
+	/**
+	 * @return List of all turtles, active or not 
+	 */
 	@Override
 	public List<Turtle> allTurtles() {
 		ArrayList<Turtle> returnList = new ArrayList<Turtle>();
@@ -47,16 +61,22 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		return returnList;
 	}
 
+	/**
+	 * @return - API for a specific turtle of give id
+	 */
 	@Override
 	public Turtle getAPI(Double id) {
 		return myTurtleMap.get(id);
 	}
 
+	/**
+	 * @return - Actual turtle for given ID
+	 */
 	public Turtle getTurtle(Double id) {
 		checkForTurtle(id);
 		return myTurtleMap.get(id);
 	}
-
+	
 	private void checkNewInputs() {
 		for (Double d : myActiveTurtles) {
 			checkForTurtle(d);
@@ -71,6 +91,9 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		return;
 	}
 
+	/**
+	 * @return - List of all active turtles, by ID
+	 */
 	public List<Double> getActiveTurtleIDs() {
 		if (myActiveTurtles.size() == 0) {
 			myActiveTurtles.addAll(myTurtleMap.keySet());
@@ -78,6 +101,9 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		return Collections.unmodifiableList(myActiveTurtles);
 	}
 
+	/**
+	 * adds all turtles of given ID to active turtles (if turtle doesn't exist, it creates it)
+	 */
 	public void addActiveTurtles(Collection<Double> newActives) {
 		myActiveTurtles.clear();
 		myActiveTurtles.addAll(newActives);
@@ -86,10 +112,18 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		return;
 	}
 
+	/**
+	 * Checks to see if turtle of ID, k, is active
+	 * @param k - ID of turtle
+	 * @return - true if turtle active, false if not
+	 */
 	public boolean isActive(Double k) {
 		return myActiveTurtles.contains(k);
 	}
 
+	/**
+	 * @return - list of all turtles, by ID
+	 */
 	public List<Double> getAllTurtleIDs() {
 		return new ArrayList<Double>(myTurtleMap.keySet());
 	}
@@ -99,16 +133,25 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		this.notifyObservers(t);
 	}
 
+	/**
+	 * Sets Pen Size, d, of turtle with ID of id
+	 */
 	public void setPenSize(double d, Double id) {
 		Turtle t = myTurtleMap.get(id);
 		t.getPen().setSize(d);
 	}
 
+	/**
+	 * Sets Pen State ( showing or hiding ), b, of turtle with ID of id
+	 */
 	public void setPenState(boolean b, Double id) {
 		Turtle t = myTurtleMap.get(id);
 		t.getPen().setPen(b);
 	}
 
+	/**
+	 * Sets Pen Color to index, d, of turtle with ID of id
+	 */
 	public void setPenColor(double d, Double id) {
 		if (myColors.checkValid(d)) {
 			Turtle t = myTurtleMap.get(id);
@@ -116,25 +159,39 @@ public class TurtleManager extends Observable implements TurtleManagerAPI, Turtl
 		}
 	}
 
+	/**
+	 * Sets Image to index, a, of turtle with ID of id
+	 */
 	public void setImage(Image a, Double id) {
 		Turtle t = myTurtleMap.get(id);
 		t.setImage(a);
 	}
 
+	/**
+	 * Sets background to index, index
+	 */
 	public void setBackground(Double index) {
 		myColors.setBackgroundColor(index);
 	}
 
+	/**
+	 * Clears all turtles, both active and inactive
+	 */
 	public void reset() {
 		myTurtleMap.clear();
 		myActiveTurtles.clear();
 	}
-
+	/**
+	 * Adds new color to ColorPalette, with a given index and RGB value
+	 */
 	public void addColor(Double index, Double r, Double g, Double b) {
 		myColors.addColor(index, r, g, b);
 		setBackground(index);
 	}
-
+	
+	/**
+	 * @param cp - color palette to use
+	 */
 	public void setPalette(ColorPalette cp) {
 		myColors = cp;
 	}

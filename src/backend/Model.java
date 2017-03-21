@@ -5,9 +5,6 @@ import backend.API.ModelAPI;
 import turtles.TurtleManager;
 import commands.Command;
 
-//This is a part of my masterpiece
-//Henry Taylor
-
 /**
  * This class serves as the bridge between the backend and the controller, so none of the other backend
  * classes have to directly communicate with the controller. This class extends from the ModelAPI, which is
@@ -26,11 +23,17 @@ public class Model implements ModelAPI {
 	private Parser myParser;
 	private CommandHandler myCommandHandler;
 
+	/**
+	 * @param syntax - relevant reg-ex expression files for pattern parsing and reflection
+	 * @param variables - variable manager 
+	 * @param methods - userMethod manager
+	 * @param turtles - turtleManager to keep track of all turtles 
+	 */
 	public Model(String[] syntax, VariableManager variables, UserMethodManager methods, TurtleManager turtles) {
 		myVariables = variables;
 		myUserMethods = methods;
 		myTurtles = turtles;
-		myParser = new Parser(syntax, this, myVariables, myUserMethods);
+		myParser = new Parser(syntax, myVariables, myUserMethods);
 		myCommandHandler = new CommandHandler(myTurtles, myVariables);
 	}
 

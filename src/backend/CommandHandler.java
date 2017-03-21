@@ -1,4 +1,4 @@
-package backend;
+	package backend;
 
 import java.util.Collection;
 import java.util.LinkedList;
@@ -8,16 +8,11 @@ import java.util.Queue;
 import turtles.TurtleManager;
 import commands.Command;
 
-
-//This entire file is a part of my masterpiece
-//Henry Taylor 
-
 /**
  * This class is responsible for handling all of the commands when the controller tells the backend 
  * to process them. We use a queue to store and process commands in order as they are received.
  * I think this is good design because we delegate a class to only worry about the execution of commands
- * @author Henry
- *
+ * @author Henry and Yanbo
  */
 public class CommandHandler {
 

@@ -1,8 +1,5 @@
 package backend;
 
-//This entire file is a part of my masterpiece
-//Henry Taylor
-
 /**
  * The purpose of this class is to reflect a given string to a command class. I think this shows good
  * design because the only purpose of this class is to reflect and return a command, which isolates its function,
