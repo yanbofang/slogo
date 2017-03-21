@@ -30,7 +30,7 @@ import javafx.stage.Stage;
 
 /**
  * Class to manage workspace options
- * @author Gordon
+ * @authors Gordon and Faith
  *
  */
 public class OptionsTab implements SubcomponentAPI {

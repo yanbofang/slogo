@@ -19,6 +19,11 @@ import javafx.scene.shape.Line;
 import turtles.Pen;
 import turtles.Turtle;
 
+/**
+ * Creates and controls the window that displays turtles and their movements
+ * @author Faith
+ *
+ */
 public class TurtleView implements TurtleViewerAPI {
 
 	private View view;
@@ -29,6 +34,7 @@ public class TurtleView implements TurtleViewerAPI {
 	private MoveAnimation animation;
 	private double colorIndex;
 
+	//Constructor
 	public TurtleView(View viewIn, Map<Double, String> mapIn, double bgIndex) {
 		view = viewIn;
 		colorMap = mapIn;
@@ -40,6 +46,7 @@ public class TurtleView implements TurtleViewerAPI {
 		lines = new ArrayList<Line>();
 	}
 
+	@Override
 	public void changePosition(Coordinate oldC, Coordinate newC, Pen pen, Turtle turtle) {
 		// animation = new MoveAnimation(view, turtle.getImage(), oldC, newC);
 		if (pen.showPen()) {
@@ -51,6 +58,7 @@ public class TurtleView implements TurtleViewerAPI {
 		}
 	}
 
+	@Override 
 	public void clear() {
 		for (Line line : lines) {
 			viewer.getChildren().remove(line);

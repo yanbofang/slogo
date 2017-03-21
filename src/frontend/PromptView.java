@@ -18,6 +18,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.VBox;
 
+/**
+ * Class to create and control the prompt window and history of previous commands
+ * @author Faith
+ * Runs methods from View (passed into the constructor)
+ */
+
 public class PromptView implements SubcomponentAPI{
 
 	private View view;
@@ -30,6 +36,7 @@ public class PromptView implements SubcomponentAPI{
 	private TextArea userText;
 	String text;
 	
+	// Constructor
 	public PromptView(View viewIn) {
 		view = viewIn; 
 		resource = ResourceBundle.getBundle(view.RESOURCE_BUNDLE);
@@ -41,16 +48,26 @@ public class PromptView implements SubcomponentAPI{
 		wholeView.getChildren().addAll(scrollPane, prompt, submitBtn);
 	}
 	
+	
+	/**
+	 * clears the history window of previous commands
+	 */
 	public void clearHistory(){
 		history.getChildren().clear();
 	}
 	
+	/**
+	 * creates prompt window
+	 */
 	private void promptSetup() {
 		prompt = new VBox();
 		userText = new TextArea();
 		prompt.getChildren().add(userText);
 	}
 	
+	/**
+	 * creates history window
+	 */
 	private void historySetup() {
 		scrollPane = new ScrollPane();
 		scrollPane.setVbarPolicy(ScrollBarPolicy.ALWAYS);
@@ -66,6 +83,12 @@ public class PromptView implements SubcomponentAPI{
 		layout.getChildren().addAll(title,history);
 	}
 	
+	/**
+	 * Adds text to the list of previous commands and allows that string,
+	 * when clicked, to execute as a command
+	 * @param text
+	 * a String that is to be added to the history window 
+	 */
 	private void updateHistory(String text) {
 		Hyperlink textToAdd = new Hyperlink(text);
 		history.getChildren().add(textToAdd);
@@ -79,6 +102,9 @@ public class PromptView implements SubcomponentAPI{
 		});
 	}
 	
+	/**
+	 * creates a button that runs the user typed string as a command
+	 */
 	private void buttonSetup() {
 		submitBtn = new Button(resource.getString("Submit"));
 		submitBtn.setId("submit");
@@ -95,10 +121,20 @@ public class PromptView implements SubcomponentAPI{
 		
 	}
 	
+	/**
+	 * runs the string as a command by calling method in View.java
+	 * @param a
+	 * String to be run as a command
+	 */
 	private void runCommand(String a) {
 		view.runCommand(a);
 	}
 	
+	/**
+	 * returns the Parent object containing the prompt and history windows
+	 * @return wholeView
+	 * The Parent object that contains the prompt and history windows
+	 */
 	@Override
 	public Parent getParent() {
 		return wholeView;
