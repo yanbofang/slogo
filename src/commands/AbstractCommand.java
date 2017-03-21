@@ -155,8 +155,7 @@ public abstract class AbstractCommand implements Command {
 		VariableManager localVariables = new VariableManager();
 		localVariables.addAll(vars.getVariableMap());
 		myTurtle = turtles.getTurtle(k);
-		myConvertedArguments = argumentsToConvert(localVariables);// convertArguments(myArguments,
-																	// // true);
+		myConvertedArguments = argumentsToConvert(localVariables);
 		this.changeToFinished();
 		return this.getValue(myConvertedArguments, localVariables);
 	}

@@ -1,5 +1,6 @@
-package backend;
+	package backend;
 
+import java.util.Collection;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -7,6 +8,12 @@ import java.util.Queue;
 import turtles.TurtleManager;
 import commands.Command;
 
+/**
+ * This class is responsible for handling all of the commands when the controller tells the backend 
+ * to process them. We use a queue to store and process commands in order as they are received.
+ * I think this is good design because we delegate a class to only worry about the execution of commands
+ * @author Henry and Yanbo
+ */
 public class CommandHandler {
 
 	private Queue<Command> myCommands;
@@ -20,16 +27,21 @@ public class CommandHandler {
 		myVariables = vars;
 	}
 
-	public void addCommands(List<Command> lst) {
+	/**
+	 * Allows model to add more commands to execute
+	 * @param lst - list of Commands to add to myCommands
+	 */
+	public void addCommands(Collection<Command> lst) {
 		for (Command c : lst) {
 			myCommands.add(c);
 		}
 	}
 
 	/**
-	 * Execute a single command -- assures we return our values for each command
-	 * 
-	 * @return
+	 * Execute a single command -- assures we return our values for each command.
+	 * Checks to see if command is a command that can be run by all turtles, if it is, it
+	 * runs the command for all active turtles
+	 * @return value of the executed command
 	 */
 
 	public Double executeCommands() {
