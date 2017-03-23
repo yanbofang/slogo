@@ -18,11 +18,12 @@ public class ForCommand extends LoopCommand {
 
 	@Override
 	protected Double calculate(List<Object> args, VariableManager vars) {
-		List<Command> lst = (List<Command>) args.get(0);
-		List<Object> positions = convertArguments(lst.subList(1, lst.size()), vars, true);
-		Variable var = new Variable(lst.get(0).getInstruction(), (Double) positions.get(0));
+		Variable var = new Variable(((Command) args.get(0)).getInstruction(),
+				((Command) args.get(1)).executeCommand(getTurtleManager(), vars, getTurtle().getID()));
 		vars.addVariable(var);
-		return runCommands((Double) positions.get(0), (Double) positions.get(1), (Double) positions.get(2), var, vars,
+		return runCommands(((Command) args.get(1)).executeCommand(getTurtleManager(), vars, getTurtle().getID()),
+				((Command) args.get(2)).executeCommand(getTurtleManager(), vars, getTurtle().getID()),
+				((Command) args.get(3)).executeCommand(getTurtleManager(), vars, getTurtle().getID()), var, vars,
 				getTurtle().getID());
 	}
 

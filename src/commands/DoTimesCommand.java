@@ -18,11 +18,9 @@ public class DoTimesCommand extends LoopCommand {
 
 	@Override
 	protected Double calculate(List<Object> args, VariableManager vars) {
-		List<Command> lst = (List<Command>) args.get(0);
-		Variable var = new Variable(((Command) lst.get(0)).getInstruction(), 1.0);
+		Variable var = new Variable(((Command) args.get(0)).getInstruction(), 1.0);
 		vars.addVariable(var);
-		return runCommands(1.0, ((Command) lst.get(1)).executeCommand(getTurtleManager(), vars, getTurtle().getID()),
+		return runCommands(1.0, ((Command) args.get(1)).executeCommand(getTurtleManager(), vars, getTurtle().getID()),
 				1.0, var, vars, getTurtle().getID());
 	}
-
 }

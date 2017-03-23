@@ -52,11 +52,7 @@ public abstract class LoopCommand extends AbstractCommand {
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
 		getArguments().stream().forEach(c -> {
-			if (getArguments().indexOf(c) % 2 == 0) {
-				convArgs.add(c.getAllArguments());
-			} else {
-				convArgs.add(c);
-			}
+			convArgs.add(getArguments().indexOf(c) % 2 == 0 ? c.getAllArguments() : c);
 		});
 		return convArgs;
 	}
