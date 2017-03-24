@@ -1,0 +1,102 @@
+VBox {
+	-fx-background-color: #4a4f4e;
+}
+
+HBox {
+	-fx-background-color: #4a4f4e;
+	-fx-spacing: 10;
+	-fx-alignment: center-left;
+	-fx-padding: 10,10,10,10;
+}
+
+.root {
+	-fx-background-color: #4a4f4e;
+}
+
+.scroll-pane {
+	-fx-background: #4a4f4e;
+	-fx-border-color: #343837;
+	-fx-focus-color: #000000;
+}
+
+.scroll-pane:focused{
+	-fx-highlight-fill: #4a2e59;
+}
+
+.scroll-bar {
+	-fx-background-color: #4a4f4e;
+}
+
+.scroll-bar .thumb {
+	-fx-background-color: #333333;
+}
+
+.btn {
+	-fx-text-fill: #000000;
+}
+
+.check-box {
+	-fx-text-fill: #ff3d3d;
+}
+
+.combo-box {
+	-fx-background-color: #333333;
+	-fx-text-fill: #5edbbc;
+}
+
+.combo-box:hover {
+	-fx-background-color: #1c1c1c;
+}
+
+.combo-box-popup {
+	-fx-background-color: #333333;
+	-fx-text-fill: #5edbbc;
+}
+
+.combo-box .list-cell {
+	-fx-background-color: #333333;
+	-fx-text-fill: #5edbbc;
+}
+
+.text-area {
+	-fx-text-fill: #ffffff;
+	-fx-prompt-text-fill: #ffffff;
+	-fx-background-color: #4a4f4e;
+	-fx-focus-color: #000000;
+}
+
+.text-area .content{
+	-fx-background-color: #4a4f4e;
+	-fx-border-color: #4a4f4e;
+}
+
+.text-area .scroll-pane {
+	-fx-border-color: #4a4f4e;
+}
+
+.hyperlink {
+	-fx-text-fill: #ffffff;
+}
+
+.label {
+	-fx-text-fill: #45e03a;
+}
+
+#option {
+	-fx-background-color: #333333;
+	-fx-text-fill: #5edbbc;
+}
+
+#option:hover {
+	-fx-background-color: #1c1c1c;
+}
+
+#submit {
+	-fx-text-fill: #4a4f4e;
+	-fx-background-color: #efe115;//#45e03a;
+	-fx-background-radius: 45;
+}
+
+#submit:hover {
+	-fx-background-color: #bfb411;
+}

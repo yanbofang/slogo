@@ -5,7 +5,7 @@ package frontend.API;
  * @author Gordon
  *
  */
-public interface VariablesViewAPI {
+public interface VariablesViewAPI extends SubcomponentAPI{
 	/**
 	 * Adds or updates a variable to the list of variables to display
 	 * @param a
@@ -14,4 +14,9 @@ public interface VariablesViewAPI {
 	 * The value of the variable
 	 */
 	public void updateVar(String a, String b);
+	
+	/**
+	 * Clear all current variables from display
+	 */
+	public void clearVars();
 }

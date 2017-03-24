@@ -13,7 +13,7 @@ to pizza [ ]
 [
   repeat 12
   [
-    slice
+    :slice
   ]
 ]
 
