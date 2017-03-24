@@ -9,6 +9,15 @@ import backend.ParserException;
 import backend.UserMethodManager;
 import backend.VariableManager;
 
+// This entire file is part of my masterpiece.
+// Yanbo Fang
+// This class provides a skeletal implementation of the {@link Command}. Beneath AbstractCommand are the concrete subclasses (individual Command). 
+// There might also exists another level of abstraction for some Commands. LoopCommand, extending AbstractCommand, is the superclass of RepeatCommand, DoTimesCommand, ForCommand, AskCommand, etc. 
+// This style of inheritance is similar to how Java implemented ArrayList, HashSet, etc. Take the ArrayList as an example, ArrayList extends the AbstractList, which implements the List interface. 
+// This design conforms to the Open Close Principle - adding new Command is can simply be achieved by creating a new subclass, existing class don't need to be modified. 
+// It also conforms to the Liskov's Substitution Principle - all the Commands are interchangeable or substitutable. 
+// In addition, all fields in this class are private, and the methods other than those provided in API are either private or protected. This shows good encapsulation.
+
 /**
  * This class provides a skeletal implementation of the {@link Command}
  * interface.
@@ -32,6 +41,7 @@ public abstract class AbstractCommand implements Command {
 
 	/**
 	 * Constructor for AbstractCommand, set the initial myNumOfExpressions to 0.
+	 * 
 	 * @param Name
 	 *            of the command
 	 * @param VariableManager
@@ -169,22 +179,16 @@ public abstract class AbstractCommand implements Command {
 	}
 
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
-		return convertArguments(myArguments, vars, true);
+		return convertArguments(myArguments, vars);
 	}
 
-	protected ArrayList<Object> convertArguments(List<Command> list, VariableManager localVariables, boolean nest) {
+	protected ArrayList<Object> convertArguments(List<Command> list, VariableManager localVariables) {
 		ArrayList<Object> newArgs = new ArrayList<Object>();
 		for (Command o : list) {
 			try {
-				if (nest) {
-					Double value = o.executeCommand(myTurtleManager, localVariables, myTurtle.getID());
-					if (value != null) {
-						newArgs.add(value);
-					} else {
-						throw new ParserException(String.format("WRONG INPUT %s", o), new Exception());
-					}
-				} else {
-					newArgs.add(o);
+				Double value = o.executeCommand(myTurtleManager, localVariables, myTurtle.getID());
+				if (value != null) {
+					newArgs.add(value);
 				}
 			} catch (Exception e) {
 				throw new ParserException(String.format("WRONG INPUT %s", o), new Exception());
@@ -193,8 +197,8 @@ public abstract class AbstractCommand implements Command {
 		return newArgs;
 	}
 
-	protected ArrayList<Object> convertArguments(Command list, VariableManager vars, boolean nest) {
+	protected ArrayList<Object> convertArguments(Command list, VariableManager vars) {
 		ArrayList<Command> temp = new ArrayList<Command>(Collections.singletonList(list));
-		return convertArguments(temp, vars, nest);
+		return convertArguments(temp, vars);
 	}
 }

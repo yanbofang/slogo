@@ -5,6 +5,11 @@ import backend.UserMethodManager;
 import backend.Variable;
 import backend.VariableManager;
 
+// This entire file is part of my masterpiece.
+// Yanbo Fang
+// This is the DoTimesCommand, a concrete subclass on the lowest level of the Commands inheritance hierarchy. 
+// It extends LoopCommand and provides concrete implementation for calculate(List<Object> args, VariableManager vars)
+
 /**
  * DoTimesCommand, a subclass of LoopCommand
  * @author Yanbo Fang

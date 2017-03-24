@@ -2,10 +2,16 @@ package commands;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import backend.UserMethodManager;
 import backend.Variable;
 import backend.VariableManager;
+
+// This entire file is part of my masterpiece.
+// Yanbo Fang
+// LoopCommand adds another level of abstraction. It is the superclass of the RepeatCommand, DoTimesCommand, ForCommand, AskCommand, AskWithCommand.
+// It extracts out the common implementation that loops may need, further reducing the chance of duplicate code. 
+// It has an abstract method calculate(List<Object> args, VariableManager vars) that all of its subclasses need to override.
+// There is no public method that is not available to its super class, preserving the idea of polymorphism. 
 
 /**
  * LoopCommand, a subclass of AbstractCommand

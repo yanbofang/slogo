@@ -67,7 +67,7 @@ public class MakeVariableCommand extends AbstractCommand {
 			.forEach(c -> {if (getArguments().indexOf(c)%2 == 0) {
 				convArgs.add(c);
 			} else  {
-				convArgs.addAll(convertArguments(c, vars, true));
+				convArgs.addAll(convertArguments(c, vars));
 			}
 			});
 		return convArgs;

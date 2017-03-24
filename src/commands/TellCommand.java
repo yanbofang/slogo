@@ -37,7 +37,7 @@ public class TellCommand extends AbstractCommand {
 	@Override
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = convertArguments(getArguments().get(getArguments().size()-1).getArguments(), 
-				vars, true);
+				vars);
 		return convArgs;
 	}
 

@@ -42,7 +42,7 @@ public abstract class ConditionalCommand extends AbstractCommand {
 		getArguments().stream()
 			.forEach(c -> {
 				if (getArguments().indexOf(c) % 3 == 0){
-					convArgs.addAll(convertArguments(c, vars, true));
+					convArgs.addAll(convertArguments(c, vars));
 				} else {
 					convArgs.add(c);
 				}

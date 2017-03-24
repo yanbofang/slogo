@@ -23,7 +23,7 @@ public class AskCommand extends LoopCommand {
 	protected ArrayList<Object> argumentsToConvert(VariableManager vars) {
 		ArrayList<Object> convArgs = new ArrayList<Object>();
 		getArguments().stream().forEach(c -> {
-			convArgs.add(getArguments().indexOf(c) % 2 == 0 ? convertArguments(c.getArguments(), vars, true) : c);
+			convArgs.add(getArguments().indexOf(c) % 2 == 0 ? convertArguments(c.getArguments(), vars) : c);
 		});
 		return convArgs;
 	}
