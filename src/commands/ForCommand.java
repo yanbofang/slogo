@@ -5,11 +5,13 @@ import backend.UserMethodManager;
 import backend.Variable;
 import backend.VariableManager;
 
+/**
+ * AndCommand, a subclass of LoopCommand
+ * @author Yanbo Fang
+ * @author Henry Taylor
+ */
 public class ForCommand extends LoopCommand {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -8273555395033115049L;
 
 	public ForCommand(String instruction, VariableManager variables, UserMethodManager methods) {
@@ -18,13 +20,12 @@ public class ForCommand extends LoopCommand {
 
 	@Override
 	protected Double calculate(List<Object> args, VariableManager vars) {
-		Variable var = new Variable(((Command) args.get(0)).getInstruction(),
-				((Command) args.get(1)).executeCommand(getTurtleManager(), vars, getTurtle().getID()));
+		Double start = ((Command) args.get(1)).executeCommand(getTurtleManager(), vars, getTurtle().getID());
+		Double end = ((Command) args.get(2)).executeCommand(getTurtleManager(), vars, getTurtle().getID());
+		Double increment = ((Command) args.get(3)).executeCommand(getTurtleManager(), vars, getTurtle().getID());
+		Variable var = new Variable(((Command) args.get(0)).getInstruction(), start);
 		vars.addVariable(var);
-		return runCommands(((Command) args.get(1)).executeCommand(getTurtleManager(), vars, getTurtle().getID()),
-				((Command) args.get(2)).executeCommand(getTurtleManager(), vars, getTurtle().getID()),
-				((Command) args.get(3)).executeCommand(getTurtleManager(), vars, getTurtle().getID()), var, vars,
-				getTurtle().getID());
+		return runCommands(start, end, increment, var, vars, getTurtle().getID());
 	}
 
 }
